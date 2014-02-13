@@ -1,4 +1,4 @@
-<?php require_once("_config.php") ?>
+<?php require_once("../../_controls/classes/_appconfig.php"); ?>
 <?php
 $zgdconfigs = new ZGDConfigurations();
 $zgdconfigs->setSite();
@@ -30,5 +30,10 @@ function gdreqonce($path)
 {
     $o = $zgdconfigs->getSubDomainDocumentRoot() . $path;
     return require_once($o);
+}
+
+function getGDConfig()
+{
+    return $zgdconfigs;
 }
 ?>
