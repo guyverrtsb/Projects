@@ -1,0 +1,32 @@
+#ContentWrapper { border-left:0px; border-right:0px;}
+
+#gdHeader {
+    width:100%; height:97px;
+    background: url("/gd.trxn.com/mimes/images/grey.png") repeat;
+}
+#gdHeader ul { list-style-type:none; }
+
+ul#topnav { list-style-type: none; overflow: hidden; padding: 1px 0; position: relative;
+/**    top: -20px;
+width: 800px;**/
+}
+ul#topnav li { display: inline; }
+ul#topnav li#login a { width: 188px; }
+ul#topnav li.common a { width: 100px; }
+ul#topnav li#spacer a { width: 206px; background: url(""); }
+ul#topnav li#spacer a.selected { }
+ul#topnav li#spacer a:hover { }
+
+form    { margin:10px;}
+.form h1 { color:#0074B2; font-size:16px; font-weight:bold; }
+.form ul { padding-top:10px; padding-bottom:10px; }
+.form li { margin-left:30px; }
+.form li.user { margin-top:10px; margin-left:30px; }
+.form li.user input { color:#0074B2; font-size:16px; font-weight:bold; width:300px; }
+.form li.cbheader { margin-top:10px; margin-left:30px; }
+.form li.button { margin-top:10px; margin-left:30px; height:45px; }
+
+#gdHeadlines li.articlepoint { margin-top:10px }
+#gdHeadlines li#launch  { list-style-type:none; margin-top:20px; margin-left:80%;  }
+
+.SYS_MESSAGE    { color:#F90F09; font-size:16px; font-weight:bold; }
