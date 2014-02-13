@@ -1,6 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/standard.php"); ?>
-<?php gdreqonce("/_controls/classes/location.php"); ?>
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/find/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/register/search.php"); ?>
@@ -26,8 +25,8 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                     gdlog()->LogInfoTaskLabel("Register Wall Message");
                     $wall_message = filter_var($_POST["WallMessageContent"], FILTER_SANITIZE_STRING);
                     $zrwallmessage = new zRegisterWallMessage();
-                    $zrwallmessage->registerWallMessage($global_group_account_uid,
-                                                            $_SESSION["UNIV_MEET_AUTH_USER_UID"],
+                    $zrwallmessage->registerWallMessage(getGDConfig()->getSessGroupUid(),
+                                                            getGDConfig()->getSessAuthUserUid(),
                                                             $wall_message,
                                                             $zsuc->getApplMimeUid());
                                                             
@@ -44,8 +43,8 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 // Save Wall Message
                 $wall_message = filter_var($_POST["WallMessageContent"], FILTER_SANITIZE_STRING);
                 $zrwallmessage = new zRegisterWallMessage();
-                $zrwallmessage->registerWallMessage($global_group_account_uid,
-                                                        $_SESSION["UNIV_MEET_AUTH_USER_UID"],
+                $zrwallmessage->registerWallMessage(getGDConfig()->getSessGroupUid(),
+                                                        getGDConfig()->getSessAuthUserUid(),
                                                         $wall_message,
                                                         "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
                                                         
@@ -71,8 +70,8 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             // Save Wall Message
             $wall_message_comment = filter_var($_POST["wall_message_comment"], FILTER_SANITIZE_STRING);
             $zrwallmessage = new zRegisterWallMessage();
-            $r = $zrwallmessage->registerWallMessageComment($global_group_account_uid,
-                                                            $_SESSION["UNIV_MEET_AUTH_USER_UID"],
+            $r = $zrwallmessage->registerWallMessageComment(getGDConfig()->getSessGroupUid(),
+                                                            getGDConfig()->getSessAuthUserUid(),
                                                             $wall_message_comment,
                                                             $wall_message_uid);
             echo $r;
@@ -89,7 +88,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             $wall_message_createddt_start = filter_var($_POST["WALL_MESSAGE_CREATEDDT_START"], FILTER_SANITIZE_STRING);
             $wall_message_lid_bypass = filter_var($_POST["WALL_MESSAGE_LID_BYPASS"], FILTER_SANITIZE_STRING);
             $zfmessage = new zFindWallMessage();
-            $r = $zfmessage->findAllExistingWallMessages($global_group_account_uid,
+            $r = $zfmessage->findAllExistingWallMessages(getGDConfig()->getSessGroupUid(),
                                                         $wall_message_createddt_start,
                                                         $wall_message_lid_bypass);
             if($r == "WALL_MESSAGES_FOUND")
@@ -111,7 +110,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             $wall_message_createddt_start = filter_var($_POST["WALL_MESSAGE_CREATEDDT_START"], FILTER_SANITIZE_STRING);
             $wall_message_lid_bypass = filter_var($_POST["WALL_MESSAGE_LID_BYPASS"], FILTER_SANITIZE_STRING);
             $zfmessage = new zFindWallMessage();
-            $r = $zfmessage->findAllNewWallMessages($global_group_account_uid,
+            $r = $zfmessage->findAllNewWallMessages(getGDConfig()->getSessGroupUid(),
                                                     $wall_message_createddt_start,
                                                     $wall_message_lid_bypass);
             if($r == "WALL_MESSAGES_FOUND")

@@ -8,12 +8,15 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
     if($action == "GROUP_HOME" && isset($_GET["ga_uid"]))
     {
         gdlog()->LogInfoTaskLabel("Redirect to Group Home");
-        $ga_uid= filter_var($_GET["ga_uid"], FILTER_SANITIZE_STRING);
-        $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"] = $ga_uid;
         $zfg = new zFindGroup();
-        $zfg->findUserRoleofGroup();
-        $_SESSION["UNIV_MEET_GROUP_ROLE"] = $zfg->getUserRoleofGroup_CfgUserRole_Sdesc();
-        gdlog()->LogInfo("UNIV_MEET_GROUP_ACCOUNT_UID{".$_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]."}:UNIV_MEET_GROUP_ROLE{".$_SESSION["UNIV_MEET_GROUP_ROLE"]."}");
+        $zfg->findUserRoleofGroup(filter_var($_GET["ga_uid"], FILTER_SANITIZE_STRING));
+        $zfg->getUserRoleofGroup_CfgUserRole_Sdesc();
+        getGDConfig()->setCurrentGroup($zfg->getUserRoleofGroup_CfgGA_Uid(),
+                                        $zfg->getUserRoleofGroup_CfgUserRole_Uid(),
+                                        $zfg->getUserRoleofGroup_CfgUserRole_Sdesc());
+        gdlog()->LogInfo("Group UID{".getGDConfig()->getSessGroupUid()."}:".
+            "Group User Role UID{".getGDConfig()->getSessGroupUserRoleUid()."}".
+            "Group User Role SDESC{".getGDConfig()->getSessGroupUserRoleSdesc()."}");
         redirectToUI("000", "GOTO_GROUP_HOME", "Go to group Home", "/siteuser/s_group_home.php");
     }
     else 

@@ -69,7 +69,7 @@ class zBaseObject
         return $fieldoutput;
     }
     
-    function getConfig()
+    function getGDConfig()
     {
         if(!isset($this->zgdconfig) || $this->zgdconfig == null)
             $this->zgdconfig = new ZGDConfigurations();
