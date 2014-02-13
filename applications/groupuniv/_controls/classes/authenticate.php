@@ -54,8 +54,7 @@ class zAuthenticate
     function isAuthenticated()
     {
         $this->gdlog()->LogInfoStartFUNCTION("isAuthenticated");
-        if(isset($_SESSION[$this->getSessAuthUserUid()])
-            && isset($_SESSION[$this->getSessAuthUserValid()]) && $_SESSION[$this->getSessAuthUserValid()] == "TRUE")
+        if($this->getGDConfig()->getSessAuthUserUid() != "" && $this->getGDConfig()->getSessAuthUserValid() == "TRUE")
         {
             $this->gdlog()->LogInfoRETURN("USER_AUTHENTICATED");
             return true;

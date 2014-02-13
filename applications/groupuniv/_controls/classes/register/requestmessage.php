@@ -21,7 +21,7 @@ class zRegisterRequestMessage
                                     , $request_content, $group_account_uid, $status = "P")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerRequestMessage");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."group_request_message SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

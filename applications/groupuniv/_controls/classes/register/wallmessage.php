@@ -17,7 +17,7 @@ class zRegisterWallMessage
     function registerWallMessage($group_account_uid, $from_user_account_uid, $wall_message, $mimes_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerWallMessage");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."wall_message SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -65,7 +65,7 @@ class zRegisterWallMessage
         $wall_message_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerWallMessageComment");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."wall_message_comment SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

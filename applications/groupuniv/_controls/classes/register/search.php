@@ -42,13 +42,20 @@ class zRegisterSearchData
     function registerSearch($content, $object_uid, $cfg_search_objects_uid, $university_account_uid = "NOT_PASSED")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerSearch");
+        $utk = "";
+        
         if($university_account_uid == "NOT_PASSED")
         {
-            $university_account_uid = $_SESSION["UNIV_MEET_AUTH_UNIV_UID"];
+            $university_account_uid = $utk = $this->getGDConfig()->getSessUnivUid();
+            $utk = $this->getGDConfig()->getSessUnivTblKey();
         }
-        $zfuniv = new zFindUniversity();
-        $zfuniv->findAccountandProfileByUID($university_account_uid);
-        $utk = $zfuniv->getTablekey()."_";
+        else
+        {
+            $zfuniv = new zFindUniversity();
+            $zfuniv->findAccountandProfileByUID($university_account_uid);
+            $utk = $zfuniv->getTablekey();
+        }
+
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."search_content SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -103,7 +110,7 @@ class zRegisterSearchData
         $this->gdlog()->LogInfoStartFUNCTION("registerKeywords");
         $zfuniv = new zFindUniversity();
         $zfuniv->findAccountandProfileByUID($university_account_uid);
-        $utk = $zfuniv->getTablekey()."_";
+        $utk = $zfuniv->getTablekey();
         $fr;
         
         $sqlstmnt = "INSERT INTO ".$utk."search_keywords SET ".

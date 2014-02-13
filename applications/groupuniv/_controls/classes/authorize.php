@@ -6,7 +6,7 @@ class zAuthorize
     function isSiteAdmin()
     {
         if($this->isAuthenticated())
-            if($_SESSION[$this->getSessAuthUserSiteRole()] == "USER_ROLE_SITE_ADMIN")
+            if($this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_ADMIN")
                 return true;
             else
                 $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Admins.");
@@ -15,7 +15,7 @@ class zAuthorize
     function isSiteUser()
     {
         if($this->isAuthenticated())
-            if($_SESSION[$this->getSessAuthUserSiteRole()] == "USER_ROLE_SITE_USER")
+            if($this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_USER")
                 return true;
             else
                 $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Users.");
@@ -24,7 +24,7 @@ class zAuthorize
     function isGroupOwner()
     {
         if($this->isAuthenticated())
-            if($_SESSION["UNIV_MEET_GROUP_ROLE"] == "USER_ROLE_GROUP_OWNER")
+            if($this->getGDConfig()->getSessGroupUserRoleSdesc() == "USER_ROLE_GROUP_OWNER")
                 return true;
             else
                 $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Users.");
@@ -33,7 +33,7 @@ class zAuthorize
     function isGroupUser()
     {
         if($this->isAuthenticated())
-            if($_SESSION["UNIV_MEET_GROUP_ROLE"] == "USER_ROLE_GROUP_USER")
+            if($this->getGDConfig()->getSessGroupUserRoleSdesc() == "USER_ROLE_GROUP_USER")
                 return true;
             else
                 $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Users.");

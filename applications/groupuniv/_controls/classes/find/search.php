@@ -15,7 +15,7 @@ class zFindSearchData
     function findSearchGroup($search_content)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findSearchGroup");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $this->cleanResults_SearchRecords();
         
@@ -120,7 +120,7 @@ class zFindSearchData
     function findSearchWallMessage($search_content)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findSearchWallMessage");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $this->cleanResults_SearchRecords();
         

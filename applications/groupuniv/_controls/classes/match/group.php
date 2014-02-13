@@ -17,7 +17,7 @@ class zMatchGroup
     function matchGrouptoProfile($group_account_uid, $group_profile_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("matchGrouptoProfile");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."match_group_account_to_group_profile SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

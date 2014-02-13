@@ -145,15 +145,16 @@ class zRegisterUniversity
     function getTablekey() {
         $emailkey = $this->getEmailkey();
         $univtablekey = explode(".", $this->getEmailkey());
-        $univtablekey = $univtablekey[0];
-        return "Z_".$univtablekey;
+        $univtablekey = strtolower($univtablekey[0]);
+        return "z_".$univtablekey."_";
     }
     
-    function createUniversityTables($univtblekey)
+    function createUniversityTables($univtblekey = "NOT_DEFINED")
     {
         $this->gdlog()->LogInfoStartFUNCTION("createUniversityTables");
         $fr;
-        
+        if($univtblekey == "NOT_DEFINED")
+            $this->getGDConfig()->getSessUnivTblKey();
         $sqlstmnt = "SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; ".
             "SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; ".
             "SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES'; ".
@@ -162,7 +163,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `group_account` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_group_account` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."group_account` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -183,7 +184,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `group_profile` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_group_profile` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."group_profile` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -201,7 +202,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `group_request_message` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_group_request_message` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."group_request_message` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -225,7 +226,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `match_group_account_to_group_profile` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_match_group_account_to_group_profile` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."match_group_account_to_group_profile` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -243,7 +244,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `match_university_account_to_group_account` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_match_university_account_to_group_account` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."match_university_account_to_group_account` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -261,7 +262,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `match_user_account_to_group_account_to_cfg_user_roles` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_match_user_account_to_group_account_to_cfg_user_roles` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."match_user_account_to_group_account_to_cfg_user_roles` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -280,7 +281,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `message_status` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_message_status` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."message_status` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -299,7 +300,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `search_content` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_search_content` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."search_content` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -320,7 +321,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `search_keywords` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_search_keywords` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."search_keywords` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -341,7 +342,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `wall_message` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_wall_message` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."wall_message` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -361,7 +362,7 @@ class zRegisterUniversity
             //"-- ----------------------------------------------------- ".
             //"-- Table `wall_message_comment` ".
             //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."_wall_message_comment` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."wall_message_comment` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".

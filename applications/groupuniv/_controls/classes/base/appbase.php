@@ -1,12 +1,12 @@
 <?php gdreqonce("/gd.trxn.com/_controls/classes/base/baseobject.php"); ?>
-<?php gdreqonce("/_controls/classes/appconfig.php"); ?>
+<?php gdreqonce("/_controls/classes/_appconfig.php"); ?>
 <?php
 class zAppBaseObject
     extends zBaseObject
 
 {
     private $zappconfig = null;
-    function getConfig()
+    function getGDConfig()
     {
         if(!isset($this->zappconfig) || $this->zappconfig == null)
             $this->zappconfig = new ZAppConfigurations();

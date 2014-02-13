@@ -183,7 +183,7 @@ class zFindUser
     function findUserAccountandProfileofGroupOwner($group_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserAccountandProfileofGroupOwner");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             $this->dbfas("user_account.uid, ".

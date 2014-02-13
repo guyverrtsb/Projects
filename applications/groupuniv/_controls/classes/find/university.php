@@ -203,8 +203,8 @@ class zFindUniversity
     function getTablekey() {
         $emailkey = $this->getEmailkey();
         $univtablekey = explode(".", $this->getEmailkey());
-        $univtablekey = $univtablekey[0];
-        return "Z_".$univtablekey;
+        $univtablekey = strtolower($univtablekey[0]);
+        return "z_".$univtablekey."_";
     }
 }
 ?>

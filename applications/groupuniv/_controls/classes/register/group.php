@@ -51,7 +51,7 @@ class zRegisterGroup
                                 $cfg_group_useracceptance_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerGroupAccount");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."group_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -103,7 +103,7 @@ class zRegisterGroup
     function registerGroupProfile($validtodate, $content)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerGroupProfile");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."group_profile SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

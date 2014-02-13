@@ -89,7 +89,7 @@ class zMatchUser
     function matchUsertoGrouptoRole($user_account_uid, $group_account_uid, $cfg_user_roles_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("matchUsertoGrouptoRole");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."match_user_account_to_group_account_to_cfg_user_roles SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

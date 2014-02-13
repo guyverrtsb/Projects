@@ -11,7 +11,7 @@ class zFindGroup
     function findAccountbySdesc($group_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAccountbySdesc");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             "uid FROM ".$utk."group_account ".
@@ -51,7 +51,7 @@ class zFindGroup
     function findAccountandProfileByUid($group_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAccountandProfileByUid");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             $this->dbfas("university_account.uid, ".
@@ -131,7 +131,7 @@ class zFindGroup
                                                 $university_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findGroupsByUniversityByTypeByAcceptanceByVisibilitySdesc");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "select ".
             $this->dbfas("university_account.uid, ".
@@ -216,7 +216,7 @@ class zFindGroup
                                                 $university_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findGroupsByUserByUniversityByUserRolesSdesc");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "select ".
             $this->dbfas("university_account.uid, ".
@@ -306,7 +306,95 @@ class zFindGroup
     function findGroupsforUserbyRoleExcludingExistingGroup($cfg_user_roles_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findGroupsforUserbyOwnershipExcludingExistingGroup");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
+        $fr;
+        $sqlstmnt = "SELECT ".
+            $this->dbfas("university_account.uid, ".
+                        "university_account.sdesc, ".
+                        "university_account.emailkey, ".
+                        $utk."group_account.uid, ".
+                        $utk."group_account.sdesc, ".
+                        $utk."group_account.ldesc, ".
+                        $utk."group_account.cfg_group_type_uid, ".
+                        $utk."group_account.cfg_group_visibility_uid, ".
+                        $utk."group_account.cfg_group_useracceptance_uid, ".
+                        $utk."group_profile.uid, ".
+                        $utk."group_profile.validtodate, ".
+                        $utk."group_profile.content, ".
+                        "cfg_group_type.sdesc, ".
+                        "cfg_group_useracceptance.sdesc, ".
+                        "cfg_group_visibility.sdesc", $utk).
+            " FROM ".$utk."group_account ".
+            "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles ".
+            " on ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid ".
+            
+            "JOIN ".$utk."match_university_account_to_group_account ".
+            " on ".$utk."match_university_account_to_group_account.group_account_uid = ".$utk."group_account.uid ".
+            "JOIN university_account ".
+            " on university_account.uid = ".$utk."match_university_account_to_group_account.university_account_uid ".
+            "JOIN ".$utk."match_group_account_to_group_profile ".
+            " on ".$utk."match_group_account_to_group_profile.group_account_uid = ".$utk."group_account.uid ".
+            "JOIN ".$utk."group_profile ".
+            " on ".$utk."group_profile.uid = ".$utk."match_group_account_to_group_profile.group_profile_uid ".
+            
+            "JOIN cfg_defaults AS cfg_group_type ".
+            " on cfg_group_type.uid = ".$utk."group_account.cfg_group_type_uid ".
+            "JOIN cfg_defaults AS cfg_group_useracceptance ".
+            " on cfg_group_useracceptance.uid = ".$utk."group_account.cfg_group_useracceptance_uid ".
+            "JOIN cfg_defaults AS cfg_group_visibility ".
+            " on cfg_group_visibility.uid = ".$utk."group_account.cfg_group_visibility_uid ".
+            "JOIN cfg_defaults AS cfg_user_roles ".
+            " on cfg_user_roles.uid = ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid ".
+            
+            "WHERE cfg_user_roles.sdesc = :cfg_user_roles_sdesc".
+            " AND university_account.uid = :university_account_uid".
+            " AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = :user_account_uid".
+            " AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid <> :group_account_uid";
+                    
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setStatement($sqlstmnt);
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
+        $dbcontrol->bindParam(":cfg_user_roles_sdesc", strtoupper($cfg_user_roles_sdesc));
+        $dbcontrol->bindParam(":university_account_uid", $this->getGDConfig()->getSessUnivUid());
+        $dbcontrol->bindParam(":group_account_uid", $this->getGDConfig()->getSessGroupUid());
+        $dbcontrol->execSelect();
+        
+        if($dbcontrol->getTransactionGood())
+        {
+            if($dbcontrol->getRowCount() > 0)
+            {
+                $this->setResults_Groups($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResults_Groups());
+                $fr = $this->gdlog()->LogInfoRETURN("GROUPS_FOUND");
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("GROUPS_NOT_FOUND");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("findGroupsforUserbyOwnershipExcludingExistingGroup");
+        return $fr;
+    }
+    
+    /**
+     * Find Groups by University that are based on
+     * Group Type
+     * Group User Acceptance
+     * Group Visibility
+     * $cfg_group_type_sdesc = SDESC
+     * $cfg_group_useracceptance_sdesc = SDESC
+     * $cfg_group_visibility_sdesc = SDESC
+     * $university_account_uid = UID
+     */
+    function findGroupsforUserbyRole($cfg_user_roles_sdesc)
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("findGroupsforUserbyOwnershipExcludingExistingGroup");
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             $this->dbfas("university_account.uid, ".
@@ -349,17 +437,13 @@ class zFindGroup
             "WHERE cfg_user_roles.sdesc = :cfg_user_roles_sdesc".
             " AND university_account.uid = :university_account_uid".
             " AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = :user_account_uid";
-            if(isset($_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]) && $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"] != "")
-                $sqlstmnt = $sqlstmnt . " AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid <> :group_account_uid";
                     
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $_SESSION["UNIV_MEET_AUTH_USER_UID"]);
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
         $dbcontrol->bindParam(":cfg_user_roles_sdesc", strtoupper($cfg_user_roles_sdesc));
-        $dbcontrol->bindParam(":university_account_uid", $_SESSION["UNIV_MEET_AUTH_UNIV_UID"]);
-        if(isset($_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]) && $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"] != "")
-            $dbcontrol->bindParam(":group_account_uid", $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]);
+        $dbcontrol->bindParam(":university_account_uid", $this->getGDConfig()->getSessUnivUid());
         $dbcontrol->execSelect();
         
         if($dbcontrol->getTransactionGood())
@@ -424,26 +508,28 @@ class zFindGroup
     function getCfgGroupVisiSdesc(){return $this->Result_Group[$this->dbf("cfg_group_visibility.sdesc")];}
     function getCfgGroupUASdesc(){return $this->Result_Group[$this->dbf("cfg_group_useracceptance.sdesc")];}
     
-    function findUserRoleofGroup()
+    function findUserRoleofGroup($ga_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserRoleofGroup");
         $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
         $fr;
         $sqlstmnt = "SELECT ".
         $this->dbfas($utk."match_user_account_to_group_account_to_cfg_user_roles.uid, ".
+                    $utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid, ".
+                    $utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid, ".
                     "cfg_user_roles.uid, ".
                     "cfg_user_roles.sdesc", $utk).
         " FROM ".$utk."match_user_account_to_group_account_to_cfg_user_roles ".
         "join cfg_defaults AS cfg_user_roles ".
         " on  cfg_user_roles.uid = ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid ".
-        "WHERE user_account_uid=:user_account_uid ".
-        "AND group_account_uid=:group_account_uid ";
+        "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid=:user_account_uid ".
+        "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid=:group_account_uid ";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":user_account_uid", $_SESSION["UNIV_MEET_AUTH_USER_UID"]);
-        $dbcontrol->bindParam(":group_account_uid", $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]);
+        $dbcontrol->bindParam(":group_account_uid", $ga_uid);
         $dbcontrol->execSelect();
         
         if($dbcontrol->getTransactionGood())
@@ -481,7 +567,8 @@ class zFindGroup
         return $this->Result_UserRoleofGroup;
     }
     function getUserRoleofGroup_MatchUserGroupUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.uid")];}
-    function getUserRoleofGroup_CfgUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("cfg_user_roles.uid")];}
+    function getUserRoleofGroup_CfgGA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.user_account_uid")];}
+    function getUserRoleofGroup_CfgUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.group_account_uid")];}
     function getUserRoleofGroup_CfgUserRole_Sdesc(){return $this->Result_UserRoleofGroup[$this->dbf("cfg_user_roles.sdesc")];}
     
 }

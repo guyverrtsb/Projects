@@ -27,7 +27,7 @@ class zFindWallMessage
                                         $wall_message_lid_bypass)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAllExistingWallMessages");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
         
@@ -106,7 +106,7 @@ class zFindWallMessage
                                     $wall_message_lid_bypass)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAllNewWallMessages");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
         
@@ -177,7 +177,7 @@ class zFindWallMessage
     function findAllWallMessageComments($wall_message_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAllWallMessageComments");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             $this->dbfas($utk."wall_message_comment.lid, ".

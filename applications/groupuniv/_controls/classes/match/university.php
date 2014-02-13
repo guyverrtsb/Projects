@@ -118,7 +118,7 @@ class zMatchUniversity
     function matchUniversitytoGroup($university_account_uid, $group_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("matchUniversitytoGroup");
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."match_university_account_to_group_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".

@@ -6,13 +6,13 @@ class zAllowed
     function isGroupUser()
     {
         $this->gdlog()->LogInfoStartFUNCTION("isGroupUser");
-        if(isset($_SESSION["UNIV_MEET_GROUP_ROLE"]))
+        if($this->getGDConfig()->getSessGroupUserRoleSdesc() != "")
         {
-            if($_SESSION["UNIV_MEET_GROUP_ROLE"] == "USER_ROLE_GROUP_USER")
+            if($this->getGDConfig()->getSessGroupUserRoleSdesc() == "USER_ROLE_GROUP_USER")
             {
                 return true;
             }
-            $this->gdlog()->LogInfoERROR("isGroupUser{UNIV_MEET_GROUP_ROLE does not Match USER_ROLE_GROUP_USER : ".$_SESSION["UNIV_MEET_GROUP_ROLE"]." }");
+            $this->gdlog()->LogInfoERROR("isGroupUser{UNIV_MEET_GROUP_ROLE does not Match USER_ROLE_GROUP_USER : ".$this->getGDConfig()->getSessGroupUserRoleSdesc()." }");
         }
         else
         {
@@ -24,13 +24,13 @@ class zAllowed
     
     function isGroupOwner()
     {
-        if(isset($_SESSION["UNIV_MEET_GROUP_ROLE"]))
+        if($this->getGDConfig()->getSessGroupUserRoleSdesc())
         {
-            if($_SESSION["UNIV_MEET_GROUP_ROLE"] == "USER_ROLE_GROUP_OWNER")
+            if($this->getGDConfig()->getSessGroupUserRoleSdesc() == "USER_ROLE_GROUP_OWNER")
             {
                 return true;
             }
-            $this->gdlog()->LogInfoERROR("isGroupOwner{UNIV_MEET_GROUP_ROLE does not Match USER_ROLE_GROUP_OWNER : ".$_SESSION["UNIV_MEET_GROUP_ROLE"]." }");
+            $this->gdlog()->LogInfoERROR("isGroupOwner{UNIV_MEET_GROUP_ROLE does not Match USER_ROLE_GROUP_OWNER : ".$this->getGDConfig()->getSessGroupUserRoleSdesc()." }");
         }
         else
         {
@@ -44,7 +44,7 @@ class zAllowed
     {
         $this->gdlog()->LogInfoStartFUNCTION("doesUserBelongtoGroupRole");
         $this->getConfig()->clearResult_GroupUserRole();
-        $utk = $_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
             "uid,  cfg_user_roles_uid ".
@@ -56,8 +56,8 @@ class zAllowed
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $_SESSION["UNIV_MEET_AUTH_USER_UID"]);
-        $dbcontrol->bindParam(":group_account_uid", $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]);
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
+        $dbcontrol->bindParam(":group_account_uid", $this->getGDConfig()->getSessGroupUid());
         $dbcontrol->bindParam(":cfg_user_roles_uid", $cfg_user_roles_uid);
         $dbcontrol->execSelect();
         
