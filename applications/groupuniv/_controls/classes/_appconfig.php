@@ -3,32 +3,31 @@
 class ZAppConfigurations
     extends ZGDConfigurations
 {
-    private $isCoreConfigSet = false;
-    private $subdomaindocroot = "SUBDOMAIN_DOCUMENT_ROOT"; 
-    function __construct()
-    {
-
-    }
-    
     function setUserObjects($user)
     {
+        $this->gdlog()->LogInfoStartFUNCTION("setUserObjects");
         $_SESSION[$this->getKeySessAuthUserUid()] = $user->getUA_Uid();
         $_SESSION[$this->getKeySessAuthUserValid()] = "TRUE";
         $_SESSION[$this->getKeySessAuthUserSiteRole()] = $user->getCfgUsrRoleSdesc();
+        $this->gdlog()->LogInfoEndFUNCTION("setUserObjects");
     }
     
     function setUniversityObjects($university)
     {
-        $_SESSION[$zfuniv->getKeySessUnivUid()] = $university->getUA_Uid();
-        $_SESSION[$zfuniv->getKeySessUnivSdesc()] = $university->getSdesc();
-        $_SESSION[$zfuniv->getKeySessUnivTblKey()] = $university->getTablekey();
+        $this->gdlog()->LogInfoStartFUNCTION("setUniversityObjects");
+        $_SESSION[$this->getKeySessUnivUid()] = $university->getUA_Uid();
+        $_SESSION[$this->getKeySessUnivSdesc()] = $university->getSdesc();
+        $_SESSION[$this->getKeySessUnivKey()] = $university->getTablekey();
+        $this->gdlog()->LogInfoEndFUNCTION("setUniversityObjects");
     }
     
     function setCurrentGroup($uid, $roleuid, $rolesdesc)
     {
+        $this->gdlog()->LogInfoStartFUNCTION("setCurrentGroup");
         $_SESSION[$this->getKeySessGroupUid()] = $uid;
-        $_SESSION[$this->getKeySessGroupRole_Uid()] = $roleuid;
-        $_SESSION[$this->getKeySessGroupRole_Sdesc()] = $rolesdesc;
+        $_SESSION[$this->getKeySessGroupUserRoleUid()] = $roleuid;
+        $_SESSION[$this->getKeySessGroupUserRoleSdesc()] = $rolesdesc;
+        $this->gdlog()->LogInfoEndFUNCTION("setCurrentGroup");
     }
     
     function cleanAuthoritySessionObjects()
@@ -40,16 +39,18 @@ class ZAppConfigurations
         
         unset($_SESSION[$this->getKeySessUnivUid()]);
         unset($_SESSION[$this->getKeySessUnivSdesc()]);
-        unset($_SESSION[$this->getKeySessUnivTblKey()]);
+        unset($_SESSION[$this->getKeySessUnivKey()]);
         $this->cleanGroupSessionObjects();
+        $this->gdlog()->LogInfoEndFUNCTION("cleanAuthoritySessionObjects");
     }
     
     function cleanGroupSessionObjects()
     {
-        $this->gdlog()->LogInfoStartFUNCTION("cleanAuthoritySessionObjects");
+        $this->gdlog()->LogInfoStartFUNCTION("cleanGroupSessionObjects");
         unset($_SESSION[$this->getKeySessGroupUid()]);
-        unset($_SESSION[$this->getKeySessGroupRole_Uid()]);
-        unset($_SESSION[$this->getKeySessGroupRole_Sdesc()]);
+        unset($_SESSION[$this->getKeySessGroupUserRoleUid()]);
+        unset($_SESSION[$this->getKeySessGroupUserRoleSdesc()]);
+        $this->gdlog()->LogInfoEndFUNCTION("cleanGroupSessionObjects");
     }
     
     function getObjectValue($key)
@@ -106,7 +107,7 @@ class ZAppConfigurations
         if(isset($_SESSION[$this->getKeySessUnivKey()]))
         {
             $tblkey = $_SESSION[$this->getKeySessUnivKey()];
-            return $tblkey."_";
+            return $tblkey;
         }
         return "";
     }

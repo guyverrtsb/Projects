@@ -162,17 +162,17 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $emailkey = explode("@", $_POST["user_email"]);
                 if(strtoupper($emailkey[1]) == "GUYVERDESIGNS.COM")
                 {
-                    $zallowed->getConfig()->setUserObjects($zallowed);
+                    $zallowed->getGDConfig()->setUserObjects($zallowed);
                     $zallowed->redirectToLogin(105, $fr, "User Logged in", "/siteadmin/s_admin_account.php");
                 }
                 else
                 {
-                    $zallowed->getConfig()->setUserObjects($zallowed);
+                    $zallowed->getGDConfig()->setUserObjects($zallowed);
                     $zfuniv = new zFindUniversity();
                     $fr = $zfuniv->findAccountandProfileByEmailKey($emailkey[1]);
                     if($fr == "ACCOUNT_FOUND")
                     {
-                        $zfuniv->getConfig()->setUniversityObjects($zfuniv);
+                        $zfuniv->getGDConfig()->setUniversityObjects($zfuniv);
                         $zallowed->redirectToLogin(0, $fr, "User Logged in", "/siteuser/s_user_account.php");
                     }
                     else

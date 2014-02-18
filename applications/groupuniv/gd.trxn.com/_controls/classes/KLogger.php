@@ -41,8 +41,8 @@
 		
 		public function __construct()
 		{
-		    $filepath = $_SERVER['GDLOG_LOCATION'];
-		    $priority = $_SERVER['GDLOG_PRIORITY'];
+		    $filepath = $_SESSION['GD_LOG_LOCATION'];
+		    $priority = $_SESSION['GD_LOG_PRIORITY'];
 			if ( $priority == KLogger::OFF ) return;
 			
 			$this->log_file = $filepath;

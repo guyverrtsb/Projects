@@ -44,7 +44,7 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
                     
                     $zfu = new zFindUniversity();
                     $zfu->findAccountandProfileByEmailKey($emailkey);
-                    getGDConfig()->setUniversityObjects($zfu);
+                    $zfu->getGDConfig()->setUniversityObjects($zfu);
                     
                     // Match University to User to Role
                     $zmuniv = new zMatchUniversity();

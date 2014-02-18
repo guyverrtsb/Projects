@@ -40,7 +40,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $r = $zmuniv->matchUniversitytoProfile($zruniv->getUA_Uid(), 
                                                     $zruniv->getUP_Uid());
 
-                getGDConfig()->setUniversityObjects($zruniv);
+                $zruniv->getGDConfig()->setUniversityObjects($zruniv);
                 $zruniv->createUniversityTables();
                 
                 gdlog()->LogInfoTaskLabel("Create of User Information President");

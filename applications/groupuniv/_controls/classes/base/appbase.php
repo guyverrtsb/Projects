@@ -175,5 +175,31 @@ class zAppBaseObject
             $sdesc = $sdesc.substring(0, 99);
         return $sdesc;
     }
+    
+    function redirectToUI($code, $sdesc, $ldesc, $location = "/siteaccess.php")
+    {
+        gdlog()->LogInfoStartFUNCTION("redirectToUI");
+        $_SESSION["AUTH_ERROR_CODE"] = $code;
+        $_SESSION["AUTH_ERROR_KEY"] = $sdesc;
+        $_SESSION["AUTH_ERROR_MSG"] = $ldesc;
+        gdlog()->LogInfo("redirectToUI".
+            ":location:".$location.
+            ":AUTH_ERROR_CODE:".$_SESSION["AUTH_ERROR_CODE"].
+            ":AUTH_ERROR_KEY:".$_SESSION["AUTH_ERROR_KEY"].
+            ":AUTH_ERROR_MSG:".$_SESSION["AUTH_ERROR_MSG"].":");
+        header("Location: ".$location);
+    }
+    
+    function redirectToLogin($code, $sdesc, $ldesc, $location = "/siteaccess.php")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("redirectToLogin");
+        $this->redirectToUI($code, $sdesc, $ldesc, $location);
+    }
+    
+    function redirectToUserHomePage($code, $sdesc, $ldesc, $location = "/siteuser/s_user_account.php")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("redirectToUserHomePage");
+        $this->redirectToUI($code, $sdesc, $ldesc, $location);
+    }
 }
 ?>

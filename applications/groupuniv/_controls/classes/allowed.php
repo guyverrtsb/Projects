@@ -43,7 +43,7 @@ class zAllowed
     function doesUserBelongtoGroupRole($cfg_user_roles_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("doesUserBelongtoGroupRole");
-        $this->getConfig()->clearResult_GroupUserRole();
+        $this->getGDConfig()->clearResult_GroupUserRole();
         $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".

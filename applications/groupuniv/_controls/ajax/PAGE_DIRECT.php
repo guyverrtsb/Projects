@@ -11,7 +11,7 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
         $zfg = new zFindGroup();
         $zfg->findUserRoleofGroup(filter_var($_GET["ga_uid"], FILTER_SANITIZE_STRING));
         $zfg->getUserRoleofGroup_CfgUserRole_Sdesc();
-        getGDConfig()->setCurrentGroup($zfg->getUserRoleofGroup_CfgGA_Uid(),
+        $zfg->getGDConfig()->setCurrentGroup($zfg->getUserRoleofGroup_CfgGA_Uid(),
                                         $zfg->getUserRoleofGroup_CfgUserRole_Uid(),
                                         $zfg->getUserRoleofGroup_CfgUserRole_Sdesc());
         gdlog()->LogInfo("Group UID{".getGDConfig()->getSessGroupUid()."}:".
@@ -21,22 +21,8 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
     }
     else 
     {
-        
+        redirectToUserHomePage("000", "GOTO_GROUP_HOME", "Go to User Home");
     }
-}
-
-function redirectToUI($code, $sdesc, $ldesc, $location = "/siteuser/s_user_account.php")
-{
-    gdlog()->LogInfoStartFUNCTION("redirectToUI");
-    $_SESSION["AUTH_ERROR_CODE"] = $code;
-    $_SESSION["AUTH_ERROR_KEY"] = $sdesc;
-    $_SESSION["AUTH_ERROR_MSG"] = $ldesc;
-    gdlog()->LogInfo("redirectToUI".
-        ":location:".$location.
-        ":AUTH_ERROR_CODE:".$_SESSION["AUTH_ERROR_CODE"].
-        ":AUTH_ERROR_KEY:".$_SESSION["AUTH_ERROR_KEY"].
-        ":AUTH_ERROR_MSG:".$_SESSION["AUTH_ERROR_MSG"].":");
-    header("Location: ".$location);
 }
 
 function validateConfiguration()

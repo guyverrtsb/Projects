@@ -6,7 +6,8 @@ class zAuthenticate
     function authenticate($user_email, $user_password)
     {
         $this->gdlog()->LogInfoStartFUNCTION("authenticate");
-        $this->getConfig()->cleanAuthoritySessionObjects();
+        $this->getGDConfig()->cleanAuthoritySessionObjects();
+        $this->clearResult_User();
         $fr;
         $sqlstmnt = "SELECT user_account.uid AS user_account_uid, ".
             "email, ".
@@ -28,20 +29,22 @@ class zAuthenticate
         $dbcontrol->execSelect();
         if($dbcontrol->getRowCount() > 0)
         {
-            $row = $dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC);
-            $this->gdlog()->LogInfoDB($row);
-            if($row["active"] == "F")
+            $this->setResult_User($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
+            $this->gdlog()->LogInfoDB($this->getResult_User());
+            if($this->getUA_Active() == "F")
             {
-                $fr = $this->saveActivityLog("ACCOUNT_INACTIVE", "User has not been activated:".json_encode($row).":");
+                $fr = $this->saveActivityLog("ACCOUNT_INACTIVE", "User has not been activated:".json_encode($this->getResult_User()).":");
+                $this->clearResult_User();
             }
-            else if($row["password"] == $user_password)
+            else if($this->getUA_Password() == $user_password)
             {
-                $fr = $this->saveActivityLog("USER_IS_AUTHENTICATED", "User has been authenticated:".json_encode($row).":");
+                $fr = $this->saveActivityLog("USER_IS_AUTHENTICATED", "User has been authenticated:".json_encode($this->getResult_User()).":");
             }
             else
             {
-                $fr = $this->saveActivityLog("USER_IS_NOT_AUTHENTICATED", "User has failed Authentication:".json_encode($row).":");
-             }
+                $fr = $this->saveActivityLog("USER_IS_NOT_AUTHENTICATED", "User has failed Authentication:".json_encode($this->getResult_User()).":");
+                $this->clearResult_User();
+            }
         }
         else
         {
@@ -64,36 +67,6 @@ class zAuthenticate
             $this->getConfig()->cleanAuthoritySessionObjects();
             $this->redirectToLogin(102, "RESOURCE_SECURED", "Resource Requested is secure and requires login.  Please Login");
         }
-    }
-    
-    function redirectToLogin($code, $sdesc, $ldesc, $location = "/siteaccess.php")
-    {
-        $this->gdlog()->LogInfoStartFUNCTION("redirectToLogin");
-        if($location == "/siteaccess.php")
-            $this->getConfig()->cleanAuthoritySessionObjects();
-        $_SESSION["AUTH_ERROR_CODE"] = $code;
-        $_SESSION["AUTH_ERROR_KEY"] = $sdesc;
-        $_SESSION["AUTH_ERROR_MSG"] = $ldesc;
-        $this->gdlog()->LogInfo("redirectToLogin()".
-            ":location:".$location.
-            ":AUTH_ERROR_CODE:".$_SESSION["AUTH_ERROR_CODE"].
-            ":AUTH_ERROR_KEY:".$_SESSION["AUTH_ERROR_KEY"].
-            ":AUTH_ERROR_MSG:".$_SESSION["AUTH_ERROR_MSG"].":");
-        header("Location: ".$location);
-    }
-    
-    function redirectToUserHomePage($code, $sdesc, $ldesc, $location = "/siteuser/s_user_account.php")
-    {
-        $this->gdlog()->LogInfoStartFUNCTION("redirectToUserHomePage");
-        $_SESSION["AUTH_ERROR_CODE"] = $code;
-        $_SESSION["AUTH_ERROR_KEY"] = $sdesc;
-        $_SESSION["AUTH_ERROR_MSG"] = $ldesc;
-        $this->gdlog()->LogInfo("redirectToUserHomePage()".
-            ":location:".$location.
-            ":AUTH_ERROR_CODE:".$_SESSION["AUTH_ERROR_CODE"].
-            ":AUTH_ERROR_KEY:".$_SESSION["AUTH_ERROR_KEY"].
-            ":AUTH_ERROR_MSG:".$_SESSION["AUTH_ERROR_MSG"].":");
-        header("Location: ".$location);
     }
     
     private $Result_User = "NO_RECORD";

@@ -2,7 +2,7 @@
 <?php
 class ZGDUtilities
 {
-    private $zgdlog, $zgdconfig;
+    private $zgdlog;
     
     function gdlog()
     {
