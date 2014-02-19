@@ -32,6 +32,7 @@ if($zauth->isSiteUser())
     </ul></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>
+    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
     </ul></li>
 </ul>
 </div>

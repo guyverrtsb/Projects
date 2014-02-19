@@ -72,6 +72,7 @@ while ($row = $page_search_records->fetch(PDO::FETCH_ASSOC))
     </ul></form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifications</li>
+    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
     </ul></li>
 </ul>
 </div>

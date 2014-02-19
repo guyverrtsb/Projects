@@ -15,6 +15,7 @@
 if(isset($_POST["GD_CONTROLLER_KEY"]))
 {
     $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
+    $gdconfig = gdconfig();
     gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "REGISTER_USER")
     {
@@ -151,52 +152,52 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
            
             if($fr == "ACCOUNT_INACTIVE")
             {
-                $zallowed->redirectToLogin(101, $fr, "Account Inactive User needs to be activated");
+                $gdconfig->redirectToLogin(101, $fr, "Account Inactive User needs to be activated");
             }
             else if($fr == "USER_IS_LOCKED_TOO_MANY_TRIES")
             {
-                $zallowed->redirectToLogin(102, $fr, "Account Locked.  Too many failed attempts.");
+                $gdconfig->redirectToLogin(102, $fr, "Account Locked.  Too many failed attempts.");
             }
             else if($fr == "USER_IS_AUTHENTICATED")
             {
                 $emailkey = explode("@", $_POST["user_email"]);
                 if(strtoupper($emailkey[1]) == "GUYVERDESIGNS.COM")
                 {
-                    $zallowed->getGDConfig()->setUserObjects($zallowed);
-                    $zallowed->redirectToLogin(105, $fr, "User Logged in", "/siteadmin/s_admin_account.php");
+                    $gdconfig->setUserObjects($zallowed);
+                    $gdconfig->redirectToLogin(105, $fr, "User Logged in", "/siteadmin/s_admin_account.php");
                 }
                 else
                 {
-                    $zallowed->getGDConfig()->setUserObjects($zallowed);
+                    $gdconfig->setUserObjects($zallowed);
                     $zfuniv = new zFindUniversity();
                     $fr = $zfuniv->findAccountandProfileByEmailKey($emailkey[1]);
                     if($fr == "ACCOUNT_FOUND")
                     {
-                        $zfuniv->getGDConfig()->setUniversityObjects($zfuniv);
-                        $zallowed->redirectToLogin(0, $fr, "User Logged in", "/siteuser/s_user_account.php");
+                        $gdconfig->setUniversityObjects($zfuniv);
+                        $gdconfig->redirectToLogin(0, $fr, "User Logged in", "/siteuser/s_user_account.php");
                     }
                     else
                     {
-                        $zallowed->redirectToLogin(105, $fr, "No University Associated");
+                        $gdconfig->redirectToLogin(105, $fr, "No University Associated");
                     }
                 }
             }
             else if($fr == "USER_IS_NOT_AUTHENTICATED")
             {
-                $zallowed->redirectToLogin(103, $fr, "Bad login");
+                $gdconfig->redirectToLogin(103, $fr, "Bad login");
             }
             else if($fr == "USER_IS_NOT_FOUND")
             {
-                $zallowed->redirectToLogin(104, $fr, "User Account not Found.");
+                $gdconfig->redirectToLogin(104, $fr, "User Account not Found.");
             }
             else if($fr == "TRANSACTION_FAIL")
             {
-                $zallowed->redirectToLogin(104, $fr, "User Authentication Failed.");
+                $gdconfig->redirectToLogin(104, $fr, "User Authentication Failed.");
             }
         }
         else
         {
-            $zallowed->redirectToLogin(999, "FORM_FIELDS_NOT_VALID", "Form Fields not Filled In");
+            $gdconfig->redirectToLogin(999, "FORM_FIELDS_NOT_VALID", "Form Fields not Filled In");
         }
     }
 }

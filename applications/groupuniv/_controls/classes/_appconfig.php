@@ -36,11 +36,16 @@ class ZAppConfigurations
         unset($_SESSION[$this->getKeySessAuthUserUid()]);
         unset($_SESSION[$this->getKeySessAuthUserValid()]);
         unset($_SESSION[$this->getKeySessAuthUserSiteRole()]);
-        
+        $this->cleanUniversitySessionObjects();
+        $this->cleanGroupSessionObjects();
+    }
+    
+    function cleanUniversitySessionObjects()
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("cleanUniversitySessionObjects");
         unset($_SESSION[$this->getKeySessUnivUid()]);
         unset($_SESSION[$this->getKeySessUnivSdesc()]);
         unset($_SESSION[$this->getKeySessUnivKey()]);
-        $this->cleanGroupSessionObjects();
         $this->gdlog()->LogInfoEndFUNCTION("cleanAuthoritySessionObjects");
     }
     
@@ -154,5 +159,32 @@ class ZAppConfigurations
     function getKeySessGroupUid(){return "UNIV_MEET_GROUP_ACCOUNT_UID";}
     function getKeySessGroupUserRoleUid(){return "UNIV_MEET_GROUP_ROLE_UID";}
     function getKeySessGroupUserRoleSdesc(){return "UNIV_MEET_GROUP_ROLE_SDESC";}
+    
+        
+    function redirectToUI($code, $sdesc, $ldesc, $location = "/siteaccess.php")
+    {
+        gdlog()->LogInfoStartFUNCTION("redirectToUI");
+        $_SESSION["AUTH_ERROR_CODE"] = $code;
+        $_SESSION["AUTH_ERROR_KEY"] = $sdesc;
+        $_SESSION["AUTH_ERROR_MSG"] = $ldesc;
+        gdlog()->LogInfo("redirectToUI".
+            ":location:".$location.
+            ":AUTH_ERROR_CODE:".$_SESSION["AUTH_ERROR_CODE"].
+            ":AUTH_ERROR_KEY:".$_SESSION["AUTH_ERROR_KEY"].
+            ":AUTH_ERROR_MSG:".$_SESSION["AUTH_ERROR_MSG"].":");
+        header("Location: ".$location);
+    }
+    
+    function redirectToLogin($code, $sdesc, $ldesc, $location = "/siteaccess.php")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("redirectToLogin");
+        $this->redirectToUI($code, $sdesc, $ldesc, $location);
+    }
+    
+    function redirectToUserHomePage($code, $sdesc, $ldesc, $location = "/siteuser/s_user_account.php")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("redirectToUserHomePage");
+        $this->redirectToUI($code, $sdesc, $ldesc, $location);
+    }
 }
 ?>

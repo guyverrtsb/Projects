@@ -10,7 +10,7 @@ if($zauth->isSiteUser())
 <?php gdreqonce("/_controls/classes/find/wallmessage.php"); ?>
 <?php
     $zfgroup = new zFindGroup();
-    $zfgroup->findAccountandProfileByUid($_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]);
+    $zfgroup->findAccountandProfileByUid(gdconfig()->getSessGroupUid());
 ?>
 <?php gdreqonce("/_controls/classes/find/group.php"); ?>
 <!DOCTYPE HTML>
@@ -27,8 +27,6 @@ if($zauth->isSiteUser())
 #WallMessageImageFile { display:none; }
 </style>
 <?php gdinc("/_controls/ui/js/core.php") ?>
-<script src="/mimes/js/content_block_logic.js"></script>
-<script src="/mimes/js/page_elements.js"></script>
 <script>
 $(document).ready(function()
 {
@@ -105,8 +103,7 @@ function showOutputResults(responseText)
 <li><ul id="CBWorkAreaLeft">
     <li class="cbheader">Menu</li>
 <?php gdinc("/_controls/ui/siteuser_left_menu.php") ?>
-    </ul>
-</li>
+    </ul></li>
 <li><form id="GDUploadImageFrm" class="form" action="/_controls/ajax/WALL_MESSAGE.php" method="post" enctype="multipart/form-data" >
 <ul id="CBWorkAreaCenter">
 <?php printf("<li class=\"cbheader\">Wall for %s</li>", $zfgroup->getGA_Ldesc()); ?>
@@ -127,6 +124,7 @@ function showOutputResults(responseText)
     </form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifications</li>
+    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
     </ul></li>
 </ul>
 </div>

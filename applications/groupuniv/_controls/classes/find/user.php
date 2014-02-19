@@ -24,7 +24,7 @@
 class zFindUser
     extends zAppBaseObject
 {
-    function findAccountandProfileByUid($uid)
+    function findAccountandProfileByUid($user_account_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAccountandProfileByEmail");
         $fr;
@@ -49,7 +49,7 @@ class zFindUser
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $uid);
+        $dbcontrol->bindParam(":user_account_uid", $user_account_uid);
         $dbcontrol->execSelect();
         if($dbcontrol->getTransactionGood())
         {

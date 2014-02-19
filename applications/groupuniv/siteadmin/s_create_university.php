@@ -18,6 +18,7 @@ if($zauth->isSiteAdmin())
 <script>
 $(document).ready( function()
 {
+    getListofUniversities();
 });
 function gdFuncRegisterData()
 {
@@ -30,7 +31,10 @@ function gdFuncRegisterData()
         else if(isDataMatch(data, "ACCOUNT_CREATED"))
             showMessage("#RegisterErr", "Account was created.  Please check your email to activate the account.");
         else
+        {
             showMessage("#RegisterErr", "Unknown Error:" + data);
+            getListofUniversities();
+        }
     });
 }
 </script>

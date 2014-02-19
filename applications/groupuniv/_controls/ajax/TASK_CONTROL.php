@@ -16,6 +16,7 @@
 if(isset($_GET["GD_CONTROLLER_KEY"]))
 {
     $action = filter_var($_GET["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
+    $gdconfig = gdconfig();
     gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "TASK_CONTROL")
     {
@@ -44,7 +45,7 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
                     
                     $zfu = new zFindUniversity();
                     $zfu->findAccountandProfileByEmailKey($emailkey);
-                    $zfu->getGDConfig()->setUniversityObjects($zfu);
+                    gdconfig()->setUniversityObjects($zfu);
                     
                     // Match University to User to Role
                     $zmuniv = new zMatchUniversity();
@@ -174,12 +175,12 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
                     
                     if($r == "USER_ACCOUNT_ACTIVATION_SWITCHED")
                     {
-                        $zauth = new zAuthenticate();
-                        $zauth->redirectToLogin(103, $r, "User has been activated", "/siteaccess.php");
+                        $gdconfig->redirectToLogin(103, $r, "User has been activated", "/siteaccess.php");
                     }
                 }
             }
-            unset($_SESSION["UNIV_MEET_AUTH_UNIV_TBL_KEY"]);
+            $gdconfig->cleanUniversitySessionObjects();
+            $gdconfig->redirectToLogin(103, $r, "User has not been activated", "/siteaccess.php");
             echo $r;
         }
         else

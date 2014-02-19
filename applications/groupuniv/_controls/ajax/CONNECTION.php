@@ -8,6 +8,7 @@
 if(isset($_POST["GD_CONTROLLER_KEY"]))
 {
     $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
+    $gdconfig = gdconfig();
     gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "JOIN_GROUP_FROM_SEARCH") // User has asked to join group
     {
@@ -49,7 +50,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 
                 $zrwallmessage = new zRegisterWallMessage();
                 $zrwallmessage->registerWallMessage($group_account_uid,
-                                                    $_SESSION[$zrwallmessage->getSessAuthUserUid()],
+                                                    $gdconfig->getSessAuthUserUid(),
                                                     $zfuserLoggedIn->getFName()." has joined ".$zfg->getGA_Ldesc().".",
                                                     "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
                                                     
@@ -60,7 +61,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             {
                 gdlog()->LogInfoTaskLabel("Group Owner Accept");
                 $zfuserLoggedIn = new zFindUser();
-                $r = $zfuserLoggedIn->findAccountandProfileByUid($_SESSION[$zfuserLoggedIn->getSessAuthUserUid()]);
+                $r = $zfuserLoggedIn->findAccountandProfileByUid($gdconfig->getSessAuthUserUid());
                 $zfuserGroupOwner = new zFindUser();
                 $r = $zfuserGroupOwner->findUserAccountandProfileofGroupOwner($group_account_uid);
                 

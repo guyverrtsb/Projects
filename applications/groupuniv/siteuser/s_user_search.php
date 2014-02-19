@@ -16,8 +16,6 @@ if($zauth->isSiteUser())
 #SearchFieldLarge { width:400px; }
 </style>
 <?php gdinc("/_controls/ui/js/core.php") ?>
-<script src="/mimes/js/content_block_logic.js"></script>
-<script src="/mimes/js/page_elements.js"></script>
 <script>
 
 </script>
@@ -50,6 +48,7 @@ if($zauth->isSiteUser())
     </ul></form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>
+    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
     </ul></li>
 </ul>
 </div>

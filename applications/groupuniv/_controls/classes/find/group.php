@@ -511,7 +511,7 @@ class zFindGroup
     function findUserRoleofGroup($ga_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserRoleofGroup");
-        $utk = $_SESSION[$this->getSessAuthUserUnivTblKey()]."_";
+        $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
         $this->dbfas($utk."match_user_account_to_group_account_to_cfg_user_roles.uid, ".
@@ -528,7 +528,7 @@ class zFindGroup
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $_SESSION["UNIV_MEET_AUTH_USER_UID"]);
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
         $dbcontrol->bindParam(":group_account_uid", $ga_uid);
         $dbcontrol->execSelect();
         
@@ -567,8 +567,9 @@ class zFindGroup
         return $this->Result_UserRoleofGroup;
     }
     function getUserRoleofGroup_MatchUserGroupUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.uid")];}
-    function getUserRoleofGroup_CfgGA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.user_account_uid")];}
-    function getUserRoleofGroup_CfgUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.group_account_uid")];}
+    function getUserRoleofGroup_CfgGA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.group_account_uid")];}
+    function getUserRoleofGroup_CfgUA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.user_account_uid")];}
+    function getUserRoleofGroup_CfgUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("cfg_user_roles.uid")];}
     function getUserRoleofGroup_CfgUserRole_Sdesc(){return $this->Result_UserRoleofGroup[$this->dbf("cfg_user_roles.sdesc")];}
     
 }

@@ -90,8 +90,8 @@ class zFindSearchData
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":search_content", $search_content);
-        $dbcontrol->bindParam(":university_account_uid", $_SESSION[$this->getSessAuthUserUnivUid()]);
-        $dbcontrol->bindParam(":user_account_uid", $_SESSION[$this->getSessAuthUserUid()]);
+        $dbcontrol->bindParam(":university_account_uid", $this->getGDConfig()->getSessUnivUid());
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
         $dbcontrol->execSelect();
         if($dbcontrol->getTransactionGood())
         {
@@ -201,8 +201,8 @@ class zFindSearchData
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":search_content", $search_content);
-        $dbcontrol->bindParam(":university_account_uid", $_SESSION[$this->getSessAuthUserUnivUid()]);
-        $dbcontrol->bindParam(":user_account_uid", $_SESSION[$this->getSessAuthUserUid()]);
+        $dbcontrol->bindParam(":university_account_uid", $this->getGDConfig()->getSessUnivUid());
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
         $dbcontrol->execSelect();
         if($dbcontrol->getTransactionGood())
         {

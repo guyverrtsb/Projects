@@ -164,7 +164,7 @@ class zFindUniversity
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("findAccountandProfileByEmailKey");
+        $this->gdlog()->LogInfoEndFUNCTION("findAllUniversitiesAccountsandProfiles");
         return $fr;
     }
     

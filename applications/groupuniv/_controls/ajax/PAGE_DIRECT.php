@@ -11,17 +11,19 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
         $zfg = new zFindGroup();
         $zfg->findUserRoleofGroup(filter_var($_GET["ga_uid"], FILTER_SANITIZE_STRING));
         $zfg->getUserRoleofGroup_CfgUserRole_Sdesc();
-        $zfg->getGDConfig()->setCurrentGroup($zfg->getUserRoleofGroup_CfgGA_Uid(),
+        gdconfig()->setCurrentGroup($zfg->getUserRoleofGroup_CfgGA_Uid(),
                                         $zfg->getUserRoleofGroup_CfgUserRole_Uid(),
                                         $zfg->getUserRoleofGroup_CfgUserRole_Sdesc());
-        gdlog()->LogInfo("Group UID{".getGDConfig()->getSessGroupUid()."}:".
-            "Group User Role UID{".getGDConfig()->getSessGroupUserRoleUid()."}".
-            "Group User Role SDESC{".getGDConfig()->getSessGroupUserRoleSdesc()."}");
-        redirectToUI("000", "GOTO_GROUP_HOME", "Go to group Home", "/siteuser/s_group_home.php");
+                                        
+        gdlog()->LogInfo("Group UID{".gdconfig()->getSessGroupUid()."}:".
+            "Group User Role UID{".gdconfig()->getSessGroupUserRoleUid()."}".
+            "Group User Role SDESC{".gdconfig()->getSessGroupUserRoleSdesc()."}");
+            
+        gdconfig()->redirectToUI("000", "GOTO_GROUP_HOME", "Go to group Home", "/siteuser/s_group_home.php");
     }
     else 
     {
-        redirectToUserHomePage("000", "GOTO_GROUP_HOME", "Go to User Home");
+        gdconfig()->redirectToUserHomePage("000", "GOTO_GROUP_HOME", "Go to User Home");
     }
 }
 

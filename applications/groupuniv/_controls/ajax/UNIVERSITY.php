@@ -14,6 +14,7 @@ gdlog()->LogInfoTaskLabel("University AJAX Loaded");
 if(isset($_POST["GD_CONTROLLER_KEY"]))
 {
     $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
+    $gdconfig = gdconfig();
     gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "REGISTER_UNIVERSITY")
     {
@@ -40,7 +41,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $r = $zmuniv->matchUniversitytoProfile($zruniv->getUA_Uid(), 
                                                     $zruniv->getUP_Uid());
 
-                $zruniv->getGDConfig()->setUniversityObjects($zruniv);
+                $gdconfig->setUniversityObjects($zruniv);
                 $zruniv->createUniversityTables();
                 
                 gdlog()->LogInfoTaskLabel("Create of User Information President");
@@ -225,13 +226,13 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             echo "FORM_FIELDS_NOT_VALID";
         }
     }
-    else if($action == "SELECT_UNIVERSITY")
+    else if($action == "GET_LIST_OF_UNIVERSITIES")
     {
         $zfuniv = new zFindUniversity();
         $r = $zfuniv->findAllUniversitiesAccountsandProfiles();
         if($r == "ACCOUNTS_FOUND")
         {
-            $r = json_encode($zfuniv->getAllFoundUniversitiesAccountsandProfilesRecords());
+            $r = json_encode($zfuniv->getResults_AllAccountsandProfiles());
             $zfuniv->gdlog()->LogInfo("JSON_ENCODE:".$r);
         }
         echo $r;

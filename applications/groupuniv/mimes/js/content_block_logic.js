@@ -62,7 +62,7 @@ function gdLoadContentBlocksforNewWallMessages()
 function gdLoadContentBlocksforSearch()
 {
     var searchcfg = $("input[name=searchcfg]:checked").attr("id");
-    $("li[contentblock=cb_search_result]").remove();
+    clearContentBlocks("cb_search_result");
     showMessage("#TransactionErr", "&nbsp;");
     var formdata = gdSerialzeControllerKey("#SearchForm", "SEARCH_NON_UNIVERSITY");
     $.post("/_controls/ajax/SEARCH.php",
@@ -104,15 +104,32 @@ function getSendRequestJoinGroup(group_account_uid, itemid)
     });
 }
 
-function loadContentBlockImages()
+function getListofUniversities()
 {
-	$("img [task=CB_IMAGE]").each(function(i)
-	{
-	   if(this.attr("loaded") == "false")
-	   {
-		   var id = this.id;
-		   document.getElementById(this.id).src = this.attr("loadurl");
-		   this.attr("loaded", "true");
-	   }
-	});
+    clearContentElements("UNIVERSITIES_LIST_ITEM");
+    var formdata = gdControllerKey("GET_LIST_OF_UNIVERSITIES");
+    $.post("/_controls/ajax/UNIVERSITY.php",
+    formdata, function(data)
+    {
+        //if(isDataMatch(data, "ACCOUNTS_FOUND"))
+        //{
+            data = eval("(" + data + ")");
+            $.each(data, function(key, val)
+            {
+            	$("li[contentheader=UNIVERSITIES_LIST]").after(getMenuContentElement(data, key, val, "UNIVERSITIES_LIST_ITEM"));
+            });
+        //}
+    });
 }
+
+function clearContentBlocks(contentblock)
+{
+    $("li[contentblock=" + contentblock + "]").remove();
+}
+
+function clearContentElements(contentelement)
+{
+    $("li[contentelement=" + contentelement + "]").remove();
+}
+
+

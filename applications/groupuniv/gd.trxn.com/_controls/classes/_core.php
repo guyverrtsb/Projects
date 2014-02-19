@@ -38,4 +38,10 @@ function gdlog()
     gdreqonce("/gd.trxn.com/_controls/classes/KLogger.php");
     return new KLogger();
 }
+
+function gdconfig()
+{
+    gdreqonce("/_controls/classes/_appconfig.php");
+    return new ZAppConfigurations();
+}
 ?>

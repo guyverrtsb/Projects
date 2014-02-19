@@ -49,6 +49,15 @@ function getSearchResultsContentBlock(data, key, val)
     return cb_li;
 }
 
+function getMenuContentElement(data, key, val, contentelement)
+{
+	var cb_li = $("<li/>")
+		.attr("contentelement", contentelement)
+		.text(eval("val.university_account_sdesc"));
+		//<li><a class="menulink" href="/siteadmin/s_create_university.php">Create</a></li>
+    return cb_li;
+}
+
 function getResultsContentBlockTest(val, uid)
 {
     var cb_li = $("<li/>")
