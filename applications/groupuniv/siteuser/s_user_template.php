@@ -34,6 +34,7 @@ $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]="NO_GROUP_DEFINED";
     </ul></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>
+    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
     </ul></li>
 </ul>
 </div>
