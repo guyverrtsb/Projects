@@ -4,7 +4,7 @@ function getWallMessageContentBlock(data, key, val)
 	var cb_li = $("<li/>")
 		.attr("id", "sr_cb_" + uid)
 		.attr("style", "border-bottom:2px solid red;")
-		.attr("class", "sr_cb__even");
+		.attr("class", "sr_cb_even");
 	var cb_li_cm = $("<ul/>");
 		cb_li_cm.appendTo(cb_li);
 	
@@ -49,12 +49,11 @@ function getSearchResultsContentBlock(data, key, val)
     return cb_li;
 }
 
-function getMenuContentElement(data, key, val, contentelement)
+function getDynamicResultsContentBlock(data, key, val, dckey, dcitm)
 {
-	var cb_li = $("<li/>")
-		.attr("contentelement", contentelement)
-		.text(eval("val.university_account_sdesc"));
-		//<li><a class="menulink" href="/siteadmin/s_create_university.php">Create</a></li>
+	var cb_li = $("<li/>").attr("contentblock", dcitm);
+	if(dckey == "LIST_OF_UNIVERSITIES")
+		cb_li.text(eval("val.university_account_sdesc"));
     return cb_li;
 }
 
@@ -198,4 +197,10 @@ function getResultsContentBlockGroupToolbarBotton(val, uid)
 function getCBTextSpan(text)
 {
 	return $("<span/>").attr("class", "cb_text").text(text);
+}
+
+
+function clearContentBlocks(contentblock)
+{
+    $("li[contentblock=" + contentblock + "]").remove();
 }

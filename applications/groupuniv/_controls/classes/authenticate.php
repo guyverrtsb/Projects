@@ -13,6 +13,7 @@ class zAuthenticate
             "email, ".
             "password, ".
             "active, ".
+            "usertablekey, ".
             "cfg_user_roles.uid AS cfg_user_roles_uid, ".
             "cfg_user_roles.sdesc AS cfg_user_roles_sdesc ".
             "FROM user_account ".
@@ -87,6 +88,7 @@ class zAuthenticate
     function getUA_Email(){ return $this->Result_User["email"]; }
     function getUA_Password(){ return $this->Result_User["password"]; }
     function getUA_Active(){ return $this->Result_User["active"]; }
+    function getUA_TableKey(){ return $this->Result_User["usertablekey"]; }
     function getCfgUsrRoleUid(){ return $this->Result_User["cfg_user_roles_uid"]; }
     function getCfgUsrRoleSdesc(){ return $this->Result_User["cfg_user_roles_sdesc"]; }
 }

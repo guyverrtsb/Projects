@@ -175,5 +175,12 @@ class zAppBaseObject
             $sdesc = $sdesc.substring(0, 99);
         return $sdesc;
     }
+    
+    function createUserTableKey($user_email)
+    {
+        $usertablekey = str_replace("@", "_", $user_email);
+        $usertablekey = str_replace(".", "_", $usertablekey);
+        return $usertablekey;
+    }
 }
 ?>

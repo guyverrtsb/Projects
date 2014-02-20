@@ -9,6 +9,7 @@ class ZAppConfigurations
         $_SESSION[$this->getKeySessAuthUserUid()] = $user->getUA_Uid();
         $_SESSION[$this->getKeySessAuthUserValid()] = "TRUE";
         $_SESSION[$this->getKeySessAuthUserSiteRole()] = $user->getCfgUsrRoleSdesc();
+        $_SESSION[$this->getKeySessUserTblKey()] = $user->getUA_TableKey();
         $this->gdlog()->LogInfoEndFUNCTION("setUserObjects");
     }
     
@@ -86,6 +87,13 @@ class ZAppConfigurations
         return "";
     }
     
+    function getSessAuthUserTblKey()
+    {
+        if(isset($_SESSION[$this->getKeySessUserTblKey()]))
+            return $_SESSION[$this->getKeySessUserTblKey()]."_";
+        return "";
+    }
+    
     function getSessUnivUid()
     {
         if(isset($_SESSION[$this->getKeySessUnivUid()]))
@@ -151,6 +159,7 @@ class ZAppConfigurations
     function getKeySessAuthUserUid(){return "UNIV_MEET_AUTH_USER_UID";}
     function getKeySessAuthUserValid(){return "UNIV_MEET_AUTH_VALID_TF";}
     function getKeySessAuthUserSiteRole(){return "UNIV_MEET_AUTH_SITE_ROLE";}
+    function getKeySessUserTblKey(){return "UNIV_MEET_AUTH_USER_TABLE_KEY";}
     
     function getKeySessUnivUid(){return "UNIV_MEET_AUTH_UNIV_UID";}
     function getKeySessUnivSdesc(){return "UNIV_MEET_AUTH_UNIV_SDESC";}

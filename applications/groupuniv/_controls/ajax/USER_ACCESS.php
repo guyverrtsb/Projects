@@ -30,7 +30,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
 
                 $emailkey = explode("@", $_POST["user_email"]);
                 $edu = explode(".", $emailkey[1]);
-
+                
                 if(strtoupper($emailkey[1]) == "GUYVERDESIGNS.COM")
                 {
                     gdlog()->LogInfo("DO_ADMIN_CREATION:fr:".$r);

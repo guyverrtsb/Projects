@@ -30,6 +30,7 @@ if($zauth->isSiteUser())
 <script>
 $(document).ready(function()
 {
+    getListofGroupRequests();
     var $win = $(window);
     $win.scroll(function ()
     {

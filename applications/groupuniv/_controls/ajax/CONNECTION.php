@@ -1,9 +1,10 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdreqonce("/_controls/classes/find/group.php"); ?>
 <?php gdreqonce("/_controls/classes/match/user.php"); ?>
-<?php gdreqonce("/_controls/classes/register/requestmessage.php"); ?>
+<?php gdreqonce("/_controls/classes/register/groupmembershiprequest.php.php"); ?>
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/find/user.php"); ?>
+<?php gdreqonce("/_controls/classes/find/grouprequest.php"); ?>
 <?php
 if(isset($_POST["GD_CONTROLLER_KEY"]))
 {
@@ -23,30 +24,25 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             $zfg = new zFindGroup();
             $zfg->findAccountandProfileByUid($group_account_uid);
             gdlog()->LogInfo("GROUP_ACCEPT_SDESC:".$zfg->getCfgGroupUASdesc());
-            if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_AUTO_ACCEPT")
+            if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_AUTO_ACCEPT")    // AUTO Accept to Group
             {
                 gdlog()->LogInfoTaskLabel("Group Auto Accept");
                 $zfuserLoggedIn = new zFindUser();
-                $r = $zfuserLoggedIn->findAccountandProfileByUid($_SESSION[$zfuserLoggedIn->getSessAuthUserUid()]);
+                $r = $zfuserLoggedIn->findAccountandProfileByUid($gdconfig->getSessAuthUserUid());
                 $zfuserGroupOwner = new zFindUser();
                 $r = $zfuserGroupOwner->findUserAccountandProfileofGroupOwner($group_account_uid);
                 
-                $zrrm = new zRegisterRequestMessage();
-                $zrrm->registerRequestMessage($zfuserLoggedIn->getUA_Uid(),
+                $zrrm = new zRegisterGroupMembershipRequest();
+                $zrrm->registerGroupMembershipRequest($zfuserLoggedIn->getUA_Uid(),
                                             $zfuserGroupOwner->getUA_Uid(),
                                             $zfuserLoggedIn->getUA_Uid(),
-                                            $zfuserLoggedIn->getFName()." has requested access to the ".$zfg->getGA_Ldesc()." Group.",
                                             $group_account_uid,
-                                            "P");
+                                            "A");
                 
                 $zmu = new zMatchUser();
-                $zmu->matchUsertoGrouptoRoleSdesc($_SESSION[$zmu->getSessAuthUserUid()],
+                $zmu->matchUsertoGrouptoRoleSdesc($zfuserLoggedIn->getUA_Uid(),
                                                 $group_account_uid,
                                                 "USER_ROLES_GROUP_USER");
-                
-                $zrrm->registerResponseMessage($zrrm->getUid(),
-                                            $zfuser->getFName()." has been auto approved to the ".$zfg->getGA_Ldesc()." Group.",
-                                            "T");
                 
                 $zrwallmessage = new zRegisterWallMessage();
                 $zrwallmessage->registerWallMessage($group_account_uid,
@@ -57,7 +53,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $r = json_encode($zrrm->getResult_RequestMessage());
                 $zrrm->gdlog()->LogInfo("JSON_ENCODE:".$r);                               
             }
-            else if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_OWNER_ACCEPT")
+            else if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_OWNER_ACCEPT") // OWNER Accept
             {
                 gdlog()->LogInfoTaskLabel("Group Owner Accept");
                 $zfuserLoggedIn = new zFindUser();
@@ -69,7 +65,52 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $zrrm->registerRequestMessage($zfuserLoggedIn->getUA_Uid(),
                                             $zfuserGroupOwner->getUA_Uid(),
                                             $zfuserLoggedIn->getUA_Uid(),
-                                            $zfuserLoggedIn->getFName()." has requested access to the ".$zfg->getGA_Ldesc()." Group.",
+                                            $group_account_uid,
+                                            "P");
+                                            
+                $r = json_encode($zrrm->getResult_RequestMessage());
+                $zrrm->gdlog()->LogInfo("JSON_ENCODE:".$r);
+            }
+            else if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_INVITED_BY_MEMBER_AUTO_ACCEPT") // Invited by Member Auto Accept
+            {
+                gdlog()->LogInfoTaskLabel("Group Owner Accept");
+                $invited_user_account_uid = filter_var($_POST["INVITED_USER_ACCOUNT_UID"], FILTER_SANITIZE_STRING);
+                
+                
+                $zfuserLoggedIn = new zFindUser();
+                $r = $zfuserLoggedIn->findAccountandProfileByUid($gdconfig->getSessAuthUserUid());
+                $zfuserGroupOwner = new zFindUser();
+                $r = $zfuserGroupOwner->findUserAccountandProfileofGroupOwner($group_account_uid);
+                $zfuserInvited = new zFindUser();
+                $r = $zfuserInvited->findAccountandProfileByUid($invited_user_account_uid);
+                
+                $zrrm = new zRegisterRequestMessage();
+                $zrrm->registerRequestMessage($zfuserLoggedIn->getUA_Uid(),
+                                            $zfuserGroupOwner->getUA_Uid(),
+                                            $zfuserInvited->getUA_Uid(),
+                                            $group_account_uid,
+                                            "P");
+                                            
+                $r = json_encode($zrrm->getResult_RequestMessage());
+                $zrrm->gdlog()->LogInfo("JSON_ENCODE:".$r);
+            }
+            else if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_INVITED_BY_OWNER_AUTO_ACCEPT") // Invited by Owner Auto Accept
+            {
+                gdlog()->LogInfoTaskLabel("Group Owner Accept");
+                $invited_user_account_uid = filter_var($_POST["INVITED_USER_ACCOUNT_UID"], FILTER_SANITIZE_STRING);
+                
+                
+                $zfuserLoggedIn = new zFindUser();
+                $r = $zfuserLoggedIn->findAccountandProfileByUid($gdconfig->getSessAuthUserUid());
+                $zfuserGroupOwner = new zFindUser();
+                $r = $zfuserGroupOwner->findUserAccountandProfileofGroupOwner($group_account_uid);
+                $zfuserInvited = new zFindUser();
+                $r = $zfuserInvited->findAccountandProfileByUid($invited_user_account_uid);
+                
+                $zrrm = new zRegisterRequestMessage();
+                $zrrm->registerRequestMessage($zfuserLoggedIn->getUA_Uid(),
+                                            $zfuserGroupOwner->getUA_Uid(),
+                                            $zfuserInvited->getUA_Uid(),
                                             $group_account_uid,
                                             "P");
                                             
@@ -82,6 +123,17 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         {
             echo "FORM_FIELDS_NOT_VALID";
         }
+    }
+    else if($action == "LIST_OF_REQUEST_FOR_GROUP")
+    {
+        $zfgr = new zFindGroupRequests();
+        $r = $zfgr->findGroupRequest();
+        if($r == "REQUEST_LIST_FOUND")
+        {
+            $r = json_encode($zfgr->getResult_RequestLists());
+            $zfgr->gdlog()->LogInfo("JSON_ENCODE:".$r);
+        }
+        echo $r;
     }
 }
 

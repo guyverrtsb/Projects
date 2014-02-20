@@ -199,10 +199,10 @@ class zRegisterUniversity
             "DEFAULT CHARACTER SET = utf8; ".
 
 
+           //"-- ----------------------------------------------------- ".
+            //"-- Table `group_membership_request` ".
             //"-- ----------------------------------------------------- ".
-            //"-- Table `group_request_message` ".
-            //"-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."group_request_message` ( ".
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."group_membership_request` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -210,17 +210,14 @@ class zRegisterUniversity
             "  `who_sent_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `who_approves_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `who_receives_user_account_uid` VARCHAR(36) NOT NULL , ".
-            "  `status` VARCHAR(1) NOT NULL , ".
-            "  `request_content` TEXT NULL , ".
-            "  `response_content` TEXT NULL , ".
-            "  `group_account_uid` VARCHAR(36) NULL , ".
-            "  PRIMARY KEY (`lid`, `uid`) , ".
+            "  `status` VARCHAR(1) NOT NULL DEFAULT 'P' , ".
+            "  `group_account_uid` VARCHAR(36) NOT NULL , ".
+            "  PRIMARY KEY (`lid`, `uid`, `group_account_uid`, `who_approves_user_account_uid`, `who_receives_user_account_uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
             "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
             "ENGINE = MyISAM ".
             "AUTO_INCREMENT = 1 ".
             "DEFAULT CHARACTER SET = utf8; ".
-
 
             
             //"-- ----------------------------------------------------- ".

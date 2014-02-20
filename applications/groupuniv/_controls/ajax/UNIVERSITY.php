@@ -226,17 +226,6 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             echo "FORM_FIELDS_NOT_VALID";
         }
     }
-    else if($action == "GET_LIST_OF_UNIVERSITIES")
-    {
-        $zfuniv = new zFindUniversity();
-        $r = $zfuniv->findAllUniversitiesAccountsandProfiles();
-        if($r == "ACCOUNTS_FOUND")
-        {
-            $r = json_encode($zfuniv->getResults_AllAccountsandProfiles());
-            $zfuniv->gdlog()->LogInfo("JSON_ENCODE:".$r);
-        }
-        echo $r;
-    }
 }
 
 function validateRegisterForm()

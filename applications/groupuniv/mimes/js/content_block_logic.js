@@ -1,3 +1,7 @@
+/*
+ * THIS IS FOR PAGE LOGIC.  ON DEMAND CALLS ONLY that are page specific
+ * If you want something to Load Automatically across all pages use the main.js
+ */
 var existing_cbwm_createddt_start = "NOW";
 var existing_cbwm_lid_bypass = "";
 var new_cbwm_createddt_start = "NOW";
@@ -104,32 +108,7 @@ function getSendRequestJoinGroup(group_account_uid, itemid)
     });
 }
 
-function getListofUniversities()
+function callDynamicContentBuilder(dyncontentkey)
 {
-    clearContentElements("UNIVERSITIES_LIST_ITEM");
-    var formdata = gdControllerKey("GET_LIST_OF_UNIVERSITIES");
-    $.post("/_controls/ajax/UNIVERSITY.php",
-    formdata, function(data)
-    {
-        //if(isDataMatch(data, "ACCOUNTS_FOUND"))
-        //{
-            data = eval("(" + data + ")");
-            $.each(data, function(key, val)
-            {
-            	$("li[contentheader=UNIVERSITIES_LIST]").after(getMenuContentElement(data, key, val, "UNIVERSITIES_LIST_ITEM"));
-            });
-        //}
-    });
+	buildDynamicContent($("li[dyncontentkey=" + dyncontentkey + "]"));	
 }
-
-function clearContentBlocks(contentblock)
-{
-    $("li[contentblock=" + contentblock + "]").remove();
-}
-
-function clearContentElements(contentelement)
-{
-    $("li[contentelement=" + contentelement + "]").remove();
-}
-
-

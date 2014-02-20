@@ -1,3 +1,6 @@
+/*
+ * Use this page for auto loading calls that are used across any page
+ */
 $(document).ready( function()
 {
 	$("select").each(function( index )
@@ -7,7 +10,36 @@ $(document).ready( function()
 			buildConfigurationsDropDown($(this));
 		}
 	});
+	
+	$("li").each(function( index )
+	{
+		if($(this).attr("dyncontentkey") != undefined && $(this).attr("dyncontentkey").length > 0 )
+		{
+			buildDynamicContent($(this));
+		}
+	});
 });
+
+function buildDynamicContent(jqobj)
+{
+	var dckey = jqobj.attr("dyncontentkey");	// LIST_OF_UNIVERSITIES
+	var dcblk = dckey + "_BLOCK";	// LIST_OF_UNIVERSITIES_BLOCK
+	clearContentBlocks(dcblk);
+    var formdata = gdControllerKey(dckey);
+    $.post("/_controls/ajax/SCREEN_CONTROL.php",
+    formdata, function(data)
+    {
+        if(!isDataMatch(data, "NO_RESULTS"))
+    	{
+	        data = eval("(" + data + ")");
+	        $.each(data, function(key, val)
+	        {
+	        	jqobj.after(getDynamicResultsContentBlock(data, key, val, dckey, dcblk));
+	        });
+    	}
+    });
+}
+
 
 function buildConfigurationsDropDown(jqobj)
 {
@@ -61,5 +93,4 @@ function buildConfigurationsDropDown(jqobj)
 			});
 		}
 	});
-
 }

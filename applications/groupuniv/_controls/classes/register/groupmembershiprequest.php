@@ -6,7 +6,7 @@
  * Date: 2013/01/05
  */
 
-class zRegisterRequestMessage
+class zRegisterGroupMembershipRequest
     extends zAppBaseObject
 {
     /**
@@ -17,8 +17,11 @@ class zRegisterRequestMessage
      * $request_content = Content used for the Request.  This is viewed by Approver;
      * $status = P=Pending; A=Accepted; D=Declined;
      **/
-    function registerRequestMessage($who_sent_user_account_uid, $who_approves_user_account_uid, $who_receives_user_account_uid
-                                    , $request_content, $group_account_uid, $status = "P")
+    function registerGroupMembershipRequest($who_sent_user_account_uid,
+                                    $who_approves_user_account_uid,
+                                    $who_receives_user_account_uid,
+                                    $group_account_uid,
+                                    $status = "P")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerRequestMessage");
         $utk = $this->getGDConfig()->getSessUnivTblKey();

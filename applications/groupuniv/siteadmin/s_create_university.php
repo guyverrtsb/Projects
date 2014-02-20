@@ -18,7 +18,6 @@ if($zauth->isSiteAdmin())
 <script>
 $(document).ready( function()
 {
-    getListofUniversities();
 });
 function gdFuncRegisterData()
 {
@@ -33,7 +32,7 @@ function gdFuncRegisterData()
         else
         {
             showMessage("#RegisterErr", "Unknown Error:" + data);
-            getListofUniversities();
+            callDynamicContentBuilder("LIST_OF_UNIVERSITIES");
         }
     });
 }

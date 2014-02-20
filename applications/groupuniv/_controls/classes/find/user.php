@@ -32,6 +32,7 @@ class zFindUser
             $this->dbfas("user_account.uid, ".
                         "user_account.email, ".
                         "user_account.active, ".
+                        "user_account.usertablekey, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
@@ -84,6 +85,7 @@ class zFindUser
             $this->dbfas("user_account.uid, ".
                         "user_account.email, ".
                         "user_account.active, ".
+                        "user_account.usertablekey, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
@@ -137,6 +139,7 @@ class zFindUser
             $this->dbfas("user_account.uid, ".
                         "user_account.email, ".
                         "user_account.active, ".
+                        "user_account.usertablekey, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
@@ -189,6 +192,7 @@ class zFindUser
             $this->dbfas("user_account.uid, ".
                         "user_account.email, ".
                         "user_account.active, ".
+                        "user_account.usertablekey, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
@@ -204,7 +208,7 @@ class zFindUser
         "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles on ".
             $utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = user_account.uid ".
         "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid ".
-            "= (SELECT uid FROM cfg_user_roles WHERE sdesc = 'GROUP_OWNER') ".
+            "= (SELECT uid FROM cfg_defaults WHERE sdesc = 'USER_ROLE_GROUP_OWNER') ".
         "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = :group_account_uid";
 
         $dbcontrol = new ZAppDatabase();
@@ -259,6 +263,7 @@ class zFindUser
     function getUA_Uid() { return $this->Result_AccountProfile[$this->dbf("user_account.uid")]; }
     function getEmail() { return $this->Result_AccountProfile[$this->dbf("user_account.email")]; }
     function getActive() { return $this->Result_AccountProfile[$this->dbf("user_account.active")]; }
+    function getUserTableKey() { return $this->Result_AccountProfile["user_account.usertablekey"]; }
     function getUP_Uid() { return $this->Result_AccountProfile[$this->dbf("user_profile.uid")]; }
     function getFName() { return $this->Result_AccountProfile[$this->dbf("user_profile.fname")]; }
     function getLName() { return $this->Result_AccountProfile[$this->dbf("user_profile.lname")]; }

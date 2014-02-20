@@ -20,7 +20,7 @@ class zRegisterUser
         $fr;
         $sqlstmnt = "INSERT INTO user_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "email=:email, password=:password, active=:active";
+            "email=:email, password=:password, active=:active, usertablekey=:usertablekey";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
@@ -28,7 +28,8 @@ class zRegisterUser
         $dbcontrol->bindParam(":email", strtolower($email));
         $dbcontrol->bindParam(":password", $password);
         $dbcontrol->bindParam(":active", strtoupper($active));
-        $dbcontrol->execUpdate();
+        $dbcontrol->bindParam(":usertablekey", strtoupper($this->createUserTableKey($email)));
+                $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
             if($dbcontrol->getRowCount() > 0)
@@ -164,6 +165,7 @@ class zRegisterUser
     function getEmail() { return $this->Result_Account["email"]; }
     function getPassword() { return $this->Result_Account["password"]; }
     function getActive() { return $this->Result_Account["active"]; }
+    function getUserTableKey() { return $this->Result_Account["usertablekey"]; }
     function getUP_Uid() { return $this->Result_Profile["uid"]; }
     function getFName() { return $this->Result_Profile["fname"]; }
     function getLName() { return $this->Result_Profile["lname"]; }
@@ -171,5 +173,76 @@ class zRegisterUser
     function getRegionCfgUid() { return $this->Result_Profile["cfg_region_uid"]; }
     function getCountryCfgUid() { return $this->Result_Profile["cfg_country_uid"]; }
     function getNickname() { return $this->Result_Profile["nickname"]; }
+    
+    function createUserTables($usertablekey = "NOT_DEFINED")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("createUserTables");
+        $fr;
+        if($usertablekey == "NOT_DEFINED")
+            $usertablekey = $this->getGDConfig()->getSessAuthUserTblKey();
+        
+        $sqlstmnt = "SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; ".
+            "SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; ".
+            "SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES'; ".
+            
+            
+            // "-- ----------------------------------------------------- ".
+            // "-- Table `user_messages` ".
+            // "-- ----------------------------------------------------- ".
+            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."user_messages` ( ".
+            "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
+            "  `uid` VARCHAR(36) NOT NULL , ".
+            "  `createddt` DATETIME NOT NULL , ".
+            "  `changeddt` DATETIME NOT NULL , ".
+            "  `cfg_message_type_uid` VARCHAR(36) NOT NULL , ".
+            "  `content` TEXT NOT NULL , ".
+            "  `to_user_account_uid` VARCHAR(36) NOT NULL , ".
+            "  `from_user_account_uid` VARCHAR(36) NOT NULL , ".
+            "  `isread` VARCHAR(1) NOT NULL , ".
+            "  PRIMARY KEY (`lid`, `uid`) , ".
+            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
+            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
+            "ENGINE = MyISAM ".
+            "AUTO_INCREMENT = 1 ".
+            "DEFAULT CHARACTER SET = utf8; ".
+            
+            
+            // "-- ----------------------------------------------------- ".
+            // "-- Table `user_notifications` ".
+            // "-- ----------------------------------------------------- ".
+            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."user_notifications` ( ".
+            "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
+            "  `uid` VARCHAR(36) NOT NULL , ".
+            "  `createddt` DATETIME NOT NULL , ".
+            "  `changeddt` DATETIME NOT NULL , ".
+            "  `cfg_message_type_uid` VARCHAR(36) NOT NULL , ".
+            "  `isactive` VARCHAR(1) NOT NULL , ".
+            "  PRIMARY KEY (`lid`, `uid`) , ".
+            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
+            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
+            "ENGINE = MyISAM ".
+            "AUTO_INCREMENT = 1 ".
+            "DEFAULT CHARACTER SET = utf8; ".
+            
+            
+            "SET SQL_MODE=@OLD_SQL_MODE; ".
+            "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; ".
+            "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; ";
+            
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setStatement($sqlstmnt);
+        $dbcontrol->execUpdate();
+        if($dbcontrol->getTransactionGood())
+        {
+            $fr = $this->gdlog()->LogInfoRETURN("CREATE_USER_TABLES");
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("createUserTables");
+        return $fr;
+    }
 }
 ?>

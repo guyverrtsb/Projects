@@ -173,6 +173,8 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
                     $zru = new zRegisterUser();
                     $r = $zru->registerUserAccountActivationSwitch($zfuser->getUA_Uid(), "T");
                     
+                    $zru->createUserTables();
+                    
                     if($r == "USER_ACCOUNT_ACTIVATION_SWITCHED")
                     {
                         $gdconfig->redirectToLogin(103, $r, "User has been activated", "/siteaccess.php");
