@@ -14,22 +14,27 @@ class zRegisterUser
      * $email = email account;
      * $password = password;
      */
-    function registerUserAccount($email, $password, $active = "F")
+    function registerUserAccount($email, $password, $nickname, $active = "F")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerUserAccount");
         $fr;
         $sqlstmnt = "INSERT INTO user_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "email=:email, password=:password, active=:active, usertablekey=:usertablekey";
+            "email=:email, ".
+            "password=:password, ".
+            "nickname=:nickname,".
+            "active=:active, ".
+            "usertablekey=:usertablekey";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":email", strtolower($email));
-        $dbcontrol->bindParam(":password", $password);
+        $dbcontrol->bindParam(":password", $password); 
+        $dbcontrol->bindParam(":nickname", trim($nickname));
         $dbcontrol->bindParam(":active", strtoupper($active));
-        $dbcontrol->bindParam(":usertablekey", strtoupper($this->createUserTableKey($email)));
-                $dbcontrol->execUpdate();
+        $dbcontrol->bindParam(":usertablekey", strtolower($this->createUserTableKey($nickname)));
+        $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
             if($dbcontrol->getRowCount() > 0)
@@ -90,22 +95,22 @@ class zRegisterUser
      * $city = City
      * $state = State
      * $country = Country
-     * $nickname = Nickname
      * $ldesc = User Description
      */
     function registerUserProfile($fname, $lname,
-        $city, $region, $country, $nickname, $ldesc)
+        $city, $region, $country, $ldesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerUserProfile");
         $fr;
         
         $sqlstmnt = "INSERT INTO user_profile SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "fname=:fname, lname=:lname, ".
+            "fname=:fname, ".
+            "lname=:lname, ".
             "city=:city, ".
             "cfg_region_uid=:cfg_region_uid, ".
             "cfg_country_uid=:cfg_country_uid, ".
-            "nickname=:nickname, ldesc=:ldesc";
+            "ldesc=:ldesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
@@ -115,7 +120,6 @@ class zRegisterUser
         $dbcontrol->bindParam(":city", $city);
         $dbcontrol->bindParam(":cfg_region_uid", $this->findCfgUidfromSdesc($region));
         $dbcontrol->bindParam(":cfg_country_uid", $this->findCfgUidfromSdesc($country));
-        $dbcontrol->bindParam(":nickname", $nickname);
         $dbcontrol->bindParam(":ldesc", $ldesc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
@@ -165,6 +169,7 @@ class zRegisterUser
     function getEmail() { return $this->Result_Account["email"]; }
     function getPassword() { return $this->Result_Account["password"]; }
     function getActive() { return $this->Result_Account["active"]; }
+    function getNickname() { return $this->Result_Account["nickname"]; }
     function getUserTableKey() { return $this->Result_Account["usertablekey"]; }
     function getUP_Uid() { return $this->Result_Profile["uid"]; }
     function getFName() { return $this->Result_Profile["fname"]; }
@@ -172,7 +177,6 @@ class zRegisterUser
     function getCity() { return $this->Result_Profile["city"]; }
     function getRegionCfgUid() { return $this->Result_Profile["cfg_region_uid"]; }
     function getCountryCfgUid() { return $this->Result_Profile["cfg_country_uid"]; }
-    function getNickname() { return $this->Result_Profile["nickname"]; }
     
     function createUserTables($usertablekey = "NOT_DEFINED")
     {
@@ -186,10 +190,10 @@ class zRegisterUser
             "SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES'; ".
             
             
-            // "-- ----------------------------------------------------- ".
-            // "-- Table `user_messages` ".
-            // "-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."user_messages` ( ".
+            //-- -----------------------------------------------------
+            //-- Table `messages`
+            //-- -----------------------------------------------------
+            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."messages` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
@@ -199,6 +203,7 @@ class zRegisterUser
             "  `to_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `from_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `isread` VARCHAR(1) NOT NULL , ".
+            "  `object_uid` VARCHAR(36) NOT NULL , ".
             "  PRIMARY KEY (`lid`, `uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
             "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
@@ -207,22 +212,24 @@ class zRegisterUser
             "DEFAULT CHARACTER SET = utf8; ".
             
             
-            // "-- ----------------------------------------------------- ".
-            // "-- Table `user_notifications` ".
-            // "-- ----------------------------------------------------- ".
-            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."user_notifications` ( ".
+            //-- -----------------------------------------------------
+            //-- Table `notifications`
+            //-- -----------------------------------------------------
+            "CREATE  TABLE IF NOT EXISTS `".$usertablekey."notifications` ( ".
             "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
             "  `uid` VARCHAR(36) NOT NULL , ".
             "  `createddt` DATETIME NOT NULL , ".
             "  `changeddt` DATETIME NOT NULL , ".
             "  `cfg_message_type_uid` VARCHAR(36) NOT NULL , ".
-            "  `isactive` VARCHAR(1) NOT NULL , ".
+            "  `message_uid` VARCHAR(36) NOT NULL , ".
+            "  `isread` VARCHAR(1) NOT NULL , ".
             "  PRIMARY KEY (`lid`, `uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
             "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
             "ENGINE = MyISAM ".
             "AUTO_INCREMENT = 1 ".
             "DEFAULT CHARACTER SET = utf8; ".
+            
             
             
             "SET SQL_MODE=@OLD_SQL_MODE; ".

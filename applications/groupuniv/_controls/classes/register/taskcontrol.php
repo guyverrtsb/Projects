@@ -31,13 +31,16 @@ class zRegisterTaskControl
         $sqlstmnt = "INSERT INTO task_control_links SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "uid1=UUID(), uid2=UUID(), uid3=UUID(), ".
-            "task_key=:task_key, record_uid=:record_uid";
+            "task_key=:task_key, ".
+            "record_uid=:record_uid, ".
+            "isactive=:isactive";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":record_uid", $record_uid);
         $dbcontrol->bindParam(":task_key", $task_key);
+        $dbcontrol->bindParam(":isactive", "T");
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -60,6 +63,38 @@ class zRegisterTaskControl
         return $fr;
     }
 
+    function registerDeactivateTask($uid)
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("registerDeactivateTask");
+        $fr;
+        $sqlstmnt = "UPDATE task_control_links SET active=:active ".
+            "WHERE uid=:uid";
+        
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setStatement($sqlstmnt);
+        $dbcontrol->bindParam(":uid", $uid);
+        $dbcontrol->bindParam(":active", "F");
+        $dbcontrol->execUpdate();
+        if($dbcontrol->getTransactionGood())
+        {
+            if($dbcontrol->getRowCount() > 0)
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("TASK_LINK_DEACTIVATED");
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("TASK_LINK_NOT_DEACTIVATED");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("registerDeactivateTask");
+        return $fr;
+    }
+
     private $Result_TempLink = "NO_RECORD";
     function setResult_TempLink($row)
     {
@@ -77,6 +112,7 @@ class zRegisterTaskControl
     function getUid2(){return $this->Result_TempLink["uid2"];}
     function getUid3(){return $this->Result_TempLink["uid3"];}
     function getRecordUid(){return $this->Result_TempLink["record_uid"];}
+    function getIsActive(){return $this->Result_TempLink["isactive"];}
     
     function getTempLink()
     {

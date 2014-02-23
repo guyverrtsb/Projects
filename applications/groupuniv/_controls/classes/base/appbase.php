@@ -124,13 +124,13 @@ class zAppBaseObject
     function findCfgUidfromSdesc($sdesc)
     {
         $this->findConfigurationfromSdesc(strtoupper($sdesc));
-        return $this->getUID();
+        return $this->getConfigurationUID();
     }
     
     function findCfgSdescfromUid($uid)
     {
         $this->findConfigurationfromUid($uid);
-        return $this->getSdesc();
+        return $this->getConfigurationSdesc();
     }
     
     private $Results_ConfigurationRecords = "NO_RECORDS";
@@ -161,12 +161,12 @@ class zAppBaseObject
         return $this->Result_ConfigurationRecord = "NO_RECORD";
     }
     
-    function getUID(){return $this->Result_ConfigurationRecord["uid"];}
-    function getSdesc(){return $this->Result_ConfigurationRecord["sdesc"];}
-    function getLdesc(){return $this->Result_ConfigurationRecord["ldesc"];}
-    function getLabel(){return $this->Result_ConfigurationRecord["label"];}
-    function getGroupKey(){return $this->Result_ConfigurationRecord["group_key"];}
-    function getNumofRecords(){return count($this->Results_ConfigurationRecords);}
+    function getConfigurationUID(){return $this->Result_ConfigurationRecord["uid"];}
+    function getConfigurationSdesc(){return $this->Result_ConfigurationRecord["sdesc"];}
+    function getConfigurationLdesc(){return $this->Result_ConfigurationRecord["ldesc"];}
+    function getConfigurationLabel(){return $this->Result_ConfigurationRecord["label"];}
+    function getConfigurationGroupKey(){return $this->Result_ConfigurationRecord["group_key"];}
+    function getConfigurationNumofRecords(){return count($this->Results_ConfigurationRecords);}
     
     function createSdesc($input)
     {
@@ -176,11 +176,10 @@ class zAppBaseObject
         return $sdesc;
     }
     
-    function createUserTableKey($user_email)
+    function createUserTableKey($usertablekey)
     {
-        $usertablekey = str_replace("@", "_", $user_email);
-        $usertablekey = str_replace(".", "_", $usertablekey);
-        return $usertablekey;
+        $usertablekey = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $usertablekey);
+        return "X_".$usertablekey."_";
     }
 }
 ?>

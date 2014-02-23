@@ -90,7 +90,7 @@ class ZAppConfigurations
     function getSessAuthUserTblKey()
     {
         if(isset($_SESSION[$this->getKeySessUserTblKey()]))
-            return $_SESSION[$this->getKeySessUserTblKey()]."_";
+            return $_SESSION[$this->getKeySessUserTblKey()];
         return "";
     }
     

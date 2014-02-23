@@ -33,13 +33,13 @@ class zFindUser
                         "user_account.email, ".
                         "user_account.active, ".
                         "user_account.usertablekey, ".
+                        "user_account.nickname, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
                         "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid, ".
-                        "user_profile.nickname").
+                        "user_profile.cfg_country_uid").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -77,6 +77,59 @@ class zFindUser
      * Find User Account and Profile by Email address
      * $user_account_email = EMAIL
      */
+    function findAccountandProfileByNickname($user_profile_nickname)
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("findAccountandProfileByNickname");
+        $fr;
+        $sqlstmnt = "SELECT ".
+            $this->dbfas("user_account.uid, ".
+                        "user_account.email, ".
+                        "user_account.active, ".
+                        "user_account.usertablekey, ".
+                        "user_account.nickname, ".
+                        "user_profile.uid, ".
+                        "user_profile.fname, ".
+                        "user_profile.lname, ".
+                        "user_profile.city, ".
+                        "user_profile.cfg_region_uid, ".
+                        "user_profile.cfg_country_uid").
+        " FROM user_account ".
+        "JOIN match_user_account_to_user_profile on ".
+            "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
+        "JOIN user_profile on ".
+            "match_user_account_to_user_profile.user_profile_uid = user_profile.uid ".
+        "WHERE user_account.nickname=:user_profile_nickname";
+
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setStatement($sqlstmnt);
+        $dbcontrol->bindParam(":user_profile_nickname", trim($user_profile_nickname));
+        $dbcontrol->execSelect();
+        if($dbcontrol->getTransactionGood())
+        {
+            if($dbcontrol->getRowCount() > 0)
+            {
+                $this->setResult_AccountProfile($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResult_AccountProfile());
+                $fr = $this->gdlog()->LogInfoRETURN("ACCOUNT_FOUND");
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("ACCOUNT_NOT_FOUND");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("findAccountandProfileByNickname");
+        return $fr;
+    }
+
+    /**
+     * Find User Account and Profile by Email address
+     * $user_account_email = EMAIL
+     */
     function findAccountandProfileByEmail($user_account_email)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAccountandProfileByEmail");
@@ -86,24 +139,24 @@ class zFindUser
                         "user_account.email, ".
                         "user_account.active, ".
                         "user_account.usertablekey, ".
+                        "user_account.nickname, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
                         "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid, ".
-                        "user_profile.nickname").
+                        "user_profile.cfg_country_uid").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
         "JOIN user_profile on ".
             "match_user_account_to_user_profile.user_profile_uid = user_profile.uid ".
-        "WHERE email=:email";
+        "WHERE user_account.email=:user_account_email";
 
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":email", $user_account_email);
+        $dbcontrol->bindParam(":user_account_email", $user_account_email);
         $dbcontrol->execSelect();
         if($dbcontrol->getTransactionGood())
         {
@@ -140,13 +193,13 @@ class zFindUser
                         "user_account.email, ".
                         "user_account.active, ".
                         "user_account.usertablekey, ".
+                        "user_account.nickname, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
                         "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid, ".
-                        "user_profile.nickname").
+                        "user_profile.cfg_country_uid").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -193,13 +246,13 @@ class zFindUser
                         "user_account.email, ".
                         "user_account.active, ".
                         "user_account.usertablekey, ".
+                        "user_account.nickname, ".
                         "user_profile.uid, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
                         "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid, ".
-                        "user_profile.nickname").
+                        "user_profile.cfg_country_uid").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -263,13 +316,13 @@ class zFindUser
     function getUA_Uid() { return $this->Result_AccountProfile[$this->dbf("user_account.uid")]; }
     function getEmail() { return $this->Result_AccountProfile[$this->dbf("user_account.email")]; }
     function getActive() { return $this->Result_AccountProfile[$this->dbf("user_account.active")]; }
-    function getUserTableKey() { return $this->Result_AccountProfile["user_account.usertablekey"]; }
+    function getUserTableKey() { return $this->Result_AccountProfile[$this->dbf("user_account.usertablekey")]; }
+    function getNickname() { return $this->Result_AccountProfile[$this->dbf("user_account.nickname")]; }
     function getUP_Uid() { return $this->Result_AccountProfile[$this->dbf("user_profile.uid")]; }
     function getFName() { return $this->Result_AccountProfile[$this->dbf("user_profile.fname")]; }
     function getLName() { return $this->Result_AccountProfile[$this->dbf("user_profile.lname")]; }
     function getCity() { return $this->Result_AccountProfile[$this->dbf("user_profile.city")]; }
     function getRegionCfgUid() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_region_uid")]; }
     function getCountryCfgUid() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_country_uid")]; }
-    function getNickname() { return $this->Result_AccountProfile[$this->dbf("user_profile.nickname")]; }
 }
 ?>

@@ -74,6 +74,8 @@ function gdLoadContentBlocksforSearch()
     {
         if(isDataMatch(data, "RECORDS_NOT_FOUND"))
             showMessage("#TransactionErr", "No Search Results");
+        else if(isDataMatch(data, "FORM_FIELDS_NOT_VALID"))
+            showMessage("#TransactionErr", "Fill in fields");
         else if(isDataMatch(data, "TRANSACTION_FAIL"))
             showMessage("#TransactionErr", "Unknown Error:" + data);
         else

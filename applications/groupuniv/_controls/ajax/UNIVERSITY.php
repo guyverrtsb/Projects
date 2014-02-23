@@ -47,13 +47,15 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 gdlog()->LogInfoTaskLabel("Create of User Information President");
                 $r = $zruserPres = new zRegisterUser();
                 $r = $zruserPres->registerUserAccount("president.".$zruniv->getSdesc()."@".$_POST["univ_emailkey"], 
-                                                "abcd1234");
+                                                "abcd1234",
+                                                $zruniv->getSdesc()."PREZ");
                 $r = $zruserPres->registerUserProfile("Univ", "President", 
                                                     $zruniv->getCity(), 
                                                     $_POST["univ_region"], 
                                                     $_POST["univ_country"], 
-                                                    $zruniv->getSdesc()."PREZ", 
                                                     "President");
+                $zruserPres->createUserTables($zruserPres->getUserTableKey());
+
                 $zmuserPres = new zMatchUser();
                 $r = $zmuserPres->matchUsertoProfile($zruserPres->getUA_Uid(),
                                                     $zruserPres->getUP_Uid());
@@ -65,13 +67,15 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 gdlog()->LogInfoTaskLabel("Create of User Information Vice-President");
                 $r = $zruserVicePres = new zRegisterUser();
                 $r = $zruserVicePres->registerUserAccount("vicepresident.".$zruniv->getSdesc()."@".$_POST["univ_emailkey"], 
-                                                    "abcd1234");
+                                                    "abcd1234",
+                                                    $zruniv->getSdesc()."VPREZ");
                 $r = $zruserVicePres->registerUserProfile("Univ", "Vice President", 
                                                     $zruniv->getCity(), 
                                                     $_POST["univ_region"], 
                                                     $_POST["univ_country"], 
-                                                    $zruniv->getSdesc()."VPREZ", 
                                                     "Vice President");
+                $zruserVicePres->createUserTables($zruserVicePres->getUserTableKey());
+
                 $zmuserVicePres = new zMatchUser();
                 $r = $zmuserVicePres->matchUsertoProfile($zruserVicePres->getUA_Uid(),
                                                     $zruserVicePres->getUP_Uid());

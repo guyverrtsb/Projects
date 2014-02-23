@@ -23,113 +23,127 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         {
             gdlog()->LogInfoTaskLabel("Find User");
             $zfuser = new zFindUser();
-            $r = $zfuser->findAccountandProfileByEmail($_POST["user_email"]);
-            if($r  == "ACCOUNT_NOT_FOUND")
+            $remailfound = $zfuser->findAccountandProfileByEmail($_POST["user_email"]);
+            $rnicknamefound = $zfuser->findAccountandProfileByNickname($_POST["user_nickname"]);
+
+            if($remailfound == "ACCOUNT_NOT_FOUND" && $rnicknamefound == "ACCOUNT_NOT_FOUND")
             {
-                gdlog()->LogInfo("USER_DOES_NOT_EXISTS:fr:".$r);
+                gdlog()->LogInfo("USER_DOES_NOT_EXISTS");
 
                 $emailkey = explode("@", $_POST["user_email"]);
                 $edu = explode(".", $emailkey[1]);
                 
-                if(strtoupper($emailkey[1]) == "GUYVERDESIGNS.COM")
-                {
-                    gdlog()->LogInfo("DO_ADMIN_CREATION:fr:".$r);
-                    
-                    //**** Create User Accounts
-                    $r = $zruser = new zRegisterUser();
-                    $r = $zruser->registerUserAccount($_POST["user_email"], 
-                                                    $_POST["user_password"],
-                                                    "T");
-                    $r = $zruser->registerUserProfile($_POST["user_firstname"],
-                                                    $_POST["user_lastname"], 
-                                                    $_POST["user_city"], 
-                                                    $_POST["user_region"], 
-                                                    $_POST["user_country"], 
-                                                    $_POST["user_nickname"],
-                                                    "");
-                    $zmuser = new zMatchUser();
-                    $r = $zmuser->matchUsertoProfile($zruser->getUA_Uid(),
-                                                    $zruser->getUP_Uid());
-                                                    
-                    $r = $zmuser->matchUsertoRoleSdesc($zruser->getUA_Uid(), "USER_ROLE_SITE_ADMIN");
-                    
-                    echo $r;
-                }
-                else if(strtoupper($edu[1]) == "EDU")
-                {
-                    gdlog()->LogInfo("DO_USER_CREATION:fr:".$r);
-	
-                    $zfuniv = new zFindUniversity();
-                    $r = $zfuniv->findAccountandProfileByEmailKey($emailkey[1]);
-                    if($r == "ACCOUNT_FOUND")
+                
+                    if(strtoupper($emailkey[1]) == "GUYVERDESIGNS.COM")
                     {
+                        gdlog()->LogInfo("DO_ADMIN_CREATION");
+                        
                         //**** Create User Accounts
-                        $zruser = new zRegisterUser();
+                        $r = $zruser = new zRegisterUser();
                         $r = $zruser->registerUserAccount($_POST["user_email"], 
-                                                        $_POST["user_password"]);
+                                                        $_POST["user_password"],
+                                                        $_POST["user_nickname"],
+                                                        "T");
                         $r = $zruser->registerUserProfile($_POST["user_firstname"],
                                                         $_POST["user_lastname"], 
                                                         $_POST["user_city"], 
                                                         $_POST["user_region"], 
-                                                        $_POST["user_country"], 
-                                                        $_POST["user_nickname"],
+                                                        $_POST["user_country"],
                                                         "");
-    
+                        $zruser->createUserTables($zruser->getUserTableKey());
+
                         $zmuser = new zMatchUser();
                         $r = $zmuser->matchUsertoProfile($zruser->getUA_Uid(),
                                                         $zruser->getUP_Uid());
                                                         
-                        // Register the Temp Link
-                        $zrtc = new zRegisterTaskControl();
-                        $r = $zrtc->registerTask("ACTIVATE_USER", $zruser->getUA_Uid());
-                        // Get Temp Link
-                        if($r == "TASK_IS_REGISTERED")
-                        {
-                            gdlog()->LogInfo("GDBuildHtmlMessage():Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
-                            $tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                            $o = "<html>";
-                            $o .= "<head>";
-                            $o .= "<title>User Activation</title>";
-                            $o .= "</head>";
-                            $o .= "<body>";
-                            $o .= "<ul>";
-                            $o = "<li>Nickname:" . $zruser->getNickname() . "</li>";
-                            $o = "<li>Email:" . $zruser->getEmail() . "</li>";
-                            $o .= "<li>First Name:" . $zruser->getFName() . "</li>";
-                            $o .= "<li>Last Name:" . $zruser->getLName() . "</li>";
-                            $o .= "<li>Activation Link:<a href=\"http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
-                                "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&".
-                                "activationlink=".$zrtc->getTempLink()."\"/>Activate Account</a></li>";
-                            $o .= "</ul>";
-                            $o .= "<br/><img src=\"http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
-                                "/gd.trxn.com/mimes/images/logos/Guyver-Designs-Web-Site-Logo-w188h59.png\"/>";
-                            $o .= "</body>";
-                            $o .= "</html>";
-                            
-                            gdlog()->LogInfo("http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
-                                "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&".
-                                "activationlink=".$zrtc->getTempLink());
-                            
-                            $zrtc->sendmail("stephen@guyverdesigns.com",
-                                            "Validate Account - ".$zruser->getEmail(),
-                                            $o);
-                        }
+                        $r = $zmuser->matchUsertoRoleSdesc($zruser->getUA_Uid(), "USER_ROLE_SITE_ADMIN");
+                        
                         echo $r;
+                    }
+                    else if(strtoupper($edu[1]) == "EDU")
+                    {
+                        gdlog()->LogInfo("DO_USER_CREATION");
+    	
+                        $zfuniv = new zFindUniversity();
+                        $r = $zfuniv->findAccountandProfileByEmailKey($emailkey[1]);
+                        if($r == "ACCOUNT_FOUND")
+                        {
+                            //**** Create User Accounts
+                            $zruser = new zRegisterUser();
+                            $r = $zruser->registerUserAccount($_POST["user_email"], 
+                                                            $_POST["user_password"],
+                                                            $_POST["user_nickname"]);
+                            $r = $zruser->registerUserProfile($_POST["user_firstname"],
+                                                            $_POST["user_lastname"], 
+                                                            $_POST["user_city"], 
+                                                            $_POST["user_region"], 
+                                                            $_POST["user_country"],
+                                                            "");
+                            $zruser->createUserTables($zruser->getUserTableKey());
+        
+                            $zmuser = new zMatchUser();
+                            $r = $zmuser->matchUsertoProfile($zruser->getUA_Uid(),
+                                                            $zruser->getUP_Uid());
+                                                            
+                            // Register the Temp Link
+                            $zrtc = new zRegisterTaskControl();
+                            $r = $zrtc->registerTask("ACTIVATE_USER", $zruser->getUA_Uid());
+                            // Get Temp Link
+                            if($r == "TASK_IS_REGISTERED")
+                            {
+                                gdlog()->LogInfo("GDBuildHtmlMessage():Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
+                                $tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                $o = "<html>";
+                                $o .= "<head>";
+                                $o .= "<title>User Activation</title>";
+                                $o .= "</head>";
+                                $o .= "<body>";
+                                $o .= "<ul>";
+                                $o = "<li>Nickname:" . $zruser->getNickname() . "</li>";
+                                $o = "<li>Email:" . $zruser->getEmail() . "</li>";
+                                $o .= "<li>First Name:" . $zruser->getFName() . "</li>";
+                                $o .= "<li>Last Name:" . $zruser->getLName() . "</li>";
+                                $o .= "<li>Activation Link:<a href=\"http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
+                                    "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&".
+                                    "activationlink=".$zrtc->getTempLink()."\"/>Activate Account</a></li>";
+                                $o .= "</ul>";
+                                $o .= "<br/><img src=\"http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
+                                    "/gd.trxn.com/mimes/images/logos/Guyver-Designs-Web-Site-Logo-w188h59.png\"/>";
+                                $o .= "</body>";
+                                $o .= "</html>";
+                                
+                                gdlog()->LogInfo("http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
+                                    "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&".
+                                    "activationlink=".$zrtc->getTempLink());
+                                
+                                $zrtc->sendmail("stephen@guyverdesigns.com",
+                                                "Validate Account - ".$zruser->getEmail(),
+                                                $o);
+                            }
+                            echo $r;
+                        }
+                        else
+                        {
+                            gdlog()->LogInfo("User is not part of a university:fr:".$r);
+                            echo $r;
+                        }
                     }
                     else
                     {
-                        gdlog()->LogInfo("User is not part of a university:fr:".$r);
-                        echo $r;
+                    	echo "EMAIL_KEY_NOT_EDU";
                     }
-                }
-                else
-                {
-                	echo "EMAIL_KEY_NOT_EDU";
-                }
+            }
+            else if($remailfound == "ACCOUNT_FOUND")
+            {
+                echo "Email in Use";
+            }
+            else if ($rnicknamefound == "ACCOUNT_FOUND")
+            {
+                echo "Nickname in Use";
             }
             else
             {
-                echo $r;
+                echo "Unknow Error";
             }
         }
         else

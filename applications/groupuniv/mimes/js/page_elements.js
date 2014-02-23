@@ -32,7 +32,7 @@ function getSearchResultsContentBlock(data, key, val)
     {
 		getResultsContentBlockTest(val, "group_account_uid").appendTo(cb_li_cm);
 		getResultsContentBlockGroupToolbarTop(val, "group_account_uid").appendTo(cb_li_cm);
-		getResultsContentBlockMeta(val, "group_account_uid", "group_account_createddt", "user_profile_nickname").appendTo(cb_li_cm);
+		getResultsContentBlockMeta(val, "group_account_uid", "group_account_createddt").appendTo(cb_li_cm);
 	    getResultsContentBlockContent(val, "group_account_uid", "group_profile_content").appendTo(cb_li_cm);
 	    getResultsContentBlockGroupToolbarBotton(val, "group_account_uid").appendTo(cb_li_cm);
     }
@@ -40,7 +40,7 @@ function getSearchResultsContentBlock(data, key, val)
     {
 		getResultsContentBlockTest(val, "wall_message_uid").appendTo(cb_li_cm);
 		getResultsContentBlockGroupToolbarTop(val, "group_account_uid").appendTo(cb_li_cm);
-		getResultsContentBlockMeta(val, "wall_message_uid", "wall_message_createddt", "user_profile_nickname").appendTo(cb_li_cm);
+		getResultsContentBlockMeta(val, "wall_message_uid", "wall_message_createddt").appendTo(cb_li_cm);
        	getResultsContentBlockImage(val, "wall_message_uid", "wall_message_mimes_uid").appendTo(cb_li_cm);
 	    getResultsContentBlockContent(val, "wall_message_uid", "wall_message_content").appendTo(cb_li_cm);
 	    getResultsContentBlockGroupToolbarBotton(val, "group_account_uid").appendTo(cb_li_cm);
@@ -54,6 +54,9 @@ function getDynamicResultsContentBlock(data, key, val, dckey, dcitm)
 	var cb_li = $("<li/>").attr("contentblock", dcitm);
 	if(dckey == "LIST_OF_UNIVERSITIES")
 		cb_li.text(eval("val.university_account_sdesc"));
+	if(dckey == "LIST_OF_JOIN_GROUP_REQUESTS")
+		cb_li.text(eval("val.who_gets_approved_user_profile_fname"));
+	
     return cb_li;
 }
 
@@ -67,12 +70,12 @@ function getResultsContentBlockTest(val, uid)
     return cb_li;
 }
 
-function getResultsContentBlockMeta(val, uid, createddt, nickname)
+function getResultsContentBlockMeta(val, uid, createddt)
 {
     var cb_li = $("<li/>")
     	.attr("id", "r_cb_meta_" + eval("val." + uid));
     getCBTextSpan(eval("val." + createddt)).appendTo(cb_li);
-    getCBTextSpan(eval("val." + nickname)).appendTo(cb_li);
+    getCBTextSpan(eval("val.user_account_nickname")).appendTo(cb_li);
     return cb_li;
 }
 

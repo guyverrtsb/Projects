@@ -42,7 +42,7 @@ class zFindWallMessage
                         $utk."wall_message.content, ".
                         $utk."wall_message.createddt, ".
                         $utk."wall_message.mimes_uid, ".
-                        "user_profile.nickname, ".
+                        "user_account.nickname, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_account.email", $utk)." ".
@@ -121,7 +121,7 @@ class zFindWallMessage
                         $utk."wall_message.content, ".
                         $utk."wall_message.createddt, ".
                         $utk."wall_message.mimes_uid, ".
-                        "user_profile.nickname, ".
+                        "user_account.nickname, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_account.email", $utk).
@@ -186,7 +186,7 @@ class zFindWallMessage
                         $utk."wall_message_comment.group_account_uid, ".
                         $utk."wall_message_comment.content, ".
                         $utk."wall_message_comment.createddt, ".
-                        "user_profile.nickname, ".
+                        "user_account.nickname, ".
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_account.email", $utk).

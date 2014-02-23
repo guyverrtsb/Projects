@@ -16,6 +16,7 @@ class zFindSearchData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findSearchGroup");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
+        $usrtk = $this->getGDConfig()->getSessAuthUserTblKey();
         $fr;
         $this->cleanResults_SearchRecords();
         
@@ -25,9 +26,9 @@ class zFindSearchData
             "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = :user_account_uid ".
             "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid) <> '', 'USER_IS_MEMBER', 'USER_IS_NOT_MEMBER') AS is_member_of_group ".
 
-            ", (SELECT status FROM ".$utk."group_request_message ".
-            "WHERE ".$utk."group_request_message.who_sent_user_account_uid = :user_account_uid ".
-            "AND ".$utk."group_request_message.group_account_uid = ".$utk."group_account.uid LIMIT 0,1) ".
+            ", (SELECT status FROM ".$utk."requests ".
+            "WHERE ".$utk."requests.who_gets_approved_user_account_uid = :user_account_uid ".
+            "AND ".$utk."requests.group_account_uid = ".$utk."group_account.uid LIMIT 0,1) ".
             "AS request_status ".
             
             ", IF((SELECT user_account.email FROM user_account ".
@@ -49,7 +50,7 @@ class zFindSearchData
                 "cfg_group_useracceptance.sdesc, ".
                 "cfg_search_objects.uid, ".
                 "cfg_search_objects.sdesc, ".
-                "user_profile.nickname", $utk)." ".
+                "user_account.nickname", $utk)." ".
             
             "FROM ".$utk."search_content ".
             
@@ -84,7 +85,8 @@ class zFindSearchData
             "AND ".$utk."group_account.cfg_group_visibility_uid <> (SELECT uid from cfg_defaults WHERE sdesc='GROUP_VISIBILITY_GROUP_PRIVATE') ".
             "AND ".$utk."search_content.cfg_search_objects_uid = (SELECT uid from cfg_defaults WHERE sdesc='SEARCH_OBJECT_GROUP') ".
             "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid = (SELECT uid from cfg_defaults WHERE sdesc='USER_ROLE_GROUP_OWNER') ".
-            "AND university_account.uid = :university_account_uid ";
+            "AND university_account.uid = :university_account_uid ".
+            "GROUP BY ".$utk."group_account.uid";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
@@ -121,6 +123,7 @@ class zFindSearchData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findSearchWallMessage");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
+        $usrtk = $this->getGDConfig()->getSessAuthUserTblKey();
         $fr;
         $this->cleanResults_SearchRecords();
         
@@ -130,9 +133,9 @@ class zFindSearchData
             "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = :user_account_uid ".
             "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid) <> '', 'USER_IS_MEMBER', 'USER_IS_NOT_MEMBER') AS is_member_of_group ".
             
-            ", (SELECT status FROM ".$utk."group_request_message ".
-            "WHERE ".$utk."group_request_message.who_sent_user_account_uid = :user_account_uid ".
-            "AND ".$utk."group_request_message.group_account_uid = ".$utk."group_account.uid LIMIT 0,1) ".
+            ", (SELECT status FROM ".$utk."requests ".
+            "WHERE ".$utk."requests.who_gets_approved_user_account_uid = :user_account_uid ".
+            "AND ".$utk."requests.group_account_uid = ".$utk."group_account.uid LIMIT 0,1) ".
             "AS request_status ".
             
             ", IF((SELECT user_account.email FROM user_account ".
@@ -154,7 +157,7 @@ class zFindSearchData
                 "cfg_group_useracceptance.sdesc, ".
                 "cfg_search_objects.uid, ".
                 "cfg_search_objects.sdesc, ".
-                "user_profile.nickname, ".
+                "user_account.nickname, ".
                 $utk."wall_message.uid, ".
                 $utk."wall_message.createddt, ".
                 $utk."wall_message.content, ".
@@ -237,7 +240,7 @@ class zFindSearchData
     }
     function cleanResults_SearchRecords()
     {
-        $this->Results_SearchRecords = "";
+        $this->Results_SearchRecords = "NO_RECORDS";
     }
     
     function setResult_SearchRecord($row)
@@ -250,7 +253,7 @@ class zFindSearchData
     }
     function cleanResult_SearchRecord()
     {
-        $this->Result_SearchRecord = "";
+        $this->Result_SearchRecord = "NO_RECORD";
     }
 }
 ?>

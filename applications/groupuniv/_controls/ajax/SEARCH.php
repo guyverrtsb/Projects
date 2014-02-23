@@ -41,9 +41,11 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
 
 function validateTaskForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["searchfield"]) || $_POST["searchfield"] == "")
-        $fv = "F";
+        $fv = false;
+    if (!isset($_POST["searchcfg"]) || $_POST["searchcfg"] == "")
+        $fv = false;
     return $fv;
 }
 ?>

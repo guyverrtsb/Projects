@@ -376,6 +376,27 @@ class zRegisterUniversity
             "DEFAULT CHARACTER SET = utf8; ".
             
             
+            //-- -----------------------------------------------------
+            //-- Table `requests`
+            //-- -----------------------------------------------------
+            "CREATE  TABLE IF NOT EXISTS `".$univtblekey."requests` ( ".
+            "  `lid` INT(11) NOT NULL AUTO_INCREMENT , ".
+            "  `uid` VARCHAR(36) NOT NULL , ".
+            "  `createddt` DATETIME NOT NULL , ".
+            "  `changeddt` DATETIME NOT NULL , ".
+            "  `who_requested_user_account_uid` VARCHAR(36) NOT NULL , ".
+            "  `who_approves_user_account_uid` VARCHAR(36) NOT NULL , ".
+            "  `who_gets_approved_user_account_uid` VARCHAR(36) NOT NULL , ".
+            "  `status` VARCHAR(1) NOT NULL , ".
+            "  `group_account_uid` VARCHAR(36) NOT NULL , ".
+            "  PRIMARY KEY (`lid`, `uid`) , ".
+            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
+            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
+            "ENGINE = MyISAM ".
+            "AUTO_INCREMENT = 1 ".
+            "DEFAULT CHARACTER SET = utf8; ".
+            
+            
             "SET SQL_MODE=@OLD_SQL_MODE; ".
             "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; ".
             "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; ";

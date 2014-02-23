@@ -66,7 +66,8 @@ class zFindTaskControl
     function getUid2(){return $this->Result_TempLink["uid2"];}
     function getUid3(){return $this->Result_TempLink["uid3"];}
     function getRecordUid(){return $this->Result_TempLink["record_uid"];}
-    
+    function getIsActive(){return $this->Result_TempLink["isactive"];}
+        
     function getTempLink()
     {
         $tl = $this->getUid1().":".$this->getUid2().":".$this->getUid3();
