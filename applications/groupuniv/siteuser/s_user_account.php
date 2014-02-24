@@ -28,7 +28,9 @@ if($zauth->isSiteUser())
     <?php gdinc("/_controls/ui/siteuser_left_menu.php") ?>
     </ul></li>
 <li><ul id="CBWorkAreaCenter">
-    <li class="cbheader">Work Area</li>
+    <li class="cbheader">Account Info</li>
+    <li id="CEResultsTOP">&nbsp;</li>
+    <li id="CEResultsBOTTOM">&nbsp;</li>
     </ul></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>

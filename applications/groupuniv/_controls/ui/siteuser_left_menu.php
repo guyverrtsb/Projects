@@ -5,6 +5,7 @@ $zallowed = new zAllowed();
 <?php if($zallowed->isGroupOwner()){printf("<li><a class=\"menulink\" href=\"s_group_owner.php\">Group Settings</a></li>");}?>
 <li><a class="menulink" href="s_user_account.php">My Account</a></li>
 <li><a class="menulink" href="s_user_search.php">Search</a></li>
+<li><a class="menulink" href="s_messages_home.php">Messages</a></li>
 <?php
 gdreqonce("/_controls/classes/find/group.php");
 $zfgroupIOwn = new zFindGroup();

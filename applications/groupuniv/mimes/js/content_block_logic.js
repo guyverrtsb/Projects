@@ -30,7 +30,7 @@ function gdLoadContentBlocksforExistingWallMessages()
             		new_cbwm_createddt_start = eval("val.wall_message_createddt")
             		new_cbwm_lid_bypass = eval("val.wall_message_lid")
         		}
-        		$("#CEWallMessagesContentBOTTOM").before(getWallMessageContentBlock(data, key, val));
+        		$("#CEResultsBOTTOM").before(getWallMessageContentBlock(data, key, val));
             	existing_cbwm_createddt_start = eval("val.wall_message_createddt");
             	existing_cbwm_lid_bypass = eval("val.wall_message_lid");
             });
@@ -55,7 +55,7 @@ function gdLoadContentBlocksforNewWallMessages()
             data = eval("(" + data + ")");
             $.each(data, function(key, val)
             {
-            	$("#CEWallMessagesContentTOP").after(getWallMessageContentBlock(data, key, val));
+            	$("#CEResultsTOP").after(getWallMessageContentBlock(data, key, val));
             	new_cbwm_createddt_start = eval("val.wall_message_createddt");
             	new_cbwm_lid_bypass = eval("val.wall_message_lid");
             });
@@ -83,7 +83,7 @@ function gdLoadContentBlocksforSearch()
             data = eval("(" + data + ")");
             $.each(data, function(key, val)
             {
-                $("#CESearchResultsContentBOTTOM").before(getSearchResultsContentBlock(data, key, val));
+                $("#CEResultsBOTTOM").before(getSearchResultsContentBlock(data, key, val));
             });
         }
     });
@@ -106,6 +106,28 @@ function getSendRequestJoinGroup(group_account_uid, itemid)
             data = eval("(" + data + ")");
         	if(data.status == "P")
         		$("#" + itemid).html("").text("Pending Request");
+        }
+    });
+}
+
+function gdLoadContentBlocksforMessages()
+{
+    showMessage("#TransactionErr", "&nbsp;");
+    var formdata = gdControllerKey("GET_LIST_OF_MESSAGES");
+    $.post("/_controls/ajax/MESSAGES.php",
+    formdata, function(data)
+    {
+        if(isDataMatch(data, "NO_RESULTS"))
+            showMessage("#TransactionErr", "No Search Results");
+        else if(isDataMatch(data, "TRANSACTION_FAIL"))
+            showMessage("#TransactionErr", "Unknown Error:" + data);
+        else
+        {
+            data = eval("(" + data + ")");
+            $.each(data, function(key, val)
+            {
+                $("#CEResultsBOTTOM").before(getMessageResultsContentBlock(data, key, val));
+            });
         }
     });
 }

@@ -49,7 +49,7 @@ class zFindTaskControl
         return $fr;
     }
 
-    private $Result_TempLink = "No_RECORD";
+    private $Result_TempLink = "NO_RECORD";
     function setResult_TempLink($row)
     {
         $this->Result_TempLink = $row;

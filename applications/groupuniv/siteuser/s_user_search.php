@@ -43,8 +43,8 @@ if($zauth->isSiteUser())
         <td>&nbsp;</td>
         </tr>
         </table></li>
-    <li id="CESearchResultsContentTOP">&nbsp;</li>
-    <li id="CESearchResultsContentBOTTOM">&nbsp;</li>
+    <li id="CEResultsTOP">&nbsp;</li>
+    <li id="CEResultsBOTTOM">&nbsp;</li>
     </ul></form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>

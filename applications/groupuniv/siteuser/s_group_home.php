@@ -117,8 +117,8 @@ function showOutputResults(responseText)
         </tr>
         </table></li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div ></div></li>
-    <li id="CEWallMessagesContentTOP">&nbsp;</li>
-    <li id="CEWallMessagesContentBOTTOM"><a href="javascript:gdLoadContentBlocksforExistingWallMessages();">Load new Messages</a>&nbsp;</li>
+    <li id="CEResultsTOP">&nbsp;</li>
+    <li id="CEResultsBOTTOM"><a href="javascript:gdLoadContentBlocksforExistingWallMessages();">Load new Messages</a>&nbsp;</li>
     </ul>
 <input type="file" id="WallMessageImageFile" name="WallMessageImageFile"/>
     </form></li>

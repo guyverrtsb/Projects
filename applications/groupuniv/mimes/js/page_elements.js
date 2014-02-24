@@ -49,6 +49,20 @@ function getSearchResultsContentBlock(data, key, val)
     return cb_li;
 }
 
+function getMessageResultsContentBlock(data, key, val)
+{
+	uid = eval("val.messages_uid");
+	var cb_li = $("<li/>")
+		.attr("id", "sr_cb_" + uid)
+		.attr("style", "border-bottom:2px solid red;")
+		.attr("class", "sr_cb_even");
+	var cb_li_cm = $("<ul/>");
+		cb_li_cm.appendTo(cb_li);
+	
+	getMessageResultsContentBlockRow(val).appendTo(cb_li_cm);
+    return cb_li;
+}
+
 function getDynamicResultsContentBlock(data, key, val, dckey, dcitm)
 {
 	var cb_li = $("<li/>").attr("contentblock", dcitm);
@@ -57,6 +71,35 @@ function getDynamicResultsContentBlock(data, key, val, dckey, dcitm)
 	if(dckey == "LIST_OF_JOIN_GROUP_REQUESTS")
 		cb_li.text(eval("val.who_gets_approved_user_profile_fname"));
 	
+    return cb_li;
+}
+
+function getMessageResultsContentBlockRow(val)
+{
+    var cb_li = $("<li/>")
+    	.attr("id", "r_cb_message_" + eval("val.messages_uid"));
+    
+    if(eval("val.messages_isread") == "F")
+    	getCBTextSpan("*").appendTo(cb_li);
+    else
+    	getCBTextSpan(" ").appendTo(cb_li);
+    
+    var msgtype = eval("val.message_type_cfg_sdesc");
+    if(msgtype == "MESSAGE_TYPE_GROUP_JOIN_REQUEST")
+    	getCBTextSpan("J").appendTo(cb_li);
+    else if(msgtype == "MESSAGE_TYPE_MESSAGE")
+    	getCBTextSpan("M").appendTo(cb_li);
+    
+    getCBTextSpan(eval("val.from_user_account_nickname") + " {" + eval("val.from_user_profile_fname") + "}").appendTo(cb_li);
+    
+    var subject = eval("val.messages_subject");
+    if(subject.length > 50)
+    	subject = subject.substring(0, 50) + "...";
+	getCBTextSpan(subject).appendTo(cb_li);
+    getCBTextSpan("Sent {" + eval("val.messages_createddt") + "}").appendTo(cb_li);
+    
+
+
     return cb_li;
 }
 
@@ -123,11 +166,8 @@ function getWallMessageContentBlockComment(wm_uid)
     var wm_cb_comment = $("<li/>")
 		.attr("id", "wm_cb_comment" + wm_uid)
 		.appendTo(cb_li_ul);
-	var wm_cb_comment_content = $("<span/>")
-    	.text("Comments Area")
-    	.appendTo(wm_cb_comment);
-	
-	
+    getCBTextSpan("Comments Area").appendTo(wm_cb_comment);
+
 	return wm_cb_li;
 }
 
@@ -202,6 +242,20 @@ function getCBTextSpan(text)
 	return $("<span/>").attr("class", "cb_text").text(text);
 }
 
+
+
+function getResultsContentBlockRow(rowid)
+{
+    var cb_li = $("<li/>")
+		.attr("id", rowid);
+	for (var i = 1; i < arguments.length; i++)
+	{
+		var text = getCBTextSpan(eval("val." + arguments[i]))
+		text.attr("class", arguments[i++])
+		text.appendTo(cb_li)
+	}
+	return cb_li;
+}
 
 function clearContentBlocks(contentblock)
 {
