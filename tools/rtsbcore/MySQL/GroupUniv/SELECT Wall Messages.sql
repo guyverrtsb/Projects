@@ -1,0 +1,15 @@
+-- All Existing wall Messages 
+SELECT IF((SELECT uid FROM match_user_account_to_group_account_to_cfg_user_roles
+ WHERE match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = 'f96a853c-83ca-11e3-8ccb-6a3ffe3e3965'
+ AND match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = 'f96a853c-83ca-11e3-8ccb-6a3ffe3e3965') <> '', 'USER_IS_MEMBER', 'USER_IS_NOT_MEMBER') AS is_member_of_group , wall_message.lid AS wall_message_lid,wall_message.uid AS wall_message_uid,wall_message.user_account_uid AS wall_message_user_account_uid,wall_message.group_account_uid AS wall_message_group_account_uid,wall_message.content AS wall_message_content,user_profile.nickname AS user_profile_nickname,user_profile.fname AS user_profile_fname,wall_message.createddt AS wall_message_createddt,user_profile.lname AS user_profile_lname,wall_message.mimes_uid AS wall_message_mimes_uid,user_account.email AS user_account_email from wall_message join match_user_account_to_user_profile  on match_user_account_to_user_profile.user_account_uid = wall_message.user_account_uid join user_account  on user_account.uid = match_user_account_to_user_profile.user_account_uid join user_profile  on user_profile.uid = match_user_account_to_user_profile.user_profile_uid
+ WHERE wall_message.group_account_uid = 'f96a853c-83ca-11e3-8ccb-6a3ffe3e3965'
+ AND wall_message.createddt BETWEEN TIMESTAMP('2014-01-01 00:00:00') AND NOW() ORDER BY wall_message.createddt DESC
+;
+
+-- All New Wall Messages
+SELECT IF((SELECT uid FROM match_user_account_to_group_account_to_cfg_user_roles
+ WHERE match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = 'eca1544e-83ca-11e3-8ccb-6a3ffe3e3965'
+ AND match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = 'f96a853c-83ca-11e3-8ccb-6a3ffe3e3965') <> '', 'USER_IS_MEMBER', 'USER_IS_NOT_MEMBER') AS is_member_of_group , wall_message.lid AS wall_message_lid,wall_message.uid AS wall_message_uid,wall_message.user_account_uid AS wall_message_user_account_uid,wall_message.group_account_uid AS wall_message_group_account_uid,wall_message.content AS wall_message_content,user_profile.nickname AS user_profile_nickname,user_profile.fname AS user_profile_fname,wall_message.createddt AS wall_message_createddt,user_profile.lname AS user_profile_lname,wall_message.mimes_uid AS wall_message_mimes_uid,user_account.email AS user_account_email from wall_message join match_user_account_to_user_profile  on match_user_account_to_user_profile.user_account_uid = wall_message.user_account_uid join user_account  on user_account.uid = match_user_account_to_user_profile.user_account_uid join user_profile  on user_profile.uid = match_user_account_to_user_profile.user_profile_uid
+ WHERE wall_message.group_account_uid = 'f96a853c-83ca-11e3-8ccb-6a3ffe3e3965'
+ AND wall_message.lid <> '272'  
+;
