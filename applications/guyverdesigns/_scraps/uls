@@ -1,0 +1,40 @@
+        <ul>
+        <li class="headline"><input class="rounded" type="text" id="documentheadline" name="documentheadline" value="Headline"/></li>
+        <li class="documentpoint"><input class="rounded" type="text" id="documentpoint0" name="documentpoint0" value="Article Point 1"/></li>
+        <li class="documentpoint"><input class="rounded" type="text" id="documentpoint1" name="documentpoint1" value="Article Point 2"/></li>
+        <li class="documentpoint"><input class="rounded" type="text" id="documentpoint2" name="documentpoint2" value="Article Point 3"/></li>
+        <li class="documentpoint"><input class="rounded" type="text" id="documentpoint3" name="documentpoint3" value="Article Point 4"/></li>
+        <li class="documentpoint"><input class="rounded" type="text" id="documentpoint4" name="documentpoint4" value="Article Point 5"/></li>
+        </ul>
+        
+addCKPreControl("gdHeadlineContent", "Job Title", CKEDITOR);
+addCKPreControl("gdHeadlinePoint0Content", "Location", CKEDITOR);
+addCKPreControl("gdHeadlinePoint1Content", "Employment Type (Full or Part time)", CKEDITOR);
+addCKPreControl("gdHeadlinePoint2Content", "On-site or Remote", CKEDITOR);
+addCKPreControl("gdHeadlinePoint3Content", "Hours per Week", CKEDITOR);
+addCKPreControl("gdHeadlinePoint4Content", "Skills (semi-colon seperated)", CKEDITOR);
+addCKPreControl("gdArticleContent", "Add Content Here", CKEDITOR);
+
+
+Hibernate,spring,PL/SQL,Design Patterns(Gang of Four +common, newer ones)TDD (Test Driven Development) methodology-JUnit/Hamcrest/Mockito, Refactoring Code, Experience with multi-tier applications
+
+    
+    
+Hibernate Spring, PL/SQL
+    
+The Successful candidate provides top-notch Java appliation development services, typically in a defined project. This will include designing and developing new Java applications or analyzing and enhancing existing apllications. You will have the opportunity to design,code,test,debug,document,implement and enhance software applications in a team-oriented fashion
+
+BS in Computer Science or equivalent experience, strong interpersonal,written,and verbal communication skills highly desired,minimun 6 years Core Java experience
+
+Hibernate,spring,PL/SQL,Design Patterns(Gang of Four +common, newer ones)TDD (Test Driven Development) methodology-JUnit/Hamcrest/Mockito, Refactoring Code, Experience with multi-tier applications,Team oriented -works cooperatively with others
+
+
+        <ul>
+        <li class="headline"><div style="float:left;">Job Title : </div><div id="gdHeadlineContent" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        <li class="documentpoint"><div style="float:left;">Location : </div><div id="gdHeadlinePoint0Content" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        <li class="documentpoint"><div style="float:left;">Employment Type (Full or Part time) : </div><div id="gdHeadlinePoint1Content" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        <li class="documentpoint"><div style="float:left;">On-site or Remote : </div><div id="gdHeadlinePoint2Content" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        <li class="documentpoint"><div style="float:left;">Hours per Week : </div><div id="gdHeadlinePoint3Content" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        <li class="documentpoint"><div style="float:left;">Skills (semi-colon seperated) : </div><div id="gdHeadlinePoint4Content" contenteditable="true" onmouseover="toggleCKContentArea(this);" onmouseout="toggleCKContentArea(this);"></div></li>
+        </ul>
+        

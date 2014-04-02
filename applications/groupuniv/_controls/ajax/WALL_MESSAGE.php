@@ -4,16 +4,16 @@
 <?php gdreqonce("/_controls/classes/find/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/register/search.php"); ?>
 <?php
-if(isset($_POST["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
     gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "REGISTER_WALL_MESSAGE")
     {
         // Do Image manipulation
         if(validateUploadWallMessageImageForm())
         {
-            $r = "INVALID";
             if(isset($_FILES["WallMessageImageFile"]))
             {
                 gdlog()->LogInfoTaskLabel("Register Image");
@@ -34,7 +34,14 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                     $zrsearch = new zRegisterSearchData();
                     $zrsearch->registerSearchSdesc($wall_message
                         , $zrwallmessage->getWM_Uid(), "SEARCH_OBJECT_WALL_MESSAGE");
-                    $r = "VALID";
+                    $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                }
+                else
+                {
+                    $echoret = json_encode(buildReturnArray("RETURN_KEY", "IMAGE_FAILURE"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "The Image was not processed correctly.  Please try again."));
                 }
             }
             else
@@ -52,20 +59,21 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 $zrsearch = new zRegisterSearchData();
                 $zrsearch->registerSearchSdesc($wall_message
                     , $zrwallmessage->getWM_Uid(), "SEARCH_OBJECT_WALL_MESSAGE");
-                $r = "VALID";
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
             }
-            echo $r;
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
     else if($action == "REGISTER_WALL_MESSAGE_COMMENT")
     {
         if(validateSaveNewWallMessageCommentForm())
         {
-            gdlog()->LogInfo($action.":REGISTER_WALL_MESSAGE_COMMENT");
             $wall_message_uid = filter_var($_POST["wall_message_uid"], FILTER_SANITIZE_STRING);
             // Save Wall Message
             $wall_message_comment = filter_var($_POST["wall_message_comment"], FILTER_SANITIZE_STRING);
@@ -74,11 +82,14 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                                             gdconfig()->getSessAuthUserUid(),
                                                             $wall_message_comment,
                                                             $wall_message_uid);
-            echo $r;
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
     else if($action == "LOAD_EXISTING_WALL_MESSAGES")
@@ -93,14 +104,22 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                                         $wall_message_lid_bypass);
             if($r == "WALL_MESSAGES_FOUND")
             {
-                $r = json_encode($zfmessage->getResults_AllWallMessages());
-                $zfmessage->gdlog()->LogInfo("JSON_ENCODE:".$r);
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfmessage->getResults_AllWallMessages()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_NOT_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Nothing has posted to your wall yet.  Be the first."));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
     else if($action == "LOAD_NEW_WALL_MESSAGES")
@@ -115,14 +134,22 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                                     $wall_message_lid_bypass);
             if($r == "WALL_MESSAGES_FOUND")
             {
-                $r = json_encode($zfmessage->getResults_AllWallMessages());
-                $zfmessage->gdlog()->LogInfo("JSON_ENCODE:".$r);
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfmessage->getResults_AllWallMessages()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_NOT_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Nothing has posted to your wall yet.  Be the first."));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
     else if($action == "LOAD_ALL_WALL_MESSAGE_COMMENTS")
@@ -134,17 +161,27 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             $r = $zfmessage->findAllWallMessageComments($wall_message_uid);
             if($r == "WALL_MESSAGE_COMMENTS_FOUND")
             {
-                $r = json_encode($zfmessage->getResults_AllWallMessageComments());
-                $zfmessage->gdlog()->LogInfo("JSON_ENCODE:".$r);
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_COMMENTS_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfmessage->getResults_AllWallMessageComments()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "WALL_MESSAGES_COMMENTS_NOT_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Nothing has posted to your wall yet.  Be the first."));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateUploadWallMessageImageForm()
 {
@@ -155,45 +192,51 @@ function validateUploadWallMessageImageForm()
 }
 function validateSaveNewWallMessageForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["wall_message"]) || $_POST["wall_message"] == "")
-        $fv = "F";
+        $fv = false;
     else if (!isset($_POST["orig_file_path"]) || $_POST["orig_file_path"] == "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 function validateLoadExistingWallMessageForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
-    if (!isset($_POST["START_POSITION"]) || $_POST["START_POSITION"] == "")
-        $fv = "F";
-    else if (!isset($_POST["COUNT_POSITION"]) || $_POST["COUNT_POSITION"] == "")
-        $fv = "F";
-    else if (!isset($_POST["DATE_TIME"]) || $_POST["DATE_TIME"] == "")
-        $fv = "F";
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
+    if (!isset($_POST["WALL_MESSAGE_CREATEDDT_START"]) || $_POST["WALL_MESSAGE_CREATEDDT_START"] == "")
+    {
+        $fv = false;
+        gdlog()->LogInfo("WALL_MESSAGE_CREATEDDT_START");
+    }
+    else if (!isset($_POST["WALL_MESSAGE_LID_BYPASS"]) || $_POST["WALL_MESSAGE_LID_BYPASS"] == "")
+    {
+        $fv = false;
+        gdlog()->LogInfo("WALL_MESSAGE_LID_BYPASS");
+    }
     return $fv;
 }
 function validateNewLoadWallMessageForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
-    if (!isset($_POST["DATE_TIME"]) || $_POST["DATE_TIME"] == "")
-        $fv = "F";
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
+    if (!isset($_POST["WALL_MESSAGE_CREATEDDT_START"]) || $_POST["WALL_MESSAGE_CREATEDDT_START"] == "")
+        $fv = false;
+    else if (!isset($_POST["WALL_MESSAGE_LID_BYPASS"]) || $_POST["WALL_MESSAGE_LID_BYPASS"] == "")
+        $fv = false;
     return $fv;
 }
 function validateSaveNewWallMessageCommentForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["wall_message_uid"]) || $_POST["wall_message_uid"] == "")
-        $fv = "F";
+        $fv = false;
     else if (!isset($_POST["wall_message_comment"]) || $_POST["wall_message_comment"]== "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 function validateLoadWallMessageCommentForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["wall_message_uid"]) || $_POST["wall_message_uid"] == "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 ?>

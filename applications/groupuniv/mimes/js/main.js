@@ -29,12 +29,12 @@ function buildDynamicContent(jqobj)
     $.post("/_controls/ajax/SCREEN_CONTROL.php",
     formdata, function(data)
     {
-        if(!isDataMatch(data, "NO_RESULTS"))
+        data = eval("(" + data + ")");
+        if(data.RETURN_KEY == "SUCCESS")
     	{
-	        data = eval("(" + data + ")");
-	        $.each(data, function(key, val)
+	        $.each(data.RESULT, function(key, val)
 	        {
-	        	jqobj.after(getDynamicResultsContentBlock(data, key, val, dckey, dcblk));
+	        	jqobj.after(buildContentBlocksDynamic(data, key, val, dckey, dcblk));
 	        });
     	}
     });
@@ -55,14 +55,15 @@ function buildConfigurationsDropDown(jqobj)
     $.post("/_controls/ajax/CONFIGURATION.php",
 	formdata, function(data)
 	{
-	    if(!isDataMatch(data, "RECORD_NOT_FOUND") && !isDataMatch(data, "LIST_NOT_FOUND") && !isDataMatch(data, "TRANSACTION_FAIL"))
+    	data = eval("(" + data + ")");
+	    if(data.RETURN_KEY == "SUCCESS")
 		{
-	    	data = eval("(" + data + ")");
+	    	jdata = data.LIST;
 	    	jqobj.empty();
 	    	$("<option/>").val("")
 				.text("Choose---")
 				.appendTo(jqobj);
-			$.each(data, function(key, val)
+			$.each(jdata, function(key, val)
 			{
 				var sdesc = eval("val.sdesc");
 				var label = eval("val.label");

@@ -57,8 +57,8 @@ class zFindGroupRequests
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResult_RequestLists($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
-                $this->gdlog()->LogInfoDB($this->getResult_RequestLists());
+                $this->setResult_Lists($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResult_Lists());
                 $fr = $this->gdlog()->LogInfoRETURN("REQUEST_LIST_FOUND");
             }
             else
@@ -74,20 +74,20 @@ class zFindGroupRequests
         return $fr;
     }
 
-    private $Result_RequestLists = "NO_RECORDS";
-    function setResult_RequestLists($row)
+    private $Result_Lists = "NO_RECORDS";
+    function setResult_Lists($row)
     {
-        $this->Result_RequestLists = $row;
+        $this->Result_Lists = $row;
     }
     
-    function getResult_RequestLists()
+    function getResult_Lists()
     {
-        return $this->Result_RequestLists;
+        return $this->Result_Lists;
     }
     
-    function clearResult_RequestLists()
+    function clearResult_Lists()
     {
-        $this->Result_RequestLists = "NO_RECORDS";
+        $this->Result_Lists = "NO_RECORDS";
     }
 }
 ?>

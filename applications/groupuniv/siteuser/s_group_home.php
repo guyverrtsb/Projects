@@ -34,9 +34,9 @@ $(document).ready(function()
     $win.scroll(function ()
     {
         if ($win.height() + $win.scrollTop() == ($(document).height() - 20))
-            gdLoadContentBlocksforExistingWallMessages();
+            gdLoadExistingWallMessages();
     });
-    gdLoadContentBlocksforExistingWallMessages();
+    gdLoadExistingWallMessages();
 //elements
     var progressbox     = $("#GDUploadProgressBox");
     var progressbar     = $("#GDUploadProgressBar");
@@ -68,14 +68,16 @@ $(document).ready(function()
                     statustxt.css("color","#fff"); //change status text to white after 50%
                 }
             },
-        complete: function(response) { // on complete
+        complete: function(data)
+        { // on complete
             //output.html(response.responseText); //update element with received data
             submitbutton.removeAttr("disabled"); //enable submit button
             progressbox.hide(); // hide progress bar
-            if(response.responseText != "VALID")
-                showMessage("#TransactionErr", "Image File size is too big.  Please scale image to a smaller size.");
-            else if(response.responseText == "VALID")
-               showOutputResults(response.responseText);
+            data = eval('(' + data.responseText + ')')
+            if(buildContentBlocksReturnMessage(data, "SUCCESS", "WallMessageTransactionOutput"))
+            {
+                gdLoadNewWallMessages();
+            }
             myform.resetForm();  // reset form
         }
     });
@@ -85,15 +87,6 @@ function clearOutputResults()
 {
     //$("#GDUploadImage").text("");
     //$("#GDUploadReturnMessage").text("");
-}
-function showOutputResults(responseText)
-{
-    if(isDataMatch(responseText, "VALID"))
-        gdLoadContentBlocksforNewWallMessages();
-    else if(isDataMatch(responseText, "FORM_FIELDS_NOT_VALID"))
-        alert("Fields cannot be empty");
-    else if(isDataMatch(responseText, "TRANSACTION_FAIL"))
-        showMessage("#TransactionErr", "Unknown Error:" + data);
 }
 </script>
 </head>
@@ -107,7 +100,7 @@ function showOutputResults(responseText)
 <li><form id="GDUploadImageFrm" class="form" action="/_controls/ajax/WALL_MESSAGE.php" method="post" enctype="multipart/form-data" >
 <ul id="CBWorkAreaCenter">
 <?php printf("<li class=\"cbheader\">Wall for %s</li>", $zfgroup->getGA_Ldesc()); ?>
-    <li id="TransactionErr" class="error">&nbsp;</li>
+    <li id="WallMessageTransactionOutput">&nbsp;</li>
     <li id="CEMessageEntry"><table>
         <tr>
         <td><img src="/mimes/images/default_user_profile_image.gif"/></td>
@@ -117,6 +110,7 @@ function showOutputResults(responseText)
         </tr>
         </table></li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div ></div></li>
+    <li id="TransactionOutput">&nbsp;</li>
     <li id="CEResultsTOP">&nbsp;</li>
     <li id="CEResultsBOTTOM"><a href="javascript:gdLoadContentBlocksforExistingWallMessages();">Load new Messages</a>&nbsp;</li>
     </ul>

@@ -24,7 +24,7 @@ class zAppBaseObject
             "WHERE group_key=:group_key";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setApplicationDB();
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":group_key", strtoupper($group_key));
         $dbcontrol->execSelect();
@@ -60,7 +60,7 @@ class zAppBaseObject
             "WHERE sdesc=:sdesc";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setApplicationDB();
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":sdesc", strtoupper($sdesc));
         $dbcontrol->execSelect();
@@ -96,7 +96,7 @@ class zAppBaseObject
             "WHERE uid=:uid";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB("GROUPYOU");
+        $dbcontrol->setApplicationDB();
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":uid", $uid);
         $dbcontrol->execSelect();
@@ -174,12 +174,6 @@ class zAppBaseObject
         if(strlen($sdesc) >= 100)
             $sdesc = $sdesc.substring(0, 99);
         return $sdesc;
-    }
-    
-    function createUserTableKey($usertablekey)
-    {
-        $usertablekey = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $usertablekey);
-        return "X_".$usertablekey."_";
     }
 }
 ?>

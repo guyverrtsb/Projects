@@ -19,23 +19,20 @@ class zRegisterNotification
      **/
     function registerNotification($cfg_message_type_sdesc,
                                 $message_uid,
-                                $utk,
-                                $isread = "F")
+                                $utk)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerNotification");
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."notifications SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "cfg_message_type_uid=:cfg_message_type_uid, ".
-            "message_uid=:message_uid, ".
-            "isread=:isread";
+            "message_uid=:message_uid";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":cfg_message_type_uid", $this->findCfgUidfromSdesc($cfg_message_type_sdesc));
         $dbcontrol->bindParam(":message_uid", $message_uid);
-        $dbcontrol->bindParam(":isread", $isread);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -72,6 +69,5 @@ class zRegisterNotification
     function getUid(){return $this->Result_Notification["uid"];}
     function getCfgMessageTypeUid(){return $this->Result_Notification["cfg_message_type_sdesc"];}
     function getMessageUid(){return $this->Result_Notification["message_uid"];}
-    function getIsRead(){return $this->Result_Notification["isread"];}
 }
 ?>

@@ -29,7 +29,7 @@ if($zauth->isSiteUser())
     </ul></li>
 <li><form id="SearchForm" class="form"><ul id="CBWorkAreaCenter">
     <li class="cbheader">Search</li>
-    <li id="TransactionErr" class="error">&nbsp;</li>
+    <li id="TransactionOutput">&nbsp;</li>
     <li><table>
         <tr>
         <td colspan="4"><input type="input" id="SearchFieldLarge" name="searchfield" value=""/></td>

@@ -21,17 +21,14 @@ $(document).ready( function()
 });
 function gdFuncRegisterData()
 {
-    showMessage("#RegisterErr", "&nbsp;");
+    buildContentBlocksReturnMessage();
     var formdata = gdSerialzeControllerKey("#RegisterFrm", "REGISTER_UNIVERSITY");
     $.post("/_controls/ajax/UNIVERSITY.php",
-    formdata, function(data) {
-        if(isDataMatch(data, "EMAIL_IN_USE"))
-            showMessage("#RegisterErr", "E-Mail already is Use");
-        else if(isDataMatch(data, "ACCOUNT_CREATED"))
-            showMessage("#RegisterErr", "Account was created.  Please check your email to activate the account.");
-        else
+    formdata, function(data)
+    {
+        data = eval("(" + data + ")");
+        if(buildContentBlocksReturnMessage(data, "UNIVERSITY_CREATED"))
         {
-            showMessage("#RegisterErr", "Unknown Error:" + data);
             callDynamicContentBuilder("LIST_OF_UNIVERSITIES");
         }
     });
@@ -51,7 +48,7 @@ function gdFuncRegisterData()
     <form id="RegisterFrm" class="form">
     <li class="cbheader">Register</li>
     <li class="cbsubheader">University Account</li>
-    <li id="RegisterErr" class=""></li>
+    <li id="TransactionOutput"></li>
     <li class="user"><input class="rounded" type="text" id="univ_emailkey" name="univ_emailkey" value="ncsu.edu"/></li>
     <li class="user"><input class="rounded" type="text" id="univ_sdesc" name="univ_sdesc" value="NCSU"/></li>
     <li class="cbsubheader">University Profile</li>

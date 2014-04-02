@@ -27,7 +27,7 @@ class zFindGroup
             if($dbcontrol->getRowCount() > 0)
             {
                 $row = $dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC);
-                $this->gdlog()->LogInfoDB($$row);
+                $this->gdlog()->LogInfoDB($row);
                 $fr = $this->gdlog()->LogInfoRETURN("ACCOUNT_FOUND");
                 $this->findAccountandProfileByUid($row["uid"]);
             }

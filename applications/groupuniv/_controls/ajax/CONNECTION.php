@@ -5,11 +5,11 @@
 <?php gdreqonce("/_controls/classes/find/user.php"); ?>
 <?php gdreqonce("/_controls/classes/find/grouprequest.php"); ?>
 <?php
-if(isset($_POST["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
     $gdconfig = gdconfig();
-    gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "JOIN_GROUP_FROM_SEARCH") // User has asked to join group
     {
         if(validateConfiguration())
@@ -39,9 +39,10 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                 
                 $zrgm = new zRequestGroupMembership();
                 $zrgm->requestGroupMembershipAutoAccept($zfg, $zfuserLoggedIn, $zfuserGroupOwner);
-                                                    
-                $r = json_encode($zrgm->getResult());
-                $zrrm->gdlog()->LogInfo("JSON_ENCODE:".$r);                               
+
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "RECORD", $zrgm->getResult()));
             }
             else if($zfg->getCfgGroupUASdesc() == "GROUP_ACCEPT_OWNER_ACCEPT") // OWNER Accept
             {
@@ -54,15 +55,21 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                             
                 $zrgm = new zRequestGroupMembership();
                 $zrgm->requestGroupMembershipOwnerAccept($zfg, $zfuserLoggedIn, $zfuserGroupOwner);
- 
-                $r = json_encode($zrgm->getResult());
-                gdlog()->LogInfo("JSON_ENCODE:".$r);
+
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "RECORD", $zrgm->getResult()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "GROUP_JOIN_NOT_DEFINED"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
         }
     }
     else if($action == "LIST_OF_REQUEST_FOR_GROUP")
@@ -71,27 +78,34 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         $r = $zfgr->findGroupRequest();
         if($r == "REQUEST_LIST_FOUND")
         {
-            $r = json_encode($zfgr->getResult_RequestLists());
-            $zfgr->gdlog()->LogInfo("JSON_ENCODE:".$r);
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                            , "RECORD", $zfgr->getResult_RequestLists()));
         }
-        echo $r;
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "REQUEST_LIST_NOT_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+        }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateConfiguration()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $tf = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["GROUP_ACCOUNT_UID"]) || $_POST["GROUP_ACCOUNT_UID"] == "")
-        $fv = "F";
-    return $fv;
+        $tf = false;
+    return $tf;
 }
 function validateConfigurationOnbehalf()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $tf = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["GROUP_ACCOUNT_UID"]) || $_POST["GROUP_ACCOUNT_UID"] == "")
-        $fv = "F";
+        $tf = false;
     else if (!isset($_POST["INVITED_USER_ACCOUNT_UID"]) || $_POST["INVITED_USER_ACCOUNT_UID"] == "")
-        $fv = "F";
-    return $fv;
+        $tf = false;
+    return $tf;
 }
 ?>

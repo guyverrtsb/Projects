@@ -224,7 +224,6 @@ class zRegisterUser
             "  `changeddt` DATETIME NOT NULL , ".
             "  `cfg_message_type_uid` VARCHAR(36) NOT NULL , ".
             "  `message_uid` VARCHAR(36) NOT NULL , ".
-            "  `isread` VARCHAR(1) NOT NULL , ".
             "  PRIMARY KEY (`lid`, `uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
             "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".

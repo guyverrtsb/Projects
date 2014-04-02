@@ -65,7 +65,9 @@ class zFindWallMessage
 
             $sqlstmnt=$sqlstmnt."ORDER BY ".$utk."wall_message.createddt DESC LIMIT 0,10";
                         
-
+        if($wall_message_lid_bypass == "EMPTY")
+            $wall_message_lid_bypass = "";
+                        
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
@@ -138,6 +140,9 @@ class zFindWallMessage
             "AND ".$utk."wall_message.lid <> :wall_message_lid_bypass ".
             "AND ".$utk."wall_message.createddt BETWEEN TIMESTAMP(:wall_message_createddt_start) AND NOW() ".
             "ORDER BY ".$utk."wall_message.createddt ASC";
+            
+        if($wall_message_lid_bypass == "EMPTY")
+            $wall_message_lid_bypass = "";
 
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");

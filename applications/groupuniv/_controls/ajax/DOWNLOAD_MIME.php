@@ -1,7 +1,7 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/mimes/imagefromdatabase.php"); ?>
 <?php
-gdlog()->LogInfo("PAGE_LOADED:");
+$echoret = "";
 if(isset($_GET["MIMEKEY"]))
 {
     $mimesobject = filter_var($_GET["MIMEKEY"], FILTER_SANITIZE_STRING);
@@ -16,7 +16,7 @@ if(isset($_GET["MIMEKEY"]))
      */
     $zifd = new zImagefromDatabase();
     $r = $zifd->findMimeRecord($mimesobject);
-    gdlog()->LogInfo($r);
+    gdlog()->LogInfo("download mime{".$r."}");
     if($r == "MIME_FOUND")
     {
         gdlog()->LogInfoTaskLabel("Mime is Found");
@@ -35,12 +35,16 @@ if(isset($_GET["MIMEKEY"]))
        }
     }
 }
+else
+{
+    gdlog()->LogInfo("Mime was not passed for download of image");
+}
 
 function validateLoginForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_GET["mimesobject"]) || $_GET["mimesobject"] == "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 ?>

@@ -12,11 +12,11 @@
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/register/taskcontrol.php"); ?>
 <?php
-if(isset($_POST["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
     $gdconfig = gdconfig();
-    gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "REGISTER_USER")
     {
         if(validateRegisterForm())
@@ -58,7 +58,10 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                                         
                         $r = $zmuser->matchUsertoRoleSdesc($zruser->getUA_Uid(), "USER_ROLE_SITE_ADMIN");
                         
-                        echo $r;
+                        $echoret = json_encode(buildReturnArray("RETURN_KEY", "GDCOM_ADMIN_CREATED"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Adminstrator Account Created. Please Log In"
+                                                ,"USER_TYPE", "GD_ADMIN"));
                     }
                     else if(strtoupper($edu[1]) == "EDU")
                     {
@@ -112,49 +115,74 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
                                 $o .= "</body>";
                                 $o .= "</html>";
                                 
-                                gdlog()->LogInfo("http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
-                                    "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&".
-                                    "activationlink=".$zrtc->getTempLink());
+                                $url = "http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
+                                    "/_controls/ajax/TASK_CONTROL.php?GD_CONTROLLER_KEY=TASK_CONTROL&activationlink=".$zrtc->getTempLink();
                                 
-                                $zrtc->sendmail("stephen@guyverdesigns.com",
-                                                "Validate Account - ".$zruser->getEmail(),
-                                                $o);
+                                if(!gdconfig()->isLandscapeLocal())
+                                {
+                                    $zrtc->sendmail("stephen@guyverdesigns.com",
+                                                    "Validate Account - ".$zruser->getEmail(),
+                                                    $o);
+                                }
+                                $echoret = json_encode(buildReturnArray("RETURN_KEY", "ACCOUNT_IN_PENDING"
+                                                                        ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                                        ,"RETURN_MSG", "Please check email for account activation email."
+                                                                        ,"TRXN_URL", "$url"
+                                                                        ,"ENV_KEY", gdconfig()->getLandscapeKey()
+                                                                        ,"USER_TYPE", "SITE_USER"));
                             }
-                            echo $r;
+                            else
+                            {
+                                $echoret = json_encode(buildReturnArray("RETURN_KEY", "TASK_IS_NOT_REGISTERED"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Task has not been registered"
+                                                ,"USER_TYPE", "SITE_USER"));
+                            }
                         }
                         else
                         {
-                            gdlog()->LogInfo("User is not part of a university:fr:".$r);
-                            echo $r;
+                            $echoret = json_encode(buildReturnArray("RETURN_KEY", "UNIVERSITY_DOMAIN_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "We have not registered your university yet."
+                                                                        ,"USER_TYPE", "SITE_USER"));
                         }
                     }
                     else
                     {
-                    	echo "EMAIL_KEY_NOT_EDU";
+                        $echoret = json_encode(buildReturnArray("RETURN_KEY", "EMAIL_KEY_NOT_EDU"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please use a .EDU Account for registering"));
                     }
             }
             else if($remailfound == "ACCOUNT_FOUND")
             {
-                echo "Email in Use";
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "EMAIL_IN_USE"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "The E-maill address supplied has been used previously."));
             }
             else if ($rnicknamefound == "ACCOUNT_FOUND")
             {
-                echo "Nickname in Use";
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "KNICKNAME_IN_USE"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please choose another nickname."));
             }
             else
             {
-                echo "Unknow Error";
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "UNKNOWN_ERROR"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Unknown Error"));
             }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "APlease enter in all of the requried fields."));
         }
     }
     else if($action == "LOGIN_USER")
     {
-        $fv = validateLoginForm();
-        if($fv == "T")
+        if(validateLoginForm())
         {
             gdreqonce("/_controls/classes/allowed.php");
             $zallowed = new zAllowed();
@@ -215,37 +243,38 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateRegisterForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["user_email"]) || $_POST["user_email"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_password"]) || $_POST["user_password"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_firstname"]) || $_POST["user_firstname"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_lastname"]) || $_POST["user_lastname"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_city"]) || $_POST["user_city"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_region"]) || $_POST["user_region"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_country"]) || $_POST["user_country"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_nickname"]) || $_POST["user_nickname"] == "")
-        $fv = "F";
-
+        $fv = false;
     return $fv;
 }
 
 function validateLoginForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["user_email"]) || $_POST["user_email"] == "")
-        $fv = "F";
+        $fv = false;
     if (!isset($_POST["user_password"]) || $_POST["user_password"] == "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 ?>

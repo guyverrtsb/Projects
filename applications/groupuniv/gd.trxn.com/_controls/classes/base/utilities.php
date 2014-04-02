@@ -11,15 +11,24 @@ class ZGDUtilities
         return $this->zgdlog;
     }
     
-    function sendmail($to, $subject, $message)
+    /*
+     * Use this to Send Email
+     * to : To Field
+     * subject : Subject Field
+     * $message : Message body
+     */
+    function sendmail($to, $from, $subject, $message)
     {
         // if "email" is filled out, send email
         //$email = $email;
         $subject = $subject;
         $message = $message;
         $headers = "";
-            $headers .= "From:" . $to . "\r\n";
-            $headers .= "BCC:audit@guyverdesigns.com\r\n";
+            $headers .= 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers .= "To:" . $to . "\r\n";
+            $headers .= "From:" . $from . "\r\n";
+            $headers .= "BCC:support@guyverdesigns.com\r\n";
             $headers .= "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
     

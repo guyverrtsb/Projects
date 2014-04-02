@@ -18,7 +18,7 @@ class zFindSearchData
         $utk = $this->getGDConfig()->getSessUnivTblKey();
         $usrtk = $this->getGDConfig()->getSessAuthUserTblKey();
         $fr;
-        $this->cleanResults_SearchRecords();
+        $this->cleanResults_List();
         
         $sqlstmnt = "SELECT ".
         
@@ -99,8 +99,8 @@ class zFindSearchData
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResults_SearchRecords($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
-                $this->gdlog()->LogInfoDB($this->getResults_SearchRecords());
+                $this->setResults_List($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResults_List());
                 $fr = $this->gdlog()->LogInfoRETURN("RECORDS_FOUND");
             }
             else
@@ -125,7 +125,7 @@ class zFindSearchData
         $utk = $this->getGDConfig()->getSessUnivTblKey();
         $usrtk = $this->getGDConfig()->getSessAuthUserTblKey();
         $fr;
-        $this->cleanResults_SearchRecords();
+        $this->cleanResults_List();
         
         $sqlstmnt = "select ".
         
@@ -211,8 +211,8 @@ class zFindSearchData
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResults_SearchRecords($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
-                $this->gdlog()->LogInfoDB($this->getResults_SearchRecords());
+                $this->setResults_List($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResults_List());
                 $fr = $this->gdlog()->LogInfoRETURN("RECORDS_FOUND");
             }
             else
@@ -228,32 +228,32 @@ class zFindSearchData
         return $fr;
     }
     
-    private $Results_SearchRecords = "NO_RECORDS";
-    private $Result_SearchRecord = "NO_RECORD";
-    function setResults_SearchRecords($rows)
+    private $Results_List = "NO_RECORDS";
+    private $Result_Record = "NO_RECORD";
+    function setResults_List($rows)
     {
-        return $this->Results_SearchRecords = $rows;
+        return $this->Results_List = $rows;
     }
-    function getResults_SearchRecords()
+    function getResults_List()
     {
-        return $this->Results_SearchRecords;
+        return $this->Results_List;
     }
-    function cleanResults_SearchRecords()
+    function cleanResults_List()
     {
-        $this->Results_SearchRecords = "NO_RECORDS";
+        $this->Results_List = "NO_RECORDS";
     }
     
-    function setResult_SearchRecord($row)
+    function setResult_Record($row)
     {
-        return $this->Result_SearchRecord = $row;
+        return $this->Result_Record = $row;
     }
-    function getResult_SearchRecord()
+    function getResult_Record()
     {
-        return $this->Result_SearchRecord;
+        return $this->Result_Record;
     }
-    function cleanResult_SearchRecord()
+    function cleanResult_Record()
     {
-        $this->Result_SearchRecord = "NO_RECORD";
+        $this->Result_Record = "NO_RECORD";
     }
 }
 ?>

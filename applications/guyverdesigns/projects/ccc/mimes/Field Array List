@@ -1,0 +1,202 @@
+<script>
+var ddele = new Array();
+ddele[ddele.length] = "gdVCBlockHeater";
+ddele[ddele.length] = "gdVCBlockHeaterVoltage";
+ddele[ddele.length] = "gdVCCoolingSystem";
+ddele[ddele.length] = "gdVCCoolingSystemTemp";
+ddele[ddele.length] = "gdVCCoolingSystemAccess01";
+ddele[ddele.length] = "gdVCAirIntake";
+ddele[ddele.length] = "gdVCAirIntakeAccess01";
+ddele[ddele.length] = "gdVCAirIntakeAccess02";
+ddele[ddele.length] = "gdVCExhaust";
+ddele[ddele.length] = "gdVCBatteryBoxMetal";
+ddele[ddele.length] = "gdVCBatteryBoxStyle";
+ddele[ddele.length] = "gdVCBatteryBoxLocation";
+ddele[ddele.length] = "gdVCBatteryBoxSide";
+ddele[ddele.length] = "gdVCBatteryBoxAccess02";
+ddele[ddele.length] = "gdVCBatteryBoxAccess03";
+ddele[ddele.length] = "gdVCStarter";
+ddele[ddele.length] = "gdVCAlternator";
+ddele[ddele.length] = "gdVCFuelTank";
+ddele[ddele.length] = "gdVCFuelTankLocation";
+ddele[ddele.length] = "gdVCFuelTankSide";
+ddele[ddele.length] = "gdVCFuelTankAccess01";
+ddele[ddele.length] = "gdVCFilterSeperator";
+ddele[ddele.length] = "gdVCTransRetarderSpeed";
+ddele[ddele.length] = "gdVCTransRetarderRetard";
+ddele[ddele.length] = "gdVCTransRetarderControls";
+ddele[ddele.length] = "gdVCTransRetarderNIS";
+ddele[ddele.length] = "gdVCPropShafts";
+ddele[ddele.length] = "gdVCFrontAxel";
+ddele[ddele.length] = "gdVCFrontAxelWheelSeals";
+ddele[ddele.length] = "gdVCFrontAxelBrakes";
+ddele[ddele.length] = "gdVCFrontAxelSlackAdjusters";
+ddele[ddele.length] = "gdVCFrontAxelWheels";
+ddele[ddele.length] = "gdVCFrontAxelTires";
+ddele[ddele.length] = "gdVCFrontAxelSpareWheel";
+ddele[ddele.length] = "gdVCFrontAxelSpareTire";
+ddele[ddele.length] = "gdVCFrontSuspension";
+ddele[ddele.length] = "gdVCSteeringPosition";
+ddele[ddele.length] = "gdVCRearAxel";
+ddele[ddele.length] = "gdVCRearAxelWheelSeals";
+ddele[ddele.length] = "gdVCRearAxelBrakes";
+ddele[ddele.length] = "gdVCRearAxelWheels";
+ddele[ddele.length] = "gdVCRearAxelTires";
+ddele[ddele.length] = "gdVCRearAxelRatioMaxSpeedRatio";
+ddele[ddele.length] = "gdVCRearAxelRatioMaxSpeedMaxSpeed";
+ddele[ddele.length] = "gdVCRearAxelSlackAdjusters";
+ddele[ddele.length] = "gdVCRearAxelSpareWheel";
+ddele[ddele.length] = "gdVCRearAxelSpareTire";
+ddele[ddele.length] = "gdVCRearAxelTelmaRetarder";
+ddele[ddele.length] = "gdVCRearSuspension";
+ddele[ddele.length] = "gdVCTagPusher";
+ddele[ddele.length] = "gdVCTagPusherWheelsYN";
+ddele[ddele.length] = "gdVCTagPusherWheelsType";
+ddele[ddele.length] = "gdVCTagPusherTires";
+ddele[ddele.length] = "gdVCFrameType";
+ddele[ddele.length] = "gdVCFrameBumper";
+ddele[ddele.length] = "gdVCWheelBase";
+ddele[ddele.length] = "gdVCABSSystems";
+ddele[ddele.length] = "gdVCAirTanks";
+ddele[ddele.length] = "gdVCAirTanksDrainValves";
+ddele[ddele.length] = "gdVCAirTanksPullCords";
+ddele[ddele.length] = "gdVCAirDryer";
+ddele[ddele.length] = "gdVCAirDryerAccess01";
+ddele[ddele.length] = "gdVCCabConstructionSide";
+ddele[ddele.length] = "gdVCCabConstructionType";
+ddele[ddele.length] = "gdVCCabConstructionCab";
+ddele[ddele.length] = "gdVCCabConstructionTiltPump";
+ddele[ddele.length] = "gdVCCabExterior";
+ddele[ddele.length] = "gdVCCabInterior";
+ddele[ddele.length] = "gdVCCabInteriorAirConditioning";
+ddele[ddele.length] = "gdVCCabInteriorStereo";
+ddele[ddele.length] = "gdVCCabInteriorWindowsLHStyle";
+ddele[ddele.length] = "gdVCCabInteriorWindowsLHControl";
+ddele[ddele.length] = "gdVCCabInteriorWindowsRHStyle";
+ddele[ddele.length] = "gdVCCabInteriorWindowsRHControl";
+ddele[ddele.length] = "gdVCCabInteriorMirrorLH";
+ddele[ddele.length] = "gdVCCabInteriorMirrorRH";
+ddele[ddele.length] = "gdVCCabInteriorSpotMirrorsLHRH";
+ddele[ddele.length] = "gdVCCabInteriorSeats";
+ddele[ddele.length] = "gdVCCabInteriorSeatsLHFabric";
+ddele[ddele.length] = "gdVCCabInteriorSeatsLHStyle";
+ddele[ddele.length] = "gdVCCabInteriorSeatsRHFabric";
+ddele[ddele.length] = "gdVCCabInteriorSeatsRHStyle";
+ddele[ddele.length] = "gdVCInstrumentation";
+ddele[ddele.length] = "gdVCInstrumentationAccess01";
+ddele[ddele.length] = "gdVCInstrumentationAccess02";
+ddele[ddele.length] = "gdVCInstrumentationAccess03";
+ddele[ddele.length] = "gdVCInstrumentationAccess04";
+ddele[ddele.length] = "gdVCInstrumentationWindshieldWipers";
+ddele[ddele.length] = "gdVCInstrumentationCabElecLighting";
+ddele[ddele.length] = "gdVCInstrumentationAccess05";
+ddele[ddele.length] = "gdVCInstrumentationAccess06";
+ddele[ddele.length] = "gdVCInstrumentationAccess07";
+ddele[ddele.length] = "gdVCInstrumentationAccess08";
+ddele[ddele.length] = "gdVCInstrumentationAccess09";
+ddele[ddele.length] = "gdVCInstrumentationBackUpAlarm";
+ddele[ddele.length] = "gdVCInstrumentationMiscEquipment";
+ddele[ddele.length] = "gdVCInstrumentationMiscEquipmentAccess01";
+ddele[ddele.length] = "gdVCInstrumentationMiscEquipmentAccess02";
+ddele[ddele.length] = "gdVCInstrumentationMiscEquipmentAccess03";
+</script>
+
+gdVCBlockHeater
+gdVCBlockHeaterVoltage
+gdVCCoolingSystem
+gdVCCoolingSystemTemp
+gdVCCoolingSystemAccess01
+gdVCAirIntake
+gdVCAirIntakeAccess01
+gdVCAirIntakeAccess02
+gdVCExhaust
+gdVCBatteryBoxMetal
+gdVCBatteryBoxStyle
+gdVCBatteryBoxLocation
+gdVCBatteryBoxSide
+gdVCBatteryBoxAccess02
+gdVCBatteryBoxAccess03
+gdVCStarter
+gdVCAlternator
+gdVCFuelTank
+gdVCFuelTankLocation
+gdVCFuelTankSide
+gdVCFuelTankAccess01
+gdVCFilterSeperator
+gdVCTransRetarderSpeed
+gdVCTransRetarderRetard
+gdVCTransRetarderControls
+gdVCTransRetarderNIS
+gdVCPropShafts
+gdVCFrontAxel
+gdVCFrontAxelWheelSeals
+gdVCFrontAxelBrakes
+gdVCFrontAxelSlackAdjusters
+gdVCFrontAxelWheels
+gdVCFrontAxelTires
+gdVCFrontAxelSpareWheel
+gdVCFrontAxelSpareTire
+gdVCFrontSuspension
+gdVCSteeringPosition
+gdVCRearAxel
+gdVCRearAxelWheelSeals
+gdVCRearAxelBrakes
+gdVCRearAxelWheels
+gdVCRearAxelTires
+gdVCRearAxelRatioMaxSpeedRatio
+gdVCRearAxelRatioMaxSpeedMaxSpeed
+gdVCRearAxelSlackAdjusters
+gdVCRearAxelSpareWheel
+gdVCRearAxelSpareTire
+gdVCRearAxelTelmaRetarder
+gdVCRearSuspension
+gdVCTagPusher
+gdVCTagPusherWheelsYN
+gdVCTagPusherWheelsType
+gdVCTagPusherTires
+gdVCFrameType
+gdVCFrameBumper
+gdVCWheelBase
+gdVCABSSystems
+gdVCAirTanks
+gdVCAirTanksDrainValves
+gdVCAirTanksPullCords
+gdVCAirDryer
+gdVCAirDryerAccess01
+gdVCCabConstructionSide
+gdVCCabConstructionType
+gdVCCabConstructionCab
+gdVCCabConstructionTiltPump
+gdVCCabExterior
+gdVCCabInterior
+gdVCCabInteriorAirConditioning
+gdVCCabInteriorStereo
+gdVCCabInteriorWindowsLHStyle
+gdVCCabInteriorWindowsLHControl
+gdVCCabInteriorWindowsRHStyle
+gdVCCabInteriorWindowsRHControl
+gdVCCabInteriorMirrorLH
+gdVCCabInteriorMirrorRH
+gdVCCabInteriorSpotMirrorsLHRH
+gdVCCabInteriorSeats
+gdVCCabInteriorSeatsLHFabric
+gdVCCabInteriorSeatsLHStyle
+gdVCCabInteriorSeatsRHFabric
+gdVCCabInteriorSeatsRHStyle
+gdVCInstrumentation
+gdVCInstrumentationAccess01
+gdVCInstrumentationAccess02
+gdVCInstrumentationAccess03
+gdVCInstrumentationAccess04
+gdVCInstrumentationWindshieldWipers
+gdVCInstrumentationCabElecLighting
+gdVCInstrumentationAccess05
+gdVCInstrumentationAccess06
+gdVCInstrumentationAccess07
+gdVCInstrumentationAccess08
+gdVCInstrumentationAccess09
+gdVCInstrumentationBackUpAlarm
+gdVCInstrumentationMiscEquipment
+gdVCInstrumentationMiscEquipmentAccess01
+gdVCInstrumentationMiscEquipmentAccess02
+gdVCInstrumentationMiscEquipmentAccess03

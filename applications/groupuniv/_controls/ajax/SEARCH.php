@@ -1,11 +1,10 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdreqonce("/_controls/classes/find/search.php"); ?>
-
 <?php
-if(isset($_POST["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
-    gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "SEARCH_NON_UNIVERSITY")
     {
         gdlog()->LogInfoTaskLabel("Search University");
@@ -27,17 +26,27 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
             
             if($r == "RECORDS_FOUND")
             {
-                $r = json_encode($zfsd->getResults_SearchRecords());
-                gdlog()->LogInfo("JSON_ENCODE:".$r);
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "RESULTS_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfsd->getResults_List()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please adjust your search.  No results found."));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateTaskForm()
 {

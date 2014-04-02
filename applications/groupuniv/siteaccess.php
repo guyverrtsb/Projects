@@ -13,18 +13,33 @@
 <script>
 function gdFuncRegisterData()
 {
-    showMessage("#RegisterErr", "&nbsp;");
+    buildContentBlocksReturnMessage();
     var formdata = gdSerialzeControllerKey("#RegisterFrm", "REGISTER_USER");
     $.post("_controls/ajax/USER_ACCESS.php",
-    formdata, function(data) {
-        if(isDataMatch(data, "UNIVERSITY_NOT_FOUND"))
-            showMessage("#RegisterErr", "Univeristy not Valid");
-        else if(isDataMatch(data, "EMAIL_IN_USE"))
-            showMessage("#RegisterErr", "E-Mail already is Use");
-        else if(isDataMatch(data, "ACCOUNT_CREATED"))
-            showMessage("#RegisterErr", "Account was created.  Please chekc your email to activate the account.");
+    formdata, function(data)
+    {
+        data = eval("(" + data + ")");
+        if(data.USER_TYPE == "GD_ADMIN")
+        {
+            buildContentBlocksReturnMessage(data, "GDCOM_ADMIN_CREATED");
+        }
+        else if(data.USER_TYPE == "SITE_USER")
+        {
+            if(buildContentBlocksReturnMessage(data, "ACCOUNT_IN_PENDING"))
+            {
+                if(data.ENV_KEY != null && data.ENV_KEY == "LCL")
+                {
+                    $("<a/>")
+                        .text("Activate User Override")
+                        .attr("href",data.TRXN_URL)
+                        .appendTo($("#TransactionOutput"));
+                }
+            }
+        }
         else
-            showMessage("#RegisterErr", "Unknown Error:" + data);
+        {
+            buildContentBlocksReturnMessage(data, true);
+        }
     });
 }
 
@@ -36,6 +51,18 @@ function gdFuncLoginData()
 function gdFuncForgotPasswordData()
 {
     //$("#" + frm).submit();    
+}
+
+function gdFuncRegisterUserData(email, pass, fname, lname, nick, country, region, city)
+{
+    $("#user_email").val(email);
+    $("#user_password").val(pass);
+    $("#user_firstname").val(fname);
+    $("#user_lastname").val(lname);
+    $("#user_nickname").val(nick);
+    $("#user_country").val(country);
+    $("#user_region").val(region);
+    $("#user_city").val(city);
 }
 </script>
 </head>
@@ -54,8 +81,8 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
     printf("<li id=\"LoginErr\" class=\"error\">&nbsp;</li>");
 }
 ?>
-    <li class="user"><input class="rounded" type="text" id="user_email" name="user_email" value="stephen@guyverdesigns.com"/></li>
-    <li class="user"><input class="rounded" type="text" id="user_password" name="user_password" value="honkey"/></li>
+    <li class="user"><input class="rounded" type="text" id="login_user_email" name="user_email" value="stephen@guyverdesigns.com"/></li>
+    <li class="user"><input class="rounded" type="text" id="login_user_password" name="user_password" value="honkey"/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncLoginData();">Login</a></li>
     <input type="hidden" id="GD_CONTROLLER_KEY" name="GD_CONTROLLER_KEY" value="LOGIN_USER"/>
     </form>
@@ -64,18 +91,24 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
 <li><ul id="CBUserRegister">
     <form id="RegisterFrm" class="form">
     <li class="cbheader">Register</li>
-    <li id="RegisterErr" class="error">&nbsp;</li>
+    <li id="TransactionOutput">&nbsp;</li>
     <li class="cbsubheader">User Account</li>
-    <li class="user"><input class="rounded" type="text" id="user_email" name="user_email" value="stephen@guyverdesigns.com"/></li>
-    <li class="user"><input class="rounded" type="text" id="user_password" name="user_password" value="honkey"/></li>
+    <li class="user"><input class="rounded" type="text" id="user_email" name="user_email" value=""/></li>
+    <li class="user"><input class="rounded" type="text" id="user_password" name="user_password" value=""/></li>
     <li class="cbsubheader">User Profile</li>
-    <li class="user"><input class="rounded" type="text" id="user_firstname" name="user_firstname" value="Stephen"/></li>
-    <li class="user"><input class="rounded" type="text" id="user_lastname" name="user_lastname" value="Shellenberger"/></li>
-    <li class="user"><input class="rounded" type="text" id="user_nickname" name="user_nickname" value="shaggy"/></li>
+    <li class="user"><input class="rounded" type="text" id="user_firstname" name="user_firstname" value=""/></li>
+    <li class="user"><input class="rounded" type="text" id="user_lastname" name="user_lastname" value=""/></li>
+    <li class="user"><input class="rounded" type="text" id="user_nickname" name="user_nickname" value=""/></li>
     <li class="user"><select class="rounded" id="user_country" name="user_country" configuration="COUNTRIES|COUNTRY_US|user_region"></select></li>
     <li class="user"><select class="rounded" id="user_region" name="user_region" configuration="COUNTRY_US|REGION_NC"></select></li>
     <li class="user"><input class="rounded" type="text" id="user_city" name="user_city" value="Raleigh"/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterData();">Register</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('stephen@guyverdesigns.com', 'honkey', 'Stephen', 'Shellenberger', 'stephen@gd.com', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Stephen @ GD.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('stephen@ncsu.edu', 'honkey', 'Stephen', 'Shellenberger', 'guyver', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Stephen @ NCSU.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('tiffany@ncsu.edu', 'honkey', 'Tiffany', 'Garner', 'harleygirl', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Tiffany @ NCSU.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('earenest@ncsu.edu', 'honkey', 'Earenest', 'Grayson', 'ejg4405', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Earenest @ NCSU.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('carlos@ncsu.edu', 'honkey', 'Carlos', 'Ibacache', 'clos', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Carlos @ NCSU.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('josh@ncsu.edu', 'honkey', 'Josh', 'Ibacache', 'josh', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Josh @ NCSU.com</a></li>
     </form>
     </ul>
 </li>

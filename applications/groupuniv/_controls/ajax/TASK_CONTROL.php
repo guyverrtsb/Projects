@@ -14,11 +14,11 @@
 <?php gdreqonce("/_controls/classes/register/taskcontrol.php"); ?>
 <?php gdreqonce("/_controls/classes/authenticate.php"); ?>
 <?php
-if(isset($_GET["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_GET["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
     $gdconfig = gdconfig();
-    gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "TASK_CONTROL")
     {
         if(validateTaskForm())
@@ -199,20 +199,23 @@ if(isset($_GET["GD_CONTROLLER_KEY"]))
                 $gdconfig->cleanUniversitySessionObjects();
                 $gdconfig->redirectToLogin(103, $r, "Activation Link is invalid", "/siteaccess.php");
             }
-            echo $r;
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FORM_FIELDS_NOT_VALID"
+                                                ,"RETURN_SHOW_PASS_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Please fill in all fields."));
         }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateTaskForm()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $fv = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_GET["activationlink"]) || $_GET["activationlink"] == "")
-        $fv = "F";
+        $fv = false;
     return $fv;
 }
 ?>

@@ -1,10 +1,10 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
 <?php
-if(isset($_POST["GD_CONTROLLER_KEY"]))
+$echoret = "";
+$action = getControlKey();
+if($action != "INVALID")
 {
-    $action = filter_var($_POST["GD_CONTROLLER_KEY"], FILTER_SANITIZE_STRING);
-    gdlog()->LogInfo("GD_CONTROLLER_KEY{".$action."}");
     if($action == "GET_CONFIGURATION")
     {
         gdlog()->LogInfoTaskLabel("Get Configuration");
@@ -12,26 +12,33 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         {
             $group_key = filter_var($_POST["group_key"], FILTER_SANITIZE_STRING);
             $zfconfigs = new zAppBaseObject();
-            $r = $zfconfigs->findConfigurationListfromGroupKey($group_key);
-            if($r == "LIST_FOUND")
+            if($zfconfigs->findConfigurationListfromGroupKey($group_key) == "LIST_FOUND")
             {
-                $r = json_encode($zfconfigs->getResults_ConfigurationRecords());
-                $zfconfigs->gdlog()->LogInfo("JSON_ENCODE:".$r);
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfconfigs->getResults_ConfigurationRecords()));
             }
-            echo $r;
+            else
+            {
+                $echoret = json_encode(buildReturnArray("RETURN", "CONFIG_NOT_FOUND"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+            }
         }
         else
         {
-            echo "FORM_FIELDS_NOT_VALID";
+            $echoret = json_encode(buildReturnArray("RETURN", "FORM_FIELDS_NOT_VALID"
+                                                , "RETURN_SHOW_PASS_MSG", "FALSE"));
         }
     }
 }
+gdLogEchoReturn($echoret);
+echo $echoret;
 
 function validateConfiguration()
 {
-    $fv = "T";  // Form is Valid Key T=Valid; anything else is invalid;
+    $tf = true;  // Form is Valid Key T=Valid; anything else is invalid;
     if (!isset($_POST["group_key"]) || $_POST["group_key"] == "")
-        $fv = "F";
-    return $fv;
+        $tf = false;
+    return $tf;
 }
 ?>
