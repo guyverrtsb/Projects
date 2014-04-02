@@ -1,0 +1,48 @@
+/*****Basic Elements*****/
+body {
+	font: 0.8em arial;
+}
+
+/*****Generic Classes*****/  
+.clear {
+	clear: both;
+}
+
+/*****Basic Layout*****/ 
+#wrap {
+	
+}
+
+#main {
+	
+}
+
+#content {
+	
+}
+
+/*****Main Page*****/
+.chat .messages {
+	border: 1px solid #ccc;
+	width: 250px;
+	height: 210px;
+	padding: 10px;
+	overflow-y: scroll;
+}
+
+.chat .message a {
+	color: slategrey;
+}
+
+.chat .message p {
+	margin: 5px 0;
+}
+
+.chat .entry {
+	width: 260px;
+	height: 40px;
+	padding: 5px;
+	margin: 5px 0 0 0;
+	font: 1em arial;
+	resize: none;
+}

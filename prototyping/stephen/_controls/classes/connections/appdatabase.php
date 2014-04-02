@@ -40,7 +40,7 @@ class ZAppDatabase
     {       
         // LCL UserSafety Database
         $convar["LCL_GDCORP_USERSAFETY_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "lclusrsfty";
+        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "gdcorpdb";
         $convar["LCL_GDCORP_USERSAFETY_USRNAM"] = "root";
         $convar["LCL_GDCORP_USERSAFETY_PASWRD"] = "GDHonkey_01";
         // GoDaddy Prototype UserSafety Database
@@ -49,14 +49,14 @@ class ZAppDatabase
         $convar["PRT_GDCORP_USERSAFETY_USRNAM"] = "prtusrsfty";
         $convar["PRT_GDCORP_USERSAFETY_PASWRD"] = "GDProto@01";
         // GoDaddy Staging UserSafety Database
-        $convar["STG_GDCORP_USERSAFETY_HOSTNAME"] = "stgusrsfty.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_USERSAFETY_DBNAME"] = "stgusrsfty";
-        $convar["STG_GDCORP_USERSAFETY_USRNAM"] = "stgusrsfty";
-        $convar["STG_GDCORP_USERSAFETY_PASWRD"] = "GDStage@01";
+        $convar["STG_GDCORP_USERSAFETY_HOSTNAME"] = "stggdcorpdb.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_USERSAFETY_DBNAME"] = "stggdcorpdb";
+        $convar["STG_GDCORP_USERSAFETY_USRNAM"] = "stggdcorpdb";
+        $convar["STG_GDCORP_USERSAFETY_PASWRD"] = "GDProd@01";
         // GoDaddy Production UserSafety Database
-        $convar["PRD_GDCORP_USERSAFETY_HOSTNAME"] = "prdusrsfty.db.6047355.hostedresource.com";
-        $convar["PRD_GDCORP_USERSAFETY_DBNAME"] = "prdusrsfty";
-        $convar["PRD_GDCORP_USERSAFETY_USRNAM"] = "prdusrsfty";
+        $convar["PRD_GDCORP_USERSAFETY_HOSTNAME"] = "gdcorpdb.db.6047355.hostedresource.com";
+        $convar["PRD_GDCORP_USERSAFETY_DBNAME"] = "gdcorpdb";
+        $convar["PRD_GDCORP_USERSAFETY_USRNAM"] = "gdcorpdb";
         $convar["PRD_GDCORP_USERSAFETY_PASWRD"] = "GDProd@01";
         
         // LCL CrossApps Database
@@ -79,8 +79,28 @@ class ZAppDatabase
         $convar["PRD_GDCORP_CROSSAPPDATA_DBNAME"] = "prdcrssapp";
         $convar["PRD_GDCORP_CROSSAPPDATA_USRNAM"] = "prdcrssapp";
         $convar["PRD_GDCORP_CROSSAPPDATA_PASWRD"] = "GDProd@01";
+        
+        // LCL GroupYou Database
+        $convar["LCL_GDCORP_APPDB_HOSTNAME"] = "localhost:3306";
+        $convar["LCL_GDCORP_APPDB_DBNAME"] = "gdcorpdb";
+        $convar["LCL_GDCORP_APPDB_USRNAM"] = "root";
+        $convar["LCL_GDCORP_APPDB_PASWRD"] = "GDHonkey_01";
+        // GoDaddy Staging GroupYou Database
+        $convar["STG_GDCORP_APPDB_HOSTNAME"] = "stggdcorpdb.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_APPDB_DBNAME"] = "stggdcorpdb";
+        $convar["STG_GDCORP_APPDB_USRNAM"] = "stggdcorpdb";
+        $convar["STG_GDCORP_APPDB_PASWRD"] = "GDProd@01";
+        // GoDaddy Production GroupYou Database
+        $convar["PRD_GDCORP_APPDB_HOSTNAME"] = "gdcorpdb.db.6047355.hostedresource.com";
+        $convar["PRD_GDCORP_APPDB_DBNAME"] = "gdcorpdb";
+        $convar["PRD_GDCORP_APPDB_USRNAM"] = "gdcorpdb";
+        $convar["PRD_GDCORP_APPDB_PASWRD"] = "GDProd@01";
        
-       return $convar[$_SESSION['GUYVERDESIGNS_SERVER_ENVIRONMENT'] . "_" . $db . "_" . $name];
+        $output = $convar[$_SESSION['GUYVERDESIGNS_SERVER_ENVIRONMENT'] . "_" . $db . "_" . $name];
+       
+        gdlog()->LogDebug("DB_CONNECTION : ".$_SESSION['GUYVERDESIGNS_SERVER_ENVIRONMENT']."_".$db."_".$name."-{".$output."}");
+       
+        return $output;
     }
 }
 ?>
