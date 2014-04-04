@@ -1,16 +1,22 @@
 /* Page Structure */
-#container { width:1100px; margin:0 auto; }
+#container { width:1100px; margin:0 auto; background-color:#333333; }
 #header { width:100%; background: url("/gd.trxn.com/mimes/images/grey.png"); }
-#logo { float:left; width:45px; height:70px; margin:0px; margin-left:0px; /*background:#fff;*/ border: 0px solid #000000; }
-#top_info { float:right; width:100px; height:40px; margin:5px; background:#666; border: 1px solid #c7c7c7; }
+#logo { float:left; width:45px; height:70px; margin:0px; margin-left:0px; /*background:#fff;*/ border: 0px solid #000000; display:none; }
+#top_info { float:right; width:100px; height:40px; margin:5px; background:#666; border: 1px solid #c7c7c7; display:none; }
 
-#navbar { height:30px; clear:both; background:#666; border-top: 2px solid #FF0000; }
+#navbar { height:50px; clear:both; background:#ff8000; }
 #navbar ul { margin:0; padding:0; list-style-type:none; }
-#navbar ul li { float:left; padding:5px; }
-#navbar ul li a { float:left; font-size:12px; padding: 0 0 0 10px; display:block; color:#fff; }
+#navbar ul li { float:left; padding:0px; }
+#navbar ul li a { float:left; font-size:12px; padding: 30px 0 0 30px; display:block; color:#fff; }
 
 #content_area { height:750px; border:0px solid #F7A922; }
 #banner { height:50px; padding:10px; clear:both; }
-#left_column { float:left; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
-#right_column { float:right; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
-#footer { height:50px; padding:5px; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }
+#left_column { float:left; width:170px; padding:5px; border:1px solid #fff; color:#fff; display:none; }
+#right_column { float:right; width:170px; padding:5px; border:1px solid #fff; color:#fff; display:none; }
+#footer { height:50px; margin-top:400px; padding:5px; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }
+
+#supportbar { height:50px; clear:both; }
+#supportbar ul { margin:0; padding:0; list-style-type:none; }
+#supportbar ul li { float:left; padding:0px; }
+#supportbar ul li a { float:left; font-size:12px; padding: 15px 0 0 30px; display:block; color:#fff; }
+

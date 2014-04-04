@@ -24,139 +24,12 @@
 		zcgdWidgetBuildProductSelector : function (data)
 		{
 			var cbobj = $(this);
-			var filterobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"1"});
-			var prodobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"2"});
-			var pageobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"3"});
-			var actionobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"4"});
+			var filterobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"0"});
+			var prodobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"1"});
+			var pageobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"2"});
+			var actionobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"3"});
 			
 	        var dataProductList = data;
-	        // Build filters
-	        var rl = dataProductList.length; // Numnber of Records;
-	        var cl = dataProductList[0]; // Columns Names
-	        var cidx = 0;
-	        for (var key in cl)
-	        {
-	            var colname = key;
-	            var colvalu = cl[colname];
-	            // alert(colname + " : " + colvalu);
-	            
-	            var li = $("<li/>");
-	            var label = $("<label/>");
-	                label.attr("class", "sapsscformfieldlabel");
-	                label.text(colname);
-	            var ele = null;
-	            if(colname == "matnr" || colname == "proddesc")
-	            {
-	                ele = $("<input/>");
-	                ele.attr("type", "text");
-	                ele.attr("id", "sapsscformfield" + key);
-	                ele.attr("name", "sapsscformfield" + key);
-	                ele.attr("class", "sapsscformfieldInput");
-	                ele.attr("jqgridcolname", colname);
-	                ele.keyup(function()
-            		{
-	                    var filter = new Array();
-	                    filterobj.children().each(function(idx, obj)
-	                    {
-	                        var eleobj = $(obj).children("input");
-	                        if(eleobj.prop("tagName"))
-	                        {
-	                            if(eleobj.val() != "")
-	                            {
-	                                var filterCondition = new Object();
-	                                    filterCondition.field = eleobj.attr("jqgridcolname");
-	                                    filterCondition.op = "cn";
-	                                    filterCondition.data = eleobj.val();
-	                                filter[filter.length] = filterCondition;
-	                            }
-	                        }
-	                            
-	                        var eleobj = $(obj).children("select");
-	                        if(eleobj.prop("tagName"))
-	                        {
-	                            if(eleobj.val() != "")
-	                            {
-	                                var filterCondition = new Object();
-	                                    filterCondition.field = eleobj.attr("jqgridcolname");
-	                                    filterCondition.op = "eq";
-	                                    filterCondition.data = eleobj.val();
-	                                filter[filter.length] = filterCondition;
-	                            }
-	                        }
-	                    });
-	                    filterobj.jqGrid("zcgdFilterGrid", prodobj, filter, "AND");
-	                });
-	            }
-	            else
-	            {
-	                ele = $("<select/>");
-	                ele.attr("type", "text");
-	                ele.attr("id", "sapsscformfield" + key);
-	                ele.attr("name", "sapsscformfield" + key);
-	                ele.attr("class", "sapsscformfieldSelect");
-	                ele.attr("jqgridcolname", colname);
-	                ele.change(function()
-            		{
-	                    var filter = new Array();
-	                    filterobj.children().each(function(idx, obj)
-	                    {
-	                        var eleobj = $(obj).children("input");
-	                        if(eleobj.prop("tagName"))
-	                        {
-	                            if(eleobj.val() != "")
-	                            {
-	                                var filterCondition = new Object();
-	                                    filterCondition.field = eleobj.attr("jqgridcolname");
-	                                    filterCondition.op = "cn";
-	                                    filterCondition.data = String(eleobj.val());
-	                                filter[filter.length] = filterCondition;
-	                            }
-	                        }
-	                            
-	                        var eleobj = $(obj).children("select");
-	                        if(eleobj.prop("tagName"))
-	                        {
-	                            if(eleobj.val() != "")
-	                            {
-	                                var filterCondition = new Object();
-	                                    filterCondition.field = eleobj.attr("jqgridcolname");
-	                                    filterCondition.op = "eq";
-	                                    filterCondition.data = String(eleobj.val());
-	                                filter[filter.length] = filterCondition;
-	                            }
-	                        }
-	                    });
-	                    filterobj.jqGrid("zcgdFilterGrid", prodobj, filter, "AND");
-                    });
-	            }
-	            li.append(label);
-	            li.append(ele)
-	            filterobj.append(li);
-	            
-	            if(ele.prop("tagName") == "SELECT")
-	            {
-	            	var option = $("<option/>");
-	                    option.val("");
-	                    option.text("Choose");
-                    ele.append(option);
-	            	var container = new Array();
-	                for(var idx = 0; idx < rl; idx++)
-	                {
-	                    var val = dataProductList[idx][colname];
-	                    if($.inArray(val, container) == -1)
-	                    {
-	                    	// alert(val);
-		                    var option = $("<option/>");
-		                        option.val(val);
-		                        option.text(val);
-		                    ele.append(option);
-		                    container[container.length] = val;
-	                    }
-	                }
-	                container = new Array();
-	            }
-	            cidx++;
-	        }
 	        
 	        // Build jqGRid with Product List Data
 	        prodobj.jqGrid({
@@ -170,10 +43,10 @@
 	                {name:'format', index:'format', width:80, align:"left", sorttype:"text", search:true, stype:"text"},     
 	                {name:'appreq', index:'appreq', width:80, align:"left", sorttype:"text", search:true, stype:"text"}     
 	            ],
-	            //rowNum:10,
+	            rowNum:10,
 	            rowList:[10,20,30],
 	            pager: "#" + pageobj.attr("id"),
-	            sortname: 'id',
+	            sortname: "matnr",
 	            viewrecords: true,
 	            sortorder: "desc",
 	            multiselect: true,
@@ -184,6 +57,8 @@
 	        {
 	        	prodobj.jqGrid('addRowData', (idx + 1), dataProductList[idx]);
 	        }
+	        
+        	cbobj.jqGrid("zcgdProductSelectFilter", filterobj, prodobj, dataProductList);
 	        
 	        var button = $("<input/>");
 	        	button.attr("type", "button");
@@ -221,9 +96,9 @@
 		zcgdWidgetBuildSubscriptionSelector : function (dataSoldtoList, dataProductList)
 		{
 			var cbobj = $(this);
-        	var soldtoobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"1"});
-			var prodobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"3"});
-			var actionobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"4"});
+        	var soldtoobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"0"});
+			var prodobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"2"});
+			var actionobj = cbobj.jqGrid("zcgdUtilFindChildObj", {type:"index", match:"3"});
 			
 		    /** Sold To List **/
 			soldtoobj.jqGrid({
@@ -239,7 +114,7 @@
 		       //rowNum:10,
 		        // rowList:[10,20,30],
 		        // pager: '#sapSscProductPager',
-		        sortname: 'id',
+		        sortname: "soldtonum",
 		        viewrecords: true,
 		        sortorder: "desc",
 		        multiselect: true,
@@ -271,7 +146,7 @@
 		        //rowNum:5,
 		        // rowList:[10,20,30],
 		        // pager: '#sapSscProductPager',
-		        sortname: 'id',
+		        sortname: "matnr",
 		        viewrecords: true,
 		        sortorder: "desc",
 		        multiselect: true,
@@ -366,6 +241,207 @@
 		                        "rules" : []}});
 		    }
 		    prodobj.trigger("reloadGrid", [{page:1}]);
+		},
+		zcgdProductSelectFilter : function (filterobj, prodobj, dataProductList)
+		{
+	        var cl = dataProductList[0]; // Columns Names
+	        
+			var defaultVals = new Array();
+			var focusedObjectId;
+			if(filterobj.children().length == 0 )
+			{
+		        var cidx = 0;
+		        for (var key in cl)
+		        {
+		        	var colname = key;
+		            var colvalu = cl[colname];
+		        	defaultVals[cidx] = "";
+		        	if(cidx == 0)
+		        	{
+		        		focusedObjectId = "sapsscformfield" + colname;
+		        	}
+		        	cidx++;
+		        }
+			}
+			else
+			{
+		        var cidx = 0;
+		        for (var key in cl)
+		        {
+		        	var colname = key;
+		            var colvalu = cl[colname];
+		            var obj = $("#sapsscformfield" + colname);
+		        	defaultVals[cidx] = obj.val();
+		        	if(obj.is(":focus"))
+		        	{
+		        		// alert("sapsscformfield" + colname + ":is focus");
+		        		focusedObjectId = "sapsscformfield" + colname;
+		        	}
+		        	cidx++;
+		        }
+		        //alert("Delta:" + defaultVals);
+			}
+				
+			filterobj.empty();
+	        // Build filters
+	        var cidx = 0;
+	        for (var key in cl)
+	        {
+	            var colname = key;
+	            var colvalu = cl[colname];
+	            // alert(colname + " : " + colvalu);
+	            
+	            var li = $("<li/>");
+	            var label = $("<label/>");
+	                label.attr("class", "sapsscformfieldlabel");
+	                label.text(prodobj.jqGrid("getGridParam", "colNames")[(cidx + 1)]);
+	            var ele = null;
+	            if(colname == "matnr" || colname == "proddesc")
+	            {
+	                ele = $("<input/>");
+	                ele.attr("type", "text");
+	                ele.attr("id", "sapsscformfield" + key);
+	                ele.attr("name", "sapsscformfield" + key);
+	                ele.attr("class", "sapsscformfieldInput");
+	                ele.attr("jqgridcolname", colname);
+	                ele.val(defaultVals[cidx]);
+	                ele.keyup(function()
+            		{
+	                    var filter = new Array();
+	                    filterobj.children().each(function(idx, obj)
+	                    {
+	                        var eleobj = $(obj).children("input");
+	                        if(eleobj.prop("tagName"))
+	                        {
+	                            if(eleobj.val() != "")
+	                            {
+	                                var filterCondition = new Object();
+	                                    filterCondition.field = eleobj.attr("jqgridcolname");
+	                                    filterCondition.op = "cn";
+	                                    filterCondition.data = eleobj.val();
+	                                filter[filter.length] = filterCondition;
+	                            }
+	                        }
+	                            
+	                        var eleobj = $(obj).children("select");
+	                        if(eleobj.prop("tagName"))
+	                        {
+	                            if(eleobj.val() != "")
+	                            {
+	                                var filterCondition = new Object();
+	                                    filterCondition.field = eleobj.attr("jqgridcolname");
+	                                    filterCondition.op = "eq";
+	                                    filterCondition.data = eleobj.val();
+	                                filter[filter.length] = filterCondition;
+	                            }
+	                        }
+	                    });
+	                    filterobj.jqGrid("zcgdFilterGrid", prodobj, filter, "AND");
+	                    filterobj.jqGrid("zcgdProductSelectFilter", filterobj, prodobj, dataProductList);
+	                });
+	            }
+	            else
+	            {
+	                ele = $("<select/>");
+	                ele.attr("type", "text");
+	                ele.attr("id", "sapsscformfield" + key);
+	                ele.attr("name", "sapsscformfield" + key);
+	                ele.attr("class", "sapsscformfieldSelect");
+	                ele.attr("jqgridcolname", colname);
+	                ele.change(function()
+            		{
+	                    var filter = new Array();
+	                    filterobj.children().each(function(idx, obj)
+	                    {
+	                        var eleobj = $(obj).children("input");
+	                        if(eleobj.prop("tagName"))
+	                        {
+	                            if(eleobj.val() != "")
+	                            {
+	                                var filterCondition = new Object();
+	                                    filterCondition.field = eleobj.attr("jqgridcolname");
+	                                    filterCondition.op = "cn";
+	                                    filterCondition.data = String(eleobj.val());
+	                                filter[filter.length] = filterCondition;
+	                            }
+	                        }
+	                            
+	                        var eleobj = $(obj).children("select");
+	                        if(eleobj.prop("tagName"))
+	                        {
+	                            if(eleobj.val() != "")
+	                            {
+	                                var filterCondition = new Object();
+	                                    filterCondition.field = eleobj.attr("jqgridcolname");
+	                                    filterCondition.op = "eq";
+	                                    filterCondition.data = String(eleobj.val());
+	                                filter[filter.length] = filterCondition;
+	                            }
+	                        }
+	                    });
+	                    filterobj.jqGrid("zcgdFilterGrid", prodobj, filter, "AND");
+	                    filterobj.jqGrid("zcgdProductSelectFilter", filterobj, prodobj, dataProductList);
+                    });
+	            }
+	            li.append(label);
+	            li.append(ele)
+	            filterobj.append(li);
+	            
+	            if(ele.prop("tagName") == "SELECT")
+	            {
+	            	
+	        		var rids = prodobj.getDataIDs();	// 1-10
+	        		//alert(numrows); // 1-10
+	            	var option = $("<option/>");
+	                    option.val("");
+	                    option.text("Choose");
+                    ele.append(option);
+	            	var container = new Array();
+	        		for(var idx = 0; idx < rids.length; idx++)
+	                {
+	                    var val = prodobj.jqGrid("getCell", rids[idx], ele.attr("jqgridcolname"));
+	                    
+	                    // if(ele.attr("jqgridcolname") == "juris")
+	                    //	alert("jqgridcolname:" + ele.attr("jqgridcolname") + "\nval:" + val + "\n" + prodobj.getDataIDs());
+
+	                    if($.inArray(val, container) == -1)
+	                    {
+	                    	// alert(val);
+		                    var option = $("<option/>");
+		                        option.val(val);
+		                        option.text(val);
+		                    ele.append(option);
+		                    container[container.length] = val;
+	                    }
+	  
+	                }
+	                container = new Array();
+	            }
+	            else if(ele.prop("tagName") == "SELECTtmp")
+            	{
+	        		for(var idx = 0; idx < numrows; idx++)
+        			{
+		        		var myCellData = prodobj.jqGrid("getCell", idx, ele.attr("jqgridcolname"));
+		        		alert(myCellData);
+        			}
+            	}
+	            cidx++;
+	        }
+	        
+	        // Set Focus
+        	var focusele = $("#" + focusedObjectId);
+            if(focusele.prop("tagName") == "INPUT")
+        	{
+            	focusele.focus();
+            	var val = focusele.val();
+            	focusele.val(val);
+            	focusele[0].setSelectionRange(focusele.val().length, focusele.val().length);
+        	}
+            else
+            {
+    	        $("#" + focusedObjectId).focus();
+            }
+
 		},
 		zcgdUtilFindChildObj : function (control)
 		{
