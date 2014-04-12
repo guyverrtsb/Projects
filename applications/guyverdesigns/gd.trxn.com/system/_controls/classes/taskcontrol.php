@@ -14,7 +14,7 @@ class gdActivation
     
     function activation($activationQS)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("activation");
         $fr = "UNKNOWN_ERROR";
         
         $gdfutc = new gdFindUsersafetyTaskControlLinks();
@@ -30,13 +30,13 @@ class gdActivation
             $fr = "TASK_KEY_NOT_CODED_FOR";
         }
 
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("activation");
         return $fr;
     }
 
     function activateUserAccount($usersafety_account_uid, $usersafety_task_control_links_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("activateUserAccount");
         $fr = "UNKNOWN_ERROR";
         $this->cleanAllOutputData();
         
@@ -58,13 +58,13 @@ class gdActivation
 
         $this->dumpOutputData();
         
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("activateUserAccount");
         return $fr;
     }
 
     function generateTaskControlLink($email)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("generateTaskControlLink");
         $fr = "UNKNOWN_ERROR";
         $this->cleanAllOutputData();
         
@@ -95,7 +95,7 @@ class gdActivation
             $fr = $this->gdlog()->LogInfoRETURN("EMAIL_NOT_FOUND");
         }
         
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("generateTaskControlLink");
         return $fr;
     }
 }

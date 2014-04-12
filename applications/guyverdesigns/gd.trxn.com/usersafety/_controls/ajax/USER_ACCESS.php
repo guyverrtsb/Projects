@@ -68,11 +68,17 @@ if($action != "INVALID")
                                                             ,"RETURN_SHOW_MSG", "TRUE"
                                                             ,"RETURN_MSG", "E-Mail in use."));
             }
-            else if($fr == "TABLEKEY_IN_USE")
+            else if($fr == "NICKNAME_IN_USE")
+            {
+                $echoret = json_encode(buildReturnArray("RETURN_KEY", "NICKNAME_IN_USE"
+                                                            ,"RETURN_SHOW_MSG", "TRUE"
+                                                            ,"RETURN_MSG", "Nickname in use."));
+            }
+            else if($fr == "USERTABLEKEY_IN_USE")
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "TABLEKEY_IN_USE"
                                                             ,"RETURN_SHOW_MSG", "TRUE"
-                                                            ,"RETURN_MSG", "Nickname in use."));
+                                                            ,"RETURN_MSG", "Tablekey in use."));
             }
             else
             {

@@ -111,7 +111,11 @@ function buildTimesheetEntry(jqobj, data, key, val)
 	    	showTotal();
     	});
 	    hours.css("padding-top","10px");
-	    cb.append(hours.append(day));
+	    
+	    var ratetype = getFormSelectConfiguration("update", "cfg_ratetype_sdesc", "", "ACCOUNTING_RATETYPE", "", "");
+	    var select = jQuery(ratetype).find("select");
+	    	select.css("margin-top","-10px");
+	    cb.append(hours.append(select.append(day)));
 	    
 	}
 
@@ -122,6 +126,8 @@ function buildTimesheetEntry(jqobj, data, key, val)
     cb.append(getFormInputHiddenField("update", "uid", val.accounting_timesheet_dates_uid));
     cb.append(getFormGDControlkey("UPDATE_TIMESHEET_DATA"));
     cb.append(getFormButton("gdFuncUpdateData();", "Update"));
+    
+    loadDynamicPageElements();
 }
 
 function showTotal()

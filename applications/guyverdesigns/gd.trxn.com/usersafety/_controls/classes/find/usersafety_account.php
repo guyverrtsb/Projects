@@ -47,6 +47,39 @@ class gdFindUsersafetyAccount
         return $fr;
     }
     
+    function findUsersafetyAccount_byNickname($nickname)
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byNickname");
+        $this->cleanResult_Record();
+        $sqlstmnt = "SELECT * FROM usersafety_useraccount ".
+            "WHERE nickname=:nickname";
+        
+        $appcon = new ZAppDatabase();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":nickname", $nickname);
+        $appcon->execSelect();
+        if($appcon->getTransactionGood())
+        {
+            if($appcon->getRowCount() > 0)
+            {
+                $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResult_Record());
+                $fr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is found:".json_encode($this->getResult_Record()).":");
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("RECORD_IS_NOT_FOUND");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("findUsersafetyAccount_byNickname");
+        return $fr;
+    }
+    
     function findUsersafetyAccount_byUsertablekey($nickname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byUsertablekey");

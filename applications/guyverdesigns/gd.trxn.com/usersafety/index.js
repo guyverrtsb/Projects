@@ -7,8 +7,8 @@ function buildForm()
     $("#workarea_col_left").append(form.append(cb));
     cb.append(getContentBlockHeader("Login - E-Mail"));
     cb.append(getContentBlockMessage());
-    cb.append(getFormInputTextField("login", "email", "", "Short Description"));
-    cb.append(getFormInputTextField("login", "password", "", "Long Description"));
+    cb.append(getFormInputTextField("login", "email", "", "E-Mail"));
+    cb.append(getFormInputTextField("login", "password", "", "Password"));
     cb.append(getFormGDControlkey("LOGIN_USER"));
     cb.append(getFormButton("gdFuncLoginUser();", "Login"));
 

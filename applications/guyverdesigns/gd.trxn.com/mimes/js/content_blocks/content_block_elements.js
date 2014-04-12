@@ -19,11 +19,11 @@ function getFormInputTextField(id, name, value, label, placeholder)
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").css("float","left").text(label);
+		var label =  $("<label/>").attr("class", "formlabel").text(label);
 		var input = getContentElementInput("text", "rounded", id+name, name, value, null);
-		input.css("float", "right");
-		
+		input.attr("class", "forminput");
 		li.append(label);
+		li.append($("<br/>"));
 		li.append(input);
 		return li;
 	}
@@ -42,14 +42,15 @@ function getFormInputDateField(id, name, value, label, placeholder)
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("style", "float:left").text(label);
+		var label = $("<label/>").attr("class", "formlabel").text(label);
 		var input = getContentElementInput("text", "rounded", id+name, name, value, null);
-		input.attr("style", "float:right");
+		input.attr("class", "forminput");
 		$(function() {
 			$( "#" + id+name ).datepicker();
 		});
 		
 		li.append(label);
+		li.append($("<br/>"));
 		li.append(input);
 		return li;
 	}
@@ -83,11 +84,12 @@ function getFormSelectConfiguration(id, name, value, configuration, onchange, la
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("style", "float:left").text(label);
+		var label = $("<label/>").attr("class", "formlabel").text(label);
 		var select = getContentElementSelect("rounded", id+name, name, configuration, null, onchange);
-		select.attr("style", "float:right");
+		select.attr("class", "formselect");
 		
 		li.append(label);
+		li.append($("<br/>"));
 		li.append(select);
 		return li;
 	}
@@ -106,11 +108,12 @@ function getFormSelectDynDropDown(id, name, value, dyndropdownkey, onchange, lab
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("style", "float:left").text(label);
+		var label = $("<label/>").attr("class", "formlabel").text(label);
 		var select = getContentElementSelect("rounded", id+name, name, null, dyndropdownkey, onchange);
-		select.attr("style", "float:right");
+		select.attr("class", "formselect");
 		
 		li.append(label);
+		li.append($("<br/>"));
 		li.append(select);
 		return li;
 	}
@@ -189,7 +192,7 @@ function getContentBlockText(id, labeltxt, spantxt)
 	// <li class="entry"><select class="rounded" id="registercfg_country_sdesc" name="cfg_country_sdesc" configuration="COUNTRIES|COUNTRY_US|registercfg_region_sdesc"></select></li>
 	var li = getContentElementLI("text", null, null);
 	li.css("clear","both");
-	var label = $("<label/>").attr("style", "float:left").text(labeltxt);
+	var label = $("<label/>").attr("class", "formlabel").text(labeltxt);
 	var span = $("<span/>").attr("id", id).css("float","right").text(spantxt);
 	
 	li.append(label);

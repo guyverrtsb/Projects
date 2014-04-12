@@ -43,16 +43,16 @@ class gdCreateUserData
                                             $lastname,
                                             $cfg_country_sdesc,
                                             $cfg_region_sdesc,
-                                            $city,
-                                            $usersafety_role_sdesc = "GD_USER")
+                                            $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
         $fr = "UNKNOWN_ERROR";
         $this->cleanAllOutputData();
         $gdfua = new gdFindUsersafetyAccount();
         $emailexists = $gdfua->findUsersafetyAccount_byEmail($email);
+        $nicknameexists = $gdfua->findUsersafetyAccount_byNickname($nickname);
         $tablekeyexists = $gdfua->findUsersafetyAccount_byUsertablekey($nickname);
-        if($emailexists == "RECORD_IS_NOT_FOUND" && $tablekeyexists == "RECORD_IS_NOT_FOUND")
+        if($emailexists == "RECORD_IS_NOT_FOUND" && $nicknameexists == "RECORD_IS_NOT_FOUND" && $tablekeyexists == "RECORD_IS_NOT_FOUND")
         {
             $gdcua = new gdCreateUsersafetyAccount();
             $gdcua->createRecordUserAccount($email, $nickname, $password);
@@ -62,15 +62,6 @@ class gdCreateUserData
 
             $gdcmap = new gdCreateMatchAccounttoProfile();
             $gdcmap->createRecordMatchUseraccounttoProfile($gdcua->getUid(), $gdcup->getUid());
-            
-            $gdfur = new gdFindUsersafetyRole();
-            $gdfur->findUsersafetyRole_bySdesc($usersafety_role_sdesc);
-            
-            $gdcmar = new gdCreateMatchAccounttoRole();
-            $gdcmar->createRecordMatchUseraccounttoRole($gdcua->getUid(), $gdfur->getUid());
-            
-            $gdcmus = new gdCreateMatchAccounttoSite();
-            $gdcmus->createRecordMatchUseraccounttoSite($gdcua->getUid(), $this->getGDConfig()->getSiteUid());
             
             $gdctc = new gdCreateTaskControl();
             $gdctc->createRecordTaskControl("ACTIVATION_USER_ACCOUNT", $gdcua->getUid(), "T");
@@ -89,6 +80,10 @@ class gdCreateUserData
         else if($emailexists == "RECORD_IS_FOUND")
         {
             $fr = $this->gdlog()->LogInfoRETURN("EMAIL_IN_USE");
+        }
+        else if($nicknameexists == "RECORD_IS_FOUND")
+        {
+            $fr = $this->gdlog()->LogInfoRETURN("NICKNAME_IN_USE");
         }
         else if($tablekeyexists == "RECORD_IS_FOUND")
         {
