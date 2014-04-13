@@ -1,4 +1,4 @@
-function buildTileElements(jqobj, data, key, val)
+function buildTileElements(jqobj, data)
 {
 	jqobj.empty();
     var isfirst = true;
@@ -9,10 +9,10 @@ function buildTileElements(jqobj, data, key, val)
     	var ul = getContentBlock("desktoptiles");
     	tile.append(ul);
     	ul.append(getFormText(eval("val.sdesc")));
-    	ul.append(getFormText("Billto : " + eval("val.accounting_billto_companyname")));
-    	ul.append(getFormText("Client : " + eval("val.accounting_client_companyname")));
-    	ul.append(getFormText("Cycle  : " + eval("val.cfg_defaults_label")));
-    	ul.append(getFormText("Rate  : " + eval("val.rate_hourly")));
+    	ul.append(getFormText("Billto : " + val.accounting_billto_companyname));
+    	ul.append(getFormText("Client : " + val.accounting_client_companyname));
+    	ul.append(getFormText("Cycle  : " + val.cfg_defaults_label));
+    	ul.append(getFormText("Rate  : " + val.rate_hourly));
     	if(isfirst)
     	{
     		jqobj.append(tile);

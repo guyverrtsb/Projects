@@ -1,4 +1,4 @@
-function buildTimesheetList(jqobj, data, key, val)
+function buildTimesheetList(jqobj, data)
 {
 	jqobj.empty();
 	var first = true;

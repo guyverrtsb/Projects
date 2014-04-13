@@ -56,8 +56,10 @@ function buildDynamicContent(jqobj)
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
     	{
-    		eval(jqobj.attr("funcname") + "(jqobj, data)");
-    	}
+        	if(jqobj.attr("funcname") != null && jqobj.attr("funcname").length > 0)
+        		eval(jqobj.attr("funcname") + "(jqobj, data)");
+        	else
+        		buildContent(jqobj, data);    	}
     });
 }
 
@@ -71,8 +73,10 @@ function buildDynamicGdtrxnComContent(jqobj)
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
     	{
-        	alert(jqobj.attr("funcname"))
-    		eval(jqobj.attr("funcname") + "(jqobj, data)");
+        	if(jqobj.attr("funcname") != null && jqobj.attr("funcname").length > 0)
+        		eval(jqobj.attr("funcname") + "(jqobj, data)");
+        	else
+        		buildContent(jqobj, data);
     	}
     });
 }

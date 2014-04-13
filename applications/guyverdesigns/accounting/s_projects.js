@@ -1,4 +1,4 @@
-function buildTileElements(jqobj, data, key, val)
+function buildTileElements(jqobj, data)
 {
 	jqobj.empty();
     var isfirst = true;
