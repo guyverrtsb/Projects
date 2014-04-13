@@ -1,4 +1,4 @@
-<?php require_once("gd.trxn.com/_controls/classes/_core.php"); ?>
+<?php require_once("../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdauth()->isAuthorized("GD_USER"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>

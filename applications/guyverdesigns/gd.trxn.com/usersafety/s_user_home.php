@@ -7,34 +7,6 @@
 <?php gdinc("/gd.trxn.com/_controls/ui/css/core.php") ?>
 <?php gdinc("/gd.trxn.com/_controls/ui/js/core.php") ?>
 <script>
-function gdFuncRegisterData()
-{
-    buildContentBlockReturnMessage();
-    var formdata = gdSerialzeControllerKey("#RegisterFrm", "REGISTER_USER");
-    $.post("_controls/ajax/USER_ACCESS.php", formdata, function(data)
-    {
-        data = eval("(" + data + ")");
-        if(data.USER_TYPE == "SITE_USER")
-        {
-            if(buildContentBlockReturnMessage(data, "ACCOUNT_IS_PENDING", "CBUserRegister"))
-            {
-                if(data.ENV_KEY != null && data.ENV_KEY == "LCL")
-                {
-                    buildtContentBlockMessage("CBUserRegister", $("<a/>").text("Activate User Override").attr("href",data.TRXN_URL));
-                }
-            }
-        }
-        else
-        {
-            buildContentBlockReturnMessage(data, true, "CBUserRegister");
-        }
-    });
-}
-
-function gdFuncLoginUser()
-{
-    $("#LoginFrm").submit();
-}
 </script>
 </head>
 <body>

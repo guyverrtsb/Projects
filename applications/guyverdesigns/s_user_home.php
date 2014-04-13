@@ -18,7 +18,7 @@
     <div id="content_area">
         <?php gdinc("/_controls/ui/banner.php") ?>
         <div id="left_column"><?php gdinc("/_controls/ui/left_menu/s_menu.php") ?></div>
-        <div id="workarea" dyncontentkey="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements">
+        <div id="workarea" dyncontentkeytemp="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements">
 
         </div>
         <div id="right_column"><?php gdinc("/_controls/ui/right_menu/s_menu.php") ?></div>

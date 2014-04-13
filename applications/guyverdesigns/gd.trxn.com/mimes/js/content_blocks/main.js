@@ -21,6 +21,8 @@ function loadDynamicPageElements()
 	{
 		if($(this).attr("dyncontentkey") != undefined && $(this).attr("dyncontentkey").length > 0 )
 			buildDynamicContent($(this));
+		else if($(this).attr("dyncontentkey_gdtrxncom") != undefined && $(this).attr("dyncontentkey_gdtrxncom").length > 0 )
+			buildDynamicGdtrxnComContent($(this));
 		else if($(this).attr("class") == "message")
 			buildDynamicMessage($(this).parent());
 	});
@@ -54,6 +56,22 @@ function buildDynamicContent(jqobj)
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
     	{
+    		eval(jqobj.attr("funcname") + "(jqobj, data)");
+    	}
+    });
+}
+
+function buildDynamicGdtrxnComContent(jqobj)
+{
+	var passdata = gdSearializeControlKey(jqobj.attr("dyncontentkey_gdtrxncom"));
+	if(jqobj.attr("dyncontentqs"))
+		passdata = passdata + "&" + jqobj.attr("dyncontentqs");
+    $.post("/gd.trxn.com/_controls/ajax/SCREEN_CONTROL.php", passdata, function(data)
+    {
+        data = eval("(" + data + ")");
+        if(data.RETURN_KEY == "SUCCESS")
+    	{
+        	alert(jqobj.attr("funcname"))
     		eval(jqobj.attr("funcname") + "(jqobj, data)");
     	}
     });
