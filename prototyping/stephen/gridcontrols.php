@@ -36,6 +36,17 @@ input, textarea, select { -webkit-border-radius: 0px; -moz-border-radius: 0px; b
 <script>
 jQuery(document).ready(function()
 {
+    $.post("/json/existingsubssoldtolist.php", "TEST_TYPE=TEST", function(data)
+    {
+        data = eval("(" + data + ")");
+        // alert(data.RETURN_KEY);
+        if(data.RETURN_KEY == "SUCCESS")
+        {
+            jQuery("#widget_ExistingSubcriptionSelector").jqGrid("zcgdWidgetBuildSubscriptionSelector", data.SOLDTO_LIST, data.SOLDTO_PRODUCT_LIST);
+        }
+    });
+    
+    
     var dataproductlist = [
             {matnr:"10261147",proddesc:"MN STAT V42",pracarea:"General",juris:"MN",format:"Print",appreq:"No"},
             {matnr:"41463607",proddesc:"PROVIEW TEST 1",pracarea:"Bankruptcy",juris:"NY",format:"Print",appreq:"Yes"},
@@ -49,37 +60,8 @@ jQuery(document).ready(function()
             {matnr:"30190016",proddesc:"PRT SA/2ALT SUB KMAT MODEL",pracarea:"General",juris:"NY",format:"Print",appreq:"Yes"}
             ];
 
-    var datasoldtolist = [
-            {soldtonum:"134253245",name:"Kelly Inc",address:"123 Independance Way",city:"Philladelphia",region:"PA"},
-            {soldtonum:"267356346",name:"Srini Corp",address:"4 Jacobi St.",city:"Chicago",region:"PA"},
-            {soldtonum:"334523564",name:"Sridhar LLC",address:"120-32 Industrial Blvd",city:"Newtown Square",region:"PA"},
-            {soldtonum:"432515324",name:"Shaggy Inc",address:"9 Swank Place",city:"Vegas Baby",region:"NV"},
-            {soldtonum:"545625235",name:"Velma Services",address:"Glasses Way",city:"Lighthouse Haven",region:"MA"},
-            {soldtonum:"634523632",name:"ScoobySoft",address:"Snack Road",city:"Dog City",region:"OH"},
-            {soldtonum:"267356346",name:"Srini Corp",address:"4 Jacobi St.",city:"Chicago",region:"PA"},
-            {soldtonum:"334523564",name:"Sridhar LLC",address:"120-32 Industrial Blvd",city:"Newtown Square",region:"PA"},
-            {soldtonum:"432515324",name:"Shaggy Inc",address:"9 Swank Place",city:"Vegas Baby",region:"NV"},
-            {soldtonum:"545625235",name:"Velma Services",address:"Glasses Way",city:"Lighthouse Haven",region:"MA"},
-            {soldtonum:"634523632",name:"ScoobySoft",address:"Snack Road",city:"Dog City",region:"OH"}
-            ];
-    
-    var datasoldtoproductlist = [
-            {matnr:"123453245",proddesc:"monthly subscription",qty:"2",bundleid:"Cool Bundle",bundletype:"C_BUNDLE",soldtonum:"634523632",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"265346898",proddesc:"daily subscription",qty:"2",bundleid:"West Bundle",bundletype:"C_BUNDLE",soldtonum:"134253245",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"332145345",proddesc:"daily subscription",qty:"2",bundleid:"Library Bundle",bundletype:"C_BUNDLE",soldtonum:"334523564",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"478953467",proddesc:"monthly subscription",qty:"2",bundleid:"West Bundle",bundletype:"C_BUNDLE",soldtonum:"545625235",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"534525254",proddesc:"cool subscription",qty:"2",bundleid:"West Bundle",bundletype:"C_BUNDLE",soldtonum:"334523564",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"634524533",proddesc:"cool subscription",qty:"2",bundleid:"Library Bundle",bundletype:"C_BUNDLE",soldtonum:"545625235",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"723214688",proddesc:"cool subscription",qty:"2",bundleid:"Cool Bundle",bundletype:"C_BUNDLE",soldtonum:"134253245",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"828007068",proddesc:"monthly subscription",qty:"2",bundleid:"West Bundle",bundletype:"C_BUNDLE",soldtonum:"545625235",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"990976857",proddesc:"monthly subscription",qty:"2",bundleid:"Library Bundle",bundletype:"C_BUNDLE",soldtonum:"432515324",shiptoname:"Yellow Truck",appreq:"y"},
-            {matnr:"104567982",proddesc:"daily subscription",qty:"2",bundleid:"West Bundle",bundletype:"C_BUNDLE",soldtonum:"545625235",shiptoname:"Yellow Truck",appreq:"y"}
-            ];
-
-
     //jQuery("#CB_sapSscProductSelector").jqGrid("zcgdUtilFindChildObj", {type:"index", match:"0"});
     jQuery("#widget_ProductSelector").jqGrid("zcgdWidgetBuildProductSelector", dataproductlist);
-    jQuery("#widget_ExistingSubcriptionSelector").jqGrid("zcgdWidgetBuildSubscriptionSelector", datasoldtolist, datasoldtoproductlist);
 });
 </script>
 </head>

@@ -40,7 +40,7 @@ class ZAppDatabase
     {       
         // LCL UserSafety Database
         $convar["LCL_GDCORP_USERSAFETY_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "gdcorpdb";
+        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "lclgdcorpdb";
         $convar["LCL_GDCORP_USERSAFETY_USRNAM"] = "root";
         $convar["LCL_GDCORP_USERSAFETY_PASWRD"] = "GDHonkey_01";
         // GoDaddy Prototype UserSafety Database

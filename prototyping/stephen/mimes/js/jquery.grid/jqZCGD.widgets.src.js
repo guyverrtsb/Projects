@@ -132,16 +132,16 @@
 		    /** Sold To Product List **/
 			prodobj.jqGrid({
 		        datatype: "local",
-		        colNames:['Product','Product Description','Qty','Bundle ID','Bundle Type','Sold to Party','Ship to Name','Approval Req.'],
+		        colNames:['Product','Product Description','Qty','Bundle ID','Bundle Type','Approval Req.','Sold to Party','Ship to Name'],
 		        colModel:[
 		            {name:'matnr', index:'matnr', width:80, align:"left", sorttype:"int"},
 		            {name:'proddesc', index:'proddesc', width:150, align:"left", sorttype:"datextte"},
 		            {name:'qty', index:'qty', width:20, align:"left", sorttype:"text"},
 		            {name:'bundleid', index:'bundleid', width:80, align:"left", sorttype:"text"},
-		            {name:'bundletype', index:'bundletype', width:80, align:"left", sorttype:"text"}  ,
-		            {name:'soldtonum', index:'soldtonum', width:80, align:"left", sorttype:"int"}  ,
-		            {name:'shiptoname', index:'shiptoname', width:100, align:"left", sorttype:"text"}  ,
-		            {name:'appreq', index:'appreq', width:80, align:"left", sorttype:"text"}     
+		            {name:'bundletype', index:'bundletype', width:80, align:"left", sorttype:"text"},
+		            {name:'appreq', index:'appreq', width:80, align:"left", sorttype:"text"},
+		            {name:'soldtonum', index:'soldtonum', width:80, align:"left", sorttype:"int"},
+		            {name:'shiptoname', index:'shiptoname', width:100, align:"left", sorttype:"text"}
 		        ],
 		        //rowNum:5,
 		        // rowList:[10,20,30],
@@ -343,7 +343,6 @@
 	            else
 	            {
 	                ele = $("<select/>");
-	                ele.attr("type", "text");
 	                ele.attr("id", "sapsscformfield" + key);
 	                ele.attr("name", "sapsscformfield" + key);
 	                ele.attr("class", "sapsscformfieldSelect");
