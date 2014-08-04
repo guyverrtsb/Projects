@@ -111,6 +111,7 @@ a.miniButtonBlue:hover {
 
 #content_area { height:700px; border:0px solid #F7A922; }
 #banner { height:50px; padding:10px; clear:both; }
+#messageline { padding-left:5px; padding-top:5px; padding-bottom:5px; clear:both; background-color:#FF7E00; font-weight:bold; }
 #left_column { float:left; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
 #right_column { float:right; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
 #footer { height:50px; padding:5px; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }

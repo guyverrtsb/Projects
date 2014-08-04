@@ -79,7 +79,7 @@ function getContentElementInput(type, clas, id, name, value, placeholder)
 	return obj;
 }
 
-function getContentElementSelect(clas, id, name, configuration, dyndropdownkey, onchange)
+function getContentElementSelect(clas, id, name, origvalue, configuration, dyndropdownkey, onchange, apppath)
 {
 	var obj = $("<select/>");
     if(clas != null) {obj.attr("class", clas);}
@@ -88,5 +88,7 @@ function getContentElementSelect(clas, id, name, configuration, dyndropdownkey, 
     if(configuration != null && configuration != "") {obj.attr("configuration", configuration);}
     if(dyndropdownkey != null && dyndropdownkey != "") {obj.attr("dyndropdownkey", dyndropdownkey);}
     if(onchange != null && onchange != "") {obj.attr("onchange", onchange);}
+    if(apppath != null && apppath != "") {obj.attr("apppath", apppath);}
+    if(origvalue != null && origvalue != "") {obj.attr("origvalue", origvalue);}
 	return obj;
 }

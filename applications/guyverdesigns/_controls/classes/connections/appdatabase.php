@@ -61,7 +61,7 @@ class ZAppDatabase
         
         // LCL CrossApps Database
         $convar["LCL_GDCORP_CROSSAPPDATA_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_CROSSAPPDATA_DBNAME"] = "lclcrssapp";
+        $convar["LCL_GDCORP_CROSSAPPDATA_DBNAME"] = "lclgdcorpdb";
         $convar["LCL_GDCORP_CROSSAPPDATA_USRNAM"] = "root";
         $convar["LCL_GDCORP_CROSSAPPDATA_PASWRD"] = "GDHonkey_01";
         // GoDaddy Prototype CrossApps Database
@@ -70,14 +70,14 @@ class ZAppDatabase
         $convar["PRT_GDCORP_CROSSAPPDATA_USRNAM"] = "prtcrssapp";
         $convar["PRT_GDCORP_CROSSAPPDATA_PASWRD"] = "GDProto@01";
         // GoDaddy Staging CrossApps Database
-        $convar["STG_GDCORP_CROSSAPPDATA_HOSTNAME"] = "stgcrssapp.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_CROSSAPPDATA_DBNAME"] = "stgcrssapp";
-        $convar["STG_GDCORP_CROSSAPPDATA_USRNAM"] = "stgcrssapp";
+        $convar["STG_GDCORP_CROSSAPPDATA_HOSTNAME"] = "stggdcorpdb.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_CROSSAPPDATA_DBNAME"] = "stggdcorpdb";
+        $convar["STG_GDCORP_CROSSAPPDATA_USRNAM"] = "stggdcorpdb";
         $convar["STG_GDCORP_CROSSAPPDATA_PASWRD"] = "GDStage@01";
         // GoDaddy Production CrossApps Database
-        $convar["PRD_GDCORP_CROSSAPPDATA_HOSTNAME"] = "prdcrssapp.db.6047355.hostedresource.com";
-        $convar["PRD_GDCORP_CROSSAPPDATA_DBNAME"] = "prdcrssapp";
-        $convar["PRD_GDCORP_CROSSAPPDATA_USRNAM"] = "prdcrssapp";
+        $convar["PRD_GDCORP_CROSSAPPDATA_HOSTNAME"] = "gdcorpdb.db.6047355.hostedresource.com";
+        $convar["PRD_GDCORP_CROSSAPPDATA_DBNAME"] = "gdcorpdb";
+        $convar["PRD_GDCORP_CROSSAPPDATA_USRNAM"] = "gdcorpdb";
         $convar["PRD_GDCORP_CROSSAPPDATA_PASWRD"] = "GDProd@01";
         
         // LCL GroupYou Database

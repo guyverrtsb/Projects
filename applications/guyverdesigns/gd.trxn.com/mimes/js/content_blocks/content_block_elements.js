@@ -19,7 +19,7 @@ function getFormInputTextField(id, name, value, label, placeholder)
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label =  $("<label/>").attr("class", "formlabel").text(label);
+		var label =  $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
 		var input = getContentElementInput("text", "rounded", id+name, name, value, null);
 		input.attr("class", "forminput");
 		li.append(label);
@@ -42,7 +42,7 @@ function getFormInputDateField(id, name, value, label, placeholder)
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("class", "formlabel").text(label);
+		var label = $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
 		var input = getContentElementInput("text", "rounded", id+name, name, value, null);
 		input.attr("class", "forminput");
 		$(function() {
@@ -77,15 +77,15 @@ function getFormInputHiddenField(id, name, value)
 	return li;
 }
 
-function getFormSelectConfiguration(id, name, value, configuration, onchange, label)
+function getFormSelectConfiguration(id, name, configuration, onchange, label, apppath)
 {
 	// <li class="entry"><select class="rounded" id="registercfg_country_sdesc" name="cfg_country_sdesc" configuration="COUNTRIES|COUNTRY_US|registercfg_region_sdesc"></select></li>
 	var li = getContentElementLI("entry", null, null);
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("class", "formlabel").text(label);
-		var select = getContentElementSelect("rounded", id+name, name, configuration, null, onchange);
+		var label = $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
+		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath);
 		select.attr("class", "formselect");
 		
 		li.append(label);
@@ -95,21 +95,21 @@ function getFormSelectConfiguration(id, name, value, configuration, onchange, la
 	}
 	else
 	{
-		var select = getContentElementSelect("rounded", id+name, name, configuration, null, onchange);
+		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath);
 		li.append(select);
 		return li;
 	}
 }
 
-function getFormSelectDynDropDown(id, name, value, dyndropdownkey, onchange, label)
+function getFormSelectDynDropDown(id, name, origvalue, dyndropdownkey, onchange, label, apppath)
 {
 	// <li class="entry"><select class="rounded" id="registercfg_country_sdesc" name="cfg_country_sdesc" configuration="COUNTRIES|COUNTRY_US|registercfg_region_sdesc"></select></li>
 	var li = getContentElementLI("entry", null, null);
 	li.css("clear","both");
 	if(isType(label, "string"))
 	{
-		var label = $("<label/>").attr("class", "formlabel").text(label);
-		var select = getContentElementSelect("rounded", id+name, name, null, dyndropdownkey, onchange);
+		var label = $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
+		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath);
 		select.attr("class", "formselect");
 		
 		li.append(label);
@@ -119,7 +119,7 @@ function getFormSelectDynDropDown(id, name, value, dyndropdownkey, onchange, lab
 	}
 	else
 	{
-		var select = getContentElementSelect("rounded", id+name, name, null, dyndropdownkey, onchange);
+		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath);
 		li.append(select);
 		return li;
 	}

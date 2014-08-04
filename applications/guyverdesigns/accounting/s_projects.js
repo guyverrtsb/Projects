@@ -12,7 +12,22 @@ function buildTileElements(jqobj, data)
     	ul.append(getFormText("Billto : " + val.accounting_billto_companyname));
     	ul.append(getFormText("Client : " + val.accounting_client_companyname));
     	ul.append(getFormText("Cycle  : " + val.cfg_defaults_label));
-    	ul.append(getFormText("Rate  : " + val.rate_hourly));
+    	// ul.append(getFormText("Rate Type  : " + val.cfg_ratetype_sdesc));
+    	
+    	if(val.cfg_ratetype_sdesc == "ACCOUNTING_RATETYPE_COMBO")
+    	{
+        	ul.append(getFormText("On-Site Rate  : " + val.rate_hourly_onsite));
+        	ul.append(getFormText("Remote  Rate  : " + val.rate_hourly_remote));
+    	}
+    	else if(val.cfg_ratetype_sdesc == "ACCOUNTING_RATETYPE_ONSITE")
+    	{
+        	ul.append(getFormText("On-Site Rate  : " + val.rate_hourly_onsite));
+    	}
+    	else if(val.cfg_ratetype_sdesc == "ACCOUNTING_RATETYPE_REMOTE")
+    	{
+        	ul.append(getFormText("Remote  Rate  : " + val.rate_hourly_remote));
+    	}
+
     	ul.append(getFormText("Start Date  : " + val.start_date));
     	ul.append(getFormText("End Date  : " + val.end_date));
     	

@@ -14,7 +14,7 @@
 <?php gdinc("/_controls/ui/header.php") ?>
     <!-- CONTENT_AREA -->
     <div id="content_area">
-        <div id="banner">Banner</div>
+<?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
         <div id="left_column"></div>
         <div id="workarea">
             <div id="workarea_col_01">

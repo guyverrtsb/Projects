@@ -1,6 +1,6 @@
 <?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/_user_authentication_data.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_account.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_useraccount.php"); ?>
 <?php
 class gdAuthenticateUser
     extends zAppBaseObject

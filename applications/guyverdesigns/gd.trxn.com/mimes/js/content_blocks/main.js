@@ -21,18 +21,21 @@ function loadDynamicPageElements()
 	{
 		if($(this).attr("dyncontentkey") != undefined && $(this).attr("dyncontentkey").length > 0 )
 			buildDynamicContent($(this));
-		else if($(this).attr("dyncontentkey_gdtrxncom") != undefined && $(this).attr("dyncontentkey_gdtrxncom").length > 0 )
-			buildDynamicGdtrxnComContent($(this));
-		else if($(this).attr("class") == "message")
-			buildDynamicMessage($(this).parent());
+		else if($(this).attr("id") == "messageline")
+			buildDynamicMessage($(this));
 	});
 }
 
 function buildDynamicDropDown(jqobj)
 {
+	var apppath = "";
+	if(jqobj.attr("apppath"))
+		apppath = jqobj.attr("apppath");
+	
 	var dckey = jqobj.attr("dyndropdownkey");
 	jqobj.empty();
-    $.post("/_controls/ajax/SCREEN_CONTROL.php", gdSearializeControlKey(dckey), function(data)
+	
+    $.post(apppath + "/_controls/ajax/SCREEN_CONTROL.php", gdSearializeControlKey(dckey), function(data)
     {
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
@@ -40,7 +43,7 @@ function buildDynamicDropDown(jqobj)
         	jqobj.append($("<option/>").val("").text("Choose---"));
 	        $.each(data.RESULT, function(key, val)
 	        {
-        		jqobj.append(buildDynamicDropDownElements(data, key, val, dckey));
+        		jqobj.append(buildDynamicDropDownElements(jqobj, data, key, val, dckey));
 	        });
     	}
     });
@@ -48,32 +51,19 @@ function buildDynamicDropDown(jqobj)
 
 function buildDynamicContent(jqobj)
 {
+	var apppath = "";
+	if(jqobj.attr("apppath"))
+		apppath = jqobj.attr("apppath");
+	
 	var passdata = gdSearializeControlKey(jqobj.attr("dyncontentkey"));
 	if(jqobj.attr("dyncontentqs"))
 		passdata = passdata + "&" + jqobj.attr("dyncontentqs");
-    $.post("/_controls/ajax/SCREEN_CONTROL.php", passdata, function(data)
+    $.post(apppath + "/_controls/ajax/SCREEN_CONTROL.php", passdata, function(data)
     {
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
     	{
-        	if(jqobj.attr("funcname") != null && jqobj.attr("funcname").length > 0)
-        		eval(jqobj.attr("funcname") + "(jqobj, data)");
-        	else
-        		buildContent(jqobj, data);    	}
-    });
-}
-
-function buildDynamicGdtrxnComContent(jqobj)
-{
-	var passdata = gdSearializeControlKey(jqobj.attr("dyncontentkey_gdtrxncom"));
-	if(jqobj.attr("dyncontentqs"))
-		passdata = passdata + "&" + jqobj.attr("dyncontentqs");
-    $.post("/gd.trxn.com/_controls/ajax/SCREEN_CONTROL.php", passdata, function(data)
-    {
-        data = eval("(" + data + ")");
-        if(data.RETURN_KEY == "SUCCESS")
-    	{
-        	if(jqobj.attr("funcname") != null && jqobj.attr("funcname").length > 0)
+        	if(jqobj.attr("funcname"))
         		eval(jqobj.attr("funcname") + "(jqobj, data)");
         	else
         		buildContent(jqobj, data);
@@ -81,8 +71,21 @@ function buildDynamicGdtrxnComContent(jqobj)
     });
 }
 
+function designDynamicContent(eleid, dyncontentkey, funcname, dyncontentqs)
+{
+	var wcr = $("#" + eleid)
+		.attr("dyncontentkey",dyncontentkey)
+		.attr("funcname",funcname)
+		.attr("dyncontentqs",dyncontentqs);
+	buildDynamicContent(wcr);
+}
+
 function buildConfigurationsDropDown(jqobj)
 {
+	var apppath = "";
+	if(jqobj.attr("apppath"))
+		apppath = jqobj.attr("apppath");
+
 	var configuration = jqobj.attr("configuration");
 	var group_key = configuration.split("|")[0];
 	var default_key = configuration.split("|")[1];
@@ -91,7 +94,7 @@ function buildConfigurationsDropDown(jqobj)
 		onchange_ele_id = configuration.split("|")[2];
 
 	var data = gdSerialize("group_key", group_key, "GD_CONTROL_KEY", "GET_CONFIGURATION"); 
-    $.post("/_controls/ajax/CONFIGURATION.php", data, function(data)
+    $.post(apppath + "/_controls/ajax/CONFIGURATION.php", data, function(data)
 	{
     	data = eval("(" + data + ")");
 	    if(data.RETURN_KEY == "SUCCESS")
@@ -136,19 +139,37 @@ function buildConfigurationsDropDown(jqobj)
 
 function buildDynamicMessage(jqobj)
 {
+	var showmessageline = false;
 	jqobj.children().each(function ()
 	{
-	    if($(this).attr("class") == "message")
-	    	if($(this).attr("UIPAGERESKEY") != "" && $(this).attr("UIPAGERESSHOW") == "TRUE")
-	    		$(this).html($(this).attr("UIPAGERESMSG") + ": " + $(this).attr("UIPAGERESCODE") + ": " + $(this).attr("UIPAGERESKEY"));
+    	if($(this).attr("UIPAGERESKEY") != "" && $(this).attr("UIPAGERESSHOW") == "TRUE")
+    	{
+    		$(this).html($(this).attr("UIPAGERESMSG") + ": " + $(this).attr("UIPAGERESCODE") + ": " + $(this).attr("UIPAGERESKEY"));
+    		$(this).css("display", "block");
+    		showmessageline = true;
+    	}
+    	else
+		{
+    		$(this).css("display", "none");
+		}
 	});
+	
+	if(showmessageline)
+	{
+		jqobj.css("display", "block");
+	}
+	else
+	{
+		jqobj.css("display", "none");
+	}
+	
 }
 
 /*
  * 1. Clear Transaction Output (data == null)
  * 2. 
  */
-function buildContentBlockReturnMessage(data, matchValue, peleid)
+function buildContentBlockReturnMessage(data, matchValue)
 {
 	if(data != null)	// no data assume a clearing of the output
 	{
@@ -167,29 +188,27 @@ function buildContentBlockReturnMessage(data, matchValue, peleid)
 			else if(matchValue.toUpperCase() != data.RETURN_KEY)
 				passKey = false;
 		}
-		var jqobj = $("#CB_" + peleid);
-		jqobj.children().each(function ()
-		{
-		    if($(this).attr("class") == "message")
-	    	{
-		    	$(this).attr("UIPAGERESSHOW", data.RETURN_SHOW_MSG);
-		    	$(this).attr("UIPAGERESCODE", "200");
-		    	$(this).attr("UIPAGERESKEY", data.RETURN_KEY);
-		    	$(this).attr("UIPAGERESMSG", data.RETURN_MSG);
-		    	buildDynamicMessage(jqobj);
-	    	}
-		});
+		
+		var jqobj = $("#messageline");
+		jqobj.empty();
+		var p = $("<p/>");
+	    	p.attr("UIPAGERESSHOW", data.RETURN_SHOW_MSG);
+	    	p.attr("UIPAGERESCODE", "200");
+	    	p.attr("UIPAGERESKEY", data.RETURN_KEY);
+	    	p.attr("UIPAGERESMSG", data.RETURN_MSG);
+    	jqobj.append(p);
+    	buildDynamicMessage(jqobj);
 		return passKey;
 	}
 	return false;
 }
 
-function appendContentBlockReturnMessageObject(peleid, jobj)
+function appendContentBlockReturnMessageObject(matchValue, jobj)
 {
-	var jqobj = $("#CB_" + peleid);
+	var jqobj = $("#messageline");
 	jqobj.children().each(function ()
 	{
-	    if($(this).attr("class") == "message")
+	    if($(this).attr("UIPAGERESKEY") == matchValue)
     	{
 	    	$(this).append(jobj);
     	}

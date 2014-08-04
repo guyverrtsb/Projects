@@ -1,9 +1,9 @@
 <?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_task_control_links.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_task_control_links.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_account.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_useraccount.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/_user_authentication_data.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_account.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_useraccount.php"); ?>
 <?php
 class gdActivation
     extends zAppBaseObject
@@ -23,9 +23,19 @@ class gdActivation
         
         if($gdfutc->getTasKKey() == "ACTIVATION_USER_ACCOUNT")
         {
-            $gdfur = new gdFindUsersafetyRole();
-            $gdfur->findUsersafetyRole_bySdesc("GD_USER");
+            $gdfua = new gdFindUsersafetyAccount();
+            $email_acct_found = $gdfua->findUsersafetyAccount_byUid($gdfutc->getRecordUid());
+            $email = $gdfua->getEmail();
             
+            $this->gdlog()->LogInfo("User Email : ".$email);
+            $this->gdlog()->LogInfo("AdminEmail : ".$this->getGDConfig()->getEmailAdminAccount());
+                        
+            $gdfur = new gdFindUsersafetyRole();
+            if($email == $this->getGDConfig()->getEmailAdminAccount())
+                $gdfur->findUsersafetyRole_bySdesc("GD_ADMIN");
+            else
+                $gdfur->findUsersafetyRole_bySdesc("GD_USER");
+                        
             $gdcmar = new gdCreateMatchAccounttoRole();
             $gdcmar->createRecordMatchUseraccounttoRole($gdfutc->getRecordUid(), $gdfur->getUid());
             

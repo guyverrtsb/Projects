@@ -32,7 +32,9 @@ class gdFindAccountingProjectData
             "accounting_project.city AS city, ".
             
             "accounting_project_profile.cfg_payoutcycle_sdesc AS cfg_payoutcycle_sdesc, ".
-            "accounting_project_profile.rate_hourly AS rate_hourly, ".
+            "accounting_project_profile.cfg_ratetype_sdesc AS cfg_ratetype_sdesc, ".
+            "accounting_project_profile.rate_hourly_onsite AS rate_hourly_onsite, ".
+            "accounting_project_profile.rate_hourly_remote AS rate_hourly_remote, ".
             
             "accounting_billto.companyname AS accounting_billto_companyname, ".
             "accounting_billto.accountingcontactname AS accounting_billto_accountingcontactname, ".
@@ -113,7 +115,9 @@ class gdFindAccountingProjectData
             "accounting_project.city AS city, ".
             
             "accounting_project_profile.cfg_payoutcycle_sdesc AS cfg_payoutcycle_sdesc, ".
-            "accounting_project_profile.rate_hourly AS rate_hourly, ".
+            "accounting_project_profile.cfg_ratetype_sdesc AS cfg_ratetype_sdesc, ".
+            "accounting_project_profile.rate_hourly_onsite AS rate_hourly_onsite, ".
+            "accounting_project_profile.rate_hourly_remote AS rate_hourly_remote, ".
             $this->getDATE_FORMAT("accounting_project_profile.start_date")." AS start_date, ".
             $this->getDATE_FORMAT("accounting_project_profile.end_date")." AS end_date, ".
             
@@ -174,7 +178,9 @@ class gdFindAccountingProjectData
             "accounting_project.city AS city, ".
             
             "accounting_project_profile.cfg_payoutcycle_sdesc AS cfg_payoutcycle_sdesc, ".
-            "accounting_project_profile.rate_hourly AS rate_hourly, ".
+            "accounting_project_profile.cfg_ratetype_sdesc AS cfg_ratetype_sdesc, ".
+            "accounting_project_profile.rate_hourly_onsite AS rate_hourly_onsite, ".
+            "accounting_project_profile.rate_hourly_remote AS rate_hourly_remote, ".
             $this->getDATE_FORMAT("accounting_project_profile.start_date")." AS start_date, ".
             $this->getDATE_FORMAT("accounting_project_profile.end_date")." AS end_date, ".
             
@@ -234,7 +240,9 @@ class gdFindAccountingProjectData
             "accounting_project.city AS city, ".
             
             "accounting_project_profile.cfg_payoutcycle_sdesc AS cfg_payoutcycle_sdesc, ".
-            "accounting_project_profile.rate_hourly AS rate_hourly, ".
+            "accounting_project_profile.cfg_ratetype_sdesc AS cfg_ratetype_sdesc, ".
+            "accounting_project_profile.rate_hourly_onsite AS rate_hourly_onsite, ".
+            "accounting_project_profile.rate_hourly_remote AS rate_hourly_remote, ".
             $this->getDATE_FORMAT("accounting_project_profile.start_date")." AS start_date, ".
             $this->getDATE_FORMAT("accounting_project_profile.end_date")." AS end_date, ".
             
@@ -297,7 +305,7 @@ class gdFindAccountingProjectData
         $this->gdlog()->LogInfoEndFUNCTION("findAcountingProjectsBIllTosClients");
         return $fr;
     }
-    
+
     function getUid() { return $this->getResult_RecordField("uid"); }
     function getSdesc() { return $this->getResult_RecordField("sdesc"); }
     function getLdesc() { return $this->getResult_RecordField("ldesc"); }
@@ -309,7 +317,9 @@ class gdFindAccountingProjectData
     function getCfgRegionSdesc() { return $this->getResult_RecordField("cfg_region_sdesc"); }
     function getCity() { return $this->getResult_RecordField("city"); }
     function getCfgPayoutcycleSdesc() { return $this->getResult_RecordField("cfg_payoutcycle_sdesc"); }
-    function getRateHourly() { return $this->getResult_RecordField("rate_hourly"); }
+    function getCfgRatetypeSdesc() { return $this->getResult_RecordField("cfg_ratetype_sdesc"); }
+    function getRateHourlyOnsite() { return $this->getResult_RecordField("rate_hourly_onsite"); }
+    function getRateHourlyRemote() { return $this->getResult_RecordField("rate_hourly_remote"); }
     function getStartDate() { return $this->getResult_RecordField("start_date"); }
     function getEndDate() { return $this->getResult_RecordField("end_date"); }
     function getAccountingBilltoUid() { return $this->getResult_RecordField("accounting_billto_uid"); }

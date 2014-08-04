@@ -220,20 +220,22 @@ class ZGDConfigurations
     
     
     /** Start - UI RESPONSE DATA **/
-    static function setUIPageResponseData($code, $key, $msg)
+    static function setUIPageResponseData($code, $key, $msg, $showmsg = "TRUE")
     {
         $zgdlog = new KLogger();
         $zgdlog->LogInfoStartFUNCTION("setUIPageResponseData");
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespCode()] = $code;
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespKey()] = $key;
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespMsg()] = $msg;
+        $_SESSION[ZGDConfigurations::getKeySessUIPageRespMsgShow()] = strtoupper($showmsg);
         $zgdlog->LogInfoEndFUNCTION("setUIPageResponseData");
     }
     
     static function getUIPageResponseCode(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessUIPageRespCode()); }
     static function getUIPageResponseKey(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessUIPageRespKey()); }
     static function getUIPageResponseMsg(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessUIPageRespMsg()); }
-
+    static function getUIPageResponseMsgShow(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessUIPageRespMsgShow()); }
+    
     static function cleanUIPageResponseData()
     {
         $zgdlog = new KLogger();
@@ -241,6 +243,7 @@ class ZGDConfigurations
         unset($_SESSION[ZGDConfigurations::getKeySessUIPageRespCode()]);
         unset($_SESSION[ZGDConfigurations::getKeySessUIPageRespKey()]);
         unset($_SESSION[ZGDConfigurations::getKeySessUIPageRespMsg()]);
+        unset($_SESSION[ZGDConfigurations::getKeySessUIPageRespMsgShow()]);
         $zgdlog->LogInfoEndFUNCTION("cleanUIPageResponseData");
     }
     /** End - UI RESPONSE DATA **/
@@ -318,6 +321,7 @@ class ZGDConfigurations
     static function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}
     static function getKeySessUIPageRespKey(){return "UI_PAGE_RESPONSE_KEY";}
     static function getKeySessUIPageRespMsg(){return "UI_PAGE_RESPONSE_MSG";}
+    static function getKeySessUIPageRespMsgShow(){return "UI_PAGE_RESPONSE_MSG_SHOW";}
     
     static function getKeySessAuthUserUid(){return "GD_CORP_AUTH_USER_UID";}
     static function getKeySessAuthUserIsAuthenticated(){return "GD_CORP_AUTH_ISUSERAUTHENTICATED_TF";}
@@ -341,16 +345,17 @@ class ZGDConfigurations
         }
     }
     
-    static function redirectToUIPage($code, $key, $msg, $location)
+    static function redirectToUIPage($code, $key, $msg, $showmsg = "TRUE", $location)
     {
         $zgdlog = new KLogger();
         $zgdlog->LogInfoStartFUNCTION("redirectToUIPage");
-        ZGDConfigurations::cleanUIPageResponseData($code, $key, $msg);
+        ZGDConfigurations::cleanUIPageResponseData();
         $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespCode()."}-{".$code."}");
         $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespKey()."}-{".$key."}");
         $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsg()."}-{".$msg."}");
+        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
         $zgdlog->LogInfo("{location}-{".$location."}");
-        ZGDConfigurations::setUIPageResponseData($code, $key, $msg);
+        ZGDConfigurations::setUIPageResponseData($code, $key, $msg, strtoupper($showmsg));
         $zgdlog->LogInfoEndFUNCTION("redirectToUIPage");
         header("Location: ".$location);
     }
@@ -403,6 +408,12 @@ class ZGDConfigurations
     static function getEmailSupportAccount()
     {
         return ZGDConfigurations::$email_support_account;
+    }
+    
+    static $email_admin_account = "stephen@guyverdesigns.com";
+    static function getEmailAdminAccount()
+    {
+        return ZAppConfigurations::$email_admin_account;
     }
     /** End - CONFIG VALUES **/
 }

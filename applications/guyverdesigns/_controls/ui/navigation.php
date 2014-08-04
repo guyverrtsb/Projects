@@ -9,7 +9,7 @@ $gdauth = new GDAccessControl();
 if($gdauth->isAthenticated())
 {
     printf("<a class=\"buttonBlue usersafety\" title=\"Login\" href=\"/gd.trxn.com/usersafety/_controls/ajax/USER_ACCESS.php?GD_CONTROLLER_KEY=LOGIN_USER_OUT\">Logout</a>");
-    printf("<a class=\"buttonBlue usersafety\" title=\"User\" href=\"/s_userpage.php\">User</a>");
+    printf("<a class=\"buttonBlue usersafety\" title=\"User\" href=\"/s_user_home.php\">User</a>");
 }
 else
 {

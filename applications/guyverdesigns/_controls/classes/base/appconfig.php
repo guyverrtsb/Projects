@@ -26,5 +26,11 @@ class ZAppConfigurations
     {
         return ZAppConfigurations::$email_support_account;
     }
+    
+    static $email_admin_account = "stephen@guyverdesigns.com";
+    static function getEmailAdminAccount()
+    {
+        return ZAppConfigurations::$email_admin_account;
+    }
 }
 ?>

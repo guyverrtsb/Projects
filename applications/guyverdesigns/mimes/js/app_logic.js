@@ -1,4 +1,20 @@
 /** Use this to override the Content Block Dynamic Content Tool.  make this specific to your application **/
+function loadList(obj, funcname)
+{
+	var jqobj = $("#" + obj.id);
+    $.post("/_controls/ajax/SCREEN_CONTROL.php", gdSearializeControlKey(jqobj.attr()), function(data)
+    {
+        data = eval("(" + data + ")");
+        if(data.RETURN_KEY == "SUCCESS")
+    	{
+	        $.each(data.RESULTS, function(key, val)
+	        {
+	        	eval(funcname + "(key, val)");
+	        });
+    	}
+    });
+}
+
 function buildDynamicContentBlockElements(data, key, val, dckey, dcitm)
 {
 	var cb_li = $("<li/>").attr("contentblock", dcitm);
@@ -10,27 +26,6 @@ function buildDynamicContentBlockElements(data, key, val, dckey, dcitm)
 		cb_li.text(eval("val.sdesc"));
 
     return cb_li;
-}
-
-function buildDynamicDropDownElements(data, key, val, dckey)
-{
-	var dd_value = $("<option/>");
-	if(dckey == "LIST_OF_BILLTOS")
-	{
-		dd_value.val(val.uid);
-		dd_value.text(val.companyname);
-	}
-	else if(dckey == "LIST_OF_CLIENTS")
-	{
-		dd_value.val(val.uid);
-		dd_value.text(val.companyname);
-	}
-	else if(dckey == "LIST_OF_PROJECTS")
-	{
-		dd_value.val(val.uid);
-		dd_value.text(val.sdesc);
-	}
-    return dd_value;
 }
 
 function buildDynamicMenuElements(jqobj, data, key, val)
@@ -55,22 +50,6 @@ function buildDynamicMenuElements(jqobj, data, key, val)
     	jqobj.after(newjqobj);
     	jqobj = newjqobj;
     	
-    });
-}
-
-function loadList(obj, funcname)
-{
-	var jqobj = $("#" + obj.id);
-    $.post("/_controls/ajax/SCREEN_CONTROL.php", gdSearializeControlKey(jqobj.attr()), function(data)
-    {
-        data = eval("(" + data + ")");
-        if(data.RETURN_KEY == "SUCCESS")
-    	{
-	        $.each(data.RESULTS, function(key, val)
-	        {
-	        	eval(funcname + "(key, val)");
-	        });
-    	}
     });
 }
 
@@ -103,13 +82,13 @@ function gdFuncRegisterData()
     $.post("/_controls/ajax/ACCOUNTING.php", gdSerialize("register"), function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlockReturnMessage(data, "DATA_IS_CREATED", "register"))
+        if(buildContentBlockReturnMessage(data, "DATA_IS_CREATED"))
         {
         	loadDynamicPageElements();
         }
         else
         {
-            buildContentBlockReturnMessage(data, true, "register");
+            buildContentBlockReturnMessage(data, true);
         }
     });
 }
@@ -120,13 +99,13 @@ function gdFuncUpdateData()
     $.post("/_controls/ajax/ACCOUNTING.php", gdSerialize("update"), function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlockReturnMessage(data, "RECORD_IS_UPDATED", "update"))
+        if(buildContentBlockReturnMessage(data, "RECORD_IS_UPDATED"))
         {
         	loadDynamicPageElements();
         }
         else
         {
-            buildContentBlockReturnMessage(data, true, "update");
+            buildContentBlockReturnMessage(data, true);
         }
     });
 }

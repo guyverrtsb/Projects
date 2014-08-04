@@ -14,6 +14,44 @@ class gdUpdateUsersafetyAccount
     {
     }
     
+    function updateRecordUserAccount_UEN($uid, $email, $nickname)
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount_UEN");
+        $this->cleanResult_Record();
+        $sqlstmnt = "UPDATE usersafety_useraccount SET ".
+            "changeddt=NOW(), ".
+            "email=:email, ".
+            "nickname=:nickname, ".
+            "WHERE uid=:uid";
+        
+        $appcon = new ZAppDatabase();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":email", $email);
+        $appcon->bindParam(":nickname", $nickname);
+        $appcon->execUpdate();
+        if($appcon->getTransactionGood())
+        {
+            if($appcon->getRowCount() > 0)
+            {
+                $this->setResult_Record($appcon->getRowfromLastId($appcon, "usersafety_useraccount", $appcon->getLastInsertID()));
+                $this->gdlog()->LogInfoDB($this->getResult_Record());
+                $fr = $this->saveActivityLog("RECORD_IS_UPDATED", "Record is Updated:".json_encode($this->getResult_Record()).":");
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("RECORD_IS_NOT_UPDATED");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("updateRecordUserAccount_UEN");
+        return $fr;
+    }
+    
     function updateRecordUserAccount($uid, $email, $password, $nickname, $isactive, $changepassword, $numberoflogintries)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount");

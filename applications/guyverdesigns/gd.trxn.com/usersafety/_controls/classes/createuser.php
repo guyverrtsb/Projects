@@ -1,7 +1,7 @@
 <?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_account.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/usersafety_account.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/usersafety_profile.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_useraccount.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/usersafety_useraccount.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/usersafety_userprofile.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/match_usersafety_useraccount_to_userprofile.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_role.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/create/match_usersafety_useraccount_to_role.php"); ?>

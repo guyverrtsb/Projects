@@ -15,13 +15,20 @@ class gdUpdateAccountingTimesheetDates
     }
     
     function updateRecordTimesheetDates($timesheet_dates_uid
-                                    , $d0_work_hours
-                                    , $d1_work_hours
-                                    , $d2_work_hours
-                                    , $d3_work_hours
-                                    , $d4_work_hours
-                                    , $d5_work_hours
-                                    , $d6_work_hours)
+                                        , $d0_work_hours
+                                        , $d1_work_hours
+                                        , $d2_work_hours
+                                        , $d3_work_hours
+                                        , $d4_work_hours
+                                        , $d5_work_hours
+                                        , $d6_work_hours
+                                        , $d0_cfg_ratetype_sdesc
+                                        , $d1_cfg_ratetype_sdesc
+                                        , $d2_cfg_ratetype_sdesc
+                                        , $d3_cfg_ratetype_sdesc
+                                        , $d4_cfg_ratetype_sdesc
+                                        , $d5_cfg_ratetype_sdesc
+                                        , $d6_cfg_ratetype_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordTimesheetDates");
         $this->cleanResult_Record();
@@ -33,7 +40,14 @@ class gdUpdateAccountingTimesheetDates
             "d3_work_hours=:d3_work_hours, ".
             "d4_work_hours=:d4_work_hours, ".
             "d5_work_hours=:d5_work_hours, ".
-            "d6_work_hours=:d6_work_hours ".
+            "d6_work_hours=:d6_work_hours, ".
+            "d0_cfg_ratetype_sdesc=:d0_cfg_ratetype_sdesc, ".
+            "d1_cfg_ratetype_sdesc=:d1_cfg_ratetype_sdesc, ".
+            "d2_cfg_ratetype_sdesc=:d2_cfg_ratetype_sdesc, ".
+            "d3_cfg_ratetype_sdesc=:d3_cfg_ratetype_sdesc, ".
+            "d4_cfg_ratetype_sdesc=:d4_cfg_ratetype_sdesc, ".
+            "d5_cfg_ratetype_sdesc=:d5_cfg_ratetype_sdesc, ".
+            "d6_cfg_ratetype_sdesc=:d6_cfg_ratetype_sdesc ".
             "WHERE uid=:timesheet_dates_uid";
         
         $appcon = new ZAppDatabase();
@@ -46,6 +60,13 @@ class gdUpdateAccountingTimesheetDates
         $appcon->bindParam(":d4_work_hours", $d4_work_hours);
         $appcon->bindParam(":d5_work_hours", $d5_work_hours);
         $appcon->bindParam(":d6_work_hours", $d6_work_hours);
+        $appcon->bindParam(":d0_cfg_ratetype_sdesc", $d0_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d1_cfg_ratetype_sdesc", $d1_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d2_cfg_ratetype_sdesc", $d2_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d3_cfg_ratetype_sdesc", $d3_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d4_cfg_ratetype_sdesc", $d4_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d5_cfg_ratetype_sdesc", $d5_cfg_ratetype_sdesc);
+        $appcon->bindParam(":d6_cfg_ratetype_sdesc", $d6_cfg_ratetype_sdesc);
         $appcon->bindParam(":timesheet_dates_uid", $timesheet_dates_uid);
         $appcon->execUpdate();
         if($appcon->getTransactionGood())

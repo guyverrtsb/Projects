@@ -1,9 +1,4 @@
-<li class="menuheader">Accounting</li>
-<li><a class="menulink" href="s_admin_account.php">Bill Tos</a></li>
-<li><a class="menulink" href="s_admin_account.php">Clients</a></li>
-<li><a class="menulink" href="s_admin_account.php">Projects</a></li>
-<li><a class="menulink" href="s_admin_account.php">Create Invoice</a></li>
-<li><a class="menulink" href="s_admin_account.php">View Invoice</a></li>
-<li class="menuheader">User Account</li>
-<li><a class="menulink" href="/siteadmin/s_create_university.php">Change Password</a></li>
-<li><a class="menulink" href="/siteadmin/s_create_university.php">Manage Account</a></li>
+<ul>
+<li class="menuheader">UserSafety</li>
+<li><a class="menulink" href="/gd.trxn.com/usersafety/s_user_accounts.php">User Accounts</a></li>
+</ul>

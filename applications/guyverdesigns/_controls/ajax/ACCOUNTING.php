@@ -203,7 +203,9 @@ if($action != "INVALID")
                                                 filter_var($_POST["cfg_region_sdesc"], FILTER_SANITIZE_STRING),
                                                 filter_var($_POST["city"], FILTER_SANITIZE_STRING),
                                                 filter_var($_POST["cfg_payoutcycle_sdesc"], FILTER_SANITIZE_STRING),
-                                                filter_var($_POST["rate_hourly"], FILTER_SANITIZE_STRING),
+                                                filter_var($_POST["cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING),
+                                                filter_var($_POST["rate_hourly_onsite"], FILTER_SANITIZE_STRING),
+                                                filter_var($_POST["rate_hourly_remote"], FILTER_SANITIZE_STRING),
                                                 filter_var($_POST["start_date"], FILTER_SANITIZE_STRING),
                                                 filter_var($_POST["end_date"], FILTER_SANITIZE_STRING));
             if($fr == "DATA_IS_CREATED")
@@ -305,7 +307,14 @@ if($action != "INVALID")
                                                 filter_var($_POST["d3_work_hours"], FILTER_SANITIZE_STRING), 
                                                 filter_var($_POST["d4_work_hours"], FILTER_SANITIZE_STRING),
                                                 filter_var($_POST["d5_work_hours"], FILTER_SANITIZE_STRING),
-                                                filter_var($_POST["d6_work_hours"], FILTER_SANITIZE_STRING));
+                                                filter_var($_POST["d6_work_hours"], FILTER_SANITIZE_STRING), 
+                                                filter_var($_POST["d0_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING), 
+                                                filter_var($_POST["d1_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING), 
+                                                filter_var($_POST["d2_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING), 
+                                                filter_var($_POST["d3_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING), 
+                                                filter_var($_POST["d4_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING),
+                                                filter_var($_POST["d5_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING),
+                                                filter_var($_POST["d6_cfg_ratetype_sdesc"], FILTER_SANITIZE_STRING));
             if($fr == "RECORD_IS_UPDATED")
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "RECORD_IS_UPDATED"
@@ -374,11 +383,15 @@ function validateProjectRegisterForm()
         $fv = false;
     if (!isset($_POST["cfg_payoutcycle_sdesc"]) || $_POST["cfg_payoutcycle_sdesc"] == "")
         $fv = false;
-    if (!isset($_POST["rate_hourly"]) || $_POST["rate_hourly"] == "")
-        $fv = false;
     if (!isset($_POST["start_date"]) || $_POST["start_date"] == "")
         $fv = false;
     if (!isset($_POST["end_date"]) || $_POST["end_date"] == "")
+        $fv = false;
+    if (!isset($_POST["cfg_ratetype_sdesc"]) || $_POST["cfg_ratetype_sdesc"] == "")
+        $fv = false;
+    if (!isset($_POST["rate_hourly_onsite"]) || $_POST["rate_hourly_onsite"] == "")
+        $fv = false;
+    if (!isset($_POST["rate_hourly_remote"]) || $_POST["rate_hourly_remote"] == "")
         $fv = false;
     return $fv;
 }
@@ -439,6 +452,20 @@ function validateTimesheetDataUpdateForm()
     if (!isset($_POST["d5_work_hours"]) || $_POST["d5_work_hours"] == "")
         $fv = false;
     if (!isset($_POST["d6_work_hours"]) || $_POST["d6_work_hours"] == "")
+        $fv = false;
+    if (!isset($_POST["d0_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d1_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d2_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d3_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d4_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d5_cfg_ratetype_sdesc"]))
+        $fv = false;
+    if (!isset($_POST["d6_cfg_ratetype_sdesc"]))
         $fv = false;
     if (!isset($_POST["uid"]) || $_POST["uid"] == "")
         $fv = false;

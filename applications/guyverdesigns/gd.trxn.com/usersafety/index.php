@@ -23,17 +23,17 @@ function gdFuncRegisterData()
         data = eval("(" + data + ")");
         if(data.USER_TYPE == "SITE_USER")
         {
-            if(buildContentBlockReturnMessage(data, "ACCOUNT_IS_PENDING", "register"))
+            if(buildContentBlockReturnMessage(data, "ACCOUNT_IS_PENDING"))
             {
                 if(data.ENV_KEY != null && data.ENV_KEY == "LCL")
                 {
-                    appendContentBlockReturnMessageObject("register", $("<a/>").text("Activate User Override").attr("href",data.TRXN_URL));
+                    appendContentBlockReturnMessageObject("ACCOUNT_IS_PENDING", $("<a/>").text("Activate User Override").attr("href",data.TRXN_URL));
                 }
             }
         }
         else
         {
-            buildContentBlockReturnMessage(data, true, "register");
+            buildContentBlockReturnMessage(data, true);
         }
     });
 }
@@ -44,16 +44,16 @@ function gdFuncSupportData()
     $.post("_controls/ajax/USER_ACCESS.php", gdSerialize("support"), function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlockReturnMessage(data, "ACCOUNT_IS_PENDING", "CBUserSupport"))
+        if(buildContentBlockReturnMessage(data, "ACCOUNT_IS_PENDING"))
         {
             if(data.ENV_KEY != null && data.ENV_KEY == "LCL")
             {
-                appendContentBlockReturnMessageObject("support", $("<a/>").text("Activate User Override").attr("href",data.TRXN_URL));
+                appendContentBlockReturnMessageObject($("<a/>").text("Activate User Override").attr("href",data.TRXN_URL));
             }
         }
         else
         {
-            buildContentBlockReturnMessage(data, true, "support");
+            buildContentBlockReturnMessage(data, true);
         }
     });
 }
@@ -78,14 +78,16 @@ function gdFuncTestData(email, pass, fname, lname, nick)
 <?php gdinc("/gd.trxn.com/_controls/ui/header.php") ?>
     <!-- CONTENT_AREA -->
     <div id="content_area">
-        <div id="banner">
+<?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
+        <div id="messageline">
 <?php
 if(gdconfig()->getUIPageResponseCode() != "")
 {
     printf("<p class=\"message\" UIPAGERESSHOW=\"TRUE\" UIPAGERESCODE=\"%s\" UIPAGERESKEY=\"%s\" UIPAGERESMSG=\"%s\">%s</p>", gdconfig()->getUIPageResponseCode(), gdconfig()->getUIPageResponseKey(), gdconfig()->getUIPageResponseMsg(), gdconfig()->getUIPageResponseMsg());
 }
 ?>
-<?php gdconfig()->cleanUIPageResponseData() ?></div>
+<?php gdconfig()->cleanUIPageResponseData() ?>
+        </div>
         <div id="left_column">Left Column</div>
         <div id="workarea">
             <div id="workarea_col_left">

@@ -59,6 +59,8 @@ class gdTimesheetData
         $gdfapd = new gdFindAccountingProjectData();
         $gdfapd->findAcountingProject_byUid($project_account_uid);
         $timesheetnumberprefix = $gdfapd->getTimesheetprefixnumber();
+        $cfg_ratetype_sdesc = $gdfapd->getCfgRatetypeSdesc();
+
 
         $srtloopdate;
         $srtprojdate = $this->getGDConfig()->gdDateTime($start_date);
@@ -111,36 +113,43 @@ class gdTimesheetData
                                                 , $funcargs["d0_work_hours"]
                                                 , $funcargs["d0_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d0_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d1_work_date"]
                                                 , $funcargs["d1_work_day_idx"]
                                                 , $funcargs["d1_work_hours"]
                                                 , $funcargs["d1_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d1_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d2_work_date"]
                                                 , $funcargs["d2_work_day_idx"]
                                                 , $funcargs["d2_work_hours"]
                                                 , $funcargs["d2_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d2_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d3_work_date"]
                                                 , $funcargs["d3_work_day_idx"]
                                                 , $funcargs["d3_work_hours"]
                                                 , $funcargs["d3_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d3_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d4_work_date"]
                                                 , $funcargs["d4_work_day_idx"]
                                                 , $funcargs["d4_work_hours"]
                                                 , $funcargs["d4_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d4_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d5_work_date"]
                                                 , $funcargs["d5_work_day_idx"]
                                                 , $funcargs["d5_work_hours"]
                                                 , $funcargs["d5_cfg_workdaystatus_sdesc"]
                                                 , $funcargs["d5_ldesc"]
+                                                , $cfg_ratetype_sdesc
                                                 , $funcargs["d6_work_date"]
                                                 , $funcargs["d6_work_day_idx"]
                                                 , $funcargs["d6_work_hours"]
                                                 , $funcargs["d6_cfg_workdaystatus_sdesc"]
-                                                , $funcargs["d6_ldesc"]);
+                                                , $funcargs["d6_ldesc"]
+                                                , $cfg_ratetype_sdesc);
                 $timesheetcounter++;
             }
 
@@ -218,7 +227,14 @@ class gdTimesheetData
                                         , $d3_work_hours
                                         , $d4_work_hours
                                         , $d5_work_hours
-                                        , $d6_work_hours)
+                                        , $d6_work_hours
+                                        , $d0_cfg_ratetype_sdesc
+                                        , $d1_cfg_ratetype_sdesc
+                                        , $d2_cfg_ratetype_sdesc
+                                        , $d3_cfg_ratetype_sdesc
+                                        , $d4_cfg_ratetype_sdesc
+                                        , $d5_cfg_ratetype_sdesc
+                                        , $d6_cfg_ratetype_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateExistingTimesheetDates");
         $fr = "UNKNOWN_ERROR";
@@ -232,7 +248,14 @@ class gdTimesheetData
                                                 , $d3_work_hours
                                                 , $d4_work_hours
                                                 , $d5_work_hours
-                                                , $d6_work_hours);
+                                                , $d6_work_hours
+                                                , $d0_cfg_ratetype_sdesc
+                                                , $d1_cfg_ratetype_sdesc
+                                                , $d2_cfg_ratetype_sdesc
+                                                , $d3_cfg_ratetype_sdesc
+                                                , $d4_cfg_ratetype_sdesc
+                                                , $d5_cfg_ratetype_sdesc
+                                                , $d6_cfg_ratetype_sdesc);
 
         if($fr == "RECORD_IS_UPDATED")
         {

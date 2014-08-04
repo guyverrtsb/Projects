@@ -16,7 +16,9 @@ class gdCreateAccountingProjectProfile
     
     function createRecordProjectProfile($accounting_project_uid
                                         , $cfg_payoutcycle_sdesc
-                                        , $rate_hourly
+                                        , $cfg_ratetype_sdesc
+                                        , $rate_hourly_onsite
+                                        , $rate_hourly_remote
                                         , $start_date
                                         , $end_date)
     {
@@ -26,7 +28,9 @@ class gdCreateAccountingProjectProfile
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "accounting_project_uid=:accounting_project_uid, ".
             "cfg_payoutcycle_sdesc=:cfg_payoutcycle_sdesc, ".
-            "rate_hourly=:rate_hourly, ".
+            "cfg_ratetype_sdesc=:cfg_ratetype_sdesc, ".
+            "rate_hourly_onsite=:rate_hourly_onsite, ".
+            "rate_hourly_remote=:rate_hourly_remote, ".
             "start_date=:start_date, ".
             "end_date=:end_date";
         
@@ -35,7 +39,9 @@ class gdCreateAccountingProjectProfile
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":accounting_project_uid", $accounting_project_uid);
         $appcon->bindParam(":cfg_payoutcycle_sdesc", $cfg_payoutcycle_sdesc);
-        $appcon->bindParam(":rate_hourly", $rate_hourly);
+        $appcon->bindParam(":cfg_ratetype_sdesc", $cfg_ratetype_sdesc);
+        $appcon->bindParam(":rate_hourly_onsite", $rate_hourly_onsite);
+        $appcon->bindParam(":rate_hourly_remote", $rate_hourly_remote);
         $appcon->bindParam(":start_date", $this->getGDConfig()->getmySQLDateTimeStamp($start_date));
         $appcon->bindParam(":end_date", $this->getGDConfig()->getmySQLDateTimeStamp($end_date));
         $appcon->execUpdate();
@@ -62,7 +68,9 @@ class gdCreateAccountingProjectProfile
     
     function getAccountingProjectUid() { return $this->getResult_RecordField("accounting_project_uid"); }
     function getCfgPayoutcycleSdesc() { return $this->getResult_RecordField("cfg_payoutcycle_sdesc"); }
-    function getRateHourly() { return $this->getResult_RecordField("rate_hourly"); }
+    function getCfgRatetypeSdesc() { return $this->getResult_RecordField("cfg_ratetype_sdesc"); }
+    function getOnsiteRateHourly() { return $this->getResult_RecordField("rate_hourly_onsite"); }
+    function getRemoteRateHourly() { return $this->getResult_RecordField("rate_hourly_remote"); }
     function getStartDate() { return $this->getResult_RecordField("start_date"); }
     function getEndDate() { return $this->getResult_RecordField("end_date"); }
 }

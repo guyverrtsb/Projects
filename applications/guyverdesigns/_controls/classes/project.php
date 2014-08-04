@@ -51,7 +51,9 @@ class gdProjectData
                                     , $cfg_region_sdesc
                                     , $city
                                     , $cfg_payoutcycle_sdesc
-                                    , $rate_hourly
+                                    , $cfg_ratetype_sdesc
+                                    , $rate_hourly_onsite
+                                    , $rate_hourly_remote
                                     , $start_date
                                     , $end_date)
     {
@@ -77,7 +79,9 @@ class gdProjectData
             $gdcapp = new gdCreateAccountingProjectProfile();
             $gdcapp->createRecordProjectProfile($gdcap->getUid()
                                                 , $cfg_payoutcycle_sdesc
-                                                , $rate_hourly
+                                                , $cfg_ratetype_sdesc
+                                                , $rate_hourly_onsite
+                                                , $rate_hourly_remote
                                                 , $start_date
                                                 , $end_date);
         
@@ -91,7 +95,6 @@ class gdProjectData
             $gdtd->createNewTimesheetAccount($gdcap->getUid()
                                             , $start_date
                                             , $end_date);
-            
             
             if($fr == "RECORD_IS_CREATED")
             {

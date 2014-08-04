@@ -8,12 +8,11 @@
 if(gdauth()->isAuthenticated())
 {
     printf("<li><a href=\"/gd.trxn.com/usersafety/_controls/ajax/USER_ACCESS.php\">Logout</a></li>");
-    printf("<li><a href=\"/s_user_home.php\">User Home</a></li>");
+    printf("<li><a href=\"%s\">User Home</a></li>", ZAppConfigurations::getRedirectAuthLoggedinPage());
 }
 else
 {
     printf("<li><a href=\"/gd.trxn.com/usersafety/index.php\">Login</a></li>");
-    printf("<li><a href=\"/URL\">Link 3</a></li>");
 }
 ?>
                 <li><a href="/gd.trxn.com/system/links.php">System Links</a></li>

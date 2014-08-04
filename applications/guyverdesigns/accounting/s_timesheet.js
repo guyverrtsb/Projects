@@ -53,7 +53,7 @@ function buildTimesheetList(jqobj, data)
     	else if(val.accounting_timesheet_dates_cfg_workweekstatus_sdesc == "ACCOUNTING_WORKWEEKSTATUS_DEACTIVATED")
     		button1 = getFormMiniButton("", "Deactivated", false);
     	else
-    		button1 = getFormMiniButton("executeTimesheetScreen('" + val.accounting_timesheet_dates_uid + "');", "Edit", false);
+    		button1 = getFormMiniButton("designDynamicContent('workarea_col_right', 'TIMESHEET_UDPATE_SCREEN_DATA', 'buildTimesheetEntry', 'accounting_timesheet_dates_uid=" + val.accounting_timesheet_dates_uid + "');", "Edit", false);
     	button1.css("float","right");
     	
     	li.append(weeknumber);
@@ -63,15 +63,6 @@ function buildTimesheetList(jqobj, data)
     	
     	cb.append(li);
    });
-}
-
-function executeTimesheetScreen(accounting_timesheet_dates_uid)
-{
-	var wcr = $("#workarea_col_right")
-		.attr("dyncontentkey","TIMESHEET_UDPATE_SCREEN_DATA")
-		.attr("funcname","buildTimesheetEntry")
-		.attr("dyncontentqs","accounting_timesheet_dates_uid=" + accounting_timesheet_dates_uid);
-	buildDynamicContent(wcr);
 }
 
 function buildTimesheetEntry(jqobj, data, key, val)
@@ -95,28 +86,27 @@ function buildTimesheetEntry(jqobj, data, key, val)
     cb.append(getContentBlockSubHeader("Date : " + val.accounting_timesheet_dates_d0_work_date + " - " 
 			+ val.accounting_timesheet_dates_d6_work_date));
 	
-    for(var idx = 0; idx <=6; idx++)
+    for(var idx = 0; idx <= 6; idx++)
 	{
-		var day = $("<p/>").text(eval("val.accounting_timesheet_dates_d" + idx + "_work_day"));
-	    day.css("float","left");
-	    day.css("padding-left","20px");
-	    day.css("padding-right","20px");
-	    day.css("margin-bottom","0px");
-	    
+		var day = $("<li/>").text(eval("val.accounting_timesheet_dates_d" + idx + "_work_day"));
+    
 	    var hours = getFormInputTextField("update", "d" + idx + "_work_hours", eval("val.accounting_timesheet_dates_d" + idx + "_work_hours"), eval("val.accounting_timesheet_dates_d" + idx + "_work_date"), null)
 	    var input = jQuery(hours).find("input");
-	    input.css("width","50px").css("margin-top","-10px");
 	    input.keyup(function()
 		{ 
 	    	showTotal();
     	});
-	    hours.css("padding-top","10px");
-	    
-	    var ratetype = getFormSelectConfiguration("update", "cfg_ratetype_sdesc", "", "ACCOUNTING_RATETYPE", "", "");
+
+	    var ratetype = getFormSelectConfiguration("update", "d" + idx + "_cfg_ratetype_sdesc", "ACCOUNTING_RATETYPE" + "|" + eval("val.accounting_timesheet_dates_d" + idx + "_cfg_ratetype_sdesc"), "", "Choose Rate Type");
 	    var select = jQuery(ratetype).find("select");
-	    	select.css("margin-top","-10px");
-	    cb.append(hours.append(select.append(day)));
 	    
+	    day.css("clear","both");
+	    day.css("font-size","14px");
+	    hours.css("float","left");
+	    input.css("width","30px");
+	    ratetype.css("float","left");
+
+    	cb.append(day).append(select).append(input);	
 	}
 
     var total = getContentBlockText("updatetotal_hours", "Total : ", "0");
@@ -137,4 +127,22 @@ function showTotal()
 	total = total +  Number($("#updated4_work_hours").val()) + Number($("#updated5_work_hours").val());
 	total = total + Number($("#updated6_work_hours").val());
 	$("#updatetotal_hours").text(total);
+}
+
+function gdFuncUpdateData()
+{
+    buildContentBlockReturnMessage();
+    $.post("/_controls/ajax/ACCOUNTING.php", gdSerialize("update"), function(data)
+    {
+        data = eval("(" + data + ")");
+        if(buildContentBlockReturnMessage(data, "RECORD_IS_UPDATED"))
+        {
+        	buildDynamicContent($("#workarea_col_left_scrolling"));
+        	buildDynamicContent($("#workarea_col_right"));
+        }
+        else
+        {
+            buildContentBlockReturnMessage(data, true);
+        }
+    });
 }
