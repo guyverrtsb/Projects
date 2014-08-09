@@ -1,6 +1,6 @@
 <?php require_once("gd.trxn.com/_controls/classes/_core.php"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
-</html>
+<html>
 <head>
 <title zgd.bkgimg="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
 <?php gdinc("/_controls/ui/css/core.php") ?>

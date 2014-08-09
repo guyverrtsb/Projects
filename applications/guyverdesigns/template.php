@@ -3,7 +3,12 @@
 </html>
 <head>
     <title></title>
-<link rel="stylesheet" href="mimes/css/main.css">
+<?php gdinc("/_controls/ui/css/core.php") ?>
+<?php gdinc("/_controls/ui/js/core.php") ?>
+<script src="template.js"></script>
+<script>
+
+</script>
 </head>
 <body>
 <div id="container">
