@@ -82,18 +82,18 @@ class ZAppDatabase
         
         // LCL GroupYou Database
         $convar["LCL_GDCORP_APPDB_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_APPDB_DBNAME"] = "lclgroupuniv";
+        $convar["LCL_GDCORP_APPDB_DBNAME"] = "lclunivmeetdb";
         $convar["LCL_GDCORP_APPDB_USRNAM"] = "root";
         $convar["LCL_GDCORP_APPDB_PASWRD"] = "GDHonkey_01";
         // GoDaddy Staging GroupYou Database
-        $convar["STG_GDCORP_APPDB_HOSTNAME"] = "stggroupuniv.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_APPDB_DBNAME"] = "stggroupuniv";
-        $convar["STG_GDCORP_APPDB_USRNAM"] = "stggroupuniv";
+        $convar["STG_GDCORP_APPDB_HOSTNAME"] = "stunivmeetdb.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_APPDB_DBNAME"] = "stunivmeetdb";
+        $convar["STG_GDCORP_APPDB_USRNAM"] = "stunivmeetdb";
         $convar["STG_GDCORP_APPDB_PASWRD"] = "GDStage@01";
         // GoDaddy Production GroupYou Database
-        $convar["PRD_GDCORP_APPDB_HOSTNAME"] = "prdgroupuniv.db.6047355.hostedresource.com";
-        $convar["PRD_GDCORP_APPDB_DBNAME"] = "prdgroupuniv";
-        $convar["PRD_GDCORP_APPDB_USRNAM"] = "prdgroupuniv";
+        $convar["PRD_GDCORP_APPDB_HOSTNAME"] = "univmeetdb.db.6047355.hostedresource.com";
+        $convar["PRD_GDCORP_APPDB_DBNAME"] = "univmeetdb";
+        $convar["PRD_GDCORP_APPDB_USRNAM"] = "univmeetdb";
         $convar["PRD_GDCORP_APPDB_PASWRD"] = "GDProd@01";
        
        return $convar[$_SESSION['GUYVERDESIGNS_SERVER_ENVIRONMENT'] . "_" . $db . "_" . $name];
