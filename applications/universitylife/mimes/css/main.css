@@ -1,0 +1,65 @@
+/** Content Wrapper **/
+#ContentWrapper {
+    margin:auto; width:1000px; height:99%;
+    border-left:1px #cecece solid; border-right:1px #cecece solid;
+    border-left:0px; border-right:0px;
+}
+
+ul#topnav { list-style-type: none; overflow: hidden; padding: 1px 0; position: relative;
+/**    top: -20px;
+width: 800px;**/
+}
+ul#topnav li { display: inline; }
+ul#topnav li#login a { width: 188px; }
+ul#topnav li.common a { width: 100px; }
+ul#topnav li#spacer a { width: 206px; background: url(""); }
+ul#topnav li#spacer a.selected { }
+ul#topnav li#spacer a:hover { }
+
+.cbheader { margin-top:10px; font-size:20px; color:#F7A922; }
+.cb_even { background: url("/mimes/images/grey.png") repeat; }
+.cb_text { margin-left:10px; }
+.menuheader { margin-top:10px; font-size:16px; color:#F7A922; }
+.menuitem { margin-top:10px; font-size:12px; color:#ffffff; }
+.menulink { margin-top:10px; font-size:12px; color:#ffffff; }
+
+#CBHorizWorkArea { margin-top:50px; margin-left:auto; margin-right:auto; height:99%; }
+#CBHorizWorkArea ul { padding-top:10px; padding-bottom:10px; }
+#CBHorizWorkArea li { float:left;}
+
+#CBVertWorkArea { margin-top:50px; margin-left:auto; margin-right:auto; }
+#CBVertWorkArea ul { padding-top:10px; padding-bottom:10px; }
+#CBVertWorkArea li { }
+
+a {
+    color: #FFFFFF; text-decoration:none;
+}
+a.selected {
+    color: #cecece; text-decoration:none;
+}
+a:hover {
+    color: #cecece; text-decoration:none;
+}
+
+.SYS_MESSAGE    { color:#F90F09; font-size:16px; font-weight:bold; }
+li { border: 0px solid red; }
+/** HORIZONTAL LAYOUT **/
+#CBWorkAreaLeft { width:200px; height:99%;
+                background: url("/mimes/images/grey.png") repeat; }
+#CBWorkAreaLeft li { float:none; text-align:left; }
+
+#CBWorkAreaCenter { width:600px; height:99%;
+                background: url("/mimes/images/grey.png") repeat; }
+#CBWorkAreaCenter li { float:none; }
+
+#CBWorkAreaRight { width:200px; height:99%;
+                background: url("/mimes/images/grey.png") repeat; }
+#CBWorkAreaRight li { float:none; text-align:left; }
+
+.groupline { font-size:16px; padding-top:3px; padding-bottom:3px;
+                margin-top:3px; margin-bottom:3px;
+                background: url("/mimes/images/grey.png") repeat;
+                width:100%; }
+                
+.groupline a { margin-left:5px; }
+
