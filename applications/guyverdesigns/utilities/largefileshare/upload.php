@@ -36,14 +36,12 @@
 <form id="GDUploadImageFrm" class="form" action="/_controls/ajax/LARGE_FILE_SHARE.php" method="post" enctype="multipart/form-data" >
 <ul id="CBWorkAreaCenter">
     <li class="cbheader">Upload Large File</li>
-    <li id="WallMessageTransactionOutput">&nbsp;</li>
-
+    <li id="GDTransactionOutput">&nbsp;</li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div></div></li>
     <li id="TransactionOutput">&nbsp;</li>
-    <li id="CEResultsTOP">&nbsp;</li>
     </ul>
 <input type="file" id="FileUploadMimeFile" name="FileUploadMimeFile"/>
-    </form>
+</form>
     </div>
         <div id="right_column">Right Column</div>
     </div>
