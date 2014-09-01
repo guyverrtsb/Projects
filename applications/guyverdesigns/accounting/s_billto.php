@@ -7,6 +7,7 @@
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <?php gdinc("/_controls/ui/js/core.php") ?>
+<?php gdinc("/_controls/ui/js/accounting.php") ?>
 <script src="s_billto.js"></script>
 <script>
 function RegisterTestData(companyname, contactname, contactemail, contactnumber, address, city)

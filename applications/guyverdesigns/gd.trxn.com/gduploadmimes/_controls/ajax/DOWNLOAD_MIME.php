@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/mimes/imagefromdatabase.php"); ?>
+<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/mimes/mimefromdatabase.php"); ?>
 <?php
 gdlog()->LogInfo("PAGE_LOADED:");
 if(isset($_GET["MIMEKEY"]))
@@ -14,7 +14,7 @@ if(isset($_GET["MIMEKEY"]))
      * 4. Use the Table and query the Mime Blob Record
      * 5. Print the Mime Blob for output.
      */
-    $zifd = new zImagefromDatabase();
+    $zifd = new zMimefromDatabase();
     $r = $zifd->findMimeRecord($mimesobject);
     gdlog()->LogInfo($r);
     if($r == "MIME_FOUND")

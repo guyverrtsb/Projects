@@ -5,13 +5,15 @@ $(document).ready(function()
     var progressbar     = $("#GDUploadProgressBar");
     var statustxt       = $("#GDUploadProgressBarStatusTxt");
     var submitbutton    = $("#GDUploadSubmitButton");
-    var myform          = $("#GDUploadImageFrm");
-    var output          = $("#TransactionErr");
+    var myform          = $("#GDUploadMimeFrm");
+    var output          = $("#GDTransactionOutput");
     var completed       = "0%";
-    var message         = "";
+    var message         = "&nbsp;";
 
+	myform.attr("action", "/_controls/ajax/lfu/GD_UPLOAD_MIME.php");
+    
     $(myform).ajaxForm({
-        data: { GD_CONTROLLER_KEY: "REGISTER_WALL_MESSAGE" },
+        data: { "GD_CONTROL_KEY" : "UPLOAD_LARGE_FILE" },
         beforeSend: function() { //before sending form
             submitbutton.attr("disabled", ""); // disable upload button
             statustxt.empty();
@@ -19,8 +21,8 @@ $(document).ready(function()
             progressbar.width(completed); //initial value 0% of progress bar
             statustxt.html(completed); //set status text
             statustxt.css("color","#000"); //initial color of status text
-            message = "";
-            output.text(message);
+            message = "&nbsp;";
+            output.html(message);
             clearOutputResults();
         },
         uploadProgress: function(event, position, total, percentComplete) { //on progress
@@ -37,7 +39,7 @@ $(document).ready(function()
             submitbutton.removeAttr("disabled"); //enable submit button
             progressbox.hide(); // hide progress bar
             data = eval('(' + data.responseText + ')')
-            if(buildContentBlocksReturnMessage(data, "SUCCESS", "GDTransactionOutput"))
+            if(buildContentBlockReturnMessage(data, "SUCCESS"))
             {
                 // gdLoadNewWallMessages();
             }

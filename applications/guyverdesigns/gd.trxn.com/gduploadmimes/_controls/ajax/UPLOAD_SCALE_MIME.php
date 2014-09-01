@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/standard.php"); ?>
+<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/image.php"); ?>
 <?php
 ini_set("memory_limit","100M");
 if(isset($_POST["GD_CONTROLLER_KEY"]))
@@ -10,7 +10,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
     {
         if(validateMimeandContent())
         {
-            $zsuc = new zStandardUploadControl();
+            $zsuc = new zImageUploadControl();
             $r = $zsuc->executeControl("GDUploadImageFile", "mimes_appl_stephen", "500", "500");
             echo $r;
         }

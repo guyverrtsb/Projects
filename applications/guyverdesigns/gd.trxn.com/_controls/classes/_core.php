@@ -61,9 +61,11 @@ function getpagekey()
 
 function getControlKey()
 {
+    gdlog()->LogInfoStartFUNCTION("getControlKey()");
     $gdcontrolkey = "INVALID";
     if(isset($_POST["GD_CONTROL_KEY"]))
     {
+        gdlog()->LogInfo("POST:GD_CONTROL_KEY:ISSET");
         $gdcontrolkey = filter_var($_POST["GD_CONTROL_KEY"], FILTER_SANITIZE_STRING);
         if($gdcontrolkey == "")
         {
@@ -74,22 +76,23 @@ function getControlKey()
                 if($gdcontrolkey == "")
                 {
                     $gdcontrolkey = "INVALID";
+                    gdlog()->LogInfo("POST:GD_CONTROL_KEY:".$gdcontrolkey);
                 }
             }
         }
     }
-    else
+    else if(isset($_GET["GD_CONTROL_KEY"]))
     {
-        if(isset($_GET["GD_CONTROL_KEY"]))
+        gdlog()->LogInfo("GET:GD_CONTROL_KEY:ISSET");
+        $gdcontrolkey = filter_var($_GET["GD_CONTROL_KEY"], FILTER_SANITIZE_STRING);
+        if($gdcontrolkey == "")
         {
-            $gdcontrolkey = filter_var($_GET["GD_CONTROL_KEY"], FILTER_SANITIZE_STRING);
-            if($gdcontrolkey == "")
-            {
-                $gdcontrolkey = "INVALID";
-            }
+            $gdcontrolkey = "INVALID";
+            gdlog()->LogInfo("GET:GD_CONTROL_KEY:".$gdcontrolkey);
         }
     }
     gdlog()->LogInfo("getControlKey{".$gdcontrolkey."}");
+    gdlog()->LogInfoEndFUNCTION("getControlKey()");
     return $gdcontrolkey;
 }
 
@@ -157,5 +160,11 @@ function validateFormforBlanks()
         return true;
     else
         return false;
+}
+
+function formValidationLogging($retTF, $funcname, $fieldfailed)
+{
+    gdlog()->LogInfo($funcname." :{".$fieldfailed."}");
+    return $retTF; 
 }
 ?>

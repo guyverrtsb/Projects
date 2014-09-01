@@ -1,9 +1,9 @@
 <?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_task_control_links.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_task_control_links.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_account.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_useraccount.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/_user_authentication_data.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_account.php"); ?>
+<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_useraccount.php"); ?>
 <?php
 class gdActivation
     extends zAppBaseObject
@@ -14,7 +14,7 @@ class gdActivation
     
     function activation($activationQS)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("activation");
         $fr = "UNKNOWN_ERROR";
         
         $gdfutc = new gdFindUsersafetyTaskControlLinks();
@@ -23,6 +23,25 @@ class gdActivation
         
         if($gdfutc->getTasKKey() == "ACTIVATION_USER_ACCOUNT")
         {
+            $gdfua = new gdFindUsersafetyAccount();
+            $email_acct_found = $gdfua->findUsersafetyAccount_byUid($gdfutc->getRecordUid());
+            $email = $gdfua->getEmail();
+            
+            $this->gdlog()->LogInfo("User Email : ".$email);
+            $this->gdlog()->LogInfo("AdminEmail : ".$this->getGDConfig()->getEmailAdminAccount());
+                        
+            $gdfur = new gdFindUsersafetyRole();
+            if($email == $this->getGDConfig()->getEmailAdminAccount())
+                $gdfur->findUsersafetyRole_bySdesc("GD_ADMIN");
+            else
+                $gdfur->findUsersafetyRole_bySdesc("GD_USER");
+                        
+            $gdcmar = new gdCreateMatchAccounttoRole();
+            $gdcmar->createRecordMatchUseraccounttoRole($gdfutc->getRecordUid(), $gdfur->getUid());
+            
+            $gdcmus = new gdCreateMatchAccounttoSite();
+            $gdcmus->createRecordMatchUseraccounttoSite($gdfutc->getRecordUid(), $this->getGDConfig()->getSiteUid());
+            
             $fr = $this->activateUserAccount($gdfutc->getRecordUid(), $gdfutc->getUid());
         }
         else
@@ -30,13 +49,13 @@ class gdActivation
             $fr = "TASK_KEY_NOT_CODED_FOR";
         }
 
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("activation");
         return $fr;
     }
 
     function activateUserAccount($usersafety_account_uid, $usersafety_task_control_links_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("activateUserAccount");
         $fr = "UNKNOWN_ERROR";
         
         $gduua = new gdUpdateUsersafetyAccount();
@@ -57,13 +76,13 @@ class gdActivation
 
         $this->dumpOutputData();
         
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("activateUserAccount");
         return $fr;
     }
 
     function generateTaskControlLink($email)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoStartFUNCTION("generateTaskControlLink");
         $fr = "UNKNOWN_ERROR";
         $this->cleanAllOutputData();
         
@@ -94,7 +113,7 @@ class gdActivation
             $fr = $this->gdlog()->LogInfoRETURN("EMAIL_NOT_FOUND");
         }
         
-        $this->gdlog()->LogInfoEndFUNCTION("createNewUserAccountandProfile");
+        $this->gdlog()->LogInfoEndFUNCTION("generateTaskControlLink");
         return $fr;
     }
 }

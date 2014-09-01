@@ -40,7 +40,7 @@ class ZAppDatabase
     {       
         // LCL UserSafety Database
         $convar["LCL_GDCORP_USERSAFETY_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "lclusrsfty";
+        $convar["LCL_GDCORP_USERSAFETY_DBNAME"] = "lclusersafety";
         $convar["LCL_GDCORP_USERSAFETY_USRNAM"] = "root";
         $convar["LCL_GDCORP_USERSAFETY_PASWRD"] = "GDHonkey_01";
         // GoDaddy Prototype UserSafety Database
@@ -61,7 +61,7 @@ class ZAppDatabase
         
         // LCL CrossApps Database
         $convar["LCL_GDCORP_CROSSAPPDATA_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_CROSSAPPDATA_DBNAME"] = "lclcrssapp";
+        $convar["LCL_GDCORP_CROSSAPPDATA_DBNAME"] = "lclcrossapplication";
         $convar["LCL_GDCORP_CROSSAPPDATA_USRNAM"] = "root";
         $convar["LCL_GDCORP_CROSSAPPDATA_PASWRD"] = "GDHonkey_01";
         // GoDaddy Prototype CrossApps Database

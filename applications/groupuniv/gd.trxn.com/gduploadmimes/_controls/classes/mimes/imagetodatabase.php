@@ -12,23 +12,35 @@ class zImagetoDatabase
 {
     var $mimes_uid;
     var $mimesappl_uid;
-    var $tablename, $filepath, $filesize;
+    var $filepath, $filesize;
+    var $mimes_table_name;
+    var $appl_table_name;
     
     /**
      * Register the Mime Record.  This is basic File Information.
      * Also the Table that the Mime exists in
      */
-    function registerMime($filename, $filetype, $fileextension,
-        $filesize, $filepath, $filefolder, $tablename, $sitepackage, $sitealias)
+    function registerMime($mimes_table_name
+                    , $appl_table_name
+                    , $filename
+                    , $filetype
+                    , $fileextension
+                    , $filesize
+                    , $filepath
+                    , $filefolder
+                    , $tablename
+                    , $sitepackage
+                    , $sitealias)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerMime()");
         $fr;
         
-        $this->tablename = $tablename;
+        $this->mimes_table_name = $mimes_table_name;
+        $this->appl_table_name = $appl_table_name;
         $this->filepath = $filepath;
         $this->filesize = $filesize;
         
-        $sqlstmnt = "INSERT INTO mimes SET ".
+        $sqlstmnt = "INSERT INTO ". $this->mimes_table_name ." SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "filename=:filename, filetype=:filetype, ".
             "fileextension=:fileextension, filesize=:filesize, ".
@@ -86,6 +98,9 @@ class zImagetoDatabase
         return $fr;
     }
 
+    /*
+     * Register Image BLOB
+     */
     function registerMimeBlobImage($width, $height)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerMimeBlobImage()");
@@ -93,7 +108,7 @@ class zImagetoDatabase
 
         $fieldname = $this->getFieldNametoUploadTo($this->filesize);
 
-        $sqlstmnt = "INSERT INTO ".$this->tablename." SET ".
+        $sqlstmnt = "INSERT INTO ".$this->appl_table_name." SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "mimes_uid=:mimes_uid, width=:width, height=:height, ".
             $fieldname."=:filedata";
@@ -142,6 +157,64 @@ class zImagetoDatabase
             $fr = "TRANSACTION_FAIL";
         }
         $this->gdlog()->LogInfoEndFUNCTION("registerMimeBlobImage()");
+        return $fr;
+    }
+
+    /*
+     * Register Document BLOB
+     */
+    function registerMimeBlobDocument()
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("registerMimeBlobDocument()");
+        $fr;
+
+        $fieldname = $this->getFieldNametoUploadTo($this->filesize);
+
+        $sqlstmnt = "INSERT INTO ".$this->appl_table_name." SET ".
+            "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
+            "mimes_uid=:mimes_uid, ".
+            $fieldname."=:filedata";
+        
+        $this->gdlog()->LogInfo("File Path{".$this->filepath."}");
+        
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("CROSSAPPDATA");
+        $dbcontrol->setStatement($sqlstmnt);
+        $dbcontrol->bindParam(":mimes_uid", $this->getMimesUid());
+        $dbcontrol->bindParamBlob(":filedata", file_get_contents($this->filepath));
+        $dbcontrol->execUpdate();
+
+        if($dbcontrol->getTransactionGood())
+        {
+            if($dbcontrol->getRowCount() > 0)
+            {
+                $lid = $dbcontrol->getLastInsertID();
+                $this->saveActivityLog("MIME_BLOB_REGISTERED","Mimes Blob has been registered into".
+                    ":lid:".$lid.
+                    ":table_name:".$this->tablename.
+                    ":filedata:".$fieldname.
+                    ":mimes_uid:".$this->getMimesUid().":".
+                    ":filepath:".$this->filepath.":");
+
+                $row = $dbcontrol->getRowfromLastId($dbcontrol, $this->tablename, $lid);
+                $this->mimesappl_uid = $row["uid"];
+                $this->gdlog()->LogInfo("registerMimeBlobDocument():MIME_BLOB_REGISTERED".
+                    ":table_name:".$this->tablename.
+                    ":filedata:".$fieldname);
+                $fr = "MIME_BLOB_REGISTERED";
+            }
+            else
+            {
+                $this->gdlog()->LogInfo("registerMimeBlobDocument():MIME_BLOB_NOT_REGISTERED");
+                $fr = "MIME_BLOB_NOT_REGISTERED";
+            }
+        }
+        else
+        {
+            $this->gdlog()->LogError("registerMimeBlobDocument():TRANSACTION_FAIL");
+            $fr = "TRANSACTION_FAIL";
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("registerMimeBlobDocument()");
         return $fr;
     }
 

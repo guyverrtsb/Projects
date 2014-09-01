@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/standard.php"); ?>
+<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/image.php"); ?>
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/find/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/register/search.php"); ?>
@@ -17,7 +17,7 @@ if($action != "INVALID")
             if(isset($_FILES["WallMessageImageFile"]))
             {
                 gdlog()->LogInfoTaskLabel("Register Image");
-                $zsuc = new zStandardUploadControl("WallMessageImageFile", "mimes_appl_groupyou_wall_message", "500", "500");
+                $zsuc = new zImageUploadControl("WallMessageImageFile", "mimes_standard", "mimes_appl_groupyou_wall_message", "500", "500");
                 $r = $zsuc->executeControl();
                 gdlog()->LogInfo("IMAGE_VALIDATION:".$r);
                 if($r == "MIME_BLOB_REGISTERED")

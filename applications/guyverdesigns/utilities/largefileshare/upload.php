@@ -5,7 +5,9 @@
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Large File Share - Upload</title>
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <style>
-    div { border:0px solid red; }
+div { border:0px solid red; }
+#GDFileUploadMimeFile
+        { display:none; }
 </style>
 <?php gdinc("/_controls/ui/js/core.php") ?>
 <script src="upload.js"></script>
@@ -31,17 +33,20 @@
     <!-- CONTENT_AREA -->
     <div id="content_area">
         <div id="banner">Banner</div>
+<?php gdinc("/gd.trxn.com/_controls/ui/messageline.php") ?>
         <div id="left_column">Left Column</div>
         <div id="workarea">
-<form id="GDUploadImageFrm" class="form" action="/_controls/ajax/LARGE_FILE_SHARE.php" method="post" enctype="multipart/form-data" >
-<ul id="CBWorkAreaCenter">
+            <div id="GDLargeFileUpoad"><form id="GDUploadMimeFrm" class="form" method="post" enctype="multipart/form-data">
+    <ul id="CBGDUpload">
     <li class="cbheader">Upload Large File</li>
     <li id="GDTransactionOutput">&nbsp;</li>
+    <li><a id="GDUploadChooseButton" class="miniButtonBlue" name="navtop" onclick="$('#GDFileUploadMimeFile').click();">Choose File</a></li>
+    <li><textarea id="GDFileDescription" name="GDFileDescription" cols="50" rows="10">TEST TEST</textarea></li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div></div></li>
-    <li id="TransactionOutput">&nbsp;</li>
+    <li><a id="GDUploadSubmitButton" class="miniButtonBlue" name="navtop" onclick="$('#GDUploadMimeFrm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+    <li><input type="file" id="GDFileUploadMimeFile" name="GDFileUploadMimeFile"/></li>
     </ul>
-<input type="file" id="FileUploadMimeFile" name="FileUploadMimeFile"/>
-</form>
+</form></div>
     </div>
         <div id="right_column">Right Column</div>
     </div>

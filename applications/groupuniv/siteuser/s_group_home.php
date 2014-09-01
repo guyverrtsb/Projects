@@ -106,15 +106,15 @@ function clearOutputResults()
         <td><img src="/mimes/images/default_user_profile_image.gif"/></td>
         <td><textarea id="WallMessageContent" name="WallMessageContent" class="WallMessageContent"></textarea></td>
         <td><a class="miniButtonBlue" name="navtop" onclick="$('#WallMessageImageFile').click();">Add image</a>
-<a class="miniButtonBlue" name="navtop" onclick="$('#GDUploadImageFrm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td
+<a class="miniButtonBlue" name="navtop" onclick="$('#GDUploadImageFrm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
         </tr>
         </table></li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div ></div></li>
     <li id="TransactionOutput">&nbsp;</li>
     <li id="CEResultsTOP">&nbsp;</li>
     <li id="CEResultsBOTTOM"><a href="javascript:gdLoadContentBlocksforExistingWallMessages();">Load new Messages</a>&nbsp;</li>
+    <li><input type="file" id="WallMessageImageFile" name="WallMessageImageFile"/></li>
     </ul>
-<input type="file" id="WallMessageImageFile" name="WallMessageImageFile"/>
     </form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifications</li>

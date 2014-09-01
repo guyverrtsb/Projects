@@ -36,6 +36,9 @@ class ZGDConfigurations
             $_SESSION[ZGDConfigurations::getKeySessSiteAlias()] = $_SERVER["HTTP_HOST"];
             
             $_SESSION["GD_SITE_DEFINED"] = "TRUE";
+            
+            $f = explode("/", $_SERVER["DOCUMENT_ROOT"]);
+            $_SESSION[ZGDConfigurations::getKeySessSiteConfigRoot()] = substr($_SERVER["DOCUMENT_ROOT"], 0, -strlen($f[sizeof($f) - 1]));
         }
     }
 
@@ -333,6 +336,7 @@ class ZGDConfigurations
     static function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
     static function getKeySessSiteAliasUid(){return "GUYVERDESIGNS_SITE_ALIAS_UID";}
     static function getKeySessSiteAlias(){return "GUYVERDESIGNS_SITE_ALIAS";}
+    static function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
     
     static function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
     

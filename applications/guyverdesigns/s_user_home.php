@@ -17,15 +17,8 @@
     <!-- CONTENT_AREA -->
     <div id="content_area">
 <?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
-        <div id="messageline">
-<?php
-if(gdconfig()->getUIPageResponseCode() != "")
-{
-    printf("<p class=\"message\" UIPAGERESSHOW=\"TRUE\" UIPAGERESCODE=\"%s\" UIPAGERESKEY=\"%s\" UIPAGERESMSG=\"%s\">%s</p>", gdconfig()->getUIPageResponseCode(), gdconfig()->getUIPageResponseKey(), gdconfig()->getUIPageResponseMsg(), gdconfig()->getUIPageResponseMsg());
-}
-?>
-<?php gdconfig()->cleanUIPageResponseData() ?>
-        </div>
+<?php gdinc("/gd.trxn.com/_controls/ui/messageline.php") ?>
+
         <div id="left_column"><?php gdinc("/_controls/ui/left_menu/s_menu.php") ?></div>
         <div id="workarea" dyncontentkeytemp="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements">
 
