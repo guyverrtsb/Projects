@@ -16,7 +16,17 @@
     <div id="content_area">
 <?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
 <?php gdinc("/gd.trxn.com/_controls/ui/messageline.php") ?>
+<?php
+if(isset($_GET["LEFT_MENU"])) {
+?>
+        <div id="left_column"><?php gdinc($_GET["LEFT_MENU"]) ?></div>
+<?php
+} else {
+?>
         <div id="left_column"><?php gdinc("/gd.trxn.com/_controls/ui/left_menu/s_menu.php") ?></div>
+<?php
+}
+?>
         <div id="workarea" dyncontentkey="LIST_OF_USER_ACCOUNTS" apppath="/gd.trxn.com">
 
         </div>

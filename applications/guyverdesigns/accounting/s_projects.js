@@ -1,10 +1,8 @@
 function buildTileElements(jqobj, data)
 {
 	jqobj.empty();
-    var isfirst = true;
     $.each(data.RESULT, function(key, val)
     {
-    	// <div class=\"tile\">TILE : %s</div>
     	var tile = $("<div/>").attr("class", "tile");
     	var ul = getContentBlock("desktoptiles");
     	tile.append(ul);
@@ -40,17 +38,8 @@ function buildTileElements(jqobj, data)
     	li.append(button2);
     	ul.append(li);
     	
-    	if(isfirst)
-    	{
-    		jqobj.append(tile);
-    		jqobj = tile;
-    	}
-    	else
-		{
-        	var newjqobj = tile;
-        	jqobj.after(newjqobj);
-        	jqobj = newjqobj;
-		}
-    	isfirst = false;
+    	var newjqobj = tile;
+    	jqobj.after(newjqobj);
+    	jqobj = newjqobj;
     });
 }

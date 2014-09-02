@@ -20,7 +20,16 @@
         <?php gdinc("/_controls/ui/banner.php") ?>
         <div id="left_column"><?php gdinc("/_controls/ui/left_menu/s_menu.php") ?></div>
         <div id="workarea" dyncontentkey="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements">
-
+<div class="tile"><ul class="content_block" id="CB_CreateProject">
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text"><a href="javascript:void(0);" class="miniButtonBlue" name="navtop" onclick="window.location='/accounting/s_project.php';">Create Project</a></li>
+</ul></div>
         </div>
         <div id="right_column"><?php gdinc("/_controls/ui/right_menu/s_menu.php") ?></div>
     </div>
