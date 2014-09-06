@@ -1,4 +1,4 @@
-<?php require_once("../gd.trxn.com/_controls/classes/_core.php"); ?>
+<?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php gdauth()->isAuthorized("GD_USER"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
@@ -6,7 +6,7 @@
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <?php gdinc("/_controls/ui/js/core.php") ?>
-<?php gdinc("/_controls/ui/js/accounting.php") ?>
+<?php gdinc("/_controls/ui/js/tools.php") ?>
 <script src="s_projects.js"></script>
 <script>
 

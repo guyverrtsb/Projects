@@ -107,7 +107,7 @@ class zBaseObject
     {
         foreach($this->outputdatacontainer as $key => $val)
         {
-            $this->outputdatacontainer[$key] = "NO_OBJECT";
+            $this->cleanOutputData($key);
         }
     }
     function dumpOutputData()

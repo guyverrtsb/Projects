@@ -35,6 +35,29 @@ function getFormInputTextField(id, name, value, label, placeholder)
 	}
 }
 
+function getFormtextareaField(id, name, value, cols, rows, label, placeholder)
+{
+	// <li class="entry"><textarea class="rounded" id="registercompanyname" name="companyname" value="" placeholder="">value</textarea></li>
+	var li = getContentElementLI("entry", null, null);
+	li.css("clear","both");
+	if(isType(label, "string"))
+	{
+		var label =  $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
+		var input = getContentElementTextarea("rounded", id+name, name, value, cols, rows, null);
+		input.attr("class", "forminput");
+		li.append(label);
+		li.append($("<br/>"));
+		li.append(input);
+		return li;
+	}
+	else
+	{
+		var input = getContentElementInput("text", "rounded", id+name, name, value, placeholder);
+		li.append(input);
+		return li;
+	}
+}
+
 function getFormInputDateField(id, name, value, label, placeholder)
 {
 	// <li class="entry"><input class="rounded" type="text" id="registercompanyname" name="companyname" value="" placeholder=""/></li>
@@ -77,7 +100,8 @@ function getFormInputHiddenField(id, name, value)
 	return li;
 }
 
-function getFormSelectConfiguration(id, name, configuration, onchange, label, apppath)
+/* This object will use the DB CONFIGURATION AJAX to Prefill data */
+function getFormSelectConfiguration(id, name, configuration, onchange, label, apppath, funcname)
 {
 	// <li class="entry"><select class="rounded" id="registercfg_country_sdesc" name="cfg_country_sdesc" configuration="COUNTRIES|COUNTRY_US|registercfg_region_sdesc"></select></li>
 	var li = getContentElementLI("entry", null, null);
@@ -85,7 +109,7 @@ function getFormSelectConfiguration(id, name, configuration, onchange, label, ap
 	if(isType(label, "string"))
 	{
 		var label = $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
-		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath);
+		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath, funcname);
 		select.attr("class", "formselect");
 		
 		li.append(label);
@@ -95,13 +119,14 @@ function getFormSelectConfiguration(id, name, configuration, onchange, label, ap
 	}
 	else
 	{
-		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath);
+		var select = getContentElementSelect("rounded", id+name, name, null, configuration, null, onchange, apppath, funcname);
 		li.append(select);
 		return li;
 	}
 }
 
-function getFormSelectDynDropDown(id, name, origvalue, dyndropdownkey, onchange, label, apppath)
+/* This object will use the SCREEN_CONTROL AJAX to load data */
+function getFormSelectDynDropDown(id, name, origvalue, dyndropdownkey, onchange, label, apppath, funcname)
 {
 	// <li class="entry"><select class="rounded" id="registercfg_country_sdesc" name="cfg_country_sdesc" configuration="COUNTRIES|COUNTRY_US|registercfg_region_sdesc"></select></li>
 	var li = getContentElementLI("entry", null, null);
@@ -109,7 +134,7 @@ function getFormSelectDynDropDown(id, name, origvalue, dyndropdownkey, onchange,
 	if(isType(label, "string"))
 	{
 		var label = $("<label/>").attr("id", id+name+"formlabel").attr("class", "formlabel").text(label);
-		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath);
+		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath, funcname);
 		select.attr("class", "formselect");
 		
 		li.append(label);
@@ -119,7 +144,7 @@ function getFormSelectDynDropDown(id, name, origvalue, dyndropdownkey, onchange,
 	}
 	else
 	{
-		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath);
+		var select = getContentElementSelect("rounded", id+name, name, origvalue, null, dyndropdownkey, onchange, apppath, funcname);
 		li.append(select);
 		return li;
 	}
@@ -193,7 +218,7 @@ function getContentBlockText(id, labeltxt, spantxt)
 	var li = getContentElementLI("text", null, null);
 	li.css("clear","both");
 	var label = $("<label/>").attr("class", "formlabel").text(labeltxt);
-	var span = $("<span/>").attr("id", id).css("float","right").text(spantxt);
+	var span = $("<span/>").attr("id", id).css("float","right").html(spantxt);
 	
 	li.append(label);
 	li.append(span);

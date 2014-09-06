@@ -62,7 +62,6 @@ class gdCreateAccountingTimesheetDates
                                         , $d6_cfg_ratetype_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordTimesheetDates");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_timesheet_dates SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "accounting_timesheet_uid=:accounting_timesheet_uid, ".

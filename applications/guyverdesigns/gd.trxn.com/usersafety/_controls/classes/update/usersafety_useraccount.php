@@ -17,7 +17,6 @@ class gdUpdateUsersafetyAccount
     function updateRecordUserAccount_UEN($uid, $email, $nickname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount_UEN");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_useraccount SET ".
             "changeddt=NOW(), ".
             "email=:email, ".
@@ -55,7 +54,6 @@ class gdUpdateUsersafetyAccount
     function updateRecordUserAccount($uid, $email, $password, $nickname, $isactive, $changepassword, $numberoflogintries)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_useraccount SET ".
             "changeddt=NOW(), ".
             "email=:email, ".
@@ -101,7 +99,6 @@ class gdUpdateUsersafetyAccount
     function updateActivateUser($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateActivateUser");
-        $this->cleanResult_Record();
         
         $fr = $this->updateRecordUserAccount_Isactive($uid, "T");
         
@@ -123,7 +120,6 @@ class gdUpdateUsersafetyAccount
     function updateRecordUserAccount_Isactive($uid, $isactive)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount_Isactive");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_useraccount SET ".
             "changeddt=NOW(), ".
             "isactive=:isactive ".
@@ -159,7 +155,6 @@ class gdUpdateUsersafetyAccount
     function updateRecordUserAccount_Numberoflogintries($uid, $numberoflogintries)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount_Numberoflogintries");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_useraccount SET ".
             "changeddt=NOW(), ".
             "numberoflogintries=:numberoflogintries ".
@@ -195,7 +190,6 @@ class gdUpdateUsersafetyAccount
     function updateChangePasswordTrue($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateChangePasswordTrue");
-        $this->cleanResult_Record();
         
         $fr = $this->updateRecordUserAccount_Changepassword($uid, "T");
         
@@ -206,7 +200,6 @@ class gdUpdateUsersafetyAccount
     function updateChangePasswordFalse($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateChangePasswordFalse");
-        $this->cleanResult_Record();
         
         $fr = $this->updateRecordUserAccount_Changepassword($uid, "F");
         
@@ -217,7 +210,6 @@ class gdUpdateUsersafetyAccount
     function updateRecordUserAccount_Changepassword($uid, $changepassword)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount_Changepassword");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_useraccount SET ".
             "changeddt=NOW(), ".
             "changepassword=:changepassword ".

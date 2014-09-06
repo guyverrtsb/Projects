@@ -42,7 +42,6 @@ class gdClientData
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewClientAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingClient();
         $fr = $gdfab->findAcountingClient_bySdesc($companyname);
@@ -78,7 +77,6 @@ class gdClientData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findClientList");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingClient();
         $fr = $gdfab->findAcountingClients();
@@ -101,7 +99,6 @@ class gdClientData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findClient_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingClient();
         $fr = $gdfab->findAcountingClient_byUid($uid);
@@ -131,7 +128,6 @@ class gdClientData
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateExistingClientAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingClient();
         $fr = $gdfab->findAcountingClient_bySdesc($companyname);

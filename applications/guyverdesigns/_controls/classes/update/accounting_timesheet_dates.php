@@ -31,7 +31,6 @@ class gdUpdateAccountingTimesheetDates
                                         , $d6_cfg_ratetype_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordTimesheetDates");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_timesheet_dates SET ".
             "changeddt=NOW(), ".
             "d0_work_hours=:d0_work_hours, ".

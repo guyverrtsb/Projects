@@ -227,6 +227,10 @@ class ZGDConfigurations
     {
         $zgdlog = new KLogger();
         $zgdlog->LogInfoStartFUNCTION("setUIPageResponseData");
+        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespCode()."}-{".$code."}");
+        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespKey()."}-{".$key."}");
+        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsg()."}-{".$msg."}");
+        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespCode()] = $code;
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespKey()] = $key;
         $_SESSION[ZGDConfigurations::getKeySessUIPageRespMsg()] = $msg;
@@ -315,10 +319,10 @@ class ZGDConfigurations
     
     static function nullCheckSession($name)
     {
+        $value = "";
         if(isset($_SESSION[$name]))
-            return $_SESSION[$name];
-        else
-            return "";
+            $value = $_SESSION[$name];
+        return $value;
     }
     
     static function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}

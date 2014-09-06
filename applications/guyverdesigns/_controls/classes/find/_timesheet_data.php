@@ -17,7 +17,6 @@ class gdFindAccountingTimesheetData
     function findAcountingTimesheetData_byProject($accounting_project_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingTimesheetData_byProject");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
         $this->dbfas("accounting_timesheet_dates.uid".
@@ -102,7 +101,6 @@ class gdFindAccountingTimesheetData
     function findAcountingTimesheetData_byUid($accounting_timesheet_dates_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingTimesheetData_byUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
         $this->dbfas("accounting_timesheet_dates.uid".
@@ -214,7 +212,6 @@ class gdFindAccountingTimesheetData
     function countAcountingTimesheets()
     {
         $this->gdlog()->LogInfoStartFUNCTION("countAcountingBilltos");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT COUNT(record_count) FROM accounting_billto";
         
         $appcon = new ZAppDatabase();

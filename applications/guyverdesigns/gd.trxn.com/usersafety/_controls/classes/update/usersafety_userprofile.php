@@ -17,7 +17,6 @@ class gdUpdateUsersafetyProfile
     function updateRecordUserAccount($uid, $firstname, $city, $lastname, $cfg_region_sdesc, $cfg_country_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_userprofile SET ".
             "changeddt=NOW(), ".
             "firstname=:firstname, ".

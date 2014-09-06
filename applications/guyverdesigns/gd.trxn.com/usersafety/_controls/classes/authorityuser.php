@@ -49,7 +49,6 @@ class gdAuthorizeUser
     {
         $this->gdlog()->LogInfoStartFUNCTION("isContentAuthorized");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
 
         $gdfur = new gdFindUsersafetyRole();
         $gdfur->findUsersafetyRole_bySdesc($resource_role_sdesc);
@@ -77,7 +76,6 @@ class gdAuthorizeUser
     {
         $this->gdlog()->LogInfoStartFUNCTION("isAuthorized");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
 
         $gdfur = new gdFindUsersafetyRole();
         $gdfur->findUsersafetyRole_bySdesc($resource_role_sdesc);

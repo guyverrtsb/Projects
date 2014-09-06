@@ -75,7 +75,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN", "FORM_FIELDS_NOT_VALID"
-                                                , "RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                , "RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "DISPLAY_DOCUMENT")
@@ -104,7 +104,7 @@ if(isset($_POST["GD_CONTROLLER_KEY"]))
     else
     {
             $echoret = json_encode(buildReturnArray("RETURN", "UNKNOWN_ERROR"
-                                                , "RETURN_SHOW_PASS_MSG", "TRUE"
+                                                , "RETURN_SHOW_MSG", "TRUE"
                                                 , "RETURN_MSG", "Unknown Error"));
     }
 }

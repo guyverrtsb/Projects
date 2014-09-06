@@ -31,7 +31,6 @@ class gdUserData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserDataList");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfud = new gdFindUserData();
         $fr = $gdfud->findUserData_List();
@@ -53,7 +52,6 @@ class gdUserData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserData_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfud = new gdFindUserData();
         $fr = $gdfud->findUserData_ByUid($usesafety_useraccount_uid);
@@ -84,7 +82,6 @@ class gdUserData
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateUserData_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfua = new gdFindUsersafetyAccount();
         // $emailexists = $gdfua->findUsersafetyAccount_byEmail($email);

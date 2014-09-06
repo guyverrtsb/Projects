@@ -19,7 +19,6 @@ class gdCreateAccountingTimesheet
                                 , $ldesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordTimesheet");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_timesheet SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "accounting_project_uid=:accounting_project_uid, ".

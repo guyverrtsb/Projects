@@ -4,6 +4,10 @@ class ZGDDatabase
     extends ZGDUtilities
 
 {
-    
+    function getmySQLDateTimeStamp($date)
+    {
+        $odate = date("Y-m-d h:i:s", strtotime($date));
+        return $odate;
+    }
 }
 ?>

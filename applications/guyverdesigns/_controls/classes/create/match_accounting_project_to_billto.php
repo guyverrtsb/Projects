@@ -18,7 +18,6 @@ class gdCreateAccountingMatchProjecttoBillto
                                     , $accounting_billto_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordMatchAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO match_accounting_project_to_billto SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "accounting_project_uid=:accounting_project_uid, ".

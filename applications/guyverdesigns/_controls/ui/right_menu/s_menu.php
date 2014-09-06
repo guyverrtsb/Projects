@@ -12,5 +12,9 @@ else if(getpagekey() == "PROJECT")
 {
     printf("<li class=\"menuheader\" dyncontentkey=\"LIST_OF_PROJECTS\" funcname=\"buildDynamicMenuElements\">Projects</li>");
 }
+else if(getpagekey() == "REQUIREMENT")
+{
+    printf("<li class=\"menuheader\" dyncontentkey=\"LIST_OF_REQUIREMENTS\" funcname=\"buildDynamicMenuElements\">Requirements</li>");
+}
 ?>
 </ul>

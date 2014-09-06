@@ -13,7 +13,6 @@ class gdAuthenticateUser
     {
         $this->gdlog()->LogInfoStartFUNCTION("authenticateByEmail");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfuad = new gdFindUserAuthenticationData();
         $emailexists = $gdfuad->findUserAuthenticationData_ByEmail($email);

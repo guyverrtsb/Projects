@@ -3,6 +3,7 @@
 <?php gdreqonce("/_controls/classes/client.php"); ?>
 <?php gdreqonce("/_controls/classes/project.php"); ?>
 <?php gdreqonce("/_controls/classes/timesheet.php"); ?>
+<?php gdreqonce("/_controls/classes/requirement.php"); ?>
 <?php
 $echoret = "";
 $action = getControlKey();
@@ -15,13 +16,13 @@ if($action != "INVALID")
         if($fv == "RECORDS_ARE_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Records()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LIST_OF_CLIENTS")
@@ -31,13 +32,13 @@ if($action != "INVALID")
         if($fv == "RECORDS_ARE_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Records()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LIST_OF_PROJECTS")
@@ -47,13 +48,13 @@ if($action != "INVALID")
         if($fv == "RECORDS_ARE_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Records()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LIST_OF_PROJECTS_FULL_DATA")
@@ -63,13 +64,13 @@ if($action != "INVALID")
         if($fv == "RECORDS_ARE_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Records()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LIST_OF_TIMESHEETS_FOR_PROJECT")
@@ -82,13 +83,13 @@ if($action != "INVALID")
             if($fv == "RECORDS_ARE_FOUND")
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                    ,"RETURN_SHOW_PASS_MSG", "false"
+                                                    ,"RETURN_SHOW_MSG", "false"
                                                     , "RESULT", $gdtd->getResult_Records()));
             }
             else
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                    ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                    ,"RETURN_SHOW_MSG", "FALSE"));
             }
         }
         else
@@ -105,13 +106,13 @@ if($action != "INVALID")
         if($fv == "RECORD_IS_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Record()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LOAD_DATA_FOR_UPDATE_CLIENT")
@@ -121,13 +122,13 @@ if($action != "INVALID")
         if($fv == "RECORD_IS_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdbd->getResult_Record()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "LOAD_DATA_FOR_UPDATE_PROJECT")
@@ -137,13 +138,13 @@ if($action != "INVALID")
         if($fv == "RECORD_IS_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdpd->getResult_Record()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
     }
     else if($action == "TIMESHEET_UDPATE_SCREEN_DATA")
@@ -153,14 +154,82 @@ if($action != "INVALID")
         if($fv == "RECORD_IS_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdpd->getResult_Record()));
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
         }
+    }
+    else if($action == "DAYS_PER_WEEK")
+    {
+            $outputAry = array("0" => "1"
+                            ,"1" => "2"
+                            ,"2" => "3"
+                            ,"3" => "4"
+                            ,"4" => "5"
+                            ,"5" => "6"
+                            ,"6" => "7");
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $outputAry));
+    }
+    else if($action == "IS_REMOTE_POSSIBLE")
+    {
+            $outputAry = array("0" => "On-Site Only"
+                            ,"1" => "Remote"
+                            ,"2" => "Remote and On-Site"
+                            ,"3" => "Possible Remote");
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $outputAry));
+    }
+    else if($action == "LIST_OF_REQUIREMENTS")
+    {
+        $gdrd = new gdRequirementData();
+        $fv = $gdrd->findRequirementList();
+        if($fv == "RECORDS_ARE_FOUND")
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $gdrd->getResult_Records()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
+        }
+    }
+    else if($action == "REQUIREMENT_FROM_UID")
+    {
+        $placement_requirement_uid = gdconfig()->getAppData("PLACEMENT_REQUIREMENT_UID");
+        // gdconfig()->cleanAppDataName("PLACEMENT_REQUIREMENT_UID");
+
+        $gdrd = new gdRequirementData();
+        $fv = $gdrd->findRequirement_byUid($placement_requirement_uid);
+        if($fv == "RECORD_IS_FOUND")
+            {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"
+                                                , "RESULT", $gdrd->getResult_Record()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Record not Found"));
+        }
+    }
+    else if($action == "RESOURCES_CONTACTED")
+    {
+            $outputAry = array("0" => "On-Site Only"
+                            ,"1" => "Remote"
+                            ,"2" => "Remote and On-Site");
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"
+                                                , "RESULT", $outputAry));
     }
     else
     {

@@ -19,7 +19,6 @@ class gdCreateTaskControl
                                     $isactive)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordTaskControl");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO usersafety_task_control_links SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "uid1=UUID(), ".

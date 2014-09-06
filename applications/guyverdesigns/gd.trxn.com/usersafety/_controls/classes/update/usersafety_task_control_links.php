@@ -33,7 +33,6 @@ class gdUpdateUsersafetyTaskControlLinks
     private function updateRecordTaskControl_Isactive($uid, $isactive)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordTaskControl_Isactive");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE usersafety_task_control_links SET ".
             "changeddt=NOW(), ".
             "isactive=:isactive ".

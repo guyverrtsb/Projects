@@ -18,7 +18,6 @@ class gdUpdateAccountingMatchProjecttoClient
                                                 , $accounting_client_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordMatchAccount_byProjectUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE match_accounting_project_to_client SET ".
             "changeddt=NOW(), ".
             "accounting_client_uid=:accounting_client_uid ".

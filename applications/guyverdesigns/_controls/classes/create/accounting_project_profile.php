@@ -23,7 +23,6 @@ class gdCreateAccountingProjectProfile
                                         , $end_date)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordClientAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_project_profile SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "accounting_project_uid=:accounting_project_uid, ".
@@ -42,8 +41,8 @@ class gdCreateAccountingProjectProfile
         $appcon->bindParam(":cfg_ratetype_sdesc", $cfg_ratetype_sdesc);
         $appcon->bindParam(":rate_hourly_onsite", $rate_hourly_onsite);
         $appcon->bindParam(":rate_hourly_remote", $rate_hourly_remote);
-        $appcon->bindParam(":start_date", $this->getGDConfig()->getmySQLDateTimeStamp($start_date));
-        $appcon->bindParam(":end_date", $this->getGDConfig()->getmySQLDateTimeStamp($end_date));
+        $appcon->bindParamDateTime(":start_date", $start_date);
+        $appcon->bindParamDateTime(":end_date", $end_date);
         $appcon->execUpdate();
         if($appcon->getTransactionGood())
         {

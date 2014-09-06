@@ -42,13 +42,12 @@ class gdBilltoData
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewBilltoAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingBillto();
-        $fr = $gdfab->findAcountingBillto_bySdesc($companyname);
+        $fr = $gdfab->findAccountingBillto_bySdesc($companyname);
         if($fr == "RECORD_IS_NOT_FOUND")
         {
-            $gdfab->countAcountingBilltos();
+            $gdfab->countAccountingBilltos();
             $count = $gdfab->getRecordCount();
             
             $invoicenumberprefix = 9000 + (100 * (1 + $count));
@@ -87,10 +86,9 @@ class gdBilltoData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findBilltoList");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingBillto();
-        $fr = $gdfab->findAcountingBilltos();
+        $fr = $gdfab->findAccountingBilltos();
         if($fr == "RECORDS_ARE_FOUND")
         {
             $this->setResult_Records($gdfab->getResult_Records());
@@ -110,10 +108,9 @@ class gdBilltoData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findBillto_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingBillto();
-        $fr = $gdfab->findAcountingBillto_byUid($uid);
+        $fr = $gdfab->findAccountingBillto_byUid($uid);
         if($fr == "RECORD_IS_FOUND")
         {
             $this->setResult_Record($gdfab->getResult_Record());
@@ -141,10 +138,9 @@ class gdBilltoData
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateExistingBilltoAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingBillto();
-        $fr = $gdfab->findAcountingBillto_bySdesc($companyname);
+        $fr = $gdfab->findAccountingBillto_bySdesc($companyname);
         
         $gdcab = new gdUpdateAccountingBillto();
         if($fr == "RECORD_IS_NOT_FOUND")

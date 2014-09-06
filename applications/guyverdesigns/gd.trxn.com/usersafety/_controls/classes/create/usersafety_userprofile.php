@@ -21,7 +21,6 @@ class gdCreateUsersafetyProfile
                         $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordUserProfile");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO usersafety_userprofile SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "firstname=:firstname, ".

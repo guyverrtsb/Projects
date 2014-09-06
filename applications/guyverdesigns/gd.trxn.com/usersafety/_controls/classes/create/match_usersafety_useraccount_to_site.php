@@ -18,7 +18,6 @@ class gdCreateMatchAccounttoSite
                                                 $usersafety_site_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordMatchUseraccounttoSite");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO match_usersafety_useraccount_to_site SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "usersafety_useraccount_uid=:usersafety_useraccount_uid, ".

@@ -19,7 +19,6 @@ class gdCreateMatchAccounttoRole
                                                 $usersafety_role_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordMatchUseraccounttoRole");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO match_usersafety_useraccount_to_role SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "usersafety_useraccount_uid=:usersafety_useraccount_uid, ".

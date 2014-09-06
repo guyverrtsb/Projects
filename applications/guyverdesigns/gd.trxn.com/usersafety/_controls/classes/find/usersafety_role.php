@@ -17,7 +17,6 @@ class gdFindUsersafetyRole
     function findUsersafetyRole_bySdesc($sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyRole_bySdesc");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_role ".
             "WHERE sdesc=:sdesc";
         
@@ -50,7 +49,6 @@ class gdFindUsersafetyRole
     function findUsersafetyRole_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyRole_byUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_role ".
             "WHERE uid=:uid";
         
@@ -83,7 +81,6 @@ class gdFindUsersafetyRole
     function findUsersafetyRoles()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyRoles");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM usersafety_role";
         
         $appcon = new ZAppDatabase();

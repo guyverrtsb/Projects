@@ -13,7 +13,7 @@ if($action != "INVALID")
         if($fv == "RECORDS_ARE_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdud->getResult_Records()));
         }
         else
@@ -30,7 +30,7 @@ if($action != "INVALID")
         if($fv == "RECORD_IS_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "false"
+                                                ,"RETURN_SHOW_MSG", "false"
                                                 , "RESULT", $gdud->getResult_Record()));
         }
         else

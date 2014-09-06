@@ -17,7 +17,6 @@ class gdFindUserAuthenticationData
     function findUserAuthenticationData_ByEmail($usersafety_useraccount_email)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserAuthenticationData_ByEmail");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT ".
         
             $this->dbfas("usersafety_useraccount.uid, ".
@@ -81,7 +80,6 @@ class gdFindUserAuthenticationData
     function findUserAuthenticationData_ByUid($usersafety_useraccount_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserAuthenticationData_ByUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT ".
         
             $this->dbfas("usersafety_useraccount.uid, ".

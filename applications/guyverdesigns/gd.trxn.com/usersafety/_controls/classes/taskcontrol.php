@@ -84,7 +84,6 @@ class gdActivation
     {
         $this->gdlog()->LogInfoStartFUNCTION("generateTaskControlLink");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfua = new gdFindUsersafetyAccount();
         $emailexists = $gdfua->findUsersafetyAccount_byEmail($email);

@@ -17,7 +17,6 @@ class gdFindAccountingClient
     function findAcountingClient_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingClient_byUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_client ".
             "WHERE uid=:uid";
         
@@ -50,7 +49,6 @@ class gdFindAccountingClient
     function findAcountingClient_bySdesc($companyname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingClient_bySdesc");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_client ".
             "WHERE sdesc=:sdesc";
         
@@ -83,7 +81,6 @@ class gdFindAccountingClient
     function findAcountingClients()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingClients");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_client ".
             "ORDER BY createddt";
         

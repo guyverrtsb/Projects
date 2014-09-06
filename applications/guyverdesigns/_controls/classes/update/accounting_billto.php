@@ -25,7 +25,6 @@ class gdUpdateAccountingBillto
                                 , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordBilltoAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_billto SET ".
             "changeddt=NOW(), ".
             "companyname=:companyname, ".
@@ -84,7 +83,6 @@ class gdUpdateAccountingBillto
                                     , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordBilltoAccount_noCompanyName");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_billto SET ".
             "changeddt=NOW(), ".
              "accountingcontactname=:accountingcontactname, ".

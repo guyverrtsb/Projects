@@ -27,7 +27,6 @@ class gdUpdateAccountingProject
                                         , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordProjectAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_project SET ".
             "changeddt=NOW(), ".
             "sdesc=:sdesc, ".

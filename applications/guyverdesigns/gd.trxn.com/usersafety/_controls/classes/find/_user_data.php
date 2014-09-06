@@ -17,7 +17,6 @@ class gdFindUserData
     function findUserData_List()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserAuthenticationData_List");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT ".
         
             $this->dbfas("usersafety_useraccount.uid, ".
@@ -78,7 +77,6 @@ class gdFindUserData
     function findUserData_ByUid($usersafety_useraccount_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserAuthenticationData_ByUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT ".
         
             $this->dbfas("usersafety_useraccount.uid, ".

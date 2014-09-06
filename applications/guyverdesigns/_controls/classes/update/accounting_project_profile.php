@@ -21,7 +21,6 @@ class gdUpdateAccountingProjectProfile
                                         , $end_date)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordProjectProfile");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_project_profile SET ".
             "changeddt=NOW(), ".
             "cfg_payoutcycle_sdesc=:cfg_payoutcycle_sdesc, ".

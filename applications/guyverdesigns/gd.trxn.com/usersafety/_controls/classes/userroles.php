@@ -26,7 +26,6 @@ class gdUserRoles
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUserRolesList");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfud = new gdFindUsersafetyRole();
         $fr = $gdfud->findUsersafetyRoles();

@@ -17,7 +17,6 @@ class gdFindUsersafetyTaskControlLinks
     function findUsersafetyTaskControlLinks_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyTaskControlLinks_byUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_task_control_links ".
             "WHERE uid=:uid";
         
@@ -50,7 +49,6 @@ class gdFindUsersafetyTaskControlLinks
     function findUsersafetyTaskControlLinks_byUid1Uid2Uid3_Valid30Minutes($uid1, $uid2, $uid3)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyTaskControlLinks_byUid1Uid2Uid3_Valid30Minutes");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_task_control_links ".
             "WHERE uid1=:uid1 ".
             "AND uid2=:uid2 ".
@@ -88,7 +86,6 @@ class gdFindUsersafetyTaskControlLinks
     function findUsersafetyTaskControlLinks_byUid1Uid2Uid3($uid1, $uid2, $uid3)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyTaskControlLinks_byUid1Uid2Uid3");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_task_control_links ".
             "WHERE uid1=:uid1 ".
             "AND uid2=:uid2 ".
@@ -125,7 +122,6 @@ class gdFindUsersafetyTaskControlLinks
     function findUsersafetyTaskControlLinks_byRecordUid($record_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyTaskControlLinks_byRecordUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM usersafety_task_control_links".
             "WHERE record_uid=:record_uid";
         

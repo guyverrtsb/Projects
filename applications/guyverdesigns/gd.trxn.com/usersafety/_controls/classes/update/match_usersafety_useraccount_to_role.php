@@ -17,7 +17,6 @@ class gdUpdateMatchAccounttoRole
     function updateRecordUserAccounttoRole($usersafety_useraccount_uid, $usersafety_role_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordUserAccounttoRole");
-        $this->cleanResult_Record();
         
         $sqlstmnt = "UPDATE match_usersafety_useraccount_to_role SET ".
             "changeddt=NOW(), ".

@@ -17,7 +17,6 @@ class gdCreateUsersafetyAccount
     function createRecordUserAccount($email, $nickname, $password)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordUserAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO usersafety_useraccount SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "email=:email, ".

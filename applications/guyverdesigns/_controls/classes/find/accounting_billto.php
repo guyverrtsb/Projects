@@ -14,10 +14,9 @@ class gdFindAccountingBillto
     {
     }
 
-    function findAcountingBillto_byUid($uid)
+    function findAccountingBillto_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingBillto_byUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_billto ".
             "WHERE uid=:uid";
         
@@ -47,10 +46,9 @@ class gdFindAccountingBillto
         return $fr;
     }
 
-    function findAcountingBillto_bySdesc($companyname)
+    function findAccountingBillto_bySdesc($companyname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingBillto_bySdesc");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_billto ".
             "WHERE sdesc=:sdesc";
         
@@ -80,10 +78,9 @@ class gdFindAccountingBillto
         return $fr;
     }
 
-    function findAcountingBilltos()
+    function findAccountingBilltos()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingBilltos");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_billto ".
             "ORDER BY createddt";
         
@@ -112,10 +109,9 @@ class gdFindAccountingBillto
         return $fr;
     }
 
-    function countAcountingBilltos()
+    function countAccountingBilltos()
     {
         $this->gdlog()->LogInfoStartFUNCTION("countAcountingBilltos");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT COUNT(uid) AS record_count FROM accounting_billto";
         
         $appcon = new ZAppDatabase();

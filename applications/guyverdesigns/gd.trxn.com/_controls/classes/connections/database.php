@@ -30,6 +30,13 @@ class ZGDDBConnection
         $this->getStatement()->bindParam($name, $value);
     }
     
+    public function bindParamDateTime($name, $value)
+    {
+        $this->gdlog()->LogInfo("bindParamDateTime()--{".$name."}-{".$value."}");
+        $value = $this->getmySQLDateTimeStamp($value);
+        $this->getStatement()->bindParam($name, $value);
+    }
+    
     public function bindParamBlob($name, $value) {
         $this->gdlog()->LogInfo("bindParam()--{".$name."}-{BLOB}");
         $this->getStatement()->bindParam($name, $value);

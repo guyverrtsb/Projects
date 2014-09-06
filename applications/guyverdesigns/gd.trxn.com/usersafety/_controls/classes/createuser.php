@@ -47,7 +47,6 @@ class gdCreateUserData
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewUserAccountandProfile");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         $gdfua = new gdFindUsersafetyAccount();
         $emailexists = $gdfua->findUsersafetyAccount_byEmail($email);
         $nicknameexists = $gdfua->findUsersafetyAccount_byNickname($nickname);

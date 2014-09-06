@@ -40,11 +40,22 @@ function buildDynamicDropDown(jqobj)
         data = eval("(" + data + ")");
         if(data.RETURN_KEY == "SUCCESS")
     	{
-        	jqobj.append($("<option/>").val("").text("Choose---"));
-	        $.each(data.RESULT, function(key, val)
-	        {
-        		jqobj.append(buildDynamicDropDownElements(jqobj, data, key, val, dckey));
-	        });
+        	if(jqobj.attr("funcname"))
+    		{
+            	jqobj.append($("<option/>").val("").text("Choose---"));
+    	        $.each(data.RESULT, function(key, val)
+    	        {
+            		jqobj.append(eval(jqobj.attr("funcname") + "(jqobj, data, key, val, dckey)"));
+    	        });
+    		}
+        	else
+    		{
+            	jqobj.append($("<option/>").val("").text("Choose---"));
+    	        $.each(data.RESULT, function(key, val)
+    	        {
+            		jqobj.append(buildDynamicDropDownElements(jqobj, data, key, val, dckey));
+    	        });
+    		}
     	}
     });
 }
@@ -144,7 +155,7 @@ function buildDynamicMessage(jqobj)
 	{
     	if($(this).attr("UIPAGERESKEY") != "" && $(this).attr("UIPAGERESSHOW") == "TRUE")
     	{
-    		$(this).html($(this).attr("UIPAGERESMSG") + ": " + $(this).attr("UIPAGERESCODE") + ": " + $(this).attr("UIPAGERESKEY"));
+    		$(this).html($(this).attr("UIPAGERESMSG") + ": " + $(this).attr("UIPAGERESCODE") + ": " + $(this).attr("UIPAGERESKEY") + ": " + $(this).attr("UIPAGERESSHOW"));
     		$(this).css("display", "block");
     		showmessageline = true;
     	}
@@ -191,6 +202,7 @@ function buildContentBlockReturnMessage(data, matchValue)
 		
 		var jqobj = $("#messageline");
 		jqobj.empty();
+		jqobj.css("display", "none");
 		var p = $("<p/>");
 	    	p.attr("UIPAGERESSHOW", data.RETURN_SHOW_MSG);
 	    	p.attr("UIPAGERESCODE", "200");
@@ -199,6 +211,15 @@ function buildContentBlockReturnMessage(data, matchValue)
     	jqobj.append(p);
     	buildDynamicMessage(jqobj);
 		return passKey;
+	}
+	else
+	{
+		if(matchValue.toUpperCase() == "RESET")
+		{
+			var jqobj = $("#messageline");
+			jqobj.empty();
+			jqobj.css("display", "none");
+		}
 	}
 	return false;
 }

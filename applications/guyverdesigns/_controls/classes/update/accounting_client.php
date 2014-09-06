@@ -25,7 +25,6 @@ class gdUpdateAccountingClient
                                     , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordClientAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_client SET ".
             "changeddt=NOW(), ".
             "companyname=:companyname, ".
@@ -84,7 +83,6 @@ class gdUpdateAccountingClient
                                     , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordClientAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE accounting_client SET ".
             "changeddt=NOW(), ".
             "contactname=:contactname, ".

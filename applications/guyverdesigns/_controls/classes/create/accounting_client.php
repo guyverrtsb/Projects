@@ -24,7 +24,6 @@ class gdCreateAccountingClient
                                     , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordClientAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_client SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "companyname=:companyname, ".

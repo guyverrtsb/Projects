@@ -18,7 +18,6 @@ class gdUpdateAccountingMatchProjecttoBillto
                                                 , $accounting_billto_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateRecordMatchAccount_byProjectUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "UPDATE match_accounting_project_to_billto SET ".
             "changeddt=NOW(), ".
             "accounting_billto_uid=:accounting_billto_uid ".

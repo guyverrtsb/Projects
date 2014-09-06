@@ -59,7 +59,6 @@ class gdProjectData
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewProjectAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingProject();
         $fr = $gdfab->findAcountingProject_bySdesc($sdesc);
@@ -117,7 +116,6 @@ class gdProjectData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findProjectList");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingProjectData();
         $fr = $gdfab->findAcountingProjects();
@@ -141,10 +139,9 @@ class gdProjectData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findProjectListFullData");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfab = new gdFindAccountingProjectData();
-        $fr = $gdfab->findAcountingProjectsBIllTosClients();
+        $fr = $gdfab->findAccountingProjectsBIllTosClients();
         
         if($fr == "RECORDS_ARE_FOUND")
         {
@@ -165,7 +162,6 @@ class gdProjectData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findProject_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfapd = new gdFindAccountingProjectData();
         $fr = $gdfapd->findAcountingProject_byUid($uid);
@@ -202,7 +198,6 @@ class gdProjectData
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateExistingProjectAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdcap = new gdUpdateAccountingProject();
         $fr = $gdcap->updateRecordProjectAccount($uid

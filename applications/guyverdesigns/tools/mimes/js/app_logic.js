@@ -45,6 +45,13 @@ function buildDynamicMenuElements(jqobj, data, key, val)
     		cb_li.text(eval("val.companyname"));
     	else if(dckey == "LIST_OF_PROJECTS")
     		cb_li.text(eval("val.sdesc"));
+    	else if(dckey == "LIST_OF_REQUIREMENTS")
+    	{
+    		var href = "/_controls/ajax/PAGE_DIRECT.php?" +
+					"GD_CONTROL_KEY=REQUIREMENT_TO_RESOURCE&placement_requirement_uid=" + val.uid;
+    		var obj = getContentElementAnchor(href, null, (eval("val.uid")), (eval("val.uid")), null, eval("val.role_desc"), null);
+    		cb_li.append(obj);
+    	}
 
     	var newjqobj = cb_li;
     	jqobj.after(newjqobj);
@@ -78,12 +85,13 @@ function loadFormData(obj, funcname)
 
 function gdFuncRegisterData()
 {
-    buildContentBlockReturnMessage();
-    $.post("/_controls/ajax/ACCOUNTING.php", gdSerialize("register"), function(data)
+    buildContentBlockReturnMessage(null, "RESET");
+    $.post("/_controls/ajax/TOOLS.php", gdSerialize("register"), function(data)
     {
         data = eval("(" + data + ")");
         if(buildContentBlockReturnMessage(data, "DATA_IS_CREATED"))
         {
+            buildContentBlockReturnMessage(data, true);
         	loadDynamicPageElements();
         }
         else
@@ -96,7 +104,7 @@ function gdFuncRegisterData()
 function gdFuncUpdateData()
 {
     buildContentBlockReturnMessage();
-    $.post("/_controls/ajax/ACCOUNTING.php", gdSerialize("update"), function(data)
+    $.post("/_controls/ajax/TOOLS.php", gdSerialize("update"), function(data)
     {
         data = eval("(" + data + ")");
         if(buildContentBlockReturnMessage(data, "RECORD_IS_UPDATED"))

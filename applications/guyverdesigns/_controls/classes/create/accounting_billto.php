@@ -26,7 +26,6 @@ class gdCreateAccountingBillto
                                     , $timesheetnumberprefix)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordBilltoAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_billto SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "companyname=:companyname, ".

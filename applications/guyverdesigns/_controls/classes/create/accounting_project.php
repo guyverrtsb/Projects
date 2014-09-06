@@ -25,7 +25,6 @@ class gdCreateAccountingProject
                                     , $city)
     {
         $this->gdlog()->LogInfoStartFUNCTION("createRecordClientAccount");
-        $this->cleanResult_Record();
         $sqlstmnt = "INSERT INTO accounting_project SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "sdesc=:sdesc, ".

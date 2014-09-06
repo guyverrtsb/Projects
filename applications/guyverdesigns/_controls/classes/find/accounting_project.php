@@ -17,7 +17,6 @@ class gdFindAccountingProject
     function findAcountingProject_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProject_byUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_project ".
             "WHERE uid=:uid";
         
@@ -50,7 +49,6 @@ class gdFindAccountingProject
     function findAcountingProject_bySdesc($sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProject_bySdesc");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_project ".
             "WHERE sdesc=:sdesc";
         
@@ -83,7 +81,6 @@ class gdFindAccountingProject
     function findAcountingProjects()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProjects");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM accounting_project ".
             "ORDER BY createddt";
         

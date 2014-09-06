@@ -79,7 +79,20 @@ function getContentElementInput(type, clas, id, name, value, placeholder)
 	return obj;
 }
 
-function getContentElementSelect(clas, id, name, origvalue, configuration, dyndropdownkey, onchange, apppath)
+function getContentElementTextarea(clas, id, name, value, cols, rows, placeholder)
+{
+	var obj = $("<textarea/>");
+    if(clas != null) {obj.attr("class", clas);}
+    if(id != null) {obj.attr("id", id);}
+    if(name != null) {obj.attr("name", name);}
+    if(value != null) {obj.text(value);}
+    if(cols != null) {obj.attr("cols", cols);}
+    if(rows != null) {obj.attr("rows", rows);}
+    if(placeholder != null) {obj.attr("placeholder", placeholder);}
+	return obj;
+}
+
+function getContentElementSelect(clas, id, name, origvalue, configuration, dyndropdownkey, onchange, apppath, funcname)
 {
 	var obj = $("<select/>");
     if(clas != null) {obj.attr("class", clas);}
@@ -90,5 +103,6 @@ function getContentElementSelect(clas, id, name, origvalue, configuration, dyndr
     if(onchange != null && onchange != "") {obj.attr("onchange", onchange);}
     if(apppath != null && apppath != "") {obj.attr("apppath", apppath);}
     if(origvalue != null && origvalue != "") {obj.attr("origvalue", origvalue);}
+    if(name != null) {obj.attr("funcname", funcname);}
 	return obj;
 }

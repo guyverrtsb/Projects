@@ -17,7 +17,6 @@ class gdFindUsersafetyProfile
     function findUsersafetyProfile_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyProfile_byUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_userprofile ".
             "WHERE uid=:uid";
         
@@ -50,7 +49,6 @@ class gdFindUsersafetyProfile
     function findUsersafetyProfiles()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyProfiles");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount";
         
         $appcon = new ZAppDatabase();

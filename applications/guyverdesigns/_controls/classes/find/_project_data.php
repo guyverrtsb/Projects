@@ -17,7 +17,6 @@ class gdFindAccountingProjectData
     function findAcountingProject_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProject_byUid");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
             "accounting_project.uid AS uid, ".
@@ -100,7 +99,6 @@ class gdFindAccountingProjectData
     function findAcountingProject_bySdesc($sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProject_bySdesc");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
             "accounting_project.uid AS uid, ".
@@ -163,7 +161,6 @@ class gdFindAccountingProjectData
     function findAcountingProjects()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProjects");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
             "accounting_project.uid AS uid, ".
@@ -222,10 +219,9 @@ class gdFindAccountingProjectData
         return $fr;
     }
 
-    function findAcountingProjectsBIllTosClients()
+    function findAccountingProjectsBIllTosClients()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findAcountingProjectsBIllTosClients");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT ".
         
             "accounting_project.uid AS uid, ".

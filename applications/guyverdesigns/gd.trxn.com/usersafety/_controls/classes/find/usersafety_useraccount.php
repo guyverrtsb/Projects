@@ -17,7 +17,6 @@ class gdFindUsersafetyAccount
     function findUsersafetyAccount_byEmail($email)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byEmail");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount ".
             "WHERE email=:email";
         
@@ -50,7 +49,6 @@ class gdFindUsersafetyAccount
     function findUsersafetyAccount_byNickname($nickname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byNickname");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount ".
             "WHERE nickname=:nickname";
         
@@ -83,7 +81,6 @@ class gdFindUsersafetyAccount
     function findUsersafetyAccount_byUsertablekey($nickname)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byUsertablekey");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount ".
             "WHERE usertablekey=:usertablekey";
         
@@ -116,7 +113,6 @@ class gdFindUsersafetyAccount
     function findUsersafetyAccount_byUid($uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccount_byUid");
-        $this->cleanResult_Record();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount ".
             "WHERE uid=:uid";
         
@@ -149,7 +145,6 @@ class gdFindUsersafetyAccount
     function findUsersafetyAccounts()
     {
         $this->gdlog()->LogInfoStartFUNCTION("findUsersafetyAccounts");
-        $this->cleanResult_Records();
         $sqlstmnt = "SELECT * FROM usersafety_useraccount";
         
         $appcon = new ZAppDatabase();

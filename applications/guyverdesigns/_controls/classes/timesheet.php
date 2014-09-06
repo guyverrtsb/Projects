@@ -49,7 +49,6 @@ class gdTimesheetData
     {
         $this->gdlog()->LogInfoStartFUNCTION("createNewTimesheetAccount");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdcat = new gdCreateAccountingTimesheet();
         $fr = $gdcat->createRecordTimesheet($project_account_uid
@@ -164,7 +163,6 @@ class gdTimesheetData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findTimesheetListforProject");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfatd = new gdFindAccountingTimesheetData();
         $fr = $gdfatd->findAcountingTimesheetData_byProject($accounting_project_uid);
@@ -188,7 +186,6 @@ class gdTimesheetData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findTimesheetDates_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gdfatd = new gdFindAccountingTimesheetData();
         $fr = $gdfatd->findAcountingTimesheetData_byUid($accounting_timesheet_dates_uid);
@@ -212,7 +209,6 @@ class gdTimesheetData
     {
         $this->gdlog()->LogInfoStartFUNCTION("findProject_byUid");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
 
 
         
@@ -238,7 +234,6 @@ class gdTimesheetData
     {
         $this->gdlog()->LogInfoStartFUNCTION("updateExistingTimesheetDates");
         $fr = "UNKNOWN_ERROR";
-        $this->cleanAllOutputData();
         
         $gduatd = new gdUpdateAccountingTimesheetDates();
         $fr = $gduatd->updateRecordTimesheetDates($timesheet_dates_uid
