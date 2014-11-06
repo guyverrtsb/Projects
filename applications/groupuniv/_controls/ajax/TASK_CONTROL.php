@@ -40,9 +40,6 @@ if($action != "INVALID")
                     
                     if($zfuser->getActive() == "F")
                     {
-                        $zmuser = new zMatchUser();
-                        $r = $zmuser->matchUsertoRoleSdesc($zfuser->getUA_Uid(), "USER_ROLE_SITE_USER");
-                        
                         $emailkey = explode("@", $zfuser->getEmail());
                         $emailkey = $emailkey[1];
                         
@@ -66,6 +63,7 @@ if($action != "INVALID")
                         foreach ($zfgroup->getResults_Groups() as $row)
                         {
                             $zfgroup->setResult_Group($row);
+                            $zmuser = new zMatchUser();
                             $r = $zmuser->matchUsertoGrouptoRoleSdesc($zfuser->getUA_Uid(),
                                                         $zfgroup->getGA_Uid(),
                                                         "USER_ROLE_GROUP_USER");
@@ -80,6 +78,7 @@ if($action != "INVALID")
                         foreach ($zfgroup->getResults_Groups() as $row)
                         {
                             $zfgroup->setResult_Group($row);
+                            $zmuser = new zMatchUser();
                             $r = $zmuser->matchUsertoGrouptoRoleSdesc($zfuser->getUA_Uid(),
                                                         $zfgroup->getGA_Uid(),
                                                         "USER_ROLE_GROUP_USER");
@@ -103,8 +102,9 @@ if($action != "INVALID")
      
                         $r = $zmuniv->matchUniversitytoGroup($zfu->getUA_Uid(),
                                                         $zrgroup01->getGA_Uid());
-                                                        
-                        $r = $zmuser->matchUsertoGrouptoRoleSdesc($zfuser->getUA_Uid(),
+                        
+                        $zmuserGfu = new zMatchUser();
+                        $r = $zmuserGfu->matchUsertoGrouptoRoleSdesc($zfuser->getUA_Uid(),
                                                         $zrgroup01->getGA_Uid(),
                                                         "USER_ROLE_GROUP_OWNER");
                             

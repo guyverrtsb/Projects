@@ -48,7 +48,7 @@ $(document).ready(function()
     var message         = "";
 
     $(myform).ajaxForm({
-        data: { GD_CONTROLLER_KEY: "REGISTER_WALL_MESSAGE" },
+        data: { GD_CONTROL_KEY: "REGISTER_WALL_MESSAGE" },
         beforeSend: function() { //before sending form
             submitbutton.attr("disabled", ""); // disable upload button
             statustxt.empty();

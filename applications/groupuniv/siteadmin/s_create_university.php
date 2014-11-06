@@ -22,7 +22,7 @@ $(document).ready( function()
 function gdFuncRegisterData()
 {
     buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControllerKey("#RegisterFrm", "REGISTER_UNIVERSITY");
+    var formdata = gdSerialzeControlKey("#RegisterFrm", "REGISTER_UNIVERSITY");
     $.post("/_controls/ajax/UNIVERSITY.php",
     formdata, function(data)
     {

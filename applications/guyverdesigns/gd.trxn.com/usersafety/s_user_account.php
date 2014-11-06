@@ -1,4 +1,5 @@
 <?php require_once("../_controls/classes/_core.php"); ?>
+<?php if(gdauth()->isAuthenticated()) { ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
@@ -34,3 +35,4 @@ if(gdconfig()->getUIPageResponseCode() != "")
 </div>
 </body>
 </html>
+<?php } ?>

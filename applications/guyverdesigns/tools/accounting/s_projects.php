@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdauth()->isAuthorized("GD_USER"); ?>
+<?php if(gdauth()->isAuthorized("GD_USER")) { ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
@@ -9,7 +9,6 @@
 <?php gdinc("/_controls/ui/js/tools.php") ?>
 <script src="s_projects.js"></script>
 <script>
-
 </script>
 </head>
 <body>
@@ -19,21 +18,11 @@
     <div id="content_area">
         <?php gdinc("/_controls/ui/banner.php") ?>
         <div id="left_column"><?php gdinc("/_controls/ui/left_menu/s_menu.php") ?></div>
-        <div id="workarea" dyncontentkey="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements">
-<div class="tile"><ul class="content_block" id="CB_CreateProject">
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text">&nbsp;</li>
-    <li class="text"><a href="javascript:void(0);" class="miniButtonBlue" name="navtop" onclick="window.location='/accounting/s_project.php';">Create Project</a></li>
-</ul></div>
-        </div>
+        <div id="workarea" dyncontentkey="LIST_OF_PROJECTS_FULL_DATA" funcname="buildTileElements"></div>
         <div id="right_column"><?php gdinc("/_controls/ui/right_menu/s_menu.php") ?></div>
     </div>
 <?php gdinc("/_controls/ui/footer.php") ?>
 </div>
 </body>
 </html>
+<?php } ?>

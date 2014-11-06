@@ -3,7 +3,7 @@
 class ZAppDatabase
     extends ZGDDBConnection
 {
-    public function setApplicationDB($APPDB = "APPDB")
+    public function setApplicationDB($APPDB = "GROUPYOU")
     { 
         //Variables for connecting to your database.
         //These variable values come from your hosting account.
@@ -49,9 +49,9 @@ class ZAppDatabase
         $convar["PRT_GDCORP_USERSAFETY_USRNAM"] = "prtusrsfty";
         $convar["PRT_GDCORP_USERSAFETY_PASWRD"] = "GDProto@01";
         // GoDaddy Staging UserSafety Database
-        $convar["STG_GDCORP_USERSAFETY_HOSTNAME"] = "stgusrsfty.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_USERSAFETY_DBNAME"] = "stgusrsfty";
-        $convar["STG_GDCORP_USERSAFETY_USRNAM"] = "stgusrsfty";
+        $convar["STG_GDCORP_USERSAFETY_HOSTNAME"] = "stgusersafety.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_USERSAFETY_DBNAME"] = "stgusersafety";
+        $convar["STG_GDCORP_USERSAFETY_USRNAM"] = "stgusersafety";
         $convar["STG_GDCORP_USERSAFETY_PASWRD"] = "GDStage@01";
         // GoDaddy Production UserSafety Database
         $convar["PRD_GDCORP_USERSAFETY_HOSTNAME"] = "prdusrsfty.db.6047355.hostedresource.com";
@@ -70,9 +70,9 @@ class ZAppDatabase
         $convar["PRT_GDCORP_CROSSAPPDATA_USRNAM"] = "prtcrssapp";
         $convar["PRT_GDCORP_CROSSAPPDATA_PASWRD"] = "GDProto@01";
         // GoDaddy Staging CrossApps Database
-        $convar["STG_GDCORP_CROSSAPPDATA_HOSTNAME"] = "stgcrssapp.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_CROSSAPPDATA_DBNAME"] = "stgcrssapp";
-        $convar["STG_GDCORP_CROSSAPPDATA_USRNAM"] = "stgcrssapp";
+        $convar["STG_GDCORP_CROSSAPPDATA_HOSTNAME"] = "stgcrossappli.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_CROSSAPPDATA_DBNAME"] = "stgcrossappli";
+        $convar["STG_GDCORP_CROSSAPPDATA_USRNAM"] = "stgcrossappli";
         $convar["STG_GDCORP_CROSSAPPDATA_PASWRD"] = "GDStage@01";
         // GoDaddy Production CrossApps Database
         $convar["PRD_GDCORP_CROSSAPPDATA_HOSTNAME"] = "prdcrssapp.db.6047355.hostedresource.com";
@@ -81,15 +81,15 @@ class ZAppDatabase
         $convar["PRD_GDCORP_CROSSAPPDATA_PASWRD"] = "GDProd@01";
         
         // LCL GroupYou Database
-        $convar["LCL_GDCORP_APPDB_HOSTNAME"] = "localhost:3306";
-        $convar["LCL_GDCORP_APPDB_DBNAME"] = "lclunivmeetdb";
-        $convar["LCL_GDCORP_APPDB_USRNAM"] = "root";
-        $convar["LCL_GDCORP_APPDB_PASWRD"] = "GDHonkey_01";
+        $convar["LCL_GDCORP_GROUPYOU_HOSTNAME"] = "localhost:3306";
+        $convar["LCL_GDCORP_GROUPYOU_DBNAME"] = "lclunivlifeportal";
+        $convar["LCL_GDCORP_GROUPYOU_USRNAM"] = "root";
+        $convar["LCL_GDCORP_GROUPYOU_PASWRD"] = "GDHonkey_01";
         // GoDaddy Staging GroupYou Database
-        $convar["STG_GDCORP_APPDB_HOSTNAME"] = "stunivmeetdb.db.6047355.hostedresource.com";
-        $convar["STG_GDCORP_APPDB_DBNAME"] = "stunivmeetdb";
-        $convar["STG_GDCORP_APPDB_USRNAM"] = "stunivmeetdb";
-        $convar["STG_GDCORP_APPDB_PASWRD"] = "GDStage@01";
+        $convar["STG_GDCORP_GROUPYOU_HOSTNAME"] = "stggroupyou.db.6047355.hostedresource.com";
+        $convar["STG_GDCORP_GROUPYOU_DBNAME"] = "stggroupyou";
+        $convar["STG_GDCORP_GROUPYOU_USRNAM"] = "stggroupyou";
+        $convar["STG_GDCORP_GROUPYOU_PASWRD"] = "GDStage@01";
         // GoDaddy Production GroupYou Database
         $convar["PRD_GDCORP_APPDB_HOSTNAME"] = "univmeetdb.db.6047355.hostedresource.com";
         $convar["PRD_GDCORP_APPDB_DBNAME"] = "univmeetdb";

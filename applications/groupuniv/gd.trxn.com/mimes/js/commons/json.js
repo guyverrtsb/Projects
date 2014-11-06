@@ -25,19 +25,19 @@ function showReturnMessage(id, data)
 	return $(id).html(data.RETURN);
 }
 
-function gdControllerKey( value)
+function gdControlKey( value)
 {
-    return "GD_CONTROLLER_KEY=" + value;
+    return "GD_CONTROL_KEY=" + value;
 }
 
-function gdSerialzeControllerKey(formid, value)
+function gdSerialzeControlKey(formid, value)
 {
 	var formdata = $(formid).serialize();
     if(formdata.length > 0)
     {
     	formdata = formdata + "&";
     }
-    return formdata = formdata + "GD_CONTROLLER_KEY=" + value;
+    return formdata = formdata + "GD_CONTROL_KEY=" + value;
 }
 
 function gdAddQSNameValue(formdata, name, value)

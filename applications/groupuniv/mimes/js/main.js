@@ -25,7 +25,7 @@ function buildDynamicContent(jqobj)
 	var dckey = jqobj.attr("dyncontentkey");	// LIST_OF_UNIVERSITIES
 	var dcblk = dckey + "_BLOCK";	// LIST_OF_UNIVERSITIES_BLOCK
 	clearContentBlocks(dcblk);
-    var formdata = gdControllerKey(dckey);
+    var formdata = gdControlKey(dckey);
     $.post("/_controls/ajax/SCREEN_CONTROL.php",
     formdata, function(data)
     {
@@ -50,7 +50,7 @@ function buildConfigurationsDropDown(jqobj)
 	if(configuration.split("|").length == 3)
 		onchange_ele_id = configuration.split("|")[2];
 
-	var formdata = gdAddQSNameValue("", "GD_CONTROLLER_KEY", "GET_CONFIGURATION"); 
+	var formdata = gdAddQSNameValue("", "GD_CONTROL_KEY", "GET_CONFIGURATION"); 
 	formdata = gdAddQSNameValue(formdata, "group_key", group_key); 
     $.post("/_controls/ajax/CONFIGURATION.php",
 	formdata, function(data)

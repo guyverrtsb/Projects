@@ -25,19 +25,16 @@ class zImageUploadControl
     var $orig_mimes_uid, $thmb_mimes_uid, $appl_mimes_uid;
     
     var $mimes_table_name;
-    var $orig_table_name = "mimes_original_image";
-    var $thmb_table_name = "mimes_thumbnail_image_100x100";
-    var $appl_table_name;
+    var $orig_table_name = "mimes_standard_appl_image";
+    var $thmb_table_name = "mimes_standard_appl_image_thumbnail_100x100";
+    var $appl_table_name = "mimes_standard_appl_image_scaled";
     
-    function __construct($formfieldname = "GDUploadImageFile", 
-                        $mimes_table_name = "mimes_standard", 
-                        $appl_table_name = "mimes_standard_image", 
+    function __construct($formfieldname = "GDUploadImageFile",
                         $target_h_pxl = "500", 
                         $target_w_pxl = "500",
                         $target_image_size = "2097152")
     {
         $this->formfieldname = $formfieldname;
-        $this->appl_table_name = $appl_table_name;
         $this->target_h_pxl = $target_h_pxl;
         $this->target_w_pxl = $target_w_pxl;
         $this->target_image_size = $target_image_size;
@@ -48,11 +45,12 @@ class zImageUploadControl
      */
     function executeControl()
     {
-        $return_mimes_data = "";
         $uploadmime = new zUploadMime($_FILES[$this->formfieldname]);
         $r = $uploadmime->isImageValid($this->target_image_size);
         if($r == "VALID")
         {
+            $uploadmime->setUrlfolder();
+            $uploadmime->setOSfolder();
             $r = $uploadmime->uploadFile();
             if($r == "FILE_UPLOADED_SUCCESSFULY")
             {
@@ -60,19 +58,19 @@ class zImageUploadControl
                 gdlog()->LogInfo("LOAD_ORIGINAL_IMAGE");
                 $origimg = new zImageResize($uploadmime->getSaveFolderLocation(),
                     $uploadmime->getSaveFileName(),
-                    $uploadmime->getAltFileSaveFileName("_ORIG"));
+                    $uploadmime->getAltFileSaveFileName(""));
                 $origimg->loadOriginalFile();
                 
                 gdlog()->LogInfo("LOAD_THUMBNAIL_IMAGE");
                 $thmbimg = new zImageResize($uploadmime->getSaveFolderLocation(),
                     $uploadmime->getSaveFileName(),
-                    $uploadmime->getAltFileSaveFileName("_THUMB"));
+                    $uploadmime->getAltFileSaveFileName("thumbnail"));
                 $thmbimg->loadOriginalFile();
                 
                 gdlog()->LogInfo("LOAD_APPLICATION_IMAGE");
                 $applimg = new zImageResize($uploadmime->getSaveFolderLocation(),
                     $uploadmime->getSaveFileName(),
-                    $uploadmime->getAltFileSaveFileName("_APPLI"));
+                    $uploadmime->getAltFileSaveFileName("medium"));
                 $applimg->loadOriginalFile();
         
                 gdlog()->LogInfo("RESIZE_IMAGES");
@@ -98,81 +96,6 @@ class zImageUploadControl
                 $applimg->logImageData();
                 $applimg->logMimeData();
                 
-                gdlog()->LogInfo("LOAD_TO DB_ORIGINAL");
-                $zitdorig = new zImagetoDatabase();
-                $r = $zitdorig->registerMime($this->mimes_table_name,
-                                    $this->orig_table_name,
-                                    $origimg->getOrigFileName(),
-                                    $origimg->getOrigType(),
-                                    $origimg->getOrigFileExt(),
-                                    $origimg->getOrigSize(),
-                                    $origimg->getOrigFilePath(),
-                                    $origimg->getOrigFileFolder(),
-                                    $_SESSION["GUYVERDESIGNS_SITE"],
-                                    $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]);
-                if($r == "MIME_REGISTERED")
-                {
-                    $this->orig_mimes_uid = $zitdorig->getMimesUid();
-                    gdlog()->LogInfo("ORIGINAL_MIME_DATA{".$zitdorig->getMimesUid()."}");
-                    $r = $zitdorig->registerMimeBlobImage($origimg->getOrigWidth(),
-                                                        $origimg->getOrigHeight());
-                    if($r == "MIME_BLOB_REGISTERED")
-                    {
-                        gdlog()->LogInfo("ORIGINAL_MIME_BLOB_UPLOADED{".$zitdorig->getMimesApplUid()."}");
-                        $return_mimes_data = $return_mimes_data.":ORIG:".$zitdorig->getMimesUid();
-                        
-                        gdlog()->LogInfo("LOAD_TO DB_THUMBNAIL");
-                        $zitdthmb = new zImagetoDatabase();
-                        $r = $zitdthmb->registerMime($this->mimes_table_name,
-                                            $this->thmb_table_name,
-                                            $thmbimg->getFileName(),
-                                            $thmbimg->getType(),
-                                            $thmbimg->getFileExt(),
-                                            $thmbimg->getFileSize(),
-                                            $thmbimg->getFilePath(),
-                                            $thmbimg->getFileFolder(),
-                                            $_SESSION["GUYVERDESIGNS_SITE"],
-                                            $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]);
-                        if($r == "MIME_REGISTERED")
-                        {
-                            gdlog()->LogInfo("THUMBNAIL_MIME_DATA{".$zitdthmb->getMimesUid()."}");
-                            $r = $zitdthmb->registerMimeBlobImage($thmbimg->getWidth(),
-                                                                $thmbimg->getHeight());
-                            if($r == "MIME_BLOB_REGISTERED")
-                            {
-                                $this->thmb_mimes_uid = $zitdthmb->getMimesUid();
-                                gdlog()->LogInfo("THUMBNAIL_MIME_BLOB_UPLOADED{".$zitdthmb->getMimesApplUid()."}");
-                                $return_mimes_data = $return_mimes_data.":THMB:".$zitdthmb->getMimesUid();
-                                
-                                gdlog()->LogInfo("LOAD_TO DB_APPLICATION");
-                                $zitdappl = new zImagetoDatabase();
-                                $r = $zitdappl->registerMime($this->mimes_table_name,
-                                                    $this->$appl_table_name,
-                                                    $applimg->getFileName(),
-                                                    $applimg->getType(),
-                                                    $applimg->getFileExt(),
-                                                    $applimg->getFileSize(),
-                                                    $applimg->getFilePath(),
-                                                    $applimg->getFileFolder(),
-                                                    $_SESSION["GUYVERDESIGNS_SITE"],
-                                                    $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]);
-                                if($r == "MIME_REGISTERED")
-                                {
-                                    $this->appl_mimes_uid = $zitdappl->getMimesUid();
-                                    gdlog()->LogInfo("APPLICATION_MIME_DATA{".$zitdappl->getMimesUid()."}");
-                                    $r = $zitdappl->registerMimeBlobImage($applimg->getWidth(),
-                                                                        $applimg->getHeight());
-                                    if($r == "MIME_BLOB_REGISTERED")
-                                    {
-                                        gdlog()->LogInfo("APPLICATION_MIME_BLOB_UPLOADED{".$zitdappl->getMimesApplUid()."}");
-                                        $return_mimes_data = $return_mimes_data.":APPL:".$zitdappl->getMimesUid();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                return $r;
             }
             else
             {
@@ -183,19 +106,6 @@ class zImageUploadControl
         {
             return $r;
         }
-    }
-
-    function getOrigMimeUid()
-    {
-        return $this->orig_mimes_uid;
-    }
-    function getThumbMimeUid()
-    {
-        return $this->thmb_mimes_uid;
-    }
-    function getApplMimeUid()
-    {
-        return $this->appl_mimes_uid;
     }
 }
 ?>

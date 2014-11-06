@@ -3,7 +3,9 @@
 <html>
 <head>
 <title zgd.bkgimg="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
+<?php gdinc("/gd.trxn.com/_controls/ui/css/core.php") ?>
 <?php gdinc("/_controls/ui/css/core.php") ?>
+<?php gdinc("/gd.trxn.com/_controls/ui/js/core.php") ?>
 <?php gdinc("/_controls/ui/js/core.php") ?>
 <script src="index.js"></script>
 <script>

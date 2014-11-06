@@ -15,13 +15,13 @@ class zMatchUniversity
      * $user_account_uid = UID;
      * $user_roles_desc = SDESC - Unique Search Field;
      */
-    function matchUniversitytoUsertoRoleSdesc($university_account_uid, $user_account_uid, $cfg_user_roles_desc)
+    function matchUniversitytoUsertoRoleUid($university_account_uid, $user_account_uid, $cfg_user_roles_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUniversitytoUsertoRoleSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUniversitytoUsertoRoleUid");
         $fr = $this->matchUniversitytoUsertoRole($university_account_uid,
                     $user_account_uid,
-                    $this->findCfgUidfromSdesc($cfg_user_roles_desc));
-        $this->gdlog()->LogInfoEndFUNCTION("matchUniversitytoUsertoRoleSdesc");
+                    $this->findCfgSdescfromUid($cfg_user_roles_uid));
+        $this->gdlog()->LogInfoEndFUNCTION("matchUniversitytoUsertoRoleUid");
         return $fr;
     }
     
@@ -31,22 +31,22 @@ class zMatchUniversity
      * $user_account_uid = UID;
      * $user_roles_uid = UID;
      */
-    function matchUniversitytoUsertoRole($university_account_uid, $user_account_uid, $cfg_user_roles_uid)
+    function matchUniversitytoUsertoRoleSdesc($university_account_uid, $user_account_uid, $cfg_user_roles_sdesc)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUniversitytoUsertoRole");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUniversitytoUsertoRoleSdesc");
         $fr;
         $sqlstmnt = "INSERT INTO match_university_account_to_user_account_to_cfg_user_roles SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "university_account_uid=:university_account_uid, ".
             "user_account_uid=:user_account_uid, ".
-            "cfg_user_roles_uid=:cfg_user_roles_uid";
+            "cfg_user_roles_sdesc=:cfg_user_roles_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":university_account_uid", $university_account_uid);
         $dbcontrol->bindParam(":user_account_uid", $user_account_uid);
-        $dbcontrol->bindParam(":cfg_user_roles_uid", $cfg_user_roles_uid);
+        $dbcontrol->bindParam(":cfg_user_roles_sdesc", $cfg_user_roles_sdesc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -65,7 +65,7 @@ class zMatchUniversity
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("matchUniversitytoUsertoRole");
+        $this->gdlog()->LogInfoEndFUNCTION("matchUniversitytoUsertoRoleSdesc");
         return $fr;
     }
 
@@ -189,7 +189,8 @@ class zMatchUniversity
     function getUniversitytoUsertoRole_Uid(){ return $this->Result_UniversitytoUsertoRole["uid"]; }
     function getUniversitytoUsertoRole_UnivAcctUid(){ return $this->Result_UniversitytoUsertoRole["university_accont_uid"]; }
     function getUniversitytoUsertoRole_UserAcctUid(){ return $this->Result_UniversitytoUsertoRole["user_account_uid"]; }
-    function getUniversitytoUsertoRole_CfgUserRoleUid(){ return $this->Result_UniversitytoUsertoRole["cfg_user_roles_uid"]; }
+    function getUniversitytoUsertoRole_CfgUserRoleUid(){ return $this->findCfgUidfromSdesc($this->Result_UniversitytoUsertoRole["cfg_user_roles_uid"]); }
+    function getUniversitytoUsertoRole_CfgUserRoleSdesc(){ return $this->Result_UniversitytoUsertoRole["cfg_user_roles_sdesc"]; }
 
     function getUniversitytoProfile_Uid(){ return $this->Result_UniversitytoProfile["uid"]; }
     function getUniversitytoProfile_UnivAcctUid(){ return $this->Result_UniversitytoProfile["university_accont_uid"]; }

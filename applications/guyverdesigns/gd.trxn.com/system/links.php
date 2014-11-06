@@ -45,6 +45,7 @@ $(document).ready(function()
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE"]; ?></li>
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"]; ?></li>
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]; ?></li>
+<li><?php echo $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]; ?></li>
 </ul>
 </div>
             </div>

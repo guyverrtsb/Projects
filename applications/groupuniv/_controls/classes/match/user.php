@@ -14,12 +14,12 @@ class zMatchUser
      * $user_account_uid = UID;
      * $user_roles_desc = SDESC - Unique Search Field;
      */
-    function matchUsertoRoleSdesc($user_account_uid, $cfg_user_roles_desc)
+    function matchUsertoSiteRoleUid($user_account_uid, $cfg_user_site_roles_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoRoleSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoSiteRoleUid");
         $fr = $this->matchUsertoCfgRole($user_account_uid,
-                                        $this->findCfgUidfromSdesc($cfg_user_roles_desc));
-        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoRoleSdesc");
+                                        $this->findCfgSdescfromUid($cfg_user_site_roles_uid));
+        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoSiteRoleUid");
         return $fr;
     }
 
@@ -28,26 +28,26 @@ class zMatchUser
      * $user_account_uid = UID;
      * $user_roles_uid = UID;
      */
-    function matchUsertoCfgRole($user_account_uid, $cfg_user_roles_uid)
+    function matchUsertoCfgSiteRoleSdesc($user_account_uid, $cfg_user_site_roles_sdesc)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoCfgRole");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoCfgSiteRole");
         $fr;
-        $sqlstmnt = "INSERT INTO match_user_account_to_cfg_user_roles SET ".
+        $sqlstmnt = "INSERT INTO match_user_account_to_cfg_user_site_roles SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "user_account_uid=:user_account_uid, ".
-            "cfg_user_roles_uid=:cfg_user_roles_uid";
+            "cfg_user_site_roles_sdesc=:cfg_user_site_roles_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":user_account_uid", $user_account_uid);
-        $dbcontrol->bindParam(":cfg_user_roles_uid", $cfg_user_roles_uid);
+        $dbcontrol->bindParam(":cfg_user_site_roles_sdesc", $cfg_user_site_roles_sdesc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResult_UsertoRole($dbcontrol->getRowfromLastId($dbcontrol, "match_user_account_to_cfg_user_roles", $dbcontrol->getLastInsertID()));
+                $this->setResult_UsertoRole($dbcontrol->getRowfromLastId($dbcontrol, "match_user_account_to_cfg_user_site_roles", $dbcontrol->getLastInsertID()));
                 $this->gdlog()->LogInfoDB($this->getResult_UsertoRole());
                 $fr = $this->saveActivityLog("MATCHED_TO_USER_TO_ROLE", "User to Role Matched:".json_encode($this->getResult_UsertoRole()).":");
             }
@@ -60,7 +60,7 @@ class zMatchUser
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoCfgRole");
+        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoCfgSiteRole");
         return $fr;
     }
 
@@ -70,13 +70,13 @@ class zMatchUser
      * $group_account_uid = UID;
      * $user_roles_desc = SDESC - Unique Search Field;
      */
-    function matchUsertoGrouptoRoleSdesc($user_account_uid, $group_account_uid, $cfg_user_roles_desc)
+    function matchUsertoGrouptoRoleUid($user_account_uid, $group_account_uid, $cfg_user_roles_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoGrouptoRoleSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoGrouptoRoleUid");
         $fr = $this->matchUsertoGrouptoRole($user_account_uid,
                                         $group_account_uid,
-                                        $this->findCfgUidfromSdesc($cfg_user_roles_desc));
-        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoGrouptoRoleSdesc");
+                                        $this->findCfgSdescfromUid($cfg_user_roles_uid));
+        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoGrouptoRoleUid");
         return $fr;
     }
     
@@ -86,23 +86,23 @@ class zMatchUser
      * $group_account_uid = UID;
      * $user_roles_uid = UID;
      */
-    function matchUsertoGrouptoRole($user_account_uid, $group_account_uid, $cfg_user_roles_uid)
+    function matchUsertoGrouptoRoleSdesc($user_account_uid, $group_account_uid, $cfg_user_roles_desc)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoGrouptoRole");
+        $this->gdlog()->LogInfoStartFUNCTION("matchUsertoGrouptoRoleSdesc");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "INSERT INTO ".$utk."match_user_account_to_group_account_to_cfg_user_roles SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "user_account_uid=:user_account_uid, ".
             "group_account_uid=:group_account_uid, ".
-            "cfg_user_roles_uid=:cfg_user_roles_uid";
+            "cfg_user_roles_sdesc=:cfg_user_roles_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":user_account_uid", $user_account_uid);
         $dbcontrol->bindParam(":group_account_uid", $group_account_uid);
-        $dbcontrol->bindParam(":cfg_user_roles_uid", $cfg_user_roles_uid);
+        $dbcontrol->bindParam(":cfg_user_roles_sdesc", $cfg_user_roles_desc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -121,7 +121,7 @@ class zMatchUser
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoGrouptoRole");
+        $this->gdlog()->LogInfoEndFUNCTION("matchUsertoGrouptoRoleSdesc");
         return $fr;
     }
 
@@ -207,7 +207,8 @@ class zMatchUser
     function getUsertoGrouptoRole_Uid(){ return $this->Result_UsertoGrouptoRole["uid"]; }
     function getUsertoGrouptoRole_UserAcctUid(){ return $this->Result_UsertoGrouptoRole["user_account_uid"]; }
     function getUsertoGrouptoRole_GroupAcctUid(){ return $this->Result_UsertoGrouptoRole["group_account_uid"]; }
-    function getUsertoGrouptoRole_CfgUserRoleUid(){ return $this->Result_UsertoGrouptoRole["cfg_user_roles_uid"]; }
+    function getUsertoGrouptoRole_CfgUserRoleSdesc(){ return $this->Result_UsertoGrouptoRole["cfg_user_roles_sdesc"]; }
+    function getUsertoGrouptoRole_CfgUserRoleUid(){ return $this->findCfgUidfromSdesc($this->Result_UsertoGrouptoRole["cfg_user_roles_sdesc"]); }
     
     function getUsertoProfile_Uid(){ return $this->Result_UsertoProfile["uid"]; }
     function getUsertoProfile_UserAcctUid(){ return $this->Result_UsertoProfile["user_account_uid"]; }

@@ -26,6 +26,15 @@ function loadDynamicPageElements()
 	});
 }
 
+function loadDynamicContent(dckey)
+{
+	$("li, div").each(function( index )
+	{
+		if($(this).attr("dyncontentkey") != undefined && $(this).attr("dyncontentkey").length > 0 && $(this).attr("dyncontentkey") == dckey)
+			buildDynamicContent($(this));
+	});
+}
+
 function buildDynamicDropDown(jqobj)
 {
 	var apppath = "";
@@ -214,7 +223,7 @@ function buildContentBlockReturnMessage(data, matchValue)
 	}
 	else
 	{
-		if(matchValue.toUpperCase() == "RESET")
+		if(matchValue == null || matchValue.toUpperCase() == "RESET")
 		{
 			var jqobj = $("#messageline");
 			jqobj.empty();

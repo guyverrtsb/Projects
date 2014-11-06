@@ -12,7 +12,8 @@ if($action != "INVALID")
         {
             $group_key = filter_var($_POST["group_key"], FILTER_SANITIZE_STRING);
             $zfconfigs = new zAppBaseObject();
-            if($zfconfigs->findConfigurationListfromGroupKey($group_key) == "LIST_FOUND")
+            $fr = $zfconfigs->findConfigurationListfromGroupKey($group_key);
+            if($fr == "LIST_FOUND")
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
                                                 ,"RETURN_SHOW_PASS_MSG", "FALSE"

@@ -3,7 +3,7 @@ function buildTileElements(jqobj, data)
 	jqobj.empty();
     $.each(data.RESULT, function(key, val)
     {
-    	var tile = $("<div/>").attr("class", "tile");
+    	var tile = $("<div/>").attr("class", "tile-desktop");
     	var ul = getContentBlock("desktoptiles");
     	tile.append(ul);
     	ul.append(getFormText(val.sdesc));
@@ -39,7 +39,7 @@ function buildTileElements(jqobj, data)
     	ul.append(li);
     	
     	var newjqobj = tile;
-    	jqobj.after(newjqobj);
+    	jqobj.append(newjqobj);
     	jqobj = newjqobj;
     });
 }

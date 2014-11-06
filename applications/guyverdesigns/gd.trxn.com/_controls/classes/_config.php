@@ -202,11 +202,21 @@ class ZGDConfigurations
         $zgdlog->LogInfoEndFUNCTION("setAuthoritySessionData");
     }
     
+    static function setAuthoritySessionPageRedirectPageOverride($page_redirect_override)
+    {
+        $zgdlog = new KLogger();
+        $zgdlog->LogInfoStartFUNCTION("setAuthoritySessionPageRedirectPageOverride");
+        $_SESSION[ZGDConfigurations::getKeySessAuthUserPageRedirectOverride()] = $page_redirect_override;
+        $zgdlog->LogInfo("Page Redirect Override:{" . ZGDConfigurations::getAuthUserPageRedirectOverride() . "}");
+        $zgdlog->LogInfoEndFUNCTION("setAuthoritySessionPageRedirectPageOverride");
+    }
+    
     static function getAuthUserUid(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUserUid()); }
     static function getAuthUserIsAuthenticated(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUserIsAuthenticated()); }
     static function getAuthUserSiteRole(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUserSiteRole()); }
     static function getAuthUserSiteRolePriority(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUserSiteRolePriority()); }
     static function getAuthUsertablekey(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUsertablekey()); }
+    static function getAuthUserPageRedirectOverride(){ return ZGDConfigurations::nullCheckSession(ZGDConfigurations::getKeySessAuthUserPageRedirectOverride()); }
         
     static function cleanAuthoritySessionData()
     {
@@ -218,6 +228,14 @@ class ZGDConfigurations
         unset($_SESSION[ZGDConfigurations::getKeySessAuthUserSiteRolePriority()]);
         unset($_SESSION[ZGDConfigurations::getKeySessAuthUsertablekey()]);
         $zgdlog->LogInfoEndFUNCTION("cleanAuthoritySessionObjects");
+    }
+    
+    static function cleanAuthoritySessionPageRedirectPageOverride()
+    {
+        $zgdlog = new KLogger();
+        $zgdlog->LogInfoStartFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
+        unset($_SESSION[ZGDConfigurations::getAuthUserPageRedirectOverride()]);
+        $zgdlog->LogInfoEndFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
     }
     /** End - USER AUTHORITY DATA **/
     
@@ -335,6 +353,7 @@ class ZGDConfigurations
     static function getKeySessAuthUserSiteRole(){return "GD_CORP_AUTH_SITE_ROLE";}
     static function getKeySessAuthUserSiteRolePriority(){return "GD_CORP_AUTH_SITE_ROLE_PRIORITY";}
     static function getKeySessAuthUsertablekey(){return "GD_CORP_AUTH_USER_TABLE_KEY";}
+    static function getKeySessAuthUserPageRedirectOverride(){return "GD_CORP_AUTH_USER_PAGE_REDIRECT_OVERRIDE";}
     
     static function getKeySessSiteUid(){return "GUYVERDESIGNS_SITE_UID";}
     static function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
@@ -343,7 +362,7 @@ class ZGDConfigurations
     static function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
     
     static function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
-    
+
     static function dumpSessionData()
     {
         $zgdlog = new KLogger();
@@ -358,12 +377,8 @@ class ZGDConfigurations
         $zgdlog = new KLogger();
         $zgdlog->LogInfoStartFUNCTION("redirectToUIPage");
         ZGDConfigurations::cleanUIPageResponseData();
-        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespCode()."}-{".$code."}");
-        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespKey()."}-{".$key."}");
-        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsg()."}-{".$msg."}");
-        $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
-        $zgdlog->LogInfo("{location}-{".$location."}");
         ZGDConfigurations::setUIPageResponseData($code, $key, $msg, strtoupper($showmsg));
+        $zgdlog->LogInfo("{location}-{".$location."}");
         $zgdlog->LogInfoEndFUNCTION("redirectToUIPage");
         header("Location: ".$location);
     }
@@ -424,5 +439,17 @@ class ZGDConfigurations
         return ZAppConfigurations::$email_admin_account;
     }
     /** End - CONFIG VALUES **/
+    function getCurrentPageURL()
+    {
+        $pageURL = 'http';
+        if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
+    }
 }
 ?>

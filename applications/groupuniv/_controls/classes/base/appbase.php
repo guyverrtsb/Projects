@@ -12,7 +12,7 @@ class zAppBaseObject
             $this->zappconfig = new ZAppConfigurations();
         return $this->zappconfig;
     }
-    
+
     function findConfigurationListfromGroupKey($group_key)
     {
         $this->gdlog()->LogInfoStartFUNCTION("findConfigurationListfromGroupKey");
@@ -24,7 +24,7 @@ class zAppBaseObject
             "WHERE group_key=:group_key";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":group_key", strtoupper($group_key));
         $dbcontrol->execSelect();
@@ -60,7 +60,7 @@ class zAppBaseObject
             "WHERE sdesc=:sdesc";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":sdesc", strtoupper($sdesc));
         $dbcontrol->execSelect();
@@ -96,7 +96,7 @@ class zAppBaseObject
             "WHERE uid=:uid";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":uid", $uid);
         $dbcontrol->execSelect();

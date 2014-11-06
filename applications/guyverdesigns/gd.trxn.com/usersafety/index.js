@@ -14,7 +14,6 @@ function buildForm()
     var cb = getContentBlock("support");
     $("#workarea_col_left").append(getForm("support").append(cb));
     
-
     var cb = getContentBlock("register");
     $("#workarea_col_right").append(getForm("register").append(cb));
     cb.append(getContentBlockHeader("Register User Account"));
@@ -32,22 +31,24 @@ function buildForm()
     cb.append(getFormButton("gdFuncRegisterData();", "Register"));
 }
 
-function buildContentBlocksUserSupport(reskey, eleid)
+function buildContentBlocksUserSupport(reskey)
 {
-	var cb = $("#" + eleid);
+    var cb = getContentBlock("support");
 	cb.empty();
+	cb.append($("</br>"));
+    $("#workarea_col_left").append(getForm("support").append(cb));
 	if(reskey == "ACCOUNT_INACTIVE")
     {
-		cb.append(getContentElementLI("header", "Activate Account"));
-		cb.append(getContentBlockElementInput("activate_user_email", "Enter in Email"));
-		cb.append(getContentBlockElementInputGDControlKey("ACTIVATE_ACCOUNT"));
-		cb.append(getContentBlockElementButton("CBAcitvateButton", "buttonBlue", "navTop", "gdFuncSupportData", "Activate Account"));
+		cb.append(getContentBlockHeader("Activate Account"));
+	    cb.append(getFormInputTextField("support", "activate_user_email", "", "Enter in Email"));
+		cb.append(getFormGDControlkey("ACTIVATE_ACCOUNT"));
+	    cb.append(getFormButton("gdFuncSupportData();", "Activate Account"));
     }
 	if(reskey == "PASSWORD_CHANGE_REQUIRED")
     {
-		cb.append(getContentElementBlockHeader("header", "Change Password"));
-		cb.append(getContentBlockElementInput("password_change_user_email", "Enter in Email"));
-		cb.append(getContentBlockElementInputGDControlKey("CHANGE_PASSWORD"));
-		cb.append(getContentBlockElementButton("CBPasswordButton", "buttonBlue", "navTop", "gdFuncSupportData", "Change Password"));
+		cb.append(getContentBlockHeader("Change Passwordt"));
+	    cb.append(getFormInputTextField("support", "password_change_user_email", "", "Enter in Email"));
+		cb.append(getFormGDControlkey("CHANGE_PASSWORD"));
+	    cb.append(getFormButton("gdFuncSupportData();", "Change Password"));
     }
 }

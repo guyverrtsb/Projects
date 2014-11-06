@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdauth()->isAuthorized("GD_PUBLISHER"); ?>
+<?php if(gdauth()->isAuthorized("GD_PUBLISHER")) { ?>
 <?php setpagekey("BILLTO"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
@@ -10,15 +10,6 @@
 <?php gdinc("/_controls/ui/js/tools.php") ?>
 <script src="s_create_billto.js"></script>
 <script>
-function RegisterTestData(companyname, contactname, contactemail, contactnumber, address, city)
-{
-    $("#registercompanyname").val(companyname);
-    $("#registerinvoicecontactname").val(contactname);
-    $("#registerinvoicecontactemail").val(contactemail);
-    $("#registerinvoicecontactnumber").val(contactnumber);
-    $("#registeraddress").val(address);
-    $("#registercity").val(city);
-}
 </script>
 </head>
 <body>
@@ -41,3 +32,4 @@ function RegisterTestData(companyname, contactname, contactemail, contactnumber,
 </div>
 </body>
 </html>
+<?php } ?>

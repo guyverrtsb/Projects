@@ -9,7 +9,13 @@ function getForm(id)
 function getFormText(label)
 {
 	// <li class="message">&nbsp;</li>
-	return getContentElementLI("text", label, null);
+	return getContentElementLI("text", label, null, false);
+}
+
+function getFormHTML(label)
+{
+	// <li class="message">&nbsp;</li>
+	return getContentElementLI("text", label, null, true);
 }
 
 function getFormInputTextField(id, name, value, label, placeholder)
@@ -154,6 +160,7 @@ function getFormGDControlkey(value)
 {
 	// <li class="hidden"><input type="hidden" id="registerGD_CONTROLLER_KEY" name="GD_CONTROLLER_KEY" value="REGISTER_BILLTO"/></li>
 	var li = getContentElementLI("hidden", null, null);
+	li.css("clear","both");
 	var input = getContentElementInput("hidden", "rounded", "GD_CONTROL_KEY", "GD_CONTROL_KEY", value);
 	return li.append(input);
 }

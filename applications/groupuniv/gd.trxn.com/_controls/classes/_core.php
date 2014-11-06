@@ -37,7 +37,7 @@ function gdlog()
 
 function gdconfig()
 {
-    gdreqonce("/_controls/classes/base/appconfig.php");
+    gdreqonce("/_controls/classes/_appconfig.php");
     return new ZAppConfigurations();
 }
 
@@ -61,6 +61,7 @@ function getpagekey()
 
 function getControlKey()
 {
+    gdlog()->LogInfoStartFUNCTION("getControlKey");
     $gdcontrolkey = "INVALID";
     if(isset($_POST["GD_CONTROL_KEY"]))
     {
@@ -90,6 +91,7 @@ function getControlKey()
         }
     }
     gdlog()->LogInfo("getControlKey{".$gdcontrolkey."}");
+    gdlog()->LogInfoEndFUNCTION("getControlKey");
     return $gdcontrolkey;
 }
 

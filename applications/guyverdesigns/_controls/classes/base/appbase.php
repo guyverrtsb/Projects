@@ -13,7 +13,7 @@ class zAppBaseObject
         return $this->zappconfig;
     }
     
-    function findConfigurationListfromGroupKey($group_key)
+    function findConfigurationListfromGroupKey($group_key, $APPDB = "APPDB")
     {
         $this->gdlog()->LogInfoStartFUNCTION("findConfigurationListfromGroupKey");
         $this->cleanResults_ConfigurationRecords();
@@ -24,7 +24,7 @@ class zAppBaseObject
             "WHERE group_key=:group_key";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB($APPDB);
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":group_key", strtoupper($group_key));
         $dbcontrol->execSelect();
@@ -49,7 +49,7 @@ class zAppBaseObject
         return $fr;
     }
     
-    function findConfigurationfromSdesc($sdesc)
+    function findConfigurationfromSdesc($sdesc, $APPDB = "APPDB")
     {
         $this->gdlog()->LogInfoStartFUNCTION("findConfigurationfromSdesc");
         $this->cleanResult_ConfigurationRecord();
@@ -60,7 +60,7 @@ class zAppBaseObject
             "WHERE sdesc=:sdesc";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB($APPDB);
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":sdesc", strtoupper($sdesc));
         $dbcontrol->execSelect();
@@ -85,7 +85,7 @@ class zAppBaseObject
         return $fr;
     }
     
-    function findConfigurationfromUid($uid)
+    function findConfigurationfromUid($uid, $APPDB = "APPDB")
     {
         $this->gdlog()->LogInfoStartFUNCTION("findConfigurationfromUid");
         $this->cleanResult_ConfigurationRecord();
@@ -96,7 +96,7 @@ class zAppBaseObject
             "WHERE uid=:uid";
         
         $dbcontrol = new ZAppDatabase();
-        $dbcontrol->setApplicationDB();
+        $dbcontrol->setApplicationDB($APPDB);
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":uid", $uid);
         $dbcontrol->execSelect();

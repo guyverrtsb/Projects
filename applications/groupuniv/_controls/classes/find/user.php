@@ -38,8 +38,8 @@ class zFindUser
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
-                        "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid").
+                        "user_profile.cfg_region_sdesc, ".
+                        "user_profile.cfg_country_sdesc").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -91,8 +91,8 @@ class zFindUser
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
-                        "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid").
+                        "user_profile.cfg_region_sdesc, ".
+                        "user_profile.cfg_country_sdesc").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -144,8 +144,8 @@ class zFindUser
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
-                        "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid").
+                        "user_profile.cfg_region_sdesc, ".
+                        "user_profile.cfg_country_sdesc").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -198,8 +198,8 @@ class zFindUser
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
-                        "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid").
+                        "user_profile.cfg_region_sdesc, ".
+                        "user_profile.cfg_country_sdesc").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -251,8 +251,8 @@ class zFindUser
                         "user_profile.fname, ".
                         "user_profile.lname, ".
                         "user_profile.city, ".
-                        "user_profile.cfg_region_uid, ".
-                        "user_profile.cfg_country_uid").
+                        "user_profile.cfg_region_sdesc, ".
+                        "user_profile.cfg_country_sdesc").
         " FROM user_account ".
         "JOIN match_user_account_to_user_profile on ".
             "match_user_account_to_user_profile.user_account_uid = user_account.uid ".
@@ -322,7 +322,7 @@ class zFindUser
     function getFName() { return $this->Result_AccountProfile[$this->dbf("user_profile.fname")]; }
     function getLName() { return $this->Result_AccountProfile[$this->dbf("user_profile.lname")]; }
     function getCity() { return $this->Result_AccountProfile[$this->dbf("user_profile.city")]; }
-    function getRegionCfgUid() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_region_uid")]; }
-    function getCountryCfgUid() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_country_uid")]; }
+    function getRegionCfgSdesc() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_region_sdesc")]; }
+    function getCountryCfgSdesc() { return $this->Result_AccountProfile[$this->dbf("user_profile.cfg_country_sdesc")]; }
 }
 ?>

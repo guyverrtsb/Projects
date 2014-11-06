@@ -37,7 +37,7 @@ class zBaseObject
     /*
      * database field AS
      */
-    public function dbfas($fieldinput, $univtablekey = "NOT_DEFINED")
+    public function dbfas($fieldinput, $usertablekey = "NOT_DEFINED")
     {
         $fns = explode(",", $fieldinput);
         $fieldoutput = "";
@@ -47,9 +47,9 @@ class zBaseObject
             $cntr++;
             $fn = trim($fn);
             $fo = "AS ".str_replace(".", "_", $fn);
-            if($univtablekey != "NOT_DEFINED")
+            if($usertablekey != "NOT_DEFINED")
             {
-                $fo = str_replace($univtablekey, "", $fo);
+                $fo = str_replace($usertablekey, "", $fo);
             }
             $this->gdlog()->LogInfo("BASE OBJECT:DBFAS:".$fn."{".$fo."}");
             $fieldoutput = $fieldoutput.$fn." ".$fo;

@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdauth()->isAuthorized("GD_PUBLISHER"); ?>
+<?php if(gdauth()->isAuthorized("GD_PUBLISHER")) { ?>
 <?php setpagekey("PROJECT"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
@@ -10,16 +10,6 @@
 <?php gdinc("/_controls/ui/js/tools.php") ?>
 <script src="s_change_project.js"></script>
 <script>
-function RegisterTestData(sdesc, ldesc, contactname, contactemail, contactnumber, address, city)
-{
-    $("#registersdesc").val(sdesc);
-    $("#registerldesc").val(ldesc);
-    $("#registercontactname").val(contactname);
-    $("#registercontactemail").val(contactemail);
-    $("#registercontactnumber").val(contactnumber);
-    $("#registeraddress").val(address);
-    $("#registercity").val(city);
-}
 </script>
 </head>
 <body>
@@ -42,3 +32,4 @@ function RegisterTestData(sdesc, ldesc, contactname, contactemail, contactnumber
 </div>
 </body>
 </html>
+<?php } ?>

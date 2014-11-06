@@ -3,7 +3,9 @@
 </html>
 <head>
     <title></title>
+<?php gdinc("/gd.trxn.com/_controls/ui/css/core.php") ?>
 <?php gdinc("/_controls/ui/css/core.php") ?>
+<?php gdinc("/gd.trxn.com/_controls/ui/js/core.php") ?>
 <?php gdinc("/_controls/ui/js/core.php") ?>
 <script src="template.js"></script>
 <script>

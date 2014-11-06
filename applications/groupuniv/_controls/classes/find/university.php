@@ -24,8 +24,8 @@ class zFindUniversity
                         "university_profile.name, ".
                         "university_profile.content, ".
                         "university_profile.city, ".
-                        "university_profile.cfg_region_uid, ".
-                        "university_profile.cfg_country_uid, ".
+                        "university_profile.cfg_region_sdesc, ".
+                        "university_profile.cfg_country_sdesc, ".
                         "university_profile.foundeddate").
         " FROM university_account ".
         "JOIN match_university_account_to_university_profile on ".
@@ -78,8 +78,8 @@ class zFindUniversity
                         "university_profile.name, ".
                         "university_profile.content, ".
                         "university_profile.city, ".
-                        "university_profile.cfg_region_uid, ".
-                        "university_profile.cfg_country_uid, ".
+                        "university_profile.cfg_region_sdesc, ".
+                        "university_profile.cfg_country_sdesc, ".
                         "university_profile.foundeddate").
         " FROM university_account ".
         "JOIN match_university_account_to_university_profile on ".
@@ -134,8 +134,8 @@ class zFindUniversity
                         "university_profile.name, ".
                         "university_profile.content, ".
                         "university_profile.city, ".
-                        "university_profile.cfg_region_uid, ".
-                        "university_profile.cfg_country_uid, ".
+                        "university_profile.cfg_region_sdesc, ".
+                        "university_profile.cfg_country_sdesc, ".
                         "university_profile.foundeddate").
         " FROM university_account ".
         "JOIN match_university_account_to_university_profile on ".
@@ -197,8 +197,10 @@ class zFindUniversity
     function getName() { return $this->Result_AccountandProfile[$this->dbf("university_profile.name")]; }
     function getContent() { return $this->Result_AccountandProfile[$this->dbf("university_profile.content")]; }
     function getCity() { return $this->Result_AccountandProfile[$this->dbf("university_profile.city")]; }
-    function getRegionCfgUid() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_region_uid")]; }
-    function getCountryCfgUid() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_country_uid")]; }
+    function getRegionCfgUid() { return $this->findCfgUidfromSdesc($this->Result_AccountandProfile[$this->dbf("university_profile.cfg_region_sdesc")]); }
+    function getCountryCfgUid() { return $this->findCfgUidfromSdesc($this->Result_AccountandProfile[$this->dbf("university_profile.cfg_country_sdesc")]); }
+    function getRegionCfgSdesc() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_region_sdesc")]; }
+    function getCountryCfgSdesc() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_country_sdesc")]; }
     function getFoundeddate() { return $this->Result_AccountandProfile[$this->dbf("university_profile.foundeddate")]; }
     function getTablekey() {
         $emailkey = $this->getEmailkey();

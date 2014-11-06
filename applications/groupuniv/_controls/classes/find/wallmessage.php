@@ -71,7 +71,7 @@ class zFindWallMessage
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getKeySessAuthUserUid());
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getAuthUserUid());
         $dbcontrol->bindParam(":group_account_uid", $group_account_uid);
         $dbcontrol->bindParam(":wall_message_lid_bypass", $wall_message_lid_bypass);
         if($wall_message_createddt_start != "NOW")
@@ -147,7 +147,7 @@ class zFindWallMessage
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getKeySessAuthUserUid());
+        $dbcontrol->bindParam(":user_account_uid", $this->getGDConfig()->getAuthUserUid());
         $dbcontrol->bindParam(":group_account_uid", $group_account_uid);
         $dbcontrol->bindParam(":wall_message_lid_bypass", $wall_message_lid_bypass);
         $dbcontrol->bindParam(":wall_message_createddt_start", $wall_message_createddt_start);

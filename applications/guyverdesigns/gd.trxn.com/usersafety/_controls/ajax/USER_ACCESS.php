@@ -1,4 +1,4 @@
-<?php require_once("../../../_controls/classes/_core.php"); ?>
+<?php require_once("../../../../gd.trxn.com/_controls/classes/_core.php"); ?>
 <?php 
 gdreqonce("/gd.trxn.com/usersafety/_controls/classes/createuser.php");
 gdreqonce("/gd.trxn.com/usersafety/_controls/classes/taskcontrol.php");
@@ -157,10 +157,6 @@ if($action != "INVALID")
             {
                 gdconfig()->redirectToUIPage(102, $fr, "Account Locked.  Too many failed Attempts.", "TRUE", gdconfig()->getRedirectAuthFailPage());
             }
-            else if($fr == "USER_IS_AUTHENTICATED")
-            {
-                gdconfig()->redirectToUIPage(0, $fr, "User Logged in", "TRUE", gdconfig()->getRedirectAuthLoggedinPage());
-            }
             else if($fr == "PASSWORD_DOES_NOT_MATCH")
             {
                 gdconfig()->redirectToUIPage(103, $fr, "Bad login", "TRUE", gdconfig()->getRedirectAuthFailPage());
@@ -172,6 +168,15 @@ if($action != "INVALID")
             else if($fr == "TRANSACTION_FAIL")
             {
                 gdconfig()->redirectToUIPage(999, $fr, "System Failure", "TRUE", gdconfig()->getRedirectAuthFailPage());
+            }
+            else if($fr == "USER_IS_AUTHENTICATED")
+            {
+                $page_redirect_override = gdconfig()->getAuthUserPageRedirectOverride();
+                gdconfig()->cleanAuthoritySessionPageRedirectPageOverride();
+                if($page_redirect_override != "")
+                    gdconfig()->redirectToUIPage(0, $fr, "User Logged in", "TRUE", $page_redirect_override);
+                else
+                    gdconfig()->redirectToUIPage(0, $fr, "User Logged in", "TRUE", gdconfig()->getRedirectAuthLoggedinPage());
             }
         }
         else

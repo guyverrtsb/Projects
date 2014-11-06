@@ -24,20 +24,20 @@ class zRegisterGroup
     extends zAppBaseObject
 {
 
-    function registerGroupAccountSdesc($group_account_ldesc,
-        $group_type_sdesc,
-        $group_visibility_sdesc,
-        $group_useracceptance_sdesc)
+    function registerGroupAccountUid($group_account_ldesc,
+                                $cfg_group_type_uid, 
+                                $cfg_group_visibility_uid, 
+                                $cfg_group_useracceptance_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("registerGroupAccountSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("registerGroupAccountUid");
         $fr;
 
-        $fr = $this->registerGroupAccount($group_account_ldesc,
-                                        $this->findCfgUidfromSdesc($group_type_sdesc),
-                                        $this->findCfgUidfromSdesc($group_visibility_sdesc),
-                                        $this->findCfgUidfromSdesc($group_useracceptance_sdesc));
+        $fr = $this->registerGroupAccountSdesc($group_account_ldesc,
+                                        $this->findCfgSdescfromUid($cfg_group_type_uid),
+                                        $this->findCfgSdescfromUid($cfg_group_visibility_uid),
+                                        $this->findCfgSdescfromUid($cfg_group_useracceptance_uid));
 
-        $this->gdlog()->LogInfoEndFUNCTION("registerGroupAccountSdesc");
+        $this->gdlog()->LogInfoEndFUNCTION("registerGroupAccountUid");
         return $fr;
     }    
     /**
@@ -45,10 +45,10 @@ class zRegisterGroup
      * $group_account_ldesc = ldesc;
      * $group_account_geolocation = geolocation;
      */
-    function registerGroupAccount($group_account_ldesc,
-                                $cfg_group_type_uid, 
-                                $cfg_group_visibility_uid, 
-                                $cfg_group_useracceptance_uid)
+    function registerGroupAccountSdesc($group_account_ldesc,
+                                    $group_type_sdesc,
+                                    $group_visibility_sdesc,
+                                    $group_useracceptance_sdesc)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerGroupAccount");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
@@ -56,18 +56,18 @@ class zRegisterGroup
         $sqlstmnt = "INSERT INTO ".$utk."group_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "ldesc=:ldesc, sdesc=:sdesc, ".
-            "cfg_group_type_uid=:cfg_group_type_uid, ".
-            "cfg_group_visibility_uid=:cfg_group_visibility_uid, ".
-            "cfg_group_useracceptance_uid=:cfg_group_useracceptance_uid";
+            "cfg_group_type_sdesc=:cfg_group_type_sdesc, ".
+            "cfg_group_visibility_sdesc=:cfg_group_visibility_sdesc, ".
+            "cfg_group_useracceptance_sdesc=:cfg_group_useracceptance_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":ldesc", $group_account_ldesc);
         $dbcontrol->bindParam(":sdesc", $this->createSdesc($group_account_ldesc));
-        $dbcontrol->bindParam(":cfg_group_type_uid", $cfg_group_type_uid);
-        $dbcontrol->bindParam(":cfg_group_visibility_uid", $cfg_group_visibility_uid);
-        $dbcontrol->bindParam(":cfg_group_useracceptance_uid", $cfg_group_useracceptance_uid);
+        $dbcontrol->bindParam(":cfg_group_type_sdesc", $group_type_sdesc);
+        $dbcontrol->bindParam(":cfg_group_visibility_sdesc", $group_visibility_sdesc);
+        $dbcontrol->bindParam(":cfg_group_useracceptance_sdesc", $group_useracceptance_sdesc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -138,9 +138,6 @@ class zRegisterGroup
     
     private $Result_Account = "NO_RECORD";
     private $Result_Profile = "NO_RECORD";
-    private $GroupTypeSdesc = "";
-    private $GroupVisibilitySdesc = "";
-    private $GroupUserAcceptanceSdesc = "";
     
     function setResult_Account($row)
     {
@@ -163,9 +160,12 @@ class zRegisterGroup
     }
     
     function getGA_Uid() { return $this->Result_Account["uid"]; }
-    function getTypeCfgUid() { return $this->Result_Account["cfg_group_type_uid"]; }
-    function getVisibilityCfgUid() { return $this->Result_Account["cfg_group_visibility_uid"]; }
-    function getUserAcceptanceCfgUid() { return $this->Result_Account["cfg_group_useracceptance_uid"]; }
+    function getTypeCfgSdesc() { return $this->Result_Account["cfg_group_type_sdesc"]; }
+    function getVisibilityCfgSdesc() { return $this->Result_Account["cfg_group_visibility_sdesc"]; }
+    function getUserAcceptanceCfgSdesc() { return $this->Result_Account["cfg_group_useracceptance_sdesc"]; }
+    function getTypeCfgUid() { return $this->findCfgUidFromSdesc($this->Result_Account["cfg_group_type_sdesc"]); }
+    function getVisibilityCfgUid() { return $this->findCfgUidFromSdesc($this->Result_Account["cfg_group_visibility_sdesc"]); }
+    function getUserAcceptanceCfgUid() { return $this->findCfgUidFromSdesc($this->Result_Account["cfg_group_useracceptance_sdesc"]); }
     function getLdesc() { return $this->Result_Account["ldesc"]; }
     function getSdesc() { return $this->Result_Account["sdesc"]; }
     function getGP_Uid() { return $this->Result_Profile["uid"]; }
@@ -173,8 +173,5 @@ class zRegisterGroup
     function getContent() { return $this->Result_Profile["content"]; }
     function getCountryCfgUid() { return $this->Result_Profile["country_cfg_defaults_uid"]; }
     function getNickname() { return $this->Result_Profile["nickname"]; }
-    function getTypeCfgSdesc() { return $this->GroupTypeSdesc; }
-    function getVisibilityCfgSdesc() { return $this->GroupVisibilitySdesc; }
-    function getUserAcceptanceCfgSdesc() { return $this->GroupUserAcceptanceSdesc; }
 }
 ?>

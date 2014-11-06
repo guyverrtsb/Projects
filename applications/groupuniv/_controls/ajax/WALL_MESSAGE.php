@@ -1,5 +1,5 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/image.php"); ?>
+<?php gdreqonce("/gd.trxn.com/upload/_controls/classes/upload.php"); ?>
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/find/wallmessage.php"); ?>
 <?php gdreqonce("/_controls/classes/register/search.php"); ?>
@@ -17,10 +17,22 @@ if($action != "INVALID")
             if(isset($_FILES["WallMessageImageFile"]))
             {
                 gdlog()->LogInfoTaskLabel("Register Image");
-                $zsuc = new zImageUploadControl("WallMessageImageFile", "mimes_standard", "mimes_appl_groupyou_wall_message", "500", "500");
-                $r = $zsuc->executeControl();
+                $gdud = new gdUploadData();
+                $gdud->uploadFile(array(
+                    'image_versions' => array(
+                        '' => array('auto_orient' => true),
+                        'medium' => array('max_width' => 500,'max_height' => 500),
+                        'thumbnail' => array('max_width' => 100, 'max_height' => 100)
+                    ),
+                    'param_name' => "WallMessageImageFile"));
+                $response = $gdud->getOutputData("UPLOAD_RESPONSE");
+                gdlog()->LogInfo("FILES:NAME{".json_encode($response)."}");
+                
+                $r = $gdud->registerToDB(gdconfig()->getSessUnivTblKey()."mimes_standard"
+                                    , "GROUPYOU");
+                
                 gdlog()->LogInfo("IMAGE_VALIDATION:".$r);
-                if($r == "MIME_BLOB_REGISTERED")
+                if($r == "UPLOAD_COMPLETED")
                 {
                     gdlog()->LogInfoTaskLabel("Register Wall Message");
                     $wall_message = filter_var($_POST["WallMessageContent"], FILTER_SANITIZE_STRING);
@@ -28,7 +40,7 @@ if($action != "INVALID")
                     $zrwallmessage->registerWallMessage(gdconfig()->getSessGroupUid(),
                                                             gdconfig()->getSessAuthUserUid(),
                                                             $wall_message,
-                                                            $zsuc->getApplMimeUid());
+                                                            $gdud->getOutputData("META_UID"));
                                                             
                     gdlog()->LogInfoTaskLabel("Add Search for Wall Message");
                     $zrsearch = new zRegisterSearchData();

@@ -92,7 +92,10 @@ class gdAuthorizeUser
         if($fr == "USER_AUTHORIZED")
             return true;
         else
+        {
+            $this->getGDConfig()->setAuthoritySessionPageRedirectPageOverride($_SERVER["REQUEST_URI"]);
             $this->getGDConfig()->redirectToUIPage(100, "USER_NOT_AUTHORIZED", "User is not Authorized for Resource", "TRUE", gdconfig()->getRedirectAuthFailPage());
+        }
     }
     
     function isAuthenticated()

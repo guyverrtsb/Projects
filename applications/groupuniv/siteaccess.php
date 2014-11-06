@@ -14,7 +14,7 @@
 function gdFuncRegisterData()
 {
     buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControllerKey("#RegisterFrm", "REGISTER_USER");
+    var formdata = gdSerialzeControlKey("#RegisterFrm", "REGISTER_USER");
     $.post("_controls/ajax/USER_ACCESS.php",
     formdata, function(data)
     {
@@ -27,12 +27,13 @@ function gdFuncRegisterData()
         {
             if(buildContentBlocksReturnMessage(data, "ACCOUNT_IN_PENDING"))
             {
-                if(data.ENV_KEY != null && data.ENV_KEY == "LCL")
+                if(data.ENV_KEY != null && (data.ENV_KEY == "LCL" || data.ENV_KEY == "STG"))
                 {
                     $("<a/>")
-                        .text("Activate User Override")
+                        .text("Activate User Override{" + data.USER_EMAIL + "}")
                         .attr("href",data.TRXN_URL)
-                        .appendTo($("#TransactionOutput"));
+                        .appendTo($("<li/>").appendTo($("#CBUserRegister")));
+                    userLoadCounter++;
                 }
             }
         }
@@ -52,6 +53,32 @@ function gdFuncForgotPasswordData()
 {
     //$("#" + frm).submit();    
 }
+</script>
+<script>
+var userLoadCounter = 0;
+function loadData(email)
+{
+     if(userLoadCounter == 0)
+         gdFuncRegisterUserData("egrayson@ncsu.edu", "abcd1234", "Earenest", "Grayson", "egrayson-ncsu", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 1)
+         gdFuncRegisterUserData("mwarren@ncsu.edu", "abcd1234", "Mike", "Warren", "mwarren-ncsu", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 2)
+         gdFuncRegisterUserData("stephen@ncsu.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-ncsu", "COUNTRY_US", "REGION_NC", "Raleigh");
+
+     else if(userLoadCounter == 3)
+         gdFuncRegisterUserData("egrayson@ou.edu", "abcd1234", "Earenest", "Grayson", "egrayson-ou", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 4)
+         gdFuncRegisterUserData("mwarren@ou.edu", "abcd1234", "Mike", "Warren", "mwarren-ou", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 5)
+         gdFuncRegisterUserData("stephen@ou.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-ou", "COUNTRY_US", "REGION_NC", "Raleigh");
+
+     else if(userLoadCounter == 6)
+         gdFuncRegisterUserData("egrayson@missouristate.edu", "abcd1234", "Earenest", "Grayson", "egrayson-mizzou", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 7)
+         gdFuncRegisterUserData("mwarren@missouristate.edu", "abcd1234", "Mike", "Warren", "mwarren-mizzou", "COUNTRY_US", "REGION_OK", "Tulsa");
+     else if(userLoadCounter == 8)
+         gdFuncRegisterUserData("stephen@missouristate.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-mizzou", "COUNTRY_US", "REGION_NC", "Raleigh");
+}
 
 function gdFuncRegisterUserData(email, pass, fname, lname, nick, country, region, city)
 {
@@ -63,6 +90,9 @@ function gdFuncRegisterUserData(email, pass, fname, lname, nick, country, region
     $("#user_country").val(country);
     $("#user_region").val(region);
     $("#user_city").val(city);
+    
+    $("#login_user_email").val(email);
+    $("#login_user_password").val(pass);
 }
 </script>
 </head>
@@ -81,10 +111,10 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
     printf("<li id=\"LoginErr\" class=\"error\">&nbsp;</li>");
 }
 ?>
-    <li class="user"><input class="rounded" type="text" id="login_user_email" name="user_email" value="stephen@guyverdesigns.com"/></li>
-    <li class="user"><input class="rounded" type="text" id="login_user_password" name="user_password" value="honkey"/></li>
+    <li class="user"><input class="rounded" type="text" id="login_user_email" name="user_email" value=""/></li>
+    <li class="user"><input class="rounded" type="text" id="login_user_password" name="user_password" value=""/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncLoginData();">Login</a></li>
-    <input type="hidden" id="GD_CONTROLLER_KEY" name="GD_CONTROLLER_KEY" value="LOGIN_USER"/>
+    <input type="hidden" id="GD_CONTROL_KEY" name="GD_CONTROL_KEY" value="LOGIN_USER"/>
     </form>
     </ul>
 </li>
@@ -103,12 +133,7 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
     <li class="user"><select class="rounded" id="user_region" name="user_region" configuration="COUNTRY_US|REGION_NC"></select></li>
     <li class="user"><input class="rounded" type="text" id="user_city" name="user_city" value="Raleigh"/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterData();">Register</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('stephen@guyverdesigns.com', 'honkey', 'Stephen', 'Shellenberger', 'stephen@gd.com', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Stephen @ GD.com</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('stephen@ncsu.edu', 'honkey', 'Stephen', 'Shellenberger', 'guyver', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Stephen @ NCSU.com</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('tiffany@ncsu.edu', 'honkey', 'Tiffany', 'Garner', 'harleygirl', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Tiffany @ NCSU.com</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('earenest@ncsu.edu', 'honkey', 'Earenest', 'Grayson', 'ejg4405', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Earenest @ NCSU.com</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('carlos@ncsu.edu', 'honkey', 'Carlos', 'Ibacache', 'clos', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Carlos @ NCSU.com</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData('josh@ncsu.edu', 'honkey', 'Josh', 'Ibacache', 'josh', 'COUNTRY_US', 'REGION_NC', 'raleigh');">Josh @ NCSU.com</a></li>
+    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData();">Start Test data Load</a></li>
     </form>
     </ul>
 </li>

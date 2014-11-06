@@ -33,7 +33,7 @@ if($action != "INVALID")
                     $zruniv = new zRegisterUniversity();
                     $r = $zruniv->registerUniversityAccount($_POST["univ_emailkey"],
                                                         $_POST["univ_sdesc"]);
-                    $r = $zruniv->registerUnversityProfile($_POST["univ_city"], 
+                    $r = $zruniv->registerUniversityProfile($_POST["univ_city"], 
                                                         $_POST["univ_region"], 
                                                         $_POST["univ_country"], 
                                                         "1875-12-31", 
@@ -54,14 +54,13 @@ if($action != "INVALID")
                     $r = $zruserPres->registerUserProfile("Univ", "President", 
                                                         $zruniv->getCity(), 
                                                         $_POST["univ_region"], 
-                                                        $_POST["univ_country"], 
-                                                        "President");
+                                                        $_POST["univ_country"]);
                     $zruserPres->createUserTables($zruserPres->getUserTableKey());
     
                     $zmuserPres = new zMatchUser();
                     $r = $zmuserPres->matchUsertoProfile($zruserPres->getUA_Uid(),
                                                         $zruserPres->getUP_Uid());
-                    $r = $zmuserPres->matchUsertoRoleSdesc($zruserPres->getUA_Uid(), "USER_ROLE_SITE_USER");
+                    $r = $zmuserPres->matchUsertoCfgSiteRoleSdesc($zruserPres->getUA_Uid(), "USER_ROLE_SITE_USER");
                     $r = $zmuniv->matchUniversitytoUsertoRoleSdesc($zruniv->getUA_Uid(),
                                                         $zruserPres->getUA_Uid(),
                                                         "USER_ROLE_UNIVERSITY_OWNER");
@@ -74,14 +73,13 @@ if($action != "INVALID")
                     $r = $zruserVicePres->registerUserProfile("Univ", "Vice President", 
                                                         $zruniv->getCity(), 
                                                         $_POST["univ_region"], 
-                                                        $_POST["univ_country"], 
-                                                        "Vice President");
+                                                        $_POST["univ_country"]);
                     $zruserVicePres->createUserTables($zruserVicePres->getUserTableKey());
     
                     $zmuserVicePres = new zMatchUser();
                     $r = $zmuserVicePres->matchUsertoProfile($zruserVicePres->getUA_Uid(),
                                                         $zruserVicePres->getUP_Uid());
-                    $r = $zmuserVicePres->matchUsertoRoleSdesc($zruserPres->getUA_Uid(), "USER_ROLE_SITE_USER");
+                    $r = $zmuserVicePres->matchUsertoCfgSiteRoleSdesc($zruserVicePres->getUA_Uid(), "USER_ROLE_SITE_USER");
                     $r = $zmuniv->matchUniversitytoUsertoRoleSdesc($zruniv->getUA_Uid(),
                                                         $zruserVicePres->getUA_Uid(),
                                                         "USER_ROLE_UNIVERSITY_USER");

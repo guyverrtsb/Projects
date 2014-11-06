@@ -1,10 +1,12 @@
 <?php require_once("gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdauth()->isAuthorized("GD_USER"); ?>
+<?php if(gdauth()->isAuthorized("GD_USER")) { ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
+<?php gdinc("/gd.trxn.com/_controls/ui/css/core.php") ?>
 <?php gdinc("/_controls/ui/css/core.php") ?>
+<?php gdinc("/gd.trxn.com/_controls/ui/js/core.php") ?>
 <?php gdinc("/_controls/ui/js/core.php") ?>
 <script src="s_user_home.js"></script>
 <script>
@@ -29,3 +31,4 @@
 </div>
 </body>
 </html>
+<?php } ?>

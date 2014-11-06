@@ -19,11 +19,11 @@ foreach ($zfgroupIOwn->getResults_Groups() as $row)
     $ga_ldesc = $zfgroupIOwn->getGA_Ldesc();
     if(gdconfig()->getSessGroupUid() == $ga_uid)
     {
-printf("<li>*<a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
+printf("<li>*<a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
     }
     else
     {
-printf("<li><a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
+printf("<li><a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
     }
 } ?>
 <?php
@@ -39,10 +39,10 @@ foreach ($zfgroupIBelong->getResults_Groups() as $row)
     $ga_ldesc = $zfgroupIBelong->getGA_Ldesc();
     if(gdconfig()->getSessGroupUid() == $ga_uid)
     {
-printf("<li>*<a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
+printf("<li>*<a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
     }
     else
     {
-printf("<li><a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
+printf("<li><a class=\"menulink\" href=\"/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=%s\">%s</a></li>", $ga_uid, $ga_ldesc);
     }
 } ?>

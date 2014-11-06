@@ -210,26 +210,72 @@ if($action != "INVALID")
         $gdrd = new gdRequirementData();
         $fv = $gdrd->findRequirement_byUid($placement_requirement_uid);
         if($fv == "RECORD_IS_FOUND")
-            {
-            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_MSG", "FALSE"
-                                                , "RESULT", $gdrd->getResult_Record()));
-        }
-        else
         {
-            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_MSG", "TRUE"
-                                                ,"RETURN_MSG", "Record not Found"));
-        }
-    }
-    else if($action == "RESOURCES_CONTACTED")
-    {
-            $outputAry = array("0" => "On-Site Only"
+           $outputAry = array("0" => "On-Site Only"
                             ,"1" => "Remote"
                             ,"2" => "Remote and On-Site");
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
                                                 ,"RETURN_SHOW_MSG", "FALSE"
-                                                , "RESULT", $outputAry));
+                                                , "RESULT", $gdrd->getResult_Record()
+                                                , "SEARCH_WORDS", $outputAry));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "FAILURE"
+                                                ,"RETURN_SHOW_MSG", "TRUE"
+                                                ,"RETURN_MSG", "Record not Found"));
+        }
+    }
+    else if($action == "RESOURCES_FOR_REQUIREMENT")
+    {
+        $placement_requirement_uid = gdconfig()->getAppData("PLACEMENT_REQUIREMENT_UID");
+        $gdrd = new gdResourceData();
+        $fv = $gdrd->findResourceAccounts_byRequirementuid($placement_requirement_uid);
+        if($fv == "RECORDS_ARE_FOUND")
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $gdrd->getResult_Records()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
+        }
+    }
+    else if($action == "LOAD_DATA_FOR_UPDATE_RECUITMENT_VIEW_OF_RESOURCE")
+    {
+        $resource_account_uid = gdconfig()->getAppData("RESOURCE_ACCOUNT_UID");
+        $gdrd = new gdResourceData();
+        $fv = $gdrd->findResourceAccountandProfile_byAccountUid($resource_account_uid);
+        if($fv == "RECORD_IS_FOUND")
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $gdrd->getResult_Record()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
+        }
+    }
+    else if($action == "REQUIREMENTS_FOR_RESOURCE")
+    {
+        $resource_account_uid = gdconfig()->getAppData("RESOURCE_ACCOUNT_UID");
+        $gdrd = new gdRequirementData();
+        $fv = $gdrd->findRequirements_byResourceAccountuid($resource_account_uid);
+        if($fv == "RECORDS_ARE_FOUND")
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_MSG", "false"
+                                                , "RESULT", $gdrd->getResult_Records()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
+        }
     }
     else
     {

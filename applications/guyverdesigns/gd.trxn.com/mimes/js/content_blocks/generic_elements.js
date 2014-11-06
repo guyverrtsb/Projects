@@ -17,13 +17,18 @@ function getContentBlockUL(clas, id)
 	return ul = $("<ul/>").attr("class", clas).attr("id", id);
 }
 
-function getContentElementLI(clas, label, jqobj)
+function getContentElementLI(clas, label, jqobj, dohtml)
 {
     var li = $("<li/>");
     if(clas != null)
     	li.attr("class", clas)
     if(label != null)
-    	li.text(label);
+    {
+    	if(dohtml != null && dohtml)
+        	li.html(label);
+    	else
+        	li.text(label);
+    }
     else if(jqobj != null)
     	li.append(jqobj);
     return li

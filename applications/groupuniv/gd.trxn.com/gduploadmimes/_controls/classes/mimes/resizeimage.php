@@ -10,55 +10,38 @@
 class zImageResize
     extends zMimesBaseObject
 {
-    var $origfilepath, $origimage;
-    var $origffolder, $origfname;
-    var $origwidth, $origheight, $origtype, $origfsize, $origfext;
-    var $newimageobj;
-    var $width, $height, $type;
+    var $file;
     
-    function __construct($ffolder, $origfilename, $fname)
+    function __construct($file)
     {
         $this->gdlog()->LogInfoStartFUNCTION("__construct()");
-        $this->gdlog()->LogInfo("File Path to Mime :".$ffolder.$origfilename);
-        $this->origffolder = $ffolder;
-        $this->origfname = $origfilename;
-        $this->origfilepath = $this->origffolder.$this->origfname;
-        
-        $this->ffolder = $ffolder;
-        $this->fname = $fname;
-        $this->fpath = $this->origffolder.$this->fname;
-        
-        $p = explode("/", $this->origfilepath);
-        $p = explode(".",$p[count($p)-1]);
-        $this->origfext = $p[count($p)-1];
+        $this->file = $file;
+        $this->gdlog()->LogInfo("File Path to Original Mime :".$this->file->gdOSPath);
     }
     
-    function loadOriginalFile()
+    function loadFile()
     {
-        $this->gdlog()->LogInfoStartFUNCTION("load()");
-        gdlog()->LogInfo("File Location to Load from :".$this->origfilepath);
-        
-        list($this->origwidth, $this->origheight, $type, $attr) = getimagesize($this->origfilepath);
-        $this->origfsize = filesize($this->origfilepath);
-
+        $this->gdlog()->LogInfoStartFUNCTION("loadFile()");
+        list($width, $height, $type, $attr) = getimagesize($this->file->gdOSPath);
         if ($type == IMAGETYPE_JPEG)
         {
-            $this->origimage = imagecreatefromjpeg($this->origfilepath);
+            $this->origimage = imagecreatefromjpeg($this->file->gdOSPath);
             $this->origtype = "JPEG";
             $this->gdlog()->LogInfo("imagecreatefromjpeg()");
         }
         elseif ($type == IMAGETYPE_GIF)
         {
-            $this->origimage = imagecreatefromgif($this->origfilepath);
+            $this->origimage = imagecreatefromgif($this->file->gdOSPath);
             $this->origtype = "GIF";
             $this->gdlog()->LogInfo("imagecreatefromgif()");
         }
         elseif ($type == IMAGETYPE_PNG)
         {
-            $this->origimage = imagecreatefrompng($this->origfilepath);
+            $this->origimage = imagecreatefrompng($this->file->gdOSPath);
             $this->origtype = "PNG";
             $this->gdlog()->LogInfo("imagecreatefrompng()");
         }
+        $this->gdlog()->LogInfoEndFUNCTION("loadFile()");
     }
 
     function saveConfiguredFile($image_type = IMAGETYPE_PNG, $compression = 75, $permissions = null)
@@ -150,72 +133,6 @@ class zImageResize
             $this->ftype = "PNG";
         else
             $this->ftype = $type;
-    }
-
-    function getOrigWidth()
-    {
-        return $this->origwidth;
-    }
-
-    function getOrigHeight()
-    {
-        return $this->origheight;
-    }
-    
-    function getOrigType()
-    {
-        return $this->origtype;
-    }
-    
-    function getOrigSize()
-    {
-        return filesize($this->origfilepath);
-    }
-    
-    function getOrigFileName()
-    {
-        return $this->origfname;
-    }
-    
-    function getOrigFilePath()
-    {
-        return $this->origfilepath;
-    }
-    
-    function getOrigFileExt()
-    {
-        return $this->origfext;
-    }
-    
-    function getOrigFileFolder()
-    {
-        return $this->origffolder;
-    }
-
-    function getWidth()
-    {
-        return $this->width;
-    }
-
-    function getHeight()
-    {
-        return $this->height;
-    }
-    
-    function getType()
-    {
-        return $this->type;
-    }
-    
-    function logImageData()
-    {
-        $this->gdlog()->LogInfo("Original Width{".$this->getOrigWidth()."}");
-        $this->gdlog()->LogInfo("Original Height{".$this->getOrigHeight()."}");
-        $this->gdlog()->LogInfo("Original Type{".$this->getOrigType()."}");
-        $this->gdlog()->LogInfo("Original Size{".$this->getOrigSize()."}");
-        $this->gdlog()->LogInfo("Width{".$this->getWidth()."}");
-        $this->gdlog()->LogInfo("Height{".$this->getHeight()."}");
-        $this->gdlog()->LogInfo("Type{".$this->getType()."}");
     }
 }
 ?>

@@ -3,13 +3,28 @@
 class zAuthorize
     extends zAuthenticate
 {
+    function isSiteGod()
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("isSiteGod");
+        if($this->isAuthenticated())
+        {
+            $this->gdlog()->LogInfo("getSessAuthUserSiteRole{".$this->getGDConfig()->getSessAuthUserSiteRole()."}");
+            if($this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_GOD")
+                return true;
+            else
+                $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Admins.");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("isSiteGod");
+    }
+    
     function isSiteAdmin()
     {
         $this->gdlog()->LogInfoStartFUNCTION("isSiteAdmin");
         if($this->isAuthenticated())
         {
             $this->gdlog()->LogInfo("getSessAuthUserSiteRole{".$this->getGDConfig()->getSessAuthUserSiteRole()."}");
-            if($this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_ADMIN")
+            if($this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_ADMIN"
+            || $this->getGDConfig()->getSessAuthUserSiteRole() == "USER_ROLE_SITE_GOD")
                 return true;
             else
                 $this->redirectToLogin(111, $fr, "User tried to access content not allowed to Site Admins.");

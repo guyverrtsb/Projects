@@ -113,11 +113,11 @@ class ZGDConfigurations
         }
         else
         {
+            $zgdlog->LogInfo("_config.php:Session Object Found");
             $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessSiteUid()."}-{".$_SESSION[ZGDConfigurations::getKeySessSiteUid()]."}");
             $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessSite()."}-{".$_SESSION[ZGDConfigurations::getKeySessSite()]."}");
             $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessSiteAliasUid()."}-{".$_SESSION[ZGDConfigurations::getKeySessSiteAliasUid()]."}");
             $zgdlog->LogInfo("{".ZGDConfigurations::getKeySessSiteAlias()."}-{".$_SESSION[ZGDConfigurations::getKeySessSiteAlias()]."}");
-            $zgdlog->LogInfo("_config.php:Session Object Found");
         }
     }
 

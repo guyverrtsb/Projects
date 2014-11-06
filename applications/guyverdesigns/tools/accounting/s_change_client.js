@@ -5,7 +5,7 @@ function buildForm()
     cb.append(getContentBlockHeader("Update Client"));
     cb.append(getContentBlockMessage());
     cb.append(getContentBlockSubHeader("Company Information"));
-    cb.append(getFormSelectDynDropDown("update", "account_uid", "", "LIST_OF_CLIENTS", "loadFormData(this);", "Choose Client"));
+    cb.append(getFormSelectDynDropDown("update", "account_uid", "", "LIST_OF_CLIENTS", "loadFormData(this, 'LOAD_DATA_FOR_UPDATE_CLIENT');", "Choose Client"));
     cb.append(getFormInputTextField("update", "companyname", "", "Company Name"));
     cb.append(getFormInputTextField("update", "address", "", "Street Address"));
     cb.append(getFormSelectConfiguration("update", "cfg_country_sdesc", "COUNTRIES|COUNTRY_US|registercfg_region_sdesc", "", "Choose Country"));

@@ -10,7 +10,7 @@ var count_postion = 0;
 function gdLoadExistingWallMessages()
 {
 	buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControllerKey("#UploadWallFrm", "LOAD_EXISTING_WALL_MESSAGES");
+    var formdata = gdSerialzeControlKey("#UploadWallFrm", "LOAD_EXISTING_WALL_MESSAGES");
     formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_CREATEDDT_START", existing_cbwm_createddt_start);
     formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_LID_BYPASS", existing_cbwm_lid_bypass);
     $.post("/_controls/ajax/WALL_MESSAGE.php",
@@ -37,7 +37,7 @@ function gdLoadExistingWallMessages()
 function gdLoadNewWallMessages()
 {
     showMessage("#TransactionOutput", "&nbsp;");
-    var formdata = gdSerialzeControllerKey("#UploadWallFrm", "LOAD_NEW_WALL_MESSAGES");
+    var formdata = gdSerialzeControlKey("#UploadWallFrm", "LOAD_NEW_WALL_MESSAGES");
     formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_CREATEDDT_START", new_cbwm_createddt_start);
     formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_LID_BYPASS", new_cbwm_lid_bypass);
     $.post("/_controls/ajax/WALL_MESSAGE.php",
@@ -61,7 +61,7 @@ function gdLoadContentBlocksforSearch()
     var searchcfg = $("input[name=searchcfg]:checked").attr("id");
     clearContentBlocks("cb_search_result");
     showMessage("#TransactionOutput", "&nbsp;");
-    var formdata = gdSerialzeControllerKey("#SearchForm", "SEARCH_NON_UNIVERSITY");
+    var formdata = gdSerialzeControlKey("#SearchForm", "SEARCH_NON_UNIVERSITY");
     $.post("/_controls/ajax/SEARCH.php",
     formdata, function(data)
     {
@@ -79,7 +79,7 @@ function gdLoadContentBlocksforSearch()
 function getSendRequestJoinGroup(group_account_uid, itemid)
 {
 	buildContentBlocksReturnMessage();
-    var formdata = gdControllerKey("JOIN_GROUP_FROM_SEARCH");
+    var formdata = gdSerialzeControlKey("JOIN_GROUP_FROM_SEARCH");
     formdata = gdAddQSNameValue(formdata, "GROUP_ACCOUNT_UID", group_account_uid);
     $.post("/_controls/ajax/CONNECTION.php",
     formdata, function(data)
@@ -96,7 +96,7 @@ function getSendRequestJoinGroup(group_account_uid, itemid)
 function gdLoadContentBlocksforMessages()
 {
 	buildContentBlocksReturnMessage();
-    var formdata = gdControllerKey("GET_LIST_OF_MESSAGES");
+    var formdata = gdSerialzeControlKey("GET_LIST_OF_MESSAGES");
     $.post("/_controls/ajax/MESSAGES.php",
     formdata, function(data)
     {

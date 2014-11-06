@@ -1,4 +1,5 @@
 <?php require_once("../_controls/classes/_core.php"); ?>
+<?php if(gdauth()->isAuthorized("GD_ADMIN")) { ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
@@ -36,3 +37,4 @@ if(isset($_GET["LEFT_MENU"])) {
 </div>
 </body>
 </html>
+<?php } ?>

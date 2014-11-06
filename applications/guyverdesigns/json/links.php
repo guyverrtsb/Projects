@@ -8,14 +8,9 @@
     { "display":"Large File Share", "url":"/utilities/largefileshare/upload.php" },
     { "display":"PHP Info", "url":"/gd.trxn.com/system/phpinfo.php" },
     { "display":"-----------", "url":"#" },
-    { "display":"mavericks-109-image-mega-part-1", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-1" },
-    { "display":"mavericks-109-image-mega-part-2", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-2" },
-    { "display":"mavericks-109-image-mega-part-3", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-3" },
-    { "display":"mavericks-109-image-mega-part-4", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-4" },
-    { "display":"mavericks-109-image-mega-part-5", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-5" },
-    { "display":"mavericks-109-image-mega-part-6", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-6" },
-    { "display":"mavericks-109-image-mega-part-7", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-7" },
-    { "display":"mavericks-109-image-mega-part-8", "url":"http://j.gs/1421644/mavericks-109-image-mega-part-8" }
+    { "display":"JQ Upload Basic", "url":"/gd.trxn.com/upload/basic.php" },
+    { "display":"JQ Upload Basic Plus", "url":"/gd.trxn.com/jq_upload/basic-plus.html" },
+    { "display":"JQ Upload UI", "url":"/gd.trxn.com/jq_upload/jquery-ui.html" }
     ]
 }
  

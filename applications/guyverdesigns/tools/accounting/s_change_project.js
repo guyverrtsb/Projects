@@ -5,7 +5,7 @@ function buildForm()
     cb.append(getContentBlockHeader("Update Project"));
     cb.append(getContentBlockMessage());
     cb.append(getContentBlockSubHeader("Project Information"));
-    cb.append(getFormSelectDynDropDown("update", "account_uid", "", "LIST_OF_PROJECTS", "loadFormData(this);", "Choose Project"));
+    cb.append(getFormSelectDynDropDown("update", "account_uid", "", "LIST_OF_PROJECTS", "loadFormData(this, 'LOAD_DATA_FOR_UPDATE_PROJECT');", "Choose Project"));
     cb.append(getFormSelectDynDropDown("update", "accounting_billto_uid", "", "LIST_OF_BILLTOS", "", "Choose Billto"));
     cb.append(getFormSelectDynDropDown("update", "accounting_client_uid", "", "LIST_OF_CLIENTS", "", "Choose Client"));
     cb.append(getFormInputTextField("update", "sdesc", "", "Short Description"));

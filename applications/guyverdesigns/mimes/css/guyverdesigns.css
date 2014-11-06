@@ -134,10 +134,15 @@ a.miniButtonBlue:hover {
 .menuheader { margin:0px; font-size:14px; color:orange; }
 .menulink { margin:10px; font-size:12px; color:#fff; }
 
-.tile { float:left;  width:180px; height:180px; padding:10px;
+.workframe {  background: url("/gd.trxn.com/mimes/images/grey.png"); border:1px solid #DAD9D9; }
+
+.tile-desktop { float:left; width:180px; height:180px; padding:10px;
         background: url("/gd.trxn.com/mimes/images/grey.png") repeat scroll 0 0 #0074B2; margin:10px 10px 10px 10px;
+        text-align:center; }
+.tile-menu { padding-top:5px; padding-bottom:5px;
+        background: url("/gd.trxn.com/mimes/images/grey.png") repeat scroll 0 0 #0074B2; margin:0px 0px 5px 0px;
         text-align:center; }
 
 /* ******************************** APPLICATIONS */
 #GDLargeFileUpoad ul li { clear:both; }
-
+/* li { border:1px red solid; } */

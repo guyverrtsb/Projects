@@ -15,52 +15,52 @@
 class zUploadMime
     extends zMimesBaseObject
 {
-    var $allowedExts;
-    var $file;
-    var $extension;
-    var $mimepath;
-    var $savefolderlocation = "";
-    var $savefilename = "";
+    var $form_file = null;
+    var $fileext = "";
     var $filerror = "";
-    var $fileurl = "";
-    var $filenamebase = "";
+    var $file = null;
+    
     
     function __construct($form_file)
     {
         gdlog()->LogInfoStartFUNCTION("__construct()");
-        $this->file = $form_file;
-        if ($this->file["error"] > 0)
+        $this->form_file = $form_file;
+        if ($this->form_file["error"] > 0)
         {
-            gdlog()->LogInfo("Return Code: " . $this->file["error"]);
-            $this->filerror = "FILE_ERROR:".$this->file["error"];
+            gdlog()->LogInfo("Return Code: " . $this->form_file["error"]);
+            $this->filerror = "FILE_ERROR:".$this->form_file["error"];
         }
         else
         {
-            $temp = explode(".", $this->file["name"]);
-            $this->extension = strtolower(end($temp));
+            $temp = explode(".", $this->form_file["name"]);
+            $this->fileext = strtolower(end($temp));
             $this->filerror = "FILE_NOT_ERROR";
-            $this->filenamebase = date("H-i-s")."_".session_id();
         }
+        gdlog()->LogInfoEndFUNCTION("__construct()");
     }
     
     function isImageValid($target_image_size)
     {
-        gdlog()->LogInfoStartFUNCTION("setValidImageInfo()");
+        gdlog()->LogInfoStartFUNCTION("isImageValid()");
         $r = $this->filerror;
         if($this->filerror == "FILE_NOT_ERROR"
-            && (($this->file["type"] == "image/gif") || ($this->file["type"] == "image/jpeg")
-            || ($this->file["type"] == "image/jpg") || ($this->file["type"] == "image/pjpeg")
-            || ($this->file["type"] == "image/x-png") || ($this->file["type"] == "image/png"))
-            && $this->file["size"] < $target_image_size
-            && in_array($this->extension, array("gif", "jpeg", "jpg", "png")))
+            && (($this->form_file["type"] == "image/gif") || ($this->form_file["type"] == "image/jpeg")
+            || ($this->form_file["type"] == "image/jpg") || ($this->form_file["type"] == "image/pjpeg")
+            || ($this->form_file["type"] == "image/x-png") || ($this->form_file["type"] == "image/png"))
+            && $this->form_file["size"] <= $target_image_size
+            && in_array($this->fileext, array("gif", "jpeg", "jpg", "png")))
         {
+            $this->file = new \stdClass();
+            $this->file->name = $this->form_file["name"];
+            $this->file->size = $this->form_file["size"];
+            $this->file->type = $this->form_file["type"];
             $r = "VALID";
         }
-        else if($this->file["size"] < $target_image_size)
+        else if($this->form_file["size"] > $target_image_size)
         {
             $r = "INVALID_FILE_SIZE";
         }
-        else if(in_array($this->extension, array("gif", "jpeg", "jpg", "png")))
+        else if(in_array($this->fileext, array("gif", "jpeg", "jpg", "png")))
         {
             $r = "INVALID_FILE_EXTENSION";
         }
@@ -68,12 +68,13 @@ class zUploadMime
         {
             $r = "INVALID_FILE_ERROR";
         }
-        else if((($this->file["type"] == "image/gif") || ($this->file["type"] == "image/jpeg")
-            || ($this->file["type"] == "image/jpg") || ($this->file["type"] == "image/pjpeg")
-            || ($this->file["type"] == "image/x-png") || ($this->file["type"] == "image/png")))
+        else if((($this->form_file["type"] == "image/gif") || ($this->form_file["type"] == "image/jpeg")
+            || ($this->form_file["type"] == "image/jpg") || ($this->form_file["type"] == "image/pjpeg")
+            || ($this->form_file["type"] == "image/x-png") || ($this->form_file["type"] == "image/png")))
         {
             $r = "INVALID_FILE_TYPE";
         }
+        gdlog()->LogInfoEndFUNCTION("isImageValid()");
         return $r;
     }
     
@@ -81,115 +82,27 @@ class zUploadMime
     {
         gdlog()->LogInfoStartFUNCTION("uploadFile()");
         $r = "FAILURE";
-        /** Define Folder Path **/
-        $ospathroot = $this->getSaveFolderLocation();
-        /** Get New File Name **/
-        $savefilename = $this->getSaveFileName();
-
-        if (file_exists($ospathroot . $savefilename))
+        if (file_exists($this->osfolder . $this->file->name))
         {
-            gdlog()->LogInfo($ospathroot . $savefilename . " already exists.");
+            gdlog()->LogInfo($this->osfolder . $this->file->name . " already exists.");
             $r = "FILE_ALREADY_EXISTS";
         }
         else
         {
-            move_uploaded_file($this->file["tmp_name"], $ospathroot . $savefilename);
-            $this->logUploadFileData($ospathroot . $savefilename);
-            $this->setFileURL();
+            gdlog()->LogInfo("file path{".$this->osfolder . $this->file->name."}");
+            move_uploaded_file($this->form_file["tmp_name"], $this->osfolder . $this->file->name);
+            
+            $this->setGDProperties($this->file);
+            $this->dumpProperties($this->file);
             $r = "FILE_UPLOADED_SUCCESSFULY";
-            $this->ffolder = $ospathroot;
-            $this->fname = $savefilename;
-            $this->ffolder = $ospathroot . $savefilename;
-            $this->setMimeData();
         }
+        gdlog()->LogInfoEndFUNCTION("uploadFile()");
         return $r;
     }
     
-    function setSaveFolderLocation($foldername_subdirectory = "")
+    function getFile()
     {
-        gdlog()->LogInfoStartFUNCTION("setSaveFolderLocation()");
-        $ospathroot = "";
-        if($_SESSION['GUYVERDESIGNS_SERVER_ENVIRONMENT'] == "LCL")
-            $ospathroot = $_SERVER["CONTEXT_DOCUMENT_ROOT"]."/../mimes/";
-        else
-            $ospathroot = $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]."/../../../../zzzproduction/websites/crossdomain/mimes/";
-        
-        $ospathroot = $ospathroot
-            .$_SESSION["GUYVERDESIGNS_SITE"]."/"
-            .$_SESSION["GUYVERDESIGNS_SITE_ALIAS"]."/";
-            
-        if(trim($foldername_subdirectory) != "")
-            $ospathroot = $ospathroot.$foldername_subdirectory."/";
-        
-        $this->mimepath = date("Y")."/".date("m")."/".date("d")."/".date("H")."/";
-        
-        $ospathroot = $ospathroot.$this->mimepath;
-        gdlog()->LogInfo("FolderPath: " . $ospathroot);
-                if (!file_exists($ospathroot))
-        {
-            mkdir($ospathroot, 0777, true);
-        }
-        
-        $this->savefolderlocation = $ospathroot;
-    }
-    
-    function getSaveFolderLocation()
-    {
-        gdlog()->LogInfoStartFUNCTION("getSaveFolderLocation()");
-        return $this->savefolderlocation;
-    }    
-    
-    function setSaveFileName($filename_suffix = "_ORIG")
-    {
-        gdlog()->LogInfoStartFUNCTION("setSaveFileName()");
-        $this->savefilename = $this->filenamebase.$filename_suffix.".".$this->extension;
-    }
-    
-    function getSaveFileName()
-    {
-        gdlog()->LogInfoStartFUNCTION("getSaveFileName()");
-        return $this->savefilename;
-    }
-    
-    function getFileURI()
-    {
-        gdlog()->LogInfoStartFUNCTION("getFileURI()");
-        return $this->getSaveFolderLocation() . $this->getSaveFileName();
-    }
-    
-    function getAltFileSaveFileName($filename_suffix = "_NEW")
-    {
-        gdlog()->LogInfoStartFUNCTION("getAltFileSaveFileName()");
-        return $this->filenamebase.$filename_suffix.".".$this->extension;
-    }
-    
-    function setFileURL()
-    {
-        gdlog()->LogInfoStartFUNCTION("setFileURL()");
-        $temp = explode(".", $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]);
-        $this->fileurl = "mimes"."."
-            .$temp[1]."."
-            .$temp[2]."/"
-            .$_SESSION["GUYVERDESIGNS_SITE"]."/"
-            .$_SESSION["GUYVERDESIGNS_SITE_ALIAS"]."/"
-            .$this->mimepath
-            .$this->getSaveFileName();
-        gdlog()->LogInfo("setFileURL():this->fileurl{".$this->fileurl."}");
-    }
-    
-    function getFileURL()
-    {
-        gdlog()->LogInfoStartFUNCTION("getFileURL()");
-        return $this->fileurl;
-    }
-    
-    function logUploadFileData($newfilelocation)
-    {
-        gdlog()->LogInfo("Upload: " . $this->file["name"]);
-        gdlog()->LogInfo("New File: " . $newfilelocation);
-        gdlog()->LogInfo("Type: " . $this->file["type"]);
-        gdlog()->LogInfo("Size: " . ($this->file["size"] / 1024) . " kB");
-        gdlog()->LogInfo("Temp file: " . $this->file["tmp_name"]);
+        return $this->file;
     }
 }
 ?>

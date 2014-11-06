@@ -10,7 +10,7 @@ function buildContentBlocksWallMessage(data, key, val)
 	
 	getContentElementsMeta(val, "wall_message_uid", "wall_message_createddt", "user_profile_nickname").appendTo(cb_li_cm);
 	getContentElementsContent(val, "wall_message_uid", "wall_message_content").appendTo(cb_li_cm);
-	getContentElementsImage(val, "wall_message_uid", "wall_message_mimes_uid").appendTo(cb_li_cm);
+	getContentElementsImageScaled(val, "wall_message_uid", "wall_message_mimes_uid").appendTo(cb_li_cm);
     return cb_li;
 }
 
@@ -39,7 +39,7 @@ function buildContentBlocksSearch(data, key, val)
 		getContentElementsTest(val, "wall_message_uid").appendTo(cb_li_cm);
 		getContentElementsToolbarTop(val, "group_account_uid").appendTo(cb_li_cm);
 		getContentElementsMeta(val, "wall_message_uid", "wall_message_createddt").appendTo(cb_li_cm);
-		getContentElementsImage(val, "wall_message_uid", "wall_message_mimes_uid").appendTo(cb_li_cm);
+		getContentElementsImageScaled(val, "wall_message_uid", "wall_message_mimes_uid").appendTo(cb_li_cm);
        	getContentElementsContent(val, "wall_message_uid", "wall_message_content").appendTo(cb_li_cm);
        	getContentElementsToolbarBotton(val, "group_account_uid").appendTo(cb_li_cm);
     }
@@ -173,8 +173,44 @@ function getContentElementsImage(val, uid, mimesuid)
 	    	.attr("id", "r_cb_li_image_object_" + uid)
 	    	.attr("task", "CB_IMAGE")
 	    	.attr("loaded", "false")
-	    	.attr("loadurl", "/_controls/ajax/DOWNLOAD_MIME.php?MIMEKEY=" + mimesuid)
-    		.attr("src", "/_controls/ajax/DOWNLOAD_MIME.php?MIMEKEY=" + mimesuid);
+	    	.attr("loadurl", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=ORIGINAL&MIMEKEY=" + mimesuid)
+    		.attr("src", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=ORIGINAL&MIMEKEY=" + mimesuid);
+	    cb_li_image.appendTo(cb_li);
+	}
+    return cb_li;
+}
+
+function getContentElementsImageScaled(val, uid, mimesuid)
+{
+    mimesuid = eval("val." + mimesuid);
+    var cb_li = $("<li/>")
+		.attr("id", "r_cb_image_" + eval("val." + uid));
+    if(mimesuid != "IMAGE_NOT_PROVIDED_FOR_UPLOADED")
+	{
+	    var cb_li_image = $("<img/>")
+	    	.attr("id", "r_cb_li_image_object_" + uid)
+	    	.attr("task", "CB_IMAGE")
+	    	.attr("loaded", "false")
+	    	.attr("loadurl", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=SCALED&MIMEKEY=" + mimesuid)
+    		.attr("src", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=SCALED&MIMEKEY=" + mimesuid);
+	    cb_li_image.appendTo(cb_li);
+	}
+    return cb_li;
+}
+
+function getContentElementsImageThumbnail(val, uid, mimesuid)
+{
+    mimesuid = eval("val." + mimesuid);
+    var cb_li = $("<li/>")
+		.attr("id", "r_cb_image_" + eval("val." + uid));
+    if(mimesuid != "IMAGE_NOT_PROVIDED_FOR_UPLOADED")
+	{
+	    var cb_li_image = $("<img/>")
+	    	.attr("id", "r_cb_li_image_object_" + uid)
+	    	.attr("task", "CB_IMAGE")
+	    	.attr("loaded", "false")
+	    	.attr("loadurl", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=THUMBNAIL&MIMEKEY=" + mimesuid)
+    		.attr("src", "/_controls/ajax/DOWNLOAD_MIME.php?TYPE=IMAGE&VERSION=THUMBNAIL&MIMEKEY=" + mimesuid);
 	    cb_li_image.appendTo(cb_li);
 	}
     return cb_li;
@@ -202,7 +238,7 @@ function getContentElementsToolbarTop(val, uid)
     if(eval("val.is_member_of_group") == "USER_IS_MEMBER")
 	{
     	$("<a/>")
-	    	.attr("href", "/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=" + eval("val." + uid))
+	    	.attr("href", "/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=" + eval("val." + uid))
 			.text("Goto Group")
 			.appendTo(status);
 	}
@@ -237,7 +273,7 @@ function getContentElementsToolbarTop(val, uid)
     	else if(request_status == "A")	// Accepted
 		{
     		$("<a/>")
-	        	.attr("href", "/_controls/ajax/PAGE_DIRECT.php?GD_CONTROLLER_KEY=GROUP_HOME&ga_uid=" + eval("val." + uid))
+	        	.attr("href", "/_controls/ajax/PAGE_DIRECT.php?GD_CONTROL_KEY=GROUP_HOME&ga_uid=" + eval("val." + uid))
 	    		.text("Goto Group")
 	    		.appendTo(status);
 		}

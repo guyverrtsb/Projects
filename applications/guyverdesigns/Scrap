@@ -1,0 +1,12 @@
+
+<div class="tile"><ul class="content_block" id="CB_CreateProject">
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text">&nbsp;</li>
+    <li class="text"><a href="javascript:void(0);" class="miniButtonBlue" name="navtop" onclick="window.location='/accounting/s_project.php';">Create Project</a></li>
+</ul></div>
+        

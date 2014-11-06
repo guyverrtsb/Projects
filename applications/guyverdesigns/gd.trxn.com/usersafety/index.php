@@ -10,7 +10,7 @@
 <?php 
 $html = "$(document).ready( function()".
     "{".
-    "buildContentBlocksUserSupport(\"%s\", \"CB_support\")".
+    "buildContentBlocksUserSupport(\"%s\")".
     "});";
     if(gdconfig()->getUIPageResponseKey() != "")
         printf($html, gdconfig()->getUIPageResponseKey());
@@ -78,16 +78,8 @@ function gdFuncTestData(email, pass, fname, lname, nick)
 <?php gdinc("/gd.trxn.com/_controls/ui/header.php") ?>
     <!-- CONTENT_AREA -->
     <div id="content_area">
-<?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
-        <div id="messageline">
-<?php
-if(gdconfig()->getUIPageResponseCode() != "")
-{
-    printf("<p class=\"message\" UIPAGERESSHOW=\"TRUE\" UIPAGERESCODE=\"%s\" UIPAGERESKEY=\"%s\" UIPAGERESMSG=\"%s\">%s</p>", gdconfig()->getUIPageResponseCode(), gdconfig()->getUIPageResponseKey(), gdconfig()->getUIPageResponseMsg(), gdconfig()->getUIPageResponseMsg());
-}
-?>
-<?php gdconfig()->cleanUIPageResponseData() ?>
-        </div>
+    <?php gdinc("/gd.trxn.com/_controls/ui/banner.php") ?>
+    <?php gdinc("/gd.trxn.com/_controls/ui/messageline.php") ?>
         <div id="left_column">Left Column</div>
         <div id="workarea">
             <div id="workarea_col_left">

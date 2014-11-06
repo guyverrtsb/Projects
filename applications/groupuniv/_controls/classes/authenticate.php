@@ -14,13 +14,13 @@ class zAuthenticate
             "password, ".
             "active, ".
             "usertablekey, ".
-            "cfg_user_roles.uid AS cfg_user_roles_uid, ".
-            "cfg_user_roles.sdesc AS cfg_user_roles_sdesc ".
+            "cfg_user_site_roles.uid AS cfg_user_site_roles_uid, ".
+            "cfg_user_site_roles.sdesc AS cfg_user_site_roles_sdesc ".
             "FROM user_account ".
-            "JOIN match_user_account_to_cfg_user_roles".
-            " on match_user_account_to_cfg_user_roles.user_account_uid = user_account.uid ".
-            "JOIN cfg_defaults AS cfg_user_roles".
-            " on cfg_user_roles.uid = match_user_account_to_cfg_user_roles.cfg_user_roles_uid ".
+            "JOIN match_user_account_to_cfg_user_site_roles".
+            " on match_user_account_to_cfg_user_site_roles.user_account_uid = user_account.uid ".
+            "JOIN cfg_defaults AS cfg_user_site_roles".
+            " on cfg_user_site_roles.sdesc = match_user_account_to_cfg_user_site_roles.cfg_user_site_roles_sdesc ".
             "WHERE email=:email";
         
         $dbcontrol = new ZAppDatabase();
@@ -28,23 +28,30 @@ class zAuthenticate
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":email", $user_email);
         $dbcontrol->execSelect();
-        if($dbcontrol->getRowCount() > 0)
+        if($dbcontrol->getTransactionGood())
         {
-            $this->setResult_User($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
-            $this->gdlog()->LogInfoDB($this->getResult_User());
-            if($this->getUA_Active() == "F")
+            if($dbcontrol->getRowCount() > 0)
             {
-                $fr = $this->saveActivityLog("ACCOUNT_INACTIVE", "User has not been activated:".json_encode($this->getResult_User()).":");
-                $this->clearResult_User();
-            }
-            else if($this->getUA_Password() == $user_password)
-            {
-                $fr = $this->saveActivityLog("USER_IS_AUTHENTICATED", "User has been authenticated:".json_encode($this->getResult_User()).":");
+                $this->setResult_User($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
+                $this->gdlog()->LogInfoDB($this->getResult_User());
+                if($this->getUA_Active() == "F")
+                {
+                    $fr = $this->saveActivityLog("ACCOUNT_INACTIVE", "User has not been activated:".json_encode($this->getResult_User()).":");
+                    $this->clearResult_User();
+                }
+                else if($this->getUA_Password() == $user_password)
+                {
+                    $fr = $this->saveActivityLog("USER_IS_AUTHENTICATED", "User has been authenticated:".json_encode($this->getResult_User()).":");
+                }
+                else
+                {
+                    $fr = $this->saveActivityLog("USER_IS_NOT_AUTHENTICATED", "User has failed Authentication:".json_encode($this->getResult_User()).":");
+                    $this->clearResult_User();
+                }
             }
             else
             {
-                $fr = $this->saveActivityLog("USER_IS_NOT_AUTHENTICATED", "User has failed Authentication:".json_encode($this->getResult_User()).":");
-                $this->clearResult_User();
+                $fr = $this->gdlog()->LogInfoRETURN("USER_NOT_FOUND");
             }
         }
         else
@@ -89,7 +96,7 @@ class zAuthenticate
     function getUA_Password(){ return $this->Result_User["password"]; }
     function getUA_Active(){ return $this->Result_User["active"]; }
     function getUA_TableKey(){ return $this->Result_User["usertablekey"]; }
-    function getCfgUsrRoleUid(){ return $this->Result_User["cfg_user_roles_uid"]; }
-    function getCfgUsrRoleSdesc(){ return $this->Result_User["cfg_user_roles_sdesc"]; }
+    function getCfgUsrSiteRoleUid(){ return $this->Result_User["cfg_user_site_roles_uid"]; }
+    function getCfgUsrSiteRoleSdesc(){ return $this->Result_User["cfg_user_site_roles_sdesc"]; }
 }
 ?>

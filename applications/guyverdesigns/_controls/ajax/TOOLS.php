@@ -3,7 +3,6 @@
 <?php gdreqonce("/_controls/classes/client.php"); ?>
 <?php gdreqonce("/_controls/classes/project.php"); ?>
 <?php gdreqonce("/_controls/classes/requirement.php"); ?>
-<?php gdreqonce("/_controls/classes/requirement.php"); ?>
 <?php
 $echoret = "";
 $action = getControlKey();
@@ -347,7 +346,7 @@ if($action != "INVALID")
     {
         $fv = validateFormforBlanks("title", "role_desc", "start_date"
                                     , "requested_days", "days_per_week", "is_remote_possible"
-                                    , "cfg_country_sdesc", "cfg_region_sdesc", "city", "scope_of_tasks");
+                                    , "cfg_country_sdesc", "cfg_region_sdesc", "scope_of_tasks");
         if($fv == true)
         {
             $gdbd = new gdRequirementData();
@@ -356,7 +355,10 @@ if($action != "INVALID")
             {
                 $comments = "";
                 if (isset($_POST["comments"]))
-                    $comments = filter_var($_POST["comments"]);
+                    $comments = filter_var($_POST["comments"], FILTER_SANITIZE_STRING);
+                $city = "";
+                if (isset($_POST["city"]))
+                    $city = filter_var($_POST["comments"], FILTER_SANITIZE_STRING);
                 $gdbd = new gdRequirementData();
                 $fr = $gdbd->createRequirement(filter_var($_POST["title"], FILTER_SANITIZE_STRING), 
                                                     filter_var($_POST["role_desc"], FILTER_SANITIZE_STRING),
@@ -371,7 +373,9 @@ if($action != "INVALID")
                                                     filter_var($_POST["city"], FILTER_SANITIZE_STRING),
                                                     filter_var($_POST["scope_of_tasks"], FILTER_SANITIZE_STRING),
                                                     $comments,
-                                                    strtoupper(trim(filter_var($_POST["title"], FILTER_SANITIZE_STRING))));
+                                                    strtoupper(trim(filter_var($_POST["title"], FILTER_SANITIZE_STRING))),
+                                                    $_POST["search_words"]);
+                                                    
                 if($fr == "DATA_IS_CREATED")
                 {
                     $echoret = json_encode(buildReturnArray("RETURN_KEY", "DATA_IS_CREATED"
@@ -401,7 +405,7 @@ if($action != "INVALID")
     }
     else if($action == "SEND_REQUIREMENT_TO_EMAIL")
     {
-        $fv = validateFormforBlanks("email");
+        $fv = validateFormforBlanks("email", "firstname", "lastname");
         if($fv == true)
         {
             $profile_id = "NOT_ASSIGNED";
@@ -414,6 +418,8 @@ if($action != "INVALID")
             
             $gdrd = new gdRequirementData();
             $fv = $gdrd->sendRequirementtoResource(filter_var($_POST["email"], FILTER_SANITIZE_STRING),
+                                            filter_var($_POST["firstname"], FILTER_SANITIZE_STRING),
+                                            filter_var($_POST["lastname"], FILTER_SANITIZE_STRING),
                                             $profile_id,
                                             $profile_url,
                                             $placement_requirement_uid);
