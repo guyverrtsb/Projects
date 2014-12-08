@@ -9,43 +9,46 @@ if($zauth->isSiteAdmin())
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">University Meet</title>
+<title>University Meet</title>
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <style>
 </style>
 <?php gdinc("/_controls/ui/js/core.php") ?>
+<script src="/mimes/js/menu_left.js"></script>
+<script src="/mimes/js/menu_right.js"></script>
 <script>
 $(document).ready( function()
 {
 });
 function gdFuncRegisterData()
 {
-    buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControlKey("#RegisterFrm", "REGISTER_UNIVERSITY");
+    buildContentBlockReturnMessage();
+    var formdata = gdSerialize("Register");
     $.post("/_controls/ajax/UNIVERSITY.php",
     formdata, function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "UNIVERSITY_CREATED"))
+        if(buildContentBlockReturnMessage(data, "UNIVERSITY_CREATED"))
         {
-            callDynamicContentBuilder("LIST_OF_UNIVERSITIES");
+            loadDynamicContent("LIST_OF_UNIVERSITIES");
         }
     });
 }
 </script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBWorkAreaLeft">
 <li class="cbheader">Menu</li>
-<?php gdinc("/_controls/ui/siteadmin_left_menu.php") ?>
+<?php gdinc("/_controls/ui/menu_left_siteadmin.php") ?>
 </ul></li>
 <li><ul id="CBWorkAreaCenter">
 <li class="cbheader">WorkArea for Administrators</li>
 <li><ul id="CBUniversityRegister">
-    <form id="RegisterFrm" class="form">
+    <form id="FORM_Register" class="form">
     <li class="cbheader">Register</li>
     <li class="cbsubheader">University Account</li>
     <li id="TransactionOutput"></li>
@@ -57,6 +60,7 @@ function gdFuncRegisterData()
     <li class="user"><input class="rounded" type="text" id="univ_city" name="univ_city" value="Raleigh"/></li>
     <li class="user"><input class="rounded" type="text" id="univ_name" name="univ_name" value="North Carolina State University"/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterData();">Register</a></li>
+    <li class="hidden" style="clear:both"><input type="hidden" class="rounded" id="GD_CONTROL_KEY" name="GD_CONTROL_KEY" value="REGISTER_UNIVERSITY"/></li>
     </form>
     </ul>
 </li>

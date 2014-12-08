@@ -66,10 +66,11 @@ class gdUploadData
         $files = $this->getOutputData("UPLOAD_RESPONSE_FILES");
         gdlog()->LogInfo("FILES:NAME{".$files[0]->name."}");
         
-        $this->findConfigurationfromSdesc("MIME_TYPES_".$files[0]->gdOSFileext, "crossappdata");
-        $docType = $this->getConfigurationGroupKey();
-        $this->gdlog()->LogInfo("CONFIG_DATA{".$this->getConfigurationGroupKey()."}");
         
+        $this->findConfigurationfromSdesc("MIME_TYPES_".$files[0]->gdOSFileext, "CROSSAPPDATA");
+        $docType = $this->getConfigurationGroupKey();
+        $this->gdlog()->LogInfo("CONFIG_DATA{".$this->getConfigurationGroupKey()."}");       
+      
         /*
          * Load Mime BLOB
          * Load Mime Meta
@@ -166,6 +167,7 @@ class gdUploadData
                 if($fr == "META_DATA_REGISTERED")
                 {
                     $this->setOutputData("META_UID", $zmtdb->getMeta_uid());
+                    $this->setOutputData("MIME_TYPE_GROUP", $docType);
                     $fr = "UPLOAD_COMPLETED";
                 }
                 else

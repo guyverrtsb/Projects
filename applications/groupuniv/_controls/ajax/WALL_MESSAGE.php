@@ -29,7 +29,7 @@ if($action != "INVALID")
                 gdlog()->LogInfo("FILES:NAME{".json_encode($response)."}");
                 
                 $r = $gdud->registerToDB(gdconfig()->getSessUnivTblKey()."mimes_standard"
-                                    , "GROUPYOU");
+                                    , "CROSSAPPDATA");
                 
                 gdlog()->LogInfo("IMAGE_VALIDATION:".$r);
                 if($r == "UPLOAD_COMPLETED")
@@ -40,7 +40,8 @@ if($action != "INVALID")
                     $zrwallmessage->registerWallMessage(gdconfig()->getSessGroupUid(),
                                                             gdconfig()->getSessAuthUserUid(),
                                                             $wall_message,
-                                                            $gdud->getOutputData("META_UID"));
+                                                            $gdud->getOutputData("META_UID"),
+                                                            $gdud->getOutputData("MIME_TYPE_GROUP"));
                                                             
                     gdlog()->LogInfoTaskLabel("Add Search for Wall Message");
                     $zrsearch = new zRegisterSearchData();
@@ -65,7 +66,8 @@ if($action != "INVALID")
                 $zrwallmessage->registerWallMessage(gdconfig()->getSessGroupUid(),
                                                         gdconfig()->getSessAuthUserUid(),
                                                         $wall_message,
-                                                        "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
+                                                        "MIME_NOT_PROVIDED_FOR_UPLOADED",
+                                                        "MIME_NOT_PROVIDED_FOR_UPLOADED");
                                                         
                 gdlog()->LogInfoTaskLabel("Add Search for Wall Message");
                 $zrsearch = new zRegisterSearchData();

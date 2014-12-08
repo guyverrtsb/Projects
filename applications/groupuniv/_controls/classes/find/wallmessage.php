@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /*
  * Author: Stephen Shellenberger
@@ -15,7 +15,7 @@
  * -- accurate results
  */
 class zFindWallMessage
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Find All Wall Messages with User account Information

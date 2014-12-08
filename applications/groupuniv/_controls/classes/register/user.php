@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,7 +7,7 @@
  */
 
 class zRegisterUser
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Register User Account.

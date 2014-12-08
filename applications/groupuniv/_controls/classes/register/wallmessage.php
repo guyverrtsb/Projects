@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,14 +7,16 @@
  */
 
 class zRegisterWallMessage
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Register Wall Message.
      * $group_account_uid = group account uid;
      * $from_user_account_uid = user account uid;
      */
-    function registerWallMessage($group_account_uid, $from_user_account_uid, $wall_message, $mimes_uid)
+    function registerWallMessage($group_account_uid, $from_user_account_uid, $wall_message
+                        , $mimes_uid="MIME_NOT_PROVIDED_FOR_UPLOADED"
+                        , $cfg_mime_types_group_sdesc="MIME_NOT_PROVIDED_FOR_UPLOADED")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerWallMessage");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
@@ -23,7 +25,8 @@ class zRegisterWallMessage
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "group_account_uid=:group_account_uid, ".
             "user_account_uid=:from_user_account_uid, ".
-            "content=:wall_message, mimes_uid=:mimes_uid";
+            "content=:wall_message, mimes_uid=:mimes_uid, ".
+            "cfg_mime_types_group_sdesc=:cfg_mime_types_group_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
@@ -32,6 +35,7 @@ class zRegisterWallMessage
         $dbcontrol->bindParam(":from_user_account_uid", $from_user_account_uid);
         $dbcontrol->bindParam(":wall_message", $wall_message);
         $dbcontrol->bindParam(":mimes_uid", $mimes_uid);
+        $dbcontrol->bindParam(":cfg_mime_types_group_sdesc", $cfg_mime_types_group_sdesc);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {

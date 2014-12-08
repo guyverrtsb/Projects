@@ -111,8 +111,7 @@ if($action != "INVALID")
                         $zrwallmessage01 = new zRegisterWallMessage();
                         $r = $zrwallmessage01->registerWallMessage($zrgroup01->getGA_Uid(),
                             $zfuser->getUA_Uid(),
-                            "This group is for ".$zfuser->getFName()." at ".$zfu->getSdesc()." to stay in with with their family.",
-                            "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
+                            "This group is for ".$zfuser->getFName()." at ".$zfu->getSdesc()." to stay in with with their family.");
     
                         //******* Group for User Social
                         $zrgroup02 = new zRegisterGroup();
@@ -138,8 +137,7 @@ if($action != "INVALID")
                         $zrwallmessage02 = new zRegisterWallMessage();
                         $r = $zrwallmessage02->registerWallMessage($zrgroup02->getGA_Uid(),
                             $zfuser->getUA_Uid(),
-                            "This group is for ".$zfuser->getFName()." at ".$zfu->getSdesc()." for college freinds and fellow alumni to stay in touch.",
-                            "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
+                            "This group is for ".$zfuser->getFName()." at ".$zfu->getSdesc()." for college freinds and fellow alumni to stay in touch.");
                                                         
                         gdlog()->LogInfoTaskLabel("Add Search for User");
                         $zrsearch = new zRegisterSearchData();

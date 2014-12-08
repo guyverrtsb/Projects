@@ -22,10 +22,26 @@ if($action != "INVALID")
                                                 ,"RETURN_SHOW_PASS_MSG", "FALSE"));
         }
     }
+    else if($action == "LIST_OF_JOIN_GROUP_REQUESTS_SENTOTAPPROVER")
+    {
+        $zfgr = new zFindGroupRequests();
+        $r = $zfgr->findGroupRequestsbyStatus("GROUP_REQUEST_STATUS_SENTTOAPPROVER");
+        if($r == "REQUEST_LIST_FOUND")
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                , "LIST", $zfgr->getResult_List()));
+        }
+        else
+        {
+            $echoret = json_encode(buildReturnArray("RETURN_KEY", "NO_RESULTS"
+                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+        }
+    }
     else if($action == "LIST_OF_JOIN_GROUP_REQUESTS_RECIEVED")
     {
         $zfgr = new zFindGroupRequests();
-        $r = $zfgr->findGroupRequests("GROUP_REQUEST_STATUS_RECIEVED");
+        $r = $zfgr->findGroupRequestsbyStatus("GROUP_REQUEST_STATUS_RECIEVED");
         if($r == "REQUEST_LIST_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
@@ -41,7 +57,7 @@ if($action != "INVALID")
     else if($action == "LIST_OF_JOIN_GROUP_REQUESTS_INREVIEW")
     {
         $zfgr = new zFindGroupRequests();
-        $r = $zfgr->findGroupRequests("GROUP_REQUEST_STATUS_INREVIEW");
+        $r = $zfgr->findGroupRequestsbyStatus("GROUP_REQUEST_STATUS_INREVIEW");
         if($r == "REQUEST_LIST_FOUND")
         {
             $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"

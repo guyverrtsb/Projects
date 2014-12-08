@@ -1,7 +1,7 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 class zAuthenticate
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     function authenticate($user_email, $user_password)
     {

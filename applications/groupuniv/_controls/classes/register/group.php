@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -21,7 +21,7 @@
  */
 
 class zRegisterGroup
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
 
     function registerGroupAccountUid($group_account_ldesc,

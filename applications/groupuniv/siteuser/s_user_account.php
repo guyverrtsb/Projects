@@ -9,7 +9,7 @@ if($zauth->isSiteUser())
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">University Meet</title>
+<title>University Meet</title>
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <style>
@@ -21,11 +21,12 @@ if($zauth->isSiteUser())
 </script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBWorkAreaLeft">
     <li class="cbheader">Menu</li>
-    <?php gdinc("/_controls/ui/siteuser_left_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_left_siteuser.php") ?>
     </ul></li>
 <li><ul id="CBWorkAreaCenter">
     <li class="cbheader">Account Info</li>
@@ -34,7 +35,7 @@ if($zauth->isSiteUser())
     </ul></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifcations</li>
-    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_right_siteuser.php") ?>
     </ul></li>
 </ul>
 </div>

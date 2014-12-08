@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php gdreqonce("/_controls/classes/find/user.php"); ?>
 <?php gdreqonce("/_controls/classes/register/grouprequests.php"); ?>
 <?php gdreqonce("/_controls/classes/register/message.php"); ?>
@@ -6,7 +6,7 @@
 <?php gdreqonce("/_controls/classes/register/wallmessage.php"); ?>
 <?php
 class zRequestGroupMembership
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     function requestGroupMembershipAutoAccept($group, $zfuserLoggedIn, $zfuserGroupOwner)
     {
@@ -15,7 +15,7 @@ class zRequestGroupMembership
                                     $zfuserGroupOwner->getUA_Uid(),
                                     $zfuserLoggedIn->getUA_Uid(),
                                     $group_account_uid,
-                                    "A");
+                                    "GROUP_REQUEST_STATUS_APPROVED");
     
         $zrmtoowner = new zRegisterMessage();
         $zrmtoowner->registerMessage("MESSAGE_TYPE_MESSAGE",
@@ -23,15 +23,13 @@ class zRequestGroupMembership
             $zfuserLoggedIn->getFName()." has been auto approved to join your ".$group->getGA_Ldesc(). " Group.",
             $zfuserGroupOwner->getUA_Uid(),
             $zfuserLoggedIn->getUA_Uid(),
-            $zfuserGroupOwner->getUserTableKey(),
             $zrgr->getUid(),
             "F",
             "TOP_LEVEL_MESSAGE");
             
         $zrntoowner = new zRegisterNotification();
         $zrntoowner->registerNotification("MESSAGE_TYPE_MESSAGE",
-            $zrmtoowner->getUid(),
-            $zfuserGroupOwner->getUserTableKey());
+            $zrmtoowner->getUid());
         
         $zrmtorequestee = new zRegisterMessage();
         $zrmtorequestee->registerMessage("MESSAGE_TYPE_MESSAGE",
@@ -39,15 +37,13 @@ class zRequestGroupMembership
             "You have been approved for ".$group->getGA_Ldesc()." Group.",
             $zfuserLoggedIn->getUA_Uid(),
             $zfuserGroupOwner->getUA_Uid(),
-            $zfuserLoggedIn->getUserTableKey(),
             $zrgr->getUid(),
             "F",
             "TOP_LEVEL_MESSAGE");
         
         $zrntorequestee = new zRegisterNotification();
         $zrntorequestee->registerNotification("MESSAGE_TYPE_MESSAGE",
-            $zrmtorequestee->getUid(),
-            $zfuserLoggedIn->getUserTableKey());
+            $zrmtorequestee->getUid());
             
         $zrwallmessage = new zRegisterWallMessage();
         $zrwallmessage->registerWallMessage($group_account_uid,
@@ -65,7 +61,7 @@ class zRequestGroupMembership
                                     $zfuserGroupOwner->getUA_Uid(),
                                     $zfuserLoggedIn->getUA_Uid(),
                                     $group->getGA_UID(),
-                                    "P");
+                                    "GROUP_REQUEST_STATUS_SENTTOAPPROVER");
                                     
         $zrmtoowner = new zRegisterMessage();
         $zrmtoowner->registerMessage("MESSAGE_TYPE_GROUP_JOIN_REQUEST",
@@ -73,7 +69,6 @@ class zRequestGroupMembership
             $zfuserLoggedIn->getFName()." has requested approval to join ".$group->getGA_Ldesc(). " Group.",
             $zfuserGroupOwner->getUA_Uid(),
             $zfuserLoggedIn->getUA_Uid(),
-            $zfuserGroupOwner->getUserTableKey(),
             $zrgr->getUid(),
             "F",
             "TOP_LEVEL_MESSAGE");
@@ -89,15 +84,13 @@ class zRequestGroupMembership
             "Your request is in process for approval to join ".$group->getGA_Ldesc()." Group.",
             $zfuserLoggedIn->getUA_Uid(),
             $zfuserGroupOwner->getUA_Uid(),
-            $zfuserLoggedIn->getUserTableKey(),
             $zrgr->getUid(),
             "F",
             "TOP_LEVEL_MESSAGE");
         
         $zrntorequestee = new zRegisterNotification();
         $zrntorequestee->registerNotification("MESSAGE_TYPE_MESSAGE",
-            $zrmtorequestee->getUid(),
-            $zfuserLoggedIn->getUserTableKey());
+            $zrmtorequestee->getUid());
             
         $this->setResult($zrgr->getResult_Request());
     }

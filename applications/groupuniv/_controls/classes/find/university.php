@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /*
  * Author: Stephen Shellenberger
@@ -6,7 +6,7 @@
  * Date: 2013/01/07
  */
 class zFindUniversity
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Find University Account and Profile by Email Key
@@ -20,6 +20,7 @@ class zFindUniversity
             $this->dbfas("university_account.uid, ".
                         "university_account.sdesc, ".
                         "university_account.emailkey, ".
+                        "university_account.tablekey, ".
                         "university_profile.uid, ".
                         "university_profile.name, ".
                         "university_profile.content, ".
@@ -74,6 +75,7 @@ class zFindUniversity
             $this->dbfas("university_account.uid, ".
                         "university_account.sdesc, ".
                         "university_account.emailkey, ".
+                        "university_account.tablekey, ".
                         "university_profile.uid, ".
                         "university_profile.name, ".
                         "university_profile.content, ".
@@ -130,13 +132,15 @@ class zFindUniversity
             $this->dbfas("university_account.uid, ".
                         "university_account.sdesc, ".
                         "university_account.emailkey, ".
+                        "university_account.tablekey, ".
                         "university_profile.uid, ".
                         "university_profile.name, ".
                         "university_profile.content, ".
                         "university_profile.city, ".
                         "university_profile.cfg_region_sdesc, ".
                         "university_profile.cfg_country_sdesc, ".
-                        "university_profile.foundeddate").
+                        "university_profile.foundeddate, ".
+                        "university_profile.content").
         " FROM university_account ".
         "JOIN match_university_account_to_university_profile on ".
             "match_university_account_to_university_profile.university_account_uid = university_account.uid ".
@@ -202,11 +206,6 @@ class zFindUniversity
     function getRegionCfgSdesc() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_region_sdesc")]; }
     function getCountryCfgSdesc() { return $this->Result_AccountandProfile[$this->dbf("university_profile.cfg_country_sdesc")]; }
     function getFoundeddate() { return $this->Result_AccountandProfile[$this->dbf("university_profile.foundeddate")]; }
-    function getTablekey() {
-        $emailkey = $this->getEmailkey();
-        $univtablekey = explode(".", $this->getEmailkey());
-        $univtablekey = strtolower($univtablekey[0]);
-        return "z_".$univtablekey."_";
-    }
+    function getTablekey() { return $this->Result_AccountandProfile[$this->dbf("university_account.tablekey")]; }
 }
 ?>

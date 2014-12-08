@@ -47,17 +47,6 @@ function buildContentBlocksSearch(data, key, val)
     return cb_li;
 }
 
-function buildContentBlocksDynamic(data, key, val, dckey, dcitm)
-{
-	var cb_li = $("<li/>").attr("contentblock", dcitm);
-	if(dckey == "LIST_OF_UNIVERSITIES")
-		cb_li.text(eval("val.university_account_sdesc"));
-	if(dckey == "LIST_OF_JOIN_GROUP_REQUESTS")
-		cb_li.text(eval("val.who_gets_approved_user_profile_fname"));
-	
-    return cb_li;
-}
-
 function buildContentBlocksMessage(data, key, val)
 {
 	uid = eval("val.messages_uid");
@@ -167,7 +156,7 @@ function getContentElementsImage(val, uid, mimesuid)
     mimesuid = eval("val." + mimesuid);
     var cb_li = $("<li/>")
 		.attr("id", "r_cb_image_" + eval("val." + uid));
-    if(mimesuid != "IMAGE_NOT_PROVIDED_FOR_UPLOADED")
+    if(mimesuid != "MIME_NOT_PROVIDED_FOR_UPLOADED")
 	{
 	    var cb_li_image = $("<img/>")
 	    	.attr("id", "r_cb_li_image_object_" + uid)
@@ -185,7 +174,7 @@ function getContentElementsImageScaled(val, uid, mimesuid)
     mimesuid = eval("val." + mimesuid);
     var cb_li = $("<li/>")
 		.attr("id", "r_cb_image_" + eval("val." + uid));
-    if(mimesuid != "IMAGE_NOT_PROVIDED_FOR_UPLOADED")
+    if(mimesuid != "MIME_NOT_PROVIDED_FOR_UPLOADED")
 	{
 	    var cb_li_image = $("<img/>")
 	    	.attr("id", "r_cb_li_image_object_" + uid)
@@ -203,7 +192,7 @@ function getContentElementsImageThumbnail(val, uid, mimesuid)
     mimesuid = eval("val." + mimesuid);
     var cb_li = $("<li/>")
 		.attr("id", "r_cb_image_" + eval("val." + uid));
-    if(mimesuid != "IMAGE_NOT_PROVIDED_FOR_UPLOADED")
+    if(mimesuid != "MIME_NOT_PROVIDED_FOR_UPLOADED")
 	{
 	    var cb_li_image = $("<img/>")
 	    	.attr("id", "r_cb_li_image_object_" + uid)

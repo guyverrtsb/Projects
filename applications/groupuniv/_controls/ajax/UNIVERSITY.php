@@ -45,6 +45,7 @@ if($action != "INVALID")
     
                     $gdconfig->setUniversityObjects($zruniv);
                     $zruniv->createUniversityTables();
+                    $zruniv->createUniversityMimesTables();
                     
                     gdlog()->LogInfoTaskLabel("Create of User Information President");
                     $r = $zruserPres = new zRegisterUser();
@@ -155,8 +156,7 @@ if($action != "INVALID")
                     $zrwallmessageHomeGroup = new zRegisterWallMessage();
                     $r = $zrwallmessageHomeGroup->registerWallMessage($zrgroup01->getGA_Uid(),
                         $zruserPres->getUA_Uid(),
-                        $wallmessagecontentHomeGroup, 
-                        "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
+                        $wallmessagecontentHomeGroup);
                     
                     gdlog()->LogInfoTaskLabel("Add Wall Message to University Wall and Voice Group");
                     $wallmessagecontentVoiceGroup = "Welcome to the ".$zruniv->getSdesc()." Wall. ".
@@ -170,8 +170,7 @@ if($action != "INVALID")
                     $zrwallmessageVoiceGroup = new zRegisterWallMessage();
                     $r = $zrwallmessageVoiceGroup->registerWallMessage($zrgroup02->getGA_Uid(),
                         $zruserPres->getUA_Uid(),
-                        $wallmessagecontentVoiceGroup,
-                        "IMAGE_NOT_PROVIDED_FOR_UPLOADED");
+                        $wallmessagecontentVoiceGroup);
                         
                     gdlog()->LogInfoTaskLabel("Add Search for University Account");
                     $zrsearch = new zRegisterSearchData();

@@ -1,5 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
-<?php
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?><?php
 /*
  * Author: Stephen Shellenberger
  * Copyright: 2013 Stephen Shellenberger
@@ -9,12 +8,12 @@
  * 1. findUid123fromUid
  */
 class zFindNotifications
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
 
-    function countNotifications($cfs_messge_type_sdesc)
+    function countNotifications($cfg_messge_type_sdesc)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("findGroupRequest");
+        $this->gdlog()->LogInfoStartFUNCTION("countNotifications");
         $usrtk = $this->getGDConfig()->getSessAuthUserTblKey();
         $fr;
         $sqlstmnt = "SELECT COUNT(cfg_defaults.sdesc) ".
@@ -49,7 +48,7 @@ class zFindNotifications
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("findGroupRequest");
+        $this->gdlog()->LogInfoEndFUNCTION("countNotifications");
         return $fr;
     }
 

@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,7 +7,7 @@
  */
 
 class zFindSearchData
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Search Group Data. This search is used by the user in the User Search Screen.
@@ -35,7 +35,7 @@ class zFindSearchData
             "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles ".
             " on ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = user_account.uid ".
             "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid ".
-            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid = (SELECT uid from cfg_defaults WHERE sdesc='USER_ROLE_GROUP_OWNER') ".
+            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc = 'USER_ROLE_GROUP_OWNER' ".
             "AND user_account.uid = :user_account_uid) <> '', 'USER_IS_OWNER', 'USER_IS_NOT_OWNER') ".
             "AS is_owner_of_group ".
             
@@ -46,10 +46,8 @@ class zFindSearchData
                 $utk."search_content.content, ".
                 $utk."search_content.uid, ".
                 $utk."search_content.createddt, ".
-                "cfg_group_useracceptance.uid, ".
-                "cfg_group_useracceptance.sdesc, ".
-                "cfg_search_objects.uid, ".
-                "cfg_search_objects.sdesc, ".
+                $utk."group_account.cfg_group_visibility_sdesc, ".
+                $utk."search_content.cfg_search_objects_sdesc, ".
                 "user_account.nickname", $utk)." ".
             
             "FROM ".$utk."search_content ".
@@ -69,11 +67,6 @@ class zFindSearchData
             "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles ".
             " on ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid ".
             
-            "JOIN cfg_defaults AS cfg_group_useracceptance ".
-            " on cfg_group_useracceptance.uid = ".$utk."group_account.cfg_group_useracceptance_uid ".
-            "JOIN cfg_defaults AS cfg_search_objects ".
-            " on cfg_search_objects.uid = ".$utk."search_content.cfg_search_objects_uid ".
-            
             "JOIN user_account ".
             " on user_account.uid = ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid ".
             "JOIN match_user_account_to_user_profile ".
@@ -82,9 +75,9 @@ class zFindSearchData
             " on  user_profile.uid = match_user_account_to_user_profile.user_profile_uid ".
                         
             "WHERE match(".$utk."search_content.content) against (:search_content) ".
-            "AND ".$utk."group_account.cfg_group_visibility_uid <> (SELECT uid from cfg_defaults WHERE sdesc='GROUP_VISIBILITY_GROUP_PRIVATE') ".
-            "AND ".$utk."search_content.cfg_search_objects_uid = (SELECT uid from cfg_defaults WHERE sdesc='SEARCH_OBJECT_GROUP') ".
-            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid = (SELECT uid from cfg_defaults WHERE sdesc='USER_ROLE_GROUP_OWNER') ".
+            "AND ".$utk."group_account.cfg_group_visibility_sdesc <> 'GROUP_VISIBILITY_GROUP_PRIVATE' ".
+            "AND ".$utk."search_content.cfg_search_objects_sdesc = 'SEARCH_OBJECT_GROUP' ".
+            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc = 'USER_ROLE_GROUP_OWNER' ".
             "AND university_account.uid = :university_account_uid ".
             "GROUP BY ".$utk."group_account.uid";
         
@@ -142,7 +135,7 @@ class zFindSearchData
             "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles ".
             "ON ".$utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = user_account.uid ".
             "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = ".$utk."group_account.uid ".
-            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid = (SELECT uid from cfg_defaults WHERE sdesc='USER_ROLE_GROUP_OWNER') ".
+            "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc = 'USER_ROLE_GROUP_OWNER' ".
             "AND user_account.uid = :user_account_uid) <> '', 'USER_IS_OWNER', 'USER_IS_NOT_OWNER') ".
             "AS is_owner_of_group ".
             
@@ -153,10 +146,8 @@ class zFindSearchData
                 $utk."search_content.content, ".
                 $utk."search_content.uid, ".
                 $utk."search_content.createddt, ".
-                "cfg_group_useracceptance.uid, ".
-                "cfg_group_useracceptance.sdesc, ".
-                "cfg_search_objects.uid, ".
-                "cfg_search_objects.sdesc, ".
+                $utk."group_account.cfg_group_visibility_sdesc, ".
+                $utk."search_content.cfg_search_objects_sdesc, ".
                 "user_account.nickname, ".
                 $utk."wall_message.uid, ".
                 $utk."wall_message.createddt, ".
@@ -180,14 +171,6 @@ class zFindSearchData
             "JOIN university_account ".
             " on university_account.uid = ".$utk."match_university_account_to_group_account.university_account_uid ".
             
-            //"JOIN match_user_account_to_group_account_to_cfg_user_roles ".
-            //" on match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = group_account.uid ".
-            
-            "JOIN cfg_defaults AS cfg_group_useracceptance ".
-            " on cfg_group_useracceptance.uid = ".$utk."group_account.cfg_group_useracceptance_uid ".
-            "JOIN cfg_defaults AS cfg_search_objects ".
-            " on cfg_search_objects.uid = ".$utk."search_content.cfg_search_objects_uid ".
-            
             "JOIN user_account ".
             " on user_account.uid = ".$utk."wall_message.user_account_uid ".
             "JOIN match_user_account_to_user_profile ".
@@ -196,8 +179,8 @@ class zFindSearchData
             " on  user_profile.uid = match_user_account_to_user_profile.user_profile_uid ".
             
             "WHERE match(".$utk."search_content.content) against (:search_content) ".
-            "AND ".$utk."group_account.cfg_group_visibility_uid <> (SELECT uid from cfg_defaults WHERE sdesc='GROUP_VISIBILITY_GROUP_PRIVATE') ".
-            "AND ".$utk."search_content.cfg_search_objects_uid = (SELECT uid from cfg_defaults WHERE sdesc='SEARCH_OBJECT_WALL_MESSAGE') ".
+            "AND ".$utk."group_account.cfg_group_visibility_sdesc <> 'GROUP_VISIBILITY_GROUP_PRIVATE' ".
+            "AND ".$utk."search_content.cfg_search_objects_sdesc = 'SEARCH_OBJECT_WALL_MESSAGE' ".
             "AND university_account.uid = :university_account_uid ";
         
         $dbcontrol = new ZAppDatabase();

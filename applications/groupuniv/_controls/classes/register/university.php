@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -8,7 +8,7 @@
  */
 
 class zRegisterUniversity
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
 
     function __construct()
@@ -27,13 +27,18 @@ class zRegisterUniversity
         $fr;
         $sqlstmnt = "INSERT INTO university_account SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "emailkey=:emailkey, sdesc=:sdesc";
+            "emailkey=:emailkey, sdesc=:sdesc, tablekey=:tablekey";
+            
+        $univtablekey = explode(".", strtolower($university_account_emailkey));
+        $univtablekey = strtolower($univtablekey[0]);
+        $univtablekey = "z_".$univtablekey."_";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":emailkey", strtolower($university_account_emailkey));
         $dbcontrol->bindParam(":sdesc", strtoupper($university_account_sdesc));
+        $dbcontrol->bindParam(":tablekey", strtoupper($univtablekey));
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
@@ -142,12 +147,7 @@ class zRegisterUniversity
     function getFoundeddate() { return $this->Result_Profile["foundeddate"]; }
     function getContent() { return $this->Result_Profile["content"]; }
     function getName() { return $this->Result_Profile["name"]; }
-    function getTablekey() {
-        $emailkey = $this->getEmailkey();
-        $univtablekey = explode(".", $this->getEmailkey());
-        $univtablekey = strtolower($univtablekey[0]);
-        return "z_".$univtablekey."_";
-    }
+    function getTablekey() { return $this->Result_Account["tablekey"]; }
     
     function createUniversityTables($univtblekey = "NOT_DEFINED")
     {
@@ -348,6 +348,7 @@ class zRegisterUniversity
             "  `group_account_uid` VARCHAR(36) NOT NULL , ".
             "  `content` TEXT NOT NULL , ".
             "  `mimes_uid` VARCHAR(36) NULL DEFAULT NULL , ".
+            "  `cfg_mime_types_group_sdesc` VARCHAR(100) NULL DEFAULT NULL , ".
             "  PRIMARY KEY (`lid`, `uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
             "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ) ".
@@ -387,7 +388,7 @@ class zRegisterUniversity
             "  `who_requested_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `who_approves_user_account_uid` VARCHAR(36) NOT NULL , ".
             "  `who_gets_approved_user_account_uid` VARCHAR(36) NOT NULL , ".
-            "  `cfg_group_request_status` VARCHAR(45) NOT NULL , ".
+            "  `cfg_group_request_status_sdesc` VARCHAR(45) NOT NULL , ".
             "  `group_account_uid` VARCHAR(36) NOT NULL , ".
             "  PRIMARY KEY (`lid`, `uid`) , ".
             "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) , ".
@@ -395,164 +396,8 @@ class zRegisterUniversity
             "ENGINE = MyISAM ".
             "AUTO_INCREMENT = 1 ".
             "DEFAULT CHARACTER SET = utf8; ".
-            
-            
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_meta_document`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_meta_document` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `site` VARCHAR(200) NOT NULL, ".
-            "  `sitealias` VARCHAR(200) NOT NULL, ".
-            "  `appl_table` VARCHAR(255) NOT NULL COMMENT 'Use this field to reference which table in the database should be used for the BLOB', ".
-            "  `appl_table_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
-            "  `name` VARCHAR(45) NOT NULL, ".
-            "  `type` VARCHAR(999) NOT NULL, ".
-            "  `size` VARCHAR(45) NOT NULL, ".
-            "  `url` VARCHAR(999) NOT NULL, ".
-            "  `osfolder` VARCHAR(999) NOT NULL, ".
-            "  `ospath` VARCHAR(999) NOT NULL, ".
-            "  `urlfolder` VARCHAR(999) NOT NULL, ".
-            "  `urlpath` VARCHAR(999) NOT NULL, ".
-            "  `osfileext` VARCHAR(45) NOT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the default location for MIMES META Data.'; ".
-            
-            
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_appl_document`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_document` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
-            "  `objectsmall` BLOB NULL DEFAULT NULL, ".
-            "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
-            "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the DEFAULT Location for Document BLOBs'; ".
-            
-            
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_meta_image`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_meta_image` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `site` VARCHAR(200) NOT NULL, ".
-            "  `sitealias` VARCHAR(200) NOT NULL, ".
-            "  `appl_table` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
-            "  `appl_table_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
-            "  `name` VARCHAR(45) NOT NULL, ".
-            "  `type` VARCHAR(999) NOT NULL, ".
-            "  `size` VARCHAR(45) NOT NULL, ".
-            "  `url` VARCHAR(999) NOT NULL, ".
-            "  `osfolder` VARCHAR(999) NOT NULL, ".
-            "  `ospath` VARCHAR(999) NOT NULL, ".
-            "  `urlfolder` VARCHAR(999) NOT NULL, ".
-            "  `urlpath` VARCHAR(999) NOT NULL, ".
-            "  `osfileext` VARCHAR(45) NOT NULL, ".
-            "  `appl_table_scaled` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
-            "  `appl_table_scaled_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
-            "  `appl_table_scaled_size` VARCHAR(45) NOT NULL, ".
-            "  `appl_table_scaled_url` VARCHAR(999) NOT NULL, ".
-            "  `appl_table_scaled_ospath` VARCHAR(999) NOT NULL, ".
-            "  `appl_table_scaled_osfolder` VARCHAR(999) NOT NULL, ".
-            "  `appl_table_thumbnail` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
-            "  `appl_table_thumbnail_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
-            "  `appl_table_thumbnail_size` VARCHAR(45) NOT NULL, ".
-            "  `appl_table_thumbnail_url` VARCHAR(999) NOT NULL, ".
-            "  `appl_table_thumbnail_ospath` VARCHAR(999) NOT NULL, ".
-            "  `appl_table_thumbnail_osfolder` VARCHAR(999) NOT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the default location for MIMES META Data.'; ".
-            
-            
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_appl_image`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
-            "  `objectsmall` BLOB NULL DEFAULT NULL, ".
-            "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
-            "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
-            
-            
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_appl_image_scaled`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image_scaled` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
-            "  `objectsmall` BLOB NULL DEFAULT NULL, ".
-            "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
-            "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
-
-
-            //-- -----------------------------------------------------
-            //-- Table `mimes_standard_appl_image_thumbnail_100x100`
-            //-- -----------------------------------------------------
-            "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image_thumbnail_100x100` ( ".
-            "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
-            "  `uid` VARCHAR(36) NOT NULL, ".
-            "  `createddt` DATETIME NOT NULL, ".
-            "  `changeddt` DATETIME NOT NULL, ".
-            "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
-            "  `objectsmall` BLOB NULL DEFAULT NULL, ".
-            "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
-            "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
-            "  PRIMARY KEY (`lid`, `uid`), ".
-            "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
-            "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
-            "ENGINE = MyISAM ".
-            "AUTO_INCREMENT = 1 ".
-            "DEFAULT CHARACTER SET = utf8 ".
-            "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
-
-
+        
+        
             "SET SQL_MODE=@OLD_SQL_MODE; ".
             "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; ".
             "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; ";
@@ -571,6 +416,215 @@ class zRegisterUniversity
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
         $this->gdlog()->LogInfoEndFUNCTION("createUniversityTables");
+        return $fr;
+    }
+    
+    function createUniversityMimesTables($univtblekey = "NOT_DEFINED")
+    {
+        $this->gdlog()->LogInfoStartFUNCTION("createUniversityMimesTables");
+        $fr;
+        if($univtblekey == "NOT_DEFINED")
+            $univtblekey = $this->getGDConfig()->getSessUnivTblKey();
+
+        $dbcontrol = new ZAppDatabase();
+        $dbcontrol->setApplicationDB("CROSSAPPDATA");
+        $dbcontrol->setStatement("SHOW TABLES LIKE '".$univtblekey."mimes_standard_appl_image_thumbnail_100x100'");
+        $dbcontrol->execSelect();
+        if($dbcontrol->getTransactionGood())
+        {
+            if($dbcontrol->getRowCount() == 0)
+            {
+                $row = $dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC);
+                
+                $sqlstmnt = "SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; ".
+                    "SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; ".
+                    "SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES'; ".
+                
+            
+            
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_meta_document`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_meta_document` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `site` VARCHAR(200) NOT NULL, ".
+                    "  `sitealias` VARCHAR(200) NOT NULL, ".
+                    "  `appl_table` VARCHAR(255) NOT NULL COMMENT 'Use this field to reference which table in the database should be used for the BLOB', ".
+                    "  `appl_table_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
+                    "  `name` VARCHAR(45) NOT NULL, ".
+                    "  `type` VARCHAR(999) NOT NULL, ".
+                    "  `size` VARCHAR(45) NOT NULL, ".
+                    "  `url` VARCHAR(999) NOT NULL, ".
+                    "  `osfolder` VARCHAR(999) NOT NULL, ".
+                    "  `ospath` VARCHAR(999) NOT NULL, ".
+                    "  `urlfolder` VARCHAR(999) NOT NULL, ".
+                    "  `urlpath` VARCHAR(999) NOT NULL, ".
+                    "  `osfileext` VARCHAR(45) NOT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the default location for MIMES META Data.'; ".
+                    
+                    
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_appl_document`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_document` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
+                    "  `objectsmall` BLOB NULL DEFAULT NULL, ".
+                    "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
+                    "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the DEFAULT Location for Document BLOBs'; ".
+                    
+                    
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_meta_image`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_meta_image` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `site` VARCHAR(200) NOT NULL, ".
+                    "  `sitealias` VARCHAR(200) NOT NULL, ".
+                    "  `appl_table` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
+                    "  `appl_table_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
+                    "  `name` VARCHAR(45) NOT NULL, ".
+                    "  `type` VARCHAR(999) NOT NULL, ".
+                    "  `size` VARCHAR(45) NOT NULL, ".
+                    "  `url` VARCHAR(999) NOT NULL, ".
+                    "  `osfolder` VARCHAR(999) NOT NULL, ".
+                    "  `ospath` VARCHAR(999) NOT NULL, ".
+                    "  `urlfolder` VARCHAR(999) NOT NULL, ".
+                    "  `urlpath` VARCHAR(999) NOT NULL, ".
+                    "  `osfileext` VARCHAR(45) NOT NULL, ".
+                    "  `appl_table_scaled` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
+                    "  `appl_table_scaled_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
+                    "  `appl_table_scaled_size` VARCHAR(45) NOT NULL, ".
+                    "  `appl_table_scaled_url` VARCHAR(999) NOT NULL, ".
+                    "  `appl_table_scaled_ospath` VARCHAR(999) NOT NULL, ".
+                    "  `appl_table_scaled_osfolder` VARCHAR(999) NOT NULL, ".
+                    "  `appl_table_thumbnail` VARCHAR(255) NOT NULL COMMENT 'Use this feild to reference which table in the database should be used for the BLOB', ".
+                    "  `appl_table_thumbnail_uid` VARCHAR(36) NOT NULL COMMENT 'Use this field to reference which field in the ref_table_name should be used for the BLOB', ".
+                    "  `appl_table_thumbnail_size` VARCHAR(45) NOT NULL, ".
+                    "  `appl_table_thumbnail_url` VARCHAR(999) NOT NULL, ".
+                    "  `appl_table_thumbnail_ospath` VARCHAR(999) NOT NULL, ".
+                    "  `appl_table_thumbnail_osfolder` VARCHAR(999) NOT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the default location for MIMES META Data.'; ".
+                    
+                    
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_appl_image`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
+                    "  `objectsmall` BLOB NULL DEFAULT NULL, ".
+                    "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
+                    "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
+                    
+                    
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_appl_image_scaled`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image_scaled` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
+                    "  `objectsmall` BLOB NULL DEFAULT NULL, ".
+                    "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
+                    "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
+        
+        
+                    //-- -----------------------------------------------------
+                    //-- Table `mimes_standard_appl_image_thumbnail_100x100`
+                    //-- -----------------------------------------------------
+                    "CREATE TABLE IF NOT EXISTS `".$univtblekey."mimes_standard_appl_image_thumbnail_100x100` ( ".
+                    "  `lid` INT(11) NOT NULL AUTO_INCREMENT, ".
+                    "  `uid` VARCHAR(36) NOT NULL, ".
+                    "  `createddt` DATETIME NOT NULL, ".
+                    "  `changeddt` DATETIME NOT NULL, ".
+                    "  `objecttiny` TINYBLOB NULL DEFAULT NULL, ".
+                    "  `objectsmall` BLOB NULL DEFAULT NULL, ".
+                    "  `objectmedium` MEDIUMBLOB NULL DEFAULT NULL, ".
+                    "  `objectlong` LONGBLOB NULL DEFAULT NULL, ".
+                    "  PRIMARY KEY (`lid`, `uid`), ".
+                    "  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC), ".
+                    "  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)) ".
+                    "ENGINE = MyISAM ".
+                    "AUTO_INCREMENT = 1 ".
+                    "DEFAULT CHARACTER SET = utf8 ".
+                    "COMMENT = 'This table is the DEFAULT Location for Image BLOBs in their '; ".
+        
+        
+                    "SET SQL_MODE=@OLD_SQL_MODE; ".
+                    "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; ".
+                    "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; ";
+                
+                $dbcontrol = new ZAppDatabase();
+                $dbcontrol->setApplicationDB("CROSSAPPDATA");
+                $dbcontrol->setStatement($sqlstmnt);
+                $dbcontrol->execUpdate();
+                if($dbcontrol->getTransactionGood())
+                {
+                    $fr = $this->gdlog()->LogInfoRETURN("CREATE_UNIVERSITY_MIMES_TABLES");
+                }
+                else
+                {
+                    $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+                }
+            }
+            else
+            {
+                $fr = $this->gdlog()->LogInfoRETURN("DID_NOT_CREATE_UNIVERSITY_MIMES_TABLES");
+            }
+        }
+        else
+        {
+            $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
+        }
+        $this->gdlog()->LogInfoEndFUNCTION("createUniversityMimesTables");
         return $fr;
     }
 }

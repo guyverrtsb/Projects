@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,7 +7,7 @@
  */
 
 class zRegisterGroupRequest
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Register Request Message.
@@ -21,7 +21,7 @@ class zRegisterGroupRequest
                                     $who_approves_user_account_uid,
                                     $who_gets_approved_user_account_uid,
                                     $group_account_uid,
-                                    $status = "P")
+                                    $cfg_group_request_status_sdesc = "GROUP_REQUEST_STATUS_SENTTOAPPROVER")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerGroupMembershipRequest");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
@@ -31,7 +31,7 @@ class zRegisterGroupRequest
             "who_requested_user_account_uid=:who_requested_user_account_uid, ".
             "who_approves_user_account_uid=:who_approves_user_account_uid, ".
             "who_gets_approved_user_account_uid=:who_gets_approved_user_account_uid, ".
-            "status=:status, ".
+            "cfg_group_request_status_sdesc=:cfg_group_request_status_sdesc, ".
             "group_account_uid=:group_account_uid";
         
         $dbcontrol = new ZAppDatabase();
@@ -40,7 +40,7 @@ class zRegisterGroupRequest
         $dbcontrol->bindParam(":who_requested_user_account_uid", $who_requested_user_account_uid);
         $dbcontrol->bindParam(":who_approves_user_account_uid", $who_approves_user_account_uid);
         $dbcontrol->bindParam(":who_gets_approved_user_account_uid", $who_gets_approved_user_account_uid);
-        $dbcontrol->bindParam(":status", strtoupper($status));
+        $dbcontrol->bindParam(":cfg_group_request_status_sdesc", strtoupper($cfg_group_request_status_sdesc));
         $dbcontrol->bindParam(":group_account_uid", $group_account_uid);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
@@ -79,7 +79,7 @@ class zRegisterGroupRequest
     function getWhoRequestesUserAccountUid(){return $this->Result_Request["who_requested_user_account_uid"];}
     function getWhoApprovesUserAccountUid(){return $this->Result_Request["who_approves_user_account_uid"];}
     function getWhoGetsApprovedUserAccountUid(){return $this->Result_Request["who_gets_approved_user_account_uid"];}
-    function geStatus(){return $this->Result_Request["status"];}
+    function getRequestStatus(){return $this->Result_Request["cfg_group_request_status_sdesc"];}
     function getGroupAccountUid(){return $this->Result_Request["group_account_uid"];}
 }
 ?>

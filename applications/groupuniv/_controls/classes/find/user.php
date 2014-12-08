@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /*
  * Author: Stephen Shellenberger
@@ -22,7 +22,7 @@
  * 12. getUserProfileNICKNAME
  */
 class zFindUser
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     function findAccountandProfileByUid($user_account_uid)
     {
@@ -260,8 +260,8 @@ class zFindUser
             "match_user_account_to_user_profile.user_profile_uid = user_profile.uid ".
         "JOIN ".$utk."match_user_account_to_group_account_to_cfg_user_roles on ".
             $utk."match_user_account_to_group_account_to_cfg_user_roles.user_account_uid = user_account.uid ".
-        "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid ".
-            "= (SELECT uid FROM cfg_defaults WHERE sdesc = 'USER_ROLE_GROUP_OWNER') ".
+        "WHERE ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc ".
+            "= 'USER_ROLE_GROUP_OWNER' ".
         "AND ".$utk."match_user_account_to_group_account_to_cfg_user_roles.group_account_uid = :group_account_uid";
 
         $dbcontrol = new ZAppDatabase();

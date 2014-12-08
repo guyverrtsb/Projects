@@ -27,7 +27,7 @@ class zFindMessages
             "user_messages.changeddt, ".
             "user_messages.subject, ".
             "user_messages.uid, ".
-            "message_type_cfg.sdesc ")." ".
+            "user_messages.cfg_message_type_sdesc ")." ".
             
             "FROM user_messages ".
             "JOIN user_account AS to_user_account ".
@@ -44,8 +44,6 @@ class zFindMessages
             "JOIN user_profile AS from_user_profile ".
             " ON from_user_profile.uid = from_user_match_user_account_to_user_profile.user_profile_uid ".
             
-            "JOIN cfg_defaults AS message_type_cfg ".
-            " ON message_type_cfg.uid = user_messages.cfg_message_type_uid ".
             "WHERE to_user_account_uid=:to_user_account_uid";
         
         $dbcontrol = new ZAppDatabase();

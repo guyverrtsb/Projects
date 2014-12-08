@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /*
  * Author: Stephen Shellenberger
@@ -6,7 +6,7 @@
  * Date: 2013/01/05
  */
 class zFindGroup
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     function findAccountbySdesc($group_sdesc)
     {
@@ -148,9 +148,9 @@ class zFindGroup
             "join ".$utk."group_profile ".
             " on ".$utk."group_profile.uid = ".$utk."match_group_account_to_group_profile.group_profile_uid ".
             
-            "where group_account.cfg_group_type_sdesc = :cfg_group_type_sdesc ".
-            "AND group_account.cfg_group_visibility_sdesc = :cfg_group_visibility_sdesc ".
-            "AND group_account.cfg_group_useracceptance_sdesc = :cfg_group_useracceptance_sdesc ".
+            "where ".$utk."group_account.cfg_group_type_sdesc = :cfg_group_type_sdesc ".
+            "AND ".$utk."group_account.cfg_group_visibility_sdesc = :cfg_group_visibility_sdesc ".
+            "AND ".$utk."group_account.cfg_group_useracceptance_sdesc = :cfg_group_useracceptance_sdesc ".
             "AND university_account.uid = :university_account_uid";
         
         $dbcontrol = new ZAppDatabase();
@@ -222,15 +222,6 @@ class zFindGroup
             " on ".$utk."group_account.uid = ".$utk."match_group_account_to_group_profile.group_account_uid ".
             "join ".$utk."group_profile ".
             " on ".$utk."group_profile.uid = ".$utk."match_group_account_to_group_profile.group_profile_uid ".
-
-            "join cfg_defaults AS cfg_group_type ".
-            " on  cfg_group_type.uid = ".$utk."group_account.cfg_group_type_uid ".
-            "join cfg_defaults AS cfg_group_useracceptance ".
-            " on  cfg_group_useracceptance.uid = ".$utk."group_account.cfg_group_useracceptance_uid ".
-            "join cfg_defaults AS cfg_group_visibility ".
-            " on  cfg_group_visibility.uid = ".$utk."group_account.cfg_group_visibility_uid ".
-            "join cfg_defaults AS cfg_user_roles ".
-            " on  cfg_user_roles.uid = ".$utk."match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_uid ".
             
             "join match_university_account_to_user_account_to_cfg_user_roles ".
             " on user_account.uid = match_university_account_to_user_account_to_cfg_user_roles.user_account_uid ".
@@ -518,6 +509,7 @@ class zFindGroup
     function getUserRoleofGroup_MatchUserGroupUserRole_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.uid")];}
     function getUserRoleofGroup_CfgGA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.group_account_uid")];}
     function getUserRoleofGroup_CfgUA_Uid(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.user_account_uid")];}
+    function getUserRoleofGroup_CfgUserRole_Uid(){return $this->findCfgUidfromSdesc($this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc")]);}
     function getUserRoleofGroup_CfgUserRole_Sdesc(){return $this->Result_UserRoleofGroup[$this->dbf("match_user_account_to_group_account_to_cfg_user_roles.cfg_user_roles_sdesc")];}
     
 }

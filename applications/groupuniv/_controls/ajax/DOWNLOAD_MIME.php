@@ -21,7 +21,7 @@ if(isset($_GET["MIMEKEY"]))
         $zifd = new zImagefromDatabase();
         $r = $zifd->findMimeMetaRecord(gdconfig()->getSessUnivTblKey()."mimes_standard_meta_image"
                                     , $mimeuid
-                                    , "GROUPYOU");
+                                    , "CROSSAPPDATA");
         gdlog()->LogInfo("download mime{".$r."}");
         if($r == "MIME_FOUND")
         {
@@ -66,7 +66,7 @@ if(isset($_GET["MIMEKEY"]))
                 $r = $zifd->findMimeBlob($mime_table
                                         , $mime_table_uid
                                         , $mime_table_size
-                                        , "GROUPYOU");
+                                        , "CROSSAPPDATA");
                 print $zifd->getResult_MimesBlob();
             }
         }

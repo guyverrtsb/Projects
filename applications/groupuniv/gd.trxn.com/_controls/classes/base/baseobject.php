@@ -117,53 +117,5 @@ class zBaseObject
             gdlog()->LogInfo("dumpOutputData:{".$key."}-{".$this->outputdatacontainer[$key]."}");
         }
     }
-    
-    /* Record Container */
-    private $Result_Records = "NO_RECORDS";
-    function setResult_Records($rows)
-    {
-        $this->Result_Records = $rows;
-    }
-    
-    function getResult_Records()
-    {
-        return $this->Result_Records;
-    }
-    
-    function cleanResult_Records()
-    {
-        $this->Result_Records = "NO_RECORDS";
-    }
-    
-    private $Result_Record = "NO_RECORD";
-    function setResult_Record($row)
-    {
-        $this->Result_Record = $row;
-    }
-    
-    function getResult_Record()
-    {
-        return $this->Result_Record;
-    }
-    
-    function getResult_RecordField($name)
-    {
-        return $this->Result_Record[$name];
-    }
-    
-    function cleanResult_Record()
-    {
-        $this->Result_Record = "NO_RECORD";
-    }
-    
-    function getDATE_FORMAT($date)
-    {
-        return "DATE_FORMAT(".$date.", \"%m/%d/%Y\")";
-    }
-    
-    function getDAY_FORMAT($date)
-    {
-        return "DATE_FORMAT(".$date.", \"%W\")";
-    }
 }
 ?>

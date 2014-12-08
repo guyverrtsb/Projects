@@ -1,5 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
-<?php
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?><?php
 /*
  * Author: Stephen Shellenberger
  * Copyright: 2013 Stephen Shellenberger
@@ -9,12 +8,12 @@
  * 1. findUid123fromUid
  */
 class zFindGroupRequests
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
 
-    function findGroupRequests($status)
+    function findGroupRequestsbyStatus($cfg_group_request_status_sdesc)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("findGroupRequest");
+        $this->gdlog()->LogInfoStartFUNCTION("findGroupRequestsbyStatus");
         $utk = $this->getGDConfig()->getSessUnivTblKey();
         $fr;
         $sqlstmnt = "SELECT ".
@@ -45,13 +44,13 @@ class zFindGroupRequests
             " on who_gets_approved_user_profile.uid = who_gets_approved_match_user_account_profile.user_profile_uid ".
             
             "WHERE ".$utk."requests.who_approves_user_account_uid = :who_approves_user_account_uid ".
-            "AND ".$utk."requests.status = :status";
+            "AND ".$utk."requests.cfg_group_request_status_sdesc = :cfg_group_request_status_sdesc";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":who_approves_user_account_uid", $this->getGDConfig()->getSessAuthUserUid());
-        $dbcontrol->bindParam(":status", strtoupper($status));
+        $dbcontrol->bindParam(":cfg_group_request_status_sdesc", strtoupper($cfg_group_request_status_sdesc));
         $dbcontrol->execSelect();
         if($dbcontrol->getTransactionGood())
         {
@@ -70,7 +69,7 @@ class zFindGroupRequests
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("findGroupRequest");
+        $this->gdlog()->LogInfoEndFUNCTION("findGroupRequestsbyStatus");
         return $fr;
     }
 

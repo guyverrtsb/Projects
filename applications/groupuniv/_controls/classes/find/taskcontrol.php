@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /*
  * Author: Stephen Shellenberger
@@ -9,7 +9,7 @@
  * 1. findUid123fromUid
  */
 class zFindTaskControl
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
 
     function findUid123fromUid($activationlink)

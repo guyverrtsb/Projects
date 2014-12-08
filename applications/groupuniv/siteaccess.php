@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
+<title>Site Access</title>
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <link rel="stylesheet" href="/mimes/css/siteaccess.css">
@@ -13,19 +13,19 @@
 <script>
 function gdFuncRegisterData()
 {
-    buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControlKey("#RegisterFrm", "REGISTER_USER");
+    buildContentBlockReturnMessage();
+    var formdata = gdSerialize("Register");
     $.post("_controls/ajax/USER_ACCESS.php",
     formdata, function(data)
     {
         data = eval("(" + data + ")");
         if(data.USER_TYPE == "GD_ADMIN")
         {
-            buildContentBlocksReturnMessage(data, "GDCOM_ADMIN_CREATED");
+            buildContentBlockReturnMessage(data, "GDCOM_ADMIN_CREATED");
         }
         else if(data.USER_TYPE == "SITE_USER")
         {
-            if(buildContentBlocksReturnMessage(data, "ACCOUNT_IN_PENDING"))
+            if(buildContentBlockReturnMessage(data, "ACCOUNT_IN_PENDING"))
             {
                 if(data.ENV_KEY != null && (data.ENV_KEY == "LCL" || data.ENV_KEY == "STG"))
                 {
@@ -33,7 +33,6 @@ function gdFuncRegisterData()
                         .text("Activate User Override{" + data.USER_EMAIL + "}")
                         .attr("href",data.TRXN_URL)
                         .appendTo($("<li/>").appendTo($("#CBUserRegister")));
-                    userLoadCounter++;
                 }
             }
         }
@@ -54,49 +53,9 @@ function gdFuncForgotPasswordData()
     //$("#" + frm).submit();    
 }
 </script>
-<script>
-var userLoadCounter = 0;
-function loadData(email)
-{
-     if(userLoadCounter == 0)
-         gdFuncRegisterUserData("egrayson@ncsu.edu", "abcd1234", "Earenest", "Grayson", "egrayson-ncsu", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 1)
-         gdFuncRegisterUserData("mwarren@ncsu.edu", "abcd1234", "Mike", "Warren", "mwarren-ncsu", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 2)
-         gdFuncRegisterUserData("stephen@ncsu.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-ncsu", "COUNTRY_US", "REGION_NC", "Raleigh");
-
-     else if(userLoadCounter == 3)
-         gdFuncRegisterUserData("egrayson@ou.edu", "abcd1234", "Earenest", "Grayson", "egrayson-ou", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 4)
-         gdFuncRegisterUserData("mwarren@ou.edu", "abcd1234", "Mike", "Warren", "mwarren-ou", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 5)
-         gdFuncRegisterUserData("stephen@ou.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-ou", "COUNTRY_US", "REGION_NC", "Raleigh");
-
-     else if(userLoadCounter == 6)
-         gdFuncRegisterUserData("egrayson@missouristate.edu", "abcd1234", "Earenest", "Grayson", "egrayson-mizzou", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 7)
-         gdFuncRegisterUserData("mwarren@missouristate.edu", "abcd1234", "Mike", "Warren", "mwarren-mizzou", "COUNTRY_US", "REGION_OK", "Tulsa");
-     else if(userLoadCounter == 8)
-         gdFuncRegisterUserData("stephen@missouristate.edu", "abcd1234", "Stephen", "Shellenberger", "guyver-mizzou", "COUNTRY_US", "REGION_NC", "Raleigh");
-}
-
-function gdFuncRegisterUserData(email, pass, fname, lname, nick, country, region, city)
-{
-    $("#user_email").val(email);
-    $("#user_password").val(pass);
-    $("#user_firstname").val(fname);
-    $("#user_lastname").val(lname);
-    $("#user_nickname").val(nick);
-    $("#user_country").val(country);
-    $("#user_region").val(region);
-    $("#user_city").val(city);
-    
-    $("#login_user_email").val(email);
-    $("#login_user_password").val(pass);
-}
-</script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBUserLogin">
@@ -119,7 +78,7 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
     </ul>
 </li>
 <li><ul id="CBUserRegister">
-    <form id="RegisterFrm" class="form">
+    <form id="FORM_Register" class="form">
     <li class="cbheader">Register</li>
     <li id="TransactionOutput">&nbsp;</li>
     <li class="cbsubheader">User Account</li>
@@ -133,7 +92,7 @@ if(isset($_SESSION["AUTH_ERROR_CODE"])) {
     <li class="user"><select class="rounded" id="user_region" name="user_region" configuration="COUNTRY_US|REGION_NC"></select></li>
     <li class="user"><input class="rounded" type="text" id="user_city" name="user_city" value="Raleigh"/></li>
     <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterData();">Register</a></li>
-    <li class="button"><a class="buttonBlue" name="navtop" onclick="gdFuncRegisterUserData();">Start Test data Load</a></li>
+    <li class="hidden" style="clear:both"><input type="hidden" class="rounded" id="GD_CONTROL_KEY" name="GD_CONTROL_KEY" value="REGISTER_USER"/></li>
     </form>
     </ul>
 </li>

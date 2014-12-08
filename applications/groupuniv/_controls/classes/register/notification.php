@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,7 +7,7 @@
  */
 
 class zRegisterNotification
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Register Request Message.
@@ -18,27 +18,26 @@ class zRegisterNotification
      * $status = P=Pending; A=Accepted; D=Declined;
      **/
     function registerNotification($cfg_message_type_sdesc,
-                                $message_uid,
-                                $utk)
+                                $message_uid)
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerNotification");
         $fr;
-        $sqlstmnt = "INSERT INTO ".$utk."notifications SET ".
+        $sqlstmnt = "INSERT INTO user_notifications SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "cfg_message_type_uid=:cfg_message_type_uid, ".
+            "cfg_message_type_sdesc=:cfg_message_type_sdesc, ".
             "message_uid=:message_uid";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":cfg_message_type_uid", $this->findCfgUidfromSdesc($cfg_message_type_sdesc));
+        $dbcontrol->bindParam(":cfg_message_type_sdesc", $cfg_message_type_sdesc);
         $dbcontrol->bindParam(":message_uid", $message_uid);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResult_Notification($dbcontrol->getRowfromLastId($dbcontrol, $utk."notifications", $dbcontrol->getLastInsertID()));
+                $this->setResult_Notification($dbcontrol->getRowfromLastId($dbcontrol, "user_notifications", $dbcontrol->getLastInsertID()));
                 $this->gdlog()->LogInfoDB($this->getResult_Notification());
                 $fr = $this->saveActivityLog("NOTIFICATION_IS_REGISTERED", "Register Notification has been registered:".json_encode($this->getResult_Notification()).":");
             }
@@ -67,7 +66,7 @@ class zRegisterNotification
     }
     
     function getUid(){return $this->Result_Notification["uid"];}
-    function getCfgMessageTypeUid(){return $this->Result_Notification["cfg_message_type_sdesc"];}
+    function getCfgMessageTypeSdesc(){return $this->Result_Notification["cfg_message_type_sdesc"];}
     function getMessageUid(){return $this->Result_Notification["message_uid"];}
 }
 ?>

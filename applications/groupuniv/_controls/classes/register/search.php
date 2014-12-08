@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php gdreqonce("/_controls/classes/find/university.php"); ?>
 <?php
 /**
@@ -22,26 +22,26 @@
  */
 
 class zRegisterSearchData
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     private $so_uid;
 
-    function registerSearchSdesc($content, $object_uid, $cfg_search_objects_sdesc, $university_account_uid = "NOT_PASSED")
+    function registerSearchUid($content, $object_uid, $cfg_search_objects_uid, $university_account_uid = "NOT_PASSED")
     {
-        $this->gdlog()->LogInfoStartFUNCTION("registerSearchSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("registerSearchUid");
         $this->registerSearch($content,
                             $object_uid,
-                            $this->findCfgUidfromSdesc($cfg_search_objects_sdesc),
+                            $this->findCfgSdescfromUid($cfg_search_objects_uid),
                             $university_account_uid);
-        $this->gdlog()->LogInfoEndFUNCTION("registerSearchSdesc");
+        $this->gdlog()->LogInfoEndFUNCTION("registerSearchUid");
     }
     
     /**
      * 
      */
-    function registerSearch($content, $object_uid, $cfg_search_objects_uid, $university_account_uid = "NOT_PASSED")
+    function registerSearchSdesc($content, $object_uid, $cfg_search_objects_sdesc, $university_account_uid = "NOT_PASSED")
     {
-        $this->gdlog()->LogInfoStartFUNCTION("registerSearch");
+        $this->gdlog()->LogInfoStartFUNCTION("registerSearchSdesc");
         $utk = "";
         
         if($university_account_uid == "NOT_PASSED")
@@ -60,14 +60,14 @@ class zRegisterSearchData
         $sqlstmnt = "INSERT INTO ".$utk."search_content SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "content=:content, object_uid=:object_uid, ".
-            "cfg_search_objects_uid=:cfg_search_objects_uid, university_account_uid=:university_account_uid";
+            "cfg_search_objects_sdesc=:cfg_search_objects_sdesc, university_account_uid=:university_account_uid";
         
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":content", strtoupper($content));
         $dbcontrol->bindParam(":object_uid", $object_uid);
-        $dbcontrol->bindParam(":cfg_search_objects_uid", $cfg_search_objects_uid);
+        $dbcontrol->bindParam(":cfg_search_objects_sdesc", $cfg_search_objects_sdesc);
         $dbcontrol->bindParam(":university_account_uid", $university_account_uid);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
@@ -87,27 +87,27 @@ class zRegisterSearchData
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("registerSearch");
+        $this->gdlog()->LogInfoEndFUNCTION("registerSearchSdesc");
         return $fr;
     }
     
     
-    function registerKeywordsSdesc($keywords, $object_uid, $cfg_search_objects_sdesc, $university_account_uid)
+    function registerKeywordsUid($keywords, $object_uid, $cfg_search_objects_uid, $university_account_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("registerKeywordsSdesc");
+        $this->gdlog()->LogInfoStartFUNCTION("registerKeywordsUid");
         $this->registerKeywords($keywords,
                                 $object_uid,
-                                $this->findCfgUidfromSdesc($cfg_search_objects_sdesc),
+                                $this->findCfgSdescfromUid($cfg_search_objects_uid),
                                 $university_account_uid);
-        $this->gdlog()->LogInfoEndFUNCTION("registerKeywordsSdesc");
+        $this->gdlog()->LogInfoEndFUNCTION("registerKeywordsUid");
     }
     
     /**
      *
      */
-    function registerKeywords($keywords, $object_uid, $cfg_search_objects_uid, $university_account_uid)
+    function registerKeywordsSdesc($keywords, $object_uid, $cfg_search_objects_sdesc, $university_account_uid)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("registerKeywords");
+        $this->gdlog()->LogInfoStartFUNCTION("registerKeywordsSdesc");
         $zfuniv = new zFindUniversity();
         $zfuniv->findAccountandProfileByUID($university_account_uid);
         $utk = $zfuniv->getTablekey();
@@ -116,7 +116,7 @@ class zRegisterSearchData
         $sqlstmnt = "INSERT INTO ".$utk."search_keywords SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "keywords=:keywords, object_uid=:object_uid, ".
-            "cfg_search_objects_uid=:cfg_search_objects_uid, ".
+            "cfg_search_objects_sdesc=:cfg_search_objects_sdesc, ".
             "university_account_uid=:university_account_uid";
         
         $dbcontrol = new ZAppDatabase();
@@ -124,7 +124,7 @@ class zRegisterSearchData
         $dbcontrol->setStatement($sqlstmnt);
         $dbcontrol->bindParam(":keywords", strtoupper($keywords));
         $dbcontrol->bindParam(":object_uid", $object_uid);
-        $dbcontrol->bindParam(":cfg_search_objects_uid", $cfg_search_objects_uid);
+        $dbcontrol->bindParam(":cfg_search_objects_sdesc", $cfg_search_objects_sdesc);
         $dbcontrol->bindParam(":university_account_uid", $university_account_uid);
         $dbcontrol->execUpdate();
         if($dbcontrol->getTransactionGood())
@@ -144,7 +144,7 @@ class zRegisterSearchData
         {
             $fr = $this->gdlog()->LogInfoERROR("TRANSACTION_FAIL");
         }
-        $this->gdlog()->LogInfoEndFUNCTION("registerKeywords");
+        $this->gdlog()->LogInfoEndFUNCTION("registerKeywordsSdesc");
         return $fr;
     }
 }

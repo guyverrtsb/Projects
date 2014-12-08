@@ -16,18 +16,20 @@ if($zauth->isSiteUser())
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">
-<?php printf("%s</title>", $zfgroup->getGA_Ldesc()); ?>
+<?php printf("<title>%s</title>", $zfgroup->getGA_Ldesc()); ?>
 
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
+<link rel="stylesheet" href="/gd.trxn.com/mimes/css/upload.form.css">
 <style>
 .WallMessageContent { width:450px; }
 .WallMessageCommentContent { width:350px; }
 #WallMessageImageFile { display:none; }
 </style>
 <?php gdinc("/_controls/ui/js/core.php") ?>
+<script src="s_group_home.js"></script>
 <script>
+
 $(document).ready(function()
 {
     var $win = $(window);
@@ -42,7 +44,7 @@ $(document).ready(function()
     var progressbar     = $("#GDUploadProgressBar");
     var statustxt       = $("#GDUploadProgressBarStatusTxt");
     var submitbutton    = $("#GDUploadSubmitButton");
-    var myform          = $("#GDUploadImageFrm");
+    var myform          = $("#GDUploadForm");
     var output          = $("#TransactionErr");
     var completed       = "0%";
     var message         = "";
@@ -74,7 +76,7 @@ $(document).ready(function()
             submitbutton.removeAttr("disabled"); //enable submit button
             progressbox.hide(); // hide progress bar
             data = eval('(' + data.responseText + ')')
-            if(buildContentBlocksReturnMessage(data, "SUCCESS", "WallMessageTransactionOutput"))
+            if(buildContentBlockReturnMessage(data, "SUCCESS", "WallMessageTransactionOutput"))
             {
                 gdLoadNewWallMessages();
             }
@@ -82,7 +84,6 @@ $(document).ready(function()
         }
     });
 });
-
 function clearOutputResults()
 {
     //$("#GDUploadImage").text("");
@@ -91,13 +92,14 @@ function clearOutputResults()
 </script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBWorkAreaLeft">
     <li class="cbheader">Menu</li>
-<?php gdinc("/_controls/ui/siteuser_left_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_left_siteuser.php") ?>
     </ul></li>
-<li><form id="GDUploadImageFrm" class="form" action="/_controls/ajax/WALL_MESSAGE.php" method="post" enctype="multipart/form-data" >
+<li><form id="GDUploadForm" class="form" action="/_controls/ajax/WALL_MESSAGE.php" method="post" enctype="multipart/form-data" >
 <ul id="CBWorkAreaCenter">
 <?php printf("<li class=\"cbheader\">Wall for %s</li>", $zfgroup->getGA_Ldesc()); ?>
     <li id="WallMessageTransactionOutput">&nbsp;</li>
@@ -105,8 +107,8 @@ function clearOutputResults()
         <tr>
         <td><img src="/mimes/images/default_user_profile_image.gif"/></td>
         <td><textarea id="WallMessageContent" name="WallMessageContent" class="WallMessageContent"></textarea></td>
-        <td><a class="miniButtonBlue" name="navtop" onclick="$('#WallMessageImageFile').click();">Add image</a>
-<a class="miniButtonBlue" name="navtop" onclick="$('#GDUploadImageFrm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+        <td><a class="miniButtonBlue" name="navtop" onclick="$('#WallMessageImageFile').click();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;File&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a class="miniButtonBlue" name="navtop" onclick="$('#GDUploadForm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
         </tr>
         </table></li>
     <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div ></div></li>
@@ -118,7 +120,7 @@ function clearOutputResults()
     </form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifications</li>
-    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_right_siteuser.php") ?>
     </ul></li>
 </ul>
 </div>

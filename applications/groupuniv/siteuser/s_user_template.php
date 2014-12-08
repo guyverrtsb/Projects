@@ -10,7 +10,7 @@ $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]="NO_GROUP_DEFINED";
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">University Meet</title>
+<title>University Meet</title>
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <link rel="stylesheet" href="/mimes/css/useraccount.css">
@@ -23,6 +23,7 @@ $_SESSION["UNIV_MEET_GROUP_ACCOUNT_UID"]="NO_GROUP_DEFINED";
 </script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBWorkAreaLeft">

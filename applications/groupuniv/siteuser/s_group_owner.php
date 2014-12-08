@@ -17,8 +17,7 @@ if($zauth->isGroupOwner())
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">
-<?php printf("%s</title>",$zfgroup->getGA_Ldesc() ); ?>
+<?php printf("<title>%s</title>",$zfgroup->getGA_Ldesc() ); ?>
 <meta charset="UTF-8">
 <?php gdinc("/_controls/ui/css/core.php") ?>
 <style>
@@ -30,11 +29,12 @@ if($zauth->isGroupOwner())
 </script>
 </head>
 <body>
+<div id="zgdbkgimg" value="/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg"></div>
 <div id="ContentWrapper">
 <ul id="CBHorizWorkArea">
 <li><ul id="CBWorkAreaLeft">
     <li class="cbheader">Menu</li>
-<?php gdinc("/_controls/ui/siteuser_left_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_left_siteuser.php") ?>
     </ul></li>
 <li><form id="UpdateGroupAccountFrm" class="form"><ul id="CBWorkAreaCenter">
 <?php printf("<li class=\"cbheader\">Account for %s</li>", $zfgroup->getGA_Ldesc()); ?>
@@ -72,7 +72,7 @@ while ($row = $page_search_records->fetch(PDO::FETCH_ASSOC))
     </ul></form></li>
 <li><ul id="CBWorkAreaRight">
     <li class="cbheader">Notifications</li>
-    <?php gdinc("/_controls/ui/siteuser_right_menu.php") ?>
+    <?php gdinc("/_controls/ui/menu_right_siteuser.php") ?>
     </ul></li>
 </ul>
 </div>

@@ -1,4 +1,4 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php gdreqonce("/_controls/classes/base/sqlbase.php"); ?>
 <?php
 /**
  * Author: Stephen Shellenberger
@@ -7,7 +7,7 @@
  */
 
 class zRegisterMessage
-    extends zAppBaseObject
+    extends zSqlBaseObject
 {
     /**
      * Register Request Message.
@@ -16,7 +16,6 @@ class zRegisterMessage
      * $content = Message content
      * $to_user_account_uid = To account uid
      * $from_user_account_uid = From account uid
-     * $utk = table key
      * $object_uid - object attachement or refrence
      * $isread = default F for not read
      * $reply_message_uid = message this one is replying to
@@ -26,16 +25,15 @@ class zRegisterMessage
                             $content,
                             $to_user_account_uid,
                             $from_user_account_uid,
-                            $utk,
                             $object_uid,
                             $isread = "F",
                             $reply_message_uid = "TOP_LEVEL_MESSAGE")
     {
         $this->gdlog()->LogInfoStartFUNCTION("registerMessage");
         $fr;
-        $sqlstmnt = "INSERT INTO ".$utk."messages SET ".
+        $sqlstmnt = "INSERT INTO user_messages SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "cfg_message_type_uid=:cfg_message_type_uid, ".
+            "cfg_message_type_sdesc=:cfg_message_type_sdesc, ".
             "subject=:subject, ".
             "content=:content, ".
             "to_user_account_uid=:to_user_account_uid, ".
@@ -47,7 +45,7 @@ class zRegisterMessage
         $dbcontrol = new ZAppDatabase();
         $dbcontrol->setApplicationDB("GROUPYOU");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":cfg_message_type_uid", $this->findCfgUidfromSdesc($cfg_message_type_sdesc));
+        $dbcontrol->bindParam(":cfg_message_type_sdesc", $cfg_message_type_sdesc);
         $dbcontrol->bindParam(":subject", $subject);
         $dbcontrol->bindParam(":content", $content);
         $dbcontrol->bindParam(":to_user_account_uid", $to_user_account_uid);
@@ -60,7 +58,7 @@ class zRegisterMessage
         {
             if($dbcontrol->getRowCount() > 0)
             {
-                $this->setResult_Message($dbcontrol->getRowfromLastId($dbcontrol, $utk."messages", $dbcontrol->getLastInsertID()));
+                $this->setResult_Message($dbcontrol->getRowfromLastId($dbcontrol, "user_messages", $dbcontrol->getLastInsertID()));
                 $this->gdlog()->LogInfoDB($this->getResult_Message());
                 $fr = $this->saveActivityLog("MESSAGE_IS_REGISTERED", "Register Message has been registered:".json_encode($this->getResult_Message()).":");
             }
@@ -89,7 +87,8 @@ class zRegisterMessage
     }
     
     function getUid(){return $this->Result_Message["uid"];}
-    function getCfgMessageTypeUid(){return $this->Result_Message["cfg_message_type_uid"];}
+    function getCfgMessageTypeUid(){return $thsi->findCfgUidfromSdesc($this->Result_Message["cfg_message_type_sdesc"]);}
+    function getCfgMessageTypeSdesc(){return $this->Result_Message["cfg_message_type_sdesc"];}
     function getContent(){return $this->Result_Message["content"];}
     function getToUserAccountUid(){return $this->Result_Message["to_user_account_uid"];}
     function getFromUserAccountUid(){return $this->Result_Message["from_user_account_uid"];}

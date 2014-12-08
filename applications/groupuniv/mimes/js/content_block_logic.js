@@ -2,60 +2,6 @@
  * THIS IS FOR PAGE LOGIC.  ON DEMAND CALLS ONLY that are page specific
  * If you want something to Load Automatically across all pages use the main.js
  */
-var existing_cbwm_createddt_start = "NOW";
-var existing_cbwm_lid_bypass = "EMPTY";
-var new_cbwm_createddt_start = "NOW";
-var new_cbwm_lid_bypass = "EMPTY";
-var count_postion = 0;
-function gdLoadExistingWallMessages()
-{
-	buildContentBlocksReturnMessage();
-    var formdata = gdSerialzeControlKey("#UploadWallFrm", "LOAD_EXISTING_WALL_MESSAGES");
-    formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_CREATEDDT_START", existing_cbwm_createddt_start);
-    formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_LID_BYPASS", existing_cbwm_lid_bypass);
-    $.post("/_controls/ajax/WALL_MESSAGE.php",
-    formdata, function(data)
-    {
-        data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "WALL_MESSAGES_FOUND"))
-        {
-            $.each(data.LIST, function(key, val)
-            {
-            	if(new_cbwm_createddt_start == "NOW")
-        		{
-            		new_cbwm_createddt_start = eval("val.wall_message_createddt")
-            		new_cbwm_lid_bypass = eval("val.wall_message_lid")
-        		}
-        		$("#CEResultsBOTTOM").before(buildContentBlocksWallMessage(data, key, val));
-            	existing_cbwm_createddt_start = eval("val.wall_message_createddt");
-            	existing_cbwm_lid_bypass = eval("val.wall_message_lid");
-            });
-        }
-    });
-}
-
-function gdLoadNewWallMessages()
-{
-    showMessage("#TransactionOutput", "&nbsp;");
-    var formdata = gdSerialzeControlKey("#UploadWallFrm", "LOAD_NEW_WALL_MESSAGES");
-    formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_CREATEDDT_START", new_cbwm_createddt_start);
-    formdata = gdAddQSNameValue(formdata, "WALL_MESSAGE_LID_BYPASS", new_cbwm_lid_bypass);
-    $.post("/_controls/ajax/WALL_MESSAGE.php",
-    formdata, function(data)
-    {
-        data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "WALL_MESSAGES_FOUND"))
-        {
-            $.each(data.LIST, function(key, val)
-            {
-            	$("#CEResultsTOP").after(buildContentBlocksWallMessage(data, key, val));
-            	new_cbwm_createddt_start = eval("val.wall_message_createddt");
-            	new_cbwm_lid_bypass = eval("val.wall_message_lid");
-            });
-        }
-    });
-}
-
 function gdLoadContentBlocksforSearch()
 {
     var searchcfg = $("input[name=searchcfg]:checked").attr("id");
@@ -66,7 +12,7 @@ function gdLoadContentBlocksforSearch()
     formdata, function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "RESULTS_FOUND"))
+        if(buildContentBlockReturnMessage(data, "RESULTS_FOUND"))
         {
             $.each(data.LIST, function(key, val)
             {
@@ -78,14 +24,14 @@ function gdLoadContentBlocksforSearch()
 
 function getSendRequestJoinGroup(group_account_uid, itemid)
 {
-	buildContentBlocksReturnMessage();
+	buildContentBlockReturnMessage();
     var formdata = gdSerialzeControlKey("JOIN_GROUP_FROM_SEARCH");
     formdata = gdAddQSNameValue(formdata, "GROUP_ACCOUNT_UID", group_account_uid);
     $.post("/_controls/ajax/CONNECTION.php",
     formdata, function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "SUCCESS"))
+        if(buildContentBlockReturnMessage(data, "SUCCESS"))
         {
         	if(data.RECORD.status == "P")
         		$("#" + itemid).html("").text("Pending Request");
@@ -95,13 +41,13 @@ function getSendRequestJoinGroup(group_account_uid, itemid)
 
 function gdLoadContentBlocksforMessages()
 {
-	buildContentBlocksReturnMessage();
+	buildContentBlockReturnMessage();
     var formdata = gdSerialzeControlKey("GET_LIST_OF_MESSAGES");
     $.post("/_controls/ajax/MESSAGES.php",
     formdata, function(data)
     {
         data = eval("(" + data + ")");
-        if(buildContentBlocksReturnMessage(data, "SUCCESS"))
+        if(buildContentBlockReturnMessage(data, "SUCCESS"))
         {
             $.each(data.LIST, function(key, val)
             {
