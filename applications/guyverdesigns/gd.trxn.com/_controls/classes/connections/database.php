@@ -20,7 +20,6 @@ class ZGDDBConnection
     {
         $this->gdlog()->LogInfo("setStatement():".$sqlstatement);
         $this->statement = $this->getConnection()->prepare($sqlstatement);
-        
     }
     public function getStatement() { return $this->statement; }
     

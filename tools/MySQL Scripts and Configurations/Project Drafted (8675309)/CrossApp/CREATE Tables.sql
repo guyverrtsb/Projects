@@ -1,0 +1,125 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+
+-- -----------------------------------------------------
+-- Table `activitylog`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `activitylog` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `sdesc` VARCHAR(100) NOT NULL,
+  `notes` TEXT NOT NULL,
+  PRIMARY KEY (`lid`, `uid`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `configurations`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `configurations` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
+  `uid` VARCHAR(36) NOT NULL ,
+  `createddt` DATETIME NOT NULL ,
+  `changeddt` DATETIME NOT NULL ,
+  `sdesc` VARCHAR(100) NOT NULL ,
+  `ldesc` VARCHAR(250) NOT NULL ,
+  `label` VARCHAR(50) NOT NULL ,
+  `groupkey` VARCHAR(250) NOT NULL ,
+  PRIMARY KEY (`lid`, `uid`, `sdesc`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
+  UNIQUE INDEX `sdesc_UNIQUE` (`sdesc` ASC) ,
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `taskcontrollinks`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `taskcontrollinks` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `taskkey` VARCHAR(45) NOT NULL,
+  `uid1` VARCHAR(36) NOT NULL,
+  `uid2` VARCHAR(36) NOT NULL,
+  `uid3` VARCHAR(36) NOT NULL,
+  `recorduid` VARCHAR(36) NOT NULL,
+  `isactive` VARCHAR(1) NOT NULL,
+  PRIMARY KEY (`lid`, `uid`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `match_site_to_sitealias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `match_site_to_sitealias` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `site_uid` VARCHAR(36) NOT NULL,
+  `sitealias_uid` VARCHAR(36) NOT NULL,
+  PRIMARY KEY (`lid`, `uid`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `site`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `site` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `sdesc` VARCHAR(100) NOT NULL,
+  `ldesc` VARCHAR(250) NULL DEFAULT NULL,
+  PRIMARY KEY (`lid`, `uid`, `sdesc`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `package_UNIQUE` (`sdesc` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sitealias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sitealias` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `sdesc` VARCHAR(100) NOT NULL,
+  `ldesc` VARCHAR(250) NULL DEFAULT NULL,
+  PRIMARY KEY (`lid`, `uid`, `sdesc`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `fullyqualifieddomain_UNIQUE` (`sdesc` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

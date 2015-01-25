@@ -1,6 +1,6 @@
 <?php require_once("../../../gd.trxn.com/_controls/classes/_core.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/mimes/upload.php"); ?>
-<?php gdreqonce("/gd.trxn.com/gduploadmimes/_controls/classes/controls/document.php"); ?>
+<?php gdreqonce("/gd.trxn.com/upload/_controls/classes/mimes/upload.php"); ?>
+<?php gdreqonce("/gd.trxn.com/upload/_controls/classes/controls/document.php"); ?>
 <?php
 $echoret = "";
 $action = getControlKey();

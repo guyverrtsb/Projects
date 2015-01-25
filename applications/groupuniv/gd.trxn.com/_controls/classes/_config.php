@@ -359,8 +359,6 @@ class ZGDConfigurations
     {
         if(substr($path, 0, 1) == "/")
             $path = ZGDConfigurations::getSubDomainDocumentRoot().$path;
-        //$zgdlog = new KLogger();
-        //$zgdlog->LogDebug("URL PATHING {".$path."}");
         return $path;
     }
     

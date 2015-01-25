@@ -10,7 +10,7 @@ $(document).ready(function()
     var completed       = "0%";
     var message         = "&nbsp;";
 
-	myform.attr("action", "/_controls/ajax/lfu/GD_UPLOAD_MIME.php");
+	myform.attr("action", "/_controls/ajax/lfu/UPLOAD.php");
     
     $(myform).ajaxForm({
         data: { "GD_CONTROL_KEY" : "UPLOAD_LARGE_FILE" },
