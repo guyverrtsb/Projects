@@ -1,5 +1,0 @@
-<?php if(gdauth()->isAuthenticated()) { ?>
-<?php } ?>
-
-<?php if(gdauth()->isAuthorized("GD_PUBLISHER")) { ?>
-<?php } ?>

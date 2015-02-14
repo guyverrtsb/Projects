@@ -112,8 +112,14 @@ class SysUtilities
     
     function createUserTableKey($usertablekey)
     {
-        $usertablekey = createSdesc($usertablekey);
-        return "X_".$usertablekey."_";
+        $import = $usertablekey;
+        $export = preg_replace('/[^a-zA-Z0-9]/', '', $import);
+        $export = str_replace(' ', '_', strtoupper($export));
+        if(strlen($export) >= 100)
+            $export = $export.substring(0, 99);
+        $export = strtoupper($export);
+        $export = "X_".$usertablekey."_";
+        return $export;
     }
     
     function createSdesc($import)

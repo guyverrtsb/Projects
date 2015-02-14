@@ -170,6 +170,12 @@ function validateFormforBlanks()
         return false;
 }
 
+/**
+ * Validating AJAX Query String or Post String calls.
+ * $retTF = Return to be brought back
+ * $ajaxfile = Ajax FIle Name
+ * $fieldfailed = Which Field Failed and needs to be mentioned in Logging
+ */
 function ajaxValidationLogging($retTF, $ajaxfile, $fieldfailed)
 {
     zLog()->LogInfo($funcname." :{".$fieldfailed."}");
