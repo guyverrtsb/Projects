@@ -43,28 +43,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `taskcontrollinks`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `taskcontrollinks` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `taskkey` VARCHAR(45) NOT NULL,
-  `uid1` VARCHAR(36) NOT NULL,
-  `uid2` VARCHAR(36) NOT NULL,
-  `uid3` VARCHAR(36) NOT NULL,
-  `recorduid` VARCHAR(36) NOT NULL,
-  `isactive` VARCHAR(1) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `match_site_to_sitealias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `match_site_to_sitealias` (
@@ -114,6 +92,29 @@ CREATE TABLE IF NOT EXISTS `sitealias` (
   PRIMARY KEY (`lid`, `uid`, `sdesc`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `fullyqualifieddomain_UNIQUE` (`sdesc` ASC),
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `taskcontrollink`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `taskcontrollink` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT,
+  `uid` VARCHAR(36) NOT NULL,
+  `createddt` DATETIME NOT NULL,
+  `changeddt` DATETIME NOT NULL,
+  `appl_configurations_sdesc_taskkey` VARCHAR(45) NOT NULL,
+  `uid1` VARCHAR(36) NOT NULL,
+  `uid2` VARCHAR(36) NOT NULL,
+  `uid3` VARCHAR(36) NOT NULL,
+  `pathtoclass` VARCHAR(500) NOT NULL,
+  `isactive` VARCHAR(1) NOT NULL,
+  `json` TEXT NOT NULL,
+  PRIMARY KEY (`lid`, `uid`),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
 ENGINE = MyISAM
 AUTO_INCREMENT = 1
