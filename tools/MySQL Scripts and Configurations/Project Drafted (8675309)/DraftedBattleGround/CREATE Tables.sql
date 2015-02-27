@@ -4,26 +4,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
--- Table `battlestage`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `battlestage` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
-  `uid` VARCHAR(36) NOT NULL ,
-  `createddt` DATETIME NOT NULL ,
-  `changeddt` DATETIME NOT NULL ,
-  `connectionkey` VARCHAR(50) NOT NULL ,
-  `tablekey` VARCHAR(100) NOT NULL ,
-  `groupaccount_uid` VARCHAR(36) NOT NULL ,
-  PRIMARY KEY (`lid`, `uid`, `groupaccount_uid`, `tablekey`) ,
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
-  UNIQUE INDEX `groupaccount_uid_UNIQUE` (`groupaccount_uid` ASC) ,
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `configurations`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `configurations` (
@@ -53,8 +33,7 @@ CREATE TABLE IF NOT EXISTS `gameraccount` (
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
   `gamertag` VARCHAR(45) NOT NULL,
-  `isactive` VARCHAR(1) NOT NULL,
-  `configurations_sdesc_gamerrole` VARCHAR(100) NOT NULL,
+  `configurations_sdesc_usertype` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`lid`, `uid`, `gamertag`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC),
@@ -89,10 +68,10 @@ CREATE TABLE `groupaccount` (
   `uid` varchar(36) NOT NULL,
   `createddt` datetime NOT NULL,
   `changeddt` datetime NOT NULL,
-  `sdesc` varchar(100) NOT NULL,
+  `ldesc` varchar(250) NOT NULL,
   `configurations_sdesc_grouptype` varchar(100) NOT NULL,
-  `configurations_sdesc_groupvisibility` varchar(100) NOT NULL,
-  `configurations_sdesc_groupaccept` varchar(100) NOT NULL,
+  `configurations_sdesc_visibility` varchar(100) NOT NULL,
+  `configurations_sdesc_useracceptance` varchar(100) NOT NULL,
   PRIMARY KEY  (`lid`,`uid`),
   UNIQUE KEY `uid_UNIQUE` (`uid`),
   UNIQUE KEY `lid_UNIQUE` (`lid`))
@@ -122,9 +101,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `hazard`
+-- Table `hazards`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hazard` (
+CREATE TABLE IF NOT EXISTS `hazards` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
@@ -135,9 +114,6 @@ CREATE TABLE IF NOT EXISTS `hazard` (
   `icon` VARCHAR(45) NOT NULL,
   `detectionrange` INT(4) NOT NULL,
   `effectiverange` INT(4) NOT NULL,
-  `configurations_sdesc_objecttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_paymenttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_hazardtype` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`lid`, `uid`, `sdesc`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC),
@@ -148,16 +124,16 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `match_gameraccount_to_groupaccount_to_gamerrole`
+-- Table `match_gameraccount_to_groupaccount_to_grouprole`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_groupaccount_to_gamerrole` (
+CREATE TABLE IF NOT EXISTS `match_gameraccount_to_groupaccount_to_grouprole` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
   `gameraccount_uid` VARCHAR(36) NOT NULL,
   `groupaccount_uid` VARCHAR(36) NOT NULL,
-  `configurations_sdesc_gamerrole` VARCHAR(100) NOT NULL,
+  `configurations_sdesc_grouprole` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
@@ -167,144 +143,15 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `match_gameraccount_to_groupaccount_to_hazard`
+-- Table `match_merchantaccount_to_hazards`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_groupaccount_to_hazard` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `groupaccount_uid` VARCHAR(36) NOT NULL,
-  `hazard_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_gameraccount_to_groupaccount_to_place`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_groupaccount_to_place` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `groupaccount_uid` VARCHAR(36) NOT NULL,
-  `place_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_gameraccount_to_groupaccount_to_shield`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_groupaccount_to_shield` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `groupaccount_uid` VARCHAR(36) NOT NULL,
-  `shield_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_gameraccount_to_hazard`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_hazard` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `hazard_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_gameraccount_to_place`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_place` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `place_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_gameraccount_to_shield`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_gameraccount_to_shield` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `gameraccount_uid` VARCHAR(36) NOT NULL,
-  `shield_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_groupaccount_to_groupprofile`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_groupaccount_to_groupprofile` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `groupaccount_uid` VARCHAR(36) NOT NULL,
-  `gamerprofile_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_merchantaccount_to_hazard`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_hazard` (
+CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_hazards` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
   `merchantaccount_uid` VARCHAR(36) NOT NULL,
-  `hazard_uid` VARCHAR(36) NOT NULL,
+  `hazards_uid` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
@@ -332,15 +179,15 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `match_merchantaccount_to_place`
+-- Table `match_merchantaccount_to_places`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_place` (
+CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_places` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
   `merchantaccount_uid` VARCHAR(36) NOT NULL,
-  `place_uid` VARCHAR(36) NOT NULL,
+  `places_uid` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
@@ -350,15 +197,15 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `match_merchantaccount_to_shield`
+-- Table `match_merchantaccount_to_safeguards`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_shield` (
+CREATE TABLE IF NOT EXISTS `match_merchantaccount_to_safeguards` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
   `merchantaccount_uid` VARCHAR(36) NOT NULL,
-  `shield_uid` VARCHAR(36) NOT NULL,
+  `safeguards_uid` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
@@ -375,28 +222,9 @@ CREATE TABLE IF NOT EXISTS `match_useraccount_to_gameraccount_to_gamerprofile` (
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
-  `useraccount_uid` VARCHAR(36) NOT NULL,
+  `userraccount_uid` VARCHAR(36) NOT NULL,
   `gameraccount_uid` VARCHAR(36) NOT NULL,
   `gamerprofile_uid` VARCHAR(36) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`),
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_useraccount_to_merchataccount_to_merchantrole`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `match_useraccount_to_merchataccount_to_merchantrole` (
-  `lid` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` VARCHAR(36) NOT NULL,
-  `createddt` DATETIME NOT NULL,
-  `changeddt` DATETIME NOT NULL,
-  `useraccount_uid` VARCHAR(36) NOT NULL,
-  `merchantaccount_uid` VARCHAR(36) NOT NULL,
-  `configurations_sdesc_merchantrole` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
@@ -413,12 +241,10 @@ CREATE TABLE IF NOT EXISTS `merchantaccount` (
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
-  `sdesc` VARCHAR(100) NOT NULL,
-  `companyname` VARCHAR(250) NOT NULL,
-  PRIMARY KEY (`lid`, `uid`, `sdesc`),
+  `company` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`lid`, `uid`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC),
-  UNIQUE INDEX `sdesc` (`sdesc` ASC))
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC))
 ENGINE = MyISAM
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
@@ -432,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `merchantprofile` (
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
   `changeddt` DATETIME NOT NULL,
-  `officename` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `address1` VARCHAR(100) NOT NULL,
   `address2` VARCHAR(100) NOT NULL,
@@ -440,7 +266,6 @@ CREATE TABLE IF NOT EXISTS `merchantprofile` (
   `city` VARCHAR(100) NOT NULL,
   `crossappl_configurations_sdesc_region` VARCHAR(100) NOT NULL,
   `crossappl_configurations_sdesc_country` VARCHAR(100) NOT NULL,
-  `intldialingcode` INT(5) NOT NULL,
   `areacode` INT(3) NOT NULL,
   `prefix` INT(3) NOT NULL,
   `number` INT(4) NOT NULL,
@@ -453,9 +278,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `place`
+-- Table `places`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `place` (
+CREATE TABLE IF NOT EXISTS `places` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
@@ -466,9 +291,6 @@ CREATE TABLE IF NOT EXISTS `place` (
   `icon` VARCHAR(45) NOT NULL,
   `detectionrange` INT(4) NOT NULL,
   `effectiverange` INT(4) NOT NULL,
-  `configurations_sdesc_objecttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_paymenttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_placetype` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`lid`, `uid`, `sdesc`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC),
@@ -479,9 +301,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `shield`
+-- Table `safeguards`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shield` (
+CREATE TABLE IF NOT EXISTS `safeguards` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT,
   `uid` VARCHAR(36) NOT NULL,
   `createddt` DATETIME NOT NULL,
@@ -492,9 +314,6 @@ CREATE TABLE IF NOT EXISTS `shield` (
   `icon` VARCHAR(45) NOT NULL,
   `detectionrange` INT(4) NOT NULL,
   `effectiverange` INT(4) NOT NULL,
-  `configurations_sdesc_objecttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_paymenttype` VARCHAR(100) NOT NULL,
-  `configurations_sdesc_shieldtype` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`lid`, `uid`, `sdesc`),
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC),

@@ -22,6 +22,16 @@ VALUES ( UUID(), NOW(), NOW(),
 'Discussions and Ideas provides a group that allows all within the group to engage in discussion on an idea.  This group moderates itself.',
 'Game',
 'GROUP_TYPE'
+),( UUID(), NOW(), NOW(),
+'GROUP_TYPE_SOCIAL',
+'Social group.  This group is where friends get together and talk.  ',
+'Social',
+'GROUP_TYPE'
+),( UUID(), NOW(), NOW(),
+'GROUP_TYPE_STAGING',
+'Gamers join here to prep a game.  The gamer who created this staging group is the Game Master or the Group Owner can assign a Game Master.',
+'Game',
+'GROUP_TYPE'
 );
 -- **********************************************************************************************************************************************
 -- Group User Acceptance Configuration
@@ -72,23 +82,42 @@ VALUES ( UUID(), NOW(), NOW(),
 'GROUP_VISIBILITY'
 );
 -- **********************************************************************************************************************************************
--- ************************* USER_TYPE
+-- ************************* GAMER_ROLE
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
-'USER_TYPE_GAMER',
+'GAMER_ROLE_GAMER',
 'Gamers are combatitants who have just started.',
 'Gamer',
-'USER_TYPE'
+'GAMER_ROLE'
 ),( UUID(), NOW(), NOW(),
-'USER_TYPE_MASTER',
+'GAMER_ROLE_MASTER',
 'Masters have achieved the second level of status and are allowed configure Games',
 'Game Master',
-'USER_TYPE'
+'GAMER_ROLE'
 ),( UUID(), NOW(), NOW(),
-'USER_TYPE_ASSET',
+'GAMER_ROLE_ASSET',
 'Assests have achieved the third level of status and area allowed to create content for Games',
 'Game Assest',
-'USER_TYPE'
+'GAMER_ROLE'
+);
+-- **********************************************************************************************************************************************
+-- ************************* MERCHANT_ROLE
+INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
+VALUES ( UUID(), NOW(), NOW(),
+'MERCHANT_ROLE_HQ',
+'Headquarters are users that oversee all offices',
+'Headquarters',
+'MERCHANT_ROLE'
+),( UUID(), NOW(), NOW(),
+'MERCHANT_ROLE_OFFICE',
+'Office users over see a single office',
+'Office',
+'MERCHANT_ROLE'
+),( UUID(), NOW(), NOW(),
+'MERCHANT_ROLE_USER',
+'Users have limitied access to office data',
+'User',
+'MERCHANT_ROLE'
 );
 -- **********************************************************************************************************************************************
 -- ************************* USER_TYPE_GAMER_ACHIEVMENTS
@@ -181,28 +210,28 @@ VALUES ( UUID(), NOW(), NOW(),
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
 'OBJECT_TYPES_SHIELD_STEALTH',
-'Stealth',
 'Stealth will hide users from hazards',
+'Stealth',
 'OBJECT_TYPES_SHIELD'
 ),( UUID(), NOW(), NOW(),
 'OBJECT_TYPES_SHIELD_DETECTOR',
-'Dectector',
 'Dectector will show Hazards and Gamers',
+'Dectector',
 'OBJECT_TYPES_SHIELD'
 ),( UUID(), NOW(), NOW(),
 'OBJECT_TYPES_SHIELD_DISTRACT',
-'Distract',
 'Distract will through off attack into multiple directions',
+'Distract',
 'OBJECT_TYPES_SHIELD'
 ),( UUID(), NOW(), NOW(),
 'OBJECT_TYPES_PLACE_CLONE',
-'Clone',
 'Will allow owner to duplicate themselves to confuse opponents',
+'Clone',
 'OBJECT_TYPES_SHIELD'
 ),( UUID(), NOW(), NOW(),
 'OBJECT_TYPES_PLACE_EMP',
-'EMP',
 'Will knockout all elecronics within a radius',
+'EMP',
 'OBJECT_TYPES_SHIELD'
 );
 -- **********************************************************************************************************************************************

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Side Scrolling Divs</title>
+
+<style type="text/css">
+* {margin:0;padding:0;}
+
+h2 {text-align:center; padding:20px}
+
+#slide-wrap {
+    width: 600px; 
+    height: 456px;
+    margin:0 auto;
+    overflow: hidden; 
+    background:#BCC5E1;
+    border:1px solid #000;
+}
+#inner-wrap {
+    float:left;
+    margin-right:-30000px;/*Be safe with Opera's limited negative margin*/
+    padding-left:20px;
+}
+#slide-cell-two {
+    height: 400px; 
+    float: left; 
+    margin:20px 20px 0 0;
+    border:1px solid #000; 
+    background: #CFCFCF;
+}
+</style>
+<script>
+var counter = 0;
+var timer1;
+function scrollDiv(divId, depl)
+{
+    counter = counter + 1;
+    output.innerHTML = counter;
+   var scroll_container = document.getElementById(divId);
+   scroll_container.scrollLeft -= depl;
+   timer1 = setTimeout('scrollDiv("'+divId+'", '+depl+')', 30);
+}
+</script>
+</head>
+<body>
+<h2>"Side Scrolling Divs"</h2>
+    
+    <div id="slide-wrap">
+        <div id="inner-wrap"> 
+            <div id="slide-cell-two">
+                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2                TEST 2
+            </div>
+        </div>  
+    </div>
+<a href="javascript:void(0)" onmouseover="scrollDiv('slide-wrap', -3)" onmouseout="clearTimeout(timer1)">To left</a>
+<a href="javascript:void(0)" onmouseover="scrollDiv('slide-wrap', 3)" onmouseout="clearTimeout(timer1)">To right</a>
+<div id="output">&nbsp;</div>
+</body>
+</html>
