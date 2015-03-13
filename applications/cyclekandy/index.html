@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Cycle Kandy...K is for Kuality and Creativity</title>
+<style>
+html	{	height:95%;	}
+body	{
+	margin:0px; font-family:arial; color:#000000; height:100%;	}
+* { margin: 0; padding: 0; }
+
+#bg { position: fixed; top: 0; left: 0; }
+.bgwidth { width: 100%; }
+.bgheight { height: 100%; }
+
+#gdDisplayOutput{ position:absolute; top:20px; left:40px; z-index:20;
+	background-color: #ffffff;	}
+</style>
+<script src="com.gd.core.mimes/js/jquery-1.7.1.js"></script>
+<script>
+$(function() {
+	var theWindow	= $(window),
+	    $bg			= $("#bg"),
+	    aspectRatio	= $bg.width() / $bg.height();
+	
+	var gdBkgImgW = $bg.width();
+	var gdBkgImgH = $bg.height();
+	
+	function resizeBg()
+	{
+
+		var controlside = "";
+		var offsetWidth = "";
+		var winWidth = theWindow.width();
+		var winHeight = theWindow.height();
+		
+		var war = winWidth / gdBkgImgW;		// Width to Image Aspect Ratio
+		var har = winHeight / gdBkgImgH;	// Height to Image Aspect Ratio
+		// Which ever Ratio is greater is the one to lock
+		// If width is greater then lock img to width
+		// If height is great then lock img to height
+		if(har > war)
+		{
+			$bg.css("width", (gdBkgImgW * har));
+			$bg.css("height", (gdBkgImgH * har));
+			offsetWidth = (winWidth - $bg.width()) / 2;
+			$bg.css("left", offsetWidth);
+			controlside = "height";
+		}
+		else if(war > har)
+		{
+			$bg.css("width", (gdBkgImgW * war));
+			$bg.css("height", (gdBkgImgH * war));
+			controlside = "width";
+		}
+		else
+		{
+			$bg.css("width", (gdBkgImgW * war));
+			$bg.css("height", (gdBkgImgH * har));
+			controlside = "beyond";
+		}
+
+		var o = ""
+			o += "war - " + war + "<br/>";
+			o += "har - " + har + "<br/>";
+			o += "w   - " + $bg.width() + "<br/>";
+			o += "h   - " + $bg.height() + "<br/>";
+			o += "ow   - " + offsetWidth + "<br/>";
+			o += "controlside - " + controlside + "<br/>";
+			
+		$("#gdDisplayOutput").html(o);
+
+	}
+
+	theWindow.resize(function() {
+		resizeBg();
+	}).trigger("resize");
+});
+</script>
+</head>
+<body>
+<img id="bg" src="mimes/images/3.jpg" alt="">
+<div id="gdDisplayOutput"></div>
+</body>
+</html>
