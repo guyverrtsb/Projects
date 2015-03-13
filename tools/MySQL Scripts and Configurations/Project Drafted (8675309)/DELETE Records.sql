@@ -1,4 +1,10 @@
 -- DELETE USERS AND GAMERS AND MERCHANTS
+delete from draftedcrossappli.site where lid <> 0;
+delete from draftedcrossappli.sitealias where lid <> 0;
+delete from draftedcrossappli.match_site_to_sitealias where lid <> 0;
+
+delete from draftedcrossappli.taskcontrollink where lid <> 0;
+
 delete from draftedusersafety.useraccount where lid <> 0;
 delete from draftedusersafety.userprofile where lid <> 0;
 delete from draftedusersafety.match_useraccount_to_userprofile where lid <> 0;
@@ -21,6 +27,7 @@ delete from drafted.match_groupaccount_to_groupprofile where lid <> 0;
 delete from drafted.merchantaccount where lid <> 0;
 delete from drafted.merchantprofile where lid <> 0;
 delete from drafted.match_merchantaccount_to_merchantprofile where lid <> 0;
+
 delete from drafted.match_merchantaccount_to_hazard where lid <> 0;
 delete from drafted.match_merchantaccount_to_place where lid <> 0;
 delete from drafted.match_merchantaccount_to_shield where lid <> 0;

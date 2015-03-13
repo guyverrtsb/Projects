@@ -139,122 +139,122 @@ VALUES ( UUID(), NOW(), NOW(),
 'USER_TYPE_GAMER'
 );
 -- **********************************************************************************************************************************************
--- ************************* PAYMENT_TYPES
+-- ************************* OBJECT_TYPE
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
-'PAYMENT_TYPES_FREE',
-'Free',
-'Free',
-'PAYMENT_TYPES'
-),( UUID(), NOW(), NOW(),
-'PAYMENT_TYPES_PAID',
-'Paid',
-'Paid',
-'PAYMENT_TYPES'
-);
--- **********************************************************************************************************************************************
--- ************************* OBJECT_TYPES
-INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
-VALUES ( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD',
+'OBJECT_TYPE_HAZARD',
 'Hazard',
 'Hazard',
-'OBJECT_TYPES'
+'OBJECT_TYPE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_TOOL',
+'OBJECT_TYPE_SHIELD',
 'Tools',
 'Tools',
-'OBJECT_TYPES'
+'OBJECT_TYPE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE',
+'OBJECT_TYPE_PLACE',
 'Places',
 'Places',
-'OBJECT_TYPES'
+'OBJECT_TYPE'
 );
 -- **********************************************************************************************************************************************
--- ************************* OBJECT_TYPES_HAZARD
+-- ************************* PAYMENT_TYPE
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_MINE',
-'Mine',
-'Mine',
-'OBJECT_TYPES_HAZARD'
+'PAYMENT_TYPE_FREE',
+'Free',
+'Free',
+'PAYMENT_TYPE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_SENTRYGUN',
-'Sentry Gun',
-'Sentry Gun',
-'OBJECT_TYPES_HAZARD'
-),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_ARTILLARY',
-'Artillary',
-'Artillary',
-'OBJECT_TYPES_HAZARD'
-),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_MISSLE',
-'Missle',
-'Missle',
-'OBJECT_TYPES_HAZARD'
-),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_DRONE',
-'Drone',
-'Drone',
-'OBJECT_TYPES_HAZARD'
-),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_HAZARD_AIRSTRIKE',
-'Air Strike',
-'Air Strike',
-'OBJECT_TYPES_HAZARD'
+'PAYMENT_TYPE_PAID',
+'Paid',
+'Paid',
+'PAYMENT_TYPE'
 );
 -- **********************************************************************************************************************************************
--- ************************* OBJECT_TYPES_SHIELD
+-- ************************* OBJECT_TYPE_HAZARD
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_SHIELD_STEALTH',
+'OBJECT_TYPE_HAZARD_MINE',
+'Mine',
+'Mine',
+'OBJECT_TYPE_HAZARD'
+),( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_HAZARD_SENTRYGUN',
+'Sentry Gun',
+'Sentry Gun',
+'OBJECT_TYPE_HAZARD'
+),( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_HAZARD_ARTILLARY',
+'Artillary',
+'Artillary',
+'OBJECT_TYPE_HAZARD'
+),( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_HAZARD_MISSLE',
+'Missle',
+'Missle',
+'OBJECT_TYPE_HAZARD'
+),( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_HAZARD_DRONE',
+'Drone',
+'Drone',
+'OBJECT_TYPE_HAZARD'
+),( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_HAZARD_AIRSTRIKE',
+'Air Strike',
+'Air Strike',
+'OBJECT_TYPE_HAZARD'
+);
+-- **********************************************************************************************************************************************
+-- ************************* OBJECT_TYPE_SHIELD
+INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
+VALUES ( UUID(), NOW(), NOW(),
+'OBJECT_TYPE_SHIELD_STEALTH',
 'Stealth will hide users from hazards',
 'Stealth',
-'OBJECT_TYPES_SHIELD'
+'OBJECT_TYPE_SHIELD'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_SHIELD_DETECTOR',
+'OBJECT_TYPE_SHIELD_DETECTOR',
 'Dectector will show Hazards and Gamers',
 'Dectector',
-'OBJECT_TYPES_SHIELD'
+'OBJECT_TYPE_SHIELD'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_SHIELD_DISTRACT',
+'OBJECT_TYPE_SHIELD_DISTRACT',
 'Distract will through off attack into multiple directions',
 'Distract',
-'OBJECT_TYPES_SHIELD'
+'OBJECT_TYPE_SHIELD'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_CLONE',
+'OBJECT_TYPE_PLACE_CLONE',
 'Will allow owner to duplicate themselves to confuse opponents',
 'Clone',
-'OBJECT_TYPES_SHIELD'
+'OBJECT_TYPE_SHIELD'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_EMP',
+'OBJECT_TYPE_PLACE_EMP',
 'Will knockout all elecronics within a radius',
 'EMP',
-'OBJECT_TYPES_SHIELD'
+'OBJECT_TYPE_SHIELD'
 );
 -- **********************************************************************************************************************************************
--- ************************* OBJECT_TYPES_PLACE
+-- ************************* OBJECT_TYPE_PLACE
 INSERT INTO configurations (`uid`,`createddt`,`changeddt`,`sdesc`,`ldesc`,`label`,`groupkey`)
 VALUES ( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_WORSHIP',
+'OBJECT_TYPE_PLACE_WORSHIP',
 'Place of Worship',
 'Place of Worship',
-'OBJECT_TYPES_PLACE'
+'OBJECT_TYPE_PLACE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_SANCTUARY',
+'OBJECT_TYPE_PLACE_SANCTUARY',
 'Sanctuary',
 'Sanctuary',
-'OBJECT_TYPES_PLACE'
+'OBJECT_TYPE_PLACE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_POWERUP',
+'OBJECT_TYPE_PLACE_POWERUP',
 'Power Up',
 'Power Up',
-'OBJECT_TYPES_PLACE'
+'OBJECT_TYPE_PLACE'
 ),( UUID(), NOW(), NOW(),
-'OBJECT_TYPES_PLACE_DEPOT',
+'OBJECT_TYPE_PLACE_DEPOT',
 'Depot',
 'Depot',
-'OBJECT_TYPES_PLACE'
+'OBJECT_TYPE_PLACE'
 );
