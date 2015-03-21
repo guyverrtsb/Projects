@@ -1,3 +1,4 @@
+<?php zReqOnce("/_controls/classes/_sys/_appsysajaxinterfacevalidation.php"); ?>
 <?php
 function setPageKey($key)
 {
@@ -13,11 +14,11 @@ function getPageKey()
 
 function getControlKey()
 {
-    zLog()->LogInfoStartFUNCTION("getControlKey()");
+    //zLog()->LogInfoStartFUNCTION("getControlKey()");
     $controlkey = "INVALID";
     if(isset($_POST["AJAX_SERVICE_CONTROL_KEY"]))
     {
-        zLog()->LogInfo("POST:AJAX_SERVICE_CONTROL_KEY:ISSET");
+        //zLog()->LogInfo("POST:AJAX_SERVICE_CONTROL_KEY:ISSET");
         $controlkey = filter_var($_POST["AJAX_SERVICE_CONTROL_KEY"], FILTER_SANITIZE_STRING);
         if($controlkey == "")
         {
@@ -28,23 +29,23 @@ function getControlKey()
                 if($controlkey == "")
                 {
                     $controlkey = "INVALID";
-                    zLog()->LogInfo("POST:AJAX_SERVICE_CONTROL_KEY:".$gdcontrolkey);
+                    //zLog()->LogInfo("POST:AJAX_SERVICE_CONTROL_KEY:".$gdcontrolkey);
                 }
             }
         }
     }
     else if(isset($_GET["AJAX_SERVICE_CONTROL_KEY"]))
     {
-        zLog()->LogInfo("GET:AJAX_SERVICE_CONTROL_KEY:ISSET");
+        //zLog()->LogInfo("GET:AJAX_SERVICE_CONTROL_KEY:ISSET");
         $controlkey = filter_var($_GET["AJAX_SERVICE_CONTROL_KEY"], FILTER_SANITIZE_STRING);
         if($controlkey == "")
         {
             $controlkey = "INVALID";
-            zLog()->LogInfo("GET:AJAX_SERVICE_CONTROL_KEY:".$controlkey);
+            //zLog()->LogInfo("GET:AJAX_SERVICE_CONTROL_KEY:".$controlkey);
         }
     }
-    zLog()->LogInfo("getControlKey{".$controlkey."}");
-    zLog()->LogInfoEndFUNCTION("getControlKey()");
+    zLog()->LogDebug("getControlKey{".$controlkey."}");
+    //zLog()->LogInfoEndFUNCTION("getControlKey()");
     return $controlkey;
 }
 

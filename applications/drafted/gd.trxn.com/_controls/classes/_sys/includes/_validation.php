@@ -36,7 +36,7 @@ function validateFormforBlanks()
  */
 function ajaxValidationLogging($retTF, $ajaxfile, $fieldfailed)
 {
-    zLog()->LogInfo($funcname." :{".$fieldfailed."}");
+    zLog()->LogInfo($ajaxfile." :{".$fieldfailed."}");
     return $retTF; 
 }
 ?>
