@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/dataobjects/base/match.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/base/draftedmatch.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class RetrieveMatchUserAccounttoGamerAccountProfile
-    extends MatchBase
+    extends DraftedMatchBase
 {
     function __construct()
     {

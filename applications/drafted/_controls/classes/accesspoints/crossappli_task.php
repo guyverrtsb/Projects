@@ -14,6 +14,29 @@ class AppliTaskControl
     function __construct()
     {
     }
+
+    function send($args)
+    {
+        zLog()->LogInfoStartFUNCTION("execute");
+        $mr = "NA"; //Method Return;
+        $tr = "NA"; //Transaction Return;
+                                
+        if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "ACTIVATE_GAMER_ACCOUNT")
+        {
+            $activation = new Activation();
+            $activation->sendActivationofGamerAccount($args);
+
+            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
+            $this->transferSysReturnAry($activation);
+        }
+        else
+        {
+            $mr = zLog()->LogInfoRETURN("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
+        }
+        
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("execute");
+    }
     
     /*
      * This Method is used when Creating
@@ -51,29 +74,6 @@ class AppliTaskControl
             */
 
             $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
-        }
-        else
-        {
-            $mr = zLog()->LogInfoRETURN("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
-        }
-        
-        $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("execute");
-    }
-
-    function send($args)
-    {
-        zLog()->LogInfoStartFUNCTION("execute");
-        $mr = "NA"; //Method Return;
-        $tr = "NA"; //Transaction Return;
-                                
-        if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "ACTIVATE_GAMER_ACCOUNT")
-        {
-            $activation = new Activation();
-            $activation->sendActivationofGamerAccount($args);
-
-            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
-            $this->transferSysReturnAry($activation);
         }
         else
         {

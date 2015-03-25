@@ -14,7 +14,7 @@ class CreateUserProfile
     {
     }
     
-    function full($firstname,
+    function basic($firstname,
                 $lastname,
                 $city,
                 $crossappl_configurations_sdesc_region,

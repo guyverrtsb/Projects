@@ -30,7 +30,5 @@ class UserBase
     function getCfgSdescRegion() { return $this->getResult_RecordField("crossappl_configurations_sdesc_country"); }
     function getCity() { return $this->getResult_RecordField("city"); }
     
-    function getMatchUserAccountUid() { return $this->getResult_RecordField("useraccount_uid"); }
-    function getMatchUserProfileUid() { return $this->getResult_RecordField("userprofile_uid"); }
 }
 ?>

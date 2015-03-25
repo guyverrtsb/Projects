@@ -7,7 +7,7 @@
 * Date: 2013/01/06
  * 1. 
 */
-class MatchBase
+class DraftedMatchBase
     extends AppSysBaseObject
 {
     function __construct()

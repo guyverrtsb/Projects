@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/usermatch.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,13 +8,13 @@
  * 1. 
 */
 class CreateMatchUserAccounttoUserProfile
-    extends UserBase
+    extends UserMatchBase
 {
     function __construct()
     {
     }
     
-    function full($useraccount_uid,
+    function basic($useraccount_uid,
                 $userprofile_uid)
     {
         zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");

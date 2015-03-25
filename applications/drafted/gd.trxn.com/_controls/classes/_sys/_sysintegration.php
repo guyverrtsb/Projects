@@ -202,16 +202,12 @@ class SysIntegration
     /** Start - USER AUTHORITY DATA **/
     static function setAuthoritySessionData($usersafety_account_uid,
                                             $isauthenticated,
-                                            $usersafety_role_sdesc,
-                                            $usersafety_role_priority,
                                             $usersafety_account_usertablekey)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setAuthoritySessionData");
         $_SESSION[SysIntegration::getKeySessAuthUserUid()] = $usersafety_account_uid;
         $_SESSION[SysIntegration::getKeySessAuthUserIsAuthenticated()] = $isauthenticated;
-        $_SESSION[SysIntegration::getKeySessAuthUserSiteRole()] = $usersafety_role_sdesc;
-        $_SESSION[SysIntegration::getKeySessAuthUserSiteRolePriority()] = $usersafety_role_priority;
         $_SESSION[SysIntegration::getKeySessAuthUsertablekey()] = $usersafety_account_usertablekey;
         $syslog->LogInfoEndFUNCTION("setAuthoritySessionData");
     }

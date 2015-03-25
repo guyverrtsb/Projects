@@ -7,7 +7,7 @@
 * Date: 2013/01/06
  * 1. 
 */
-class RetrieveGamerAccount
+class RetrieveGamer
     extends GamerBase
 {
     function __construct()

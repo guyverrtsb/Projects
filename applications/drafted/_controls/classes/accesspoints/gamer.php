@@ -9,6 +9,8 @@
 <?php zReqOnce("/_controls/classes/dataobjects/create/match_useraccount_to_gameraccount_to_gamerprofile.php"); ?>
 <?php zReqOnce("/_controls/classes/dataobjects/retrieve/match_useraccount_to_gameraccount_to_gamerprofile.php"); ?>
 <?php zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/accesspoints/generateuniquevalue.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/retrieve/gamerdata.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/userdata.php"); ?>
 <?php
 /*
 * File: user.php
@@ -116,6 +118,75 @@ class Gamer
         
         $this->setSysReturnCode($mr);
         zLog()->LogInfoEndFUNCTION("createGamerInfo");
+    }
+    
+    function retrieveGamer($argary)
+    {
+        zLog()->LogInfoStartFUNCTION("retrieveGamer");
+        $mr = "NA";
+ 
+        $gameraccount_uid = "";
+        if(in_array("useraccount_uid", $argary))
+        {
+            $rgd = new RetrieveGamerData();
+            $rgd->byUseraccountuid($argary["useraccount_uid"]);
+            
+            $this->setOutputData("useraccount_uid", $rgd->getUserAccountUid());
+            $this->setOutputData("gameraccount_uid", $rgd->getGamerAccountUid());
+            $this->setOutputData("gameraccount_configurations_sdesc_gamerrole", $rgd->getGamerAccountCfgSdescGamerRole());
+            $this->setOutputData("gameraccount_gamertag", $rgd->getGamerAccountGamertag());
+            $this->setOutputData("gameraccount_isactive", $rgd->getGamerAccountIsactive());
+            $this->setOutputData("gamerprofile_uid", $rgd->getGamerProfileUid());
+            $this->setOutputData("gamerprofile_avatarmimeuid", $rgd->getGamerProfileAvatarmimeuid());
+            
+            $mr = "GAMER_ACCOUNT_FOUND";
+        }
+        else if(in_array("gameraccount_tag", $argary))
+        {
+            $rgd = new RetrieveGamerData();
+            $rgd->byGamertag($argary["useraccount_uid"]);
+            
+            $this->setOutputData("useraccount_uid", $rgd->getUserAccountUid());
+            $this->setOutputData("gameraccount_uid", $rgd->getGamerAccountUid());
+            $this->setOutputData("gameraccount_configurations_sdesc_gamerrole", $rgd->getGamerAccountCfgSdescGamerRole());
+            $this->setOutputData("gameraccount_gamertag", $rgd->getGamerAccountGamertag());
+            $this->setOutputData("gameraccount_isactive", $rgd->getGamerAccountIsactive());
+            $this->setOutputData("gamerprofile_uid", $rgd->getGamerProfileUid());
+            $this->setOutputData("gamerprofile_avatarmimeuid", $rgd->getGamerProfileAvatarmimeuid());
+            
+            $mr = "GAMER_ACCOUNT_FOUND";
+        }
+        else if(in_array("useraccount_email", $argary))
+        {
+            $rud = new RetrieveUserData();
+            $rud->byUseraccountemail($argary["useraccount_email"]);
+            
+            if($rud->getSysReturnCode() == "RECORD_IS_FOUND")
+            {
+            
+                $rgd = new RetrieveGamerData();
+                $rgd->byGamertag($rud->getUAUid());
+                
+                $this->setOutputData("useraccount_uid", $rud->getUAUid());
+                $this->setOutputData("useraccount_email", $rud->getEmail());
+                $this->setOutputData("useraccount_nickname", $rud->getNickname());
+
+                $this->setOutputData("userprofile_firstname", $rud->getFirstname());
+                $this->setOutputData("userprofile_lastname", $rud->getLastname());
+                
+                $this->setOutputData("gameraccount_uid", $rgd->getGamerAccountUid());
+                $this->setOutputData("gameraccount_gamertag", $rgd->getGamerAccountGamertag());
+                
+                $mr = "GAMER_ACCOUNT_FOUND";
+            }
+            else
+            {
+                $mr = $rud->getSysReturnCode();
+            }
+        }
+        
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("retrieveGamer");
     }
 }
 ?>
