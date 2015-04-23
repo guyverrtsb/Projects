@@ -14,15 +14,16 @@ class UpdateUserAccount
     {
     }
     
-    function updateAllbyUid($uid,
-                            $email,
-                            $password,
-                            $nickname,
-                            $isactive,
-                            $changepassword,
-                            $numberoflogintries)
+    function basic($uid,
+                $email,
+                $password,
+                $nickname,
+                $isactive,
+                $changepassword,
+                $numberoflogintries)
     {
-        zcLog()->LogInfoStartFUNCTION("updateAllbyUid");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
             "email=:email, ".
@@ -44,25 +45,96 @@ class UpdateUserAccount
         $appcon->bindParam(":changepassword", $changepassword);
         $appcon->bindParam(":numberoflogintries", $numberoflogintries);
         $appcon->execUpdate();
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getRowfromLastId($appcon, "useraccount", $appcon->getLastInsertID()));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_UPDATED", "Record is Updated:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_UPDATED");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("updateAllbyUid");
-        return $fr;
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+    }
+    
+    function updateLogintries($uid,
+                            $numberoflogintries)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateLogintries");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "numberoflogintries=:numberoflogintries ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":numberoflogintries", $numberoflogintries);
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateLogintries");
+    }
+    
+    function updateIsactive($uid,
+                            $isactive)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateIsactive");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "isactive=:isactive ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":isactive", $isactive);
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateIsactive");
+    }
+    
+    function updateActivatebyUid($uid)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateActivatebyUid");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "isactive=:isactive ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":isactive", "T");
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateActivatebyUid");
+    }
+    
+    function updateDeactivatebyUid($uid)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateDeactivatebyUid");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "isactive=:isactive ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":isactive", "F");
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateDeactivatebyUid");
     }
 }
 ?>

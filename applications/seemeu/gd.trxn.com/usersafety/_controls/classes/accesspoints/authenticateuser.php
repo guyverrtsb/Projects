@@ -1,64 +1,72 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/_user_authentication_data.php"); ?>
-<?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/update/usersafety_useraccount.php"); ?>
+<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/useraccount.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/userprofile.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/match_useraccount_to_userprofile.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/update/useraccount.php"); ?>
 <?php
 class gdAuthenticateUser
-    extends zAppBaseObject
+    extends AppSysBaseObject
 {
     function __construct()
     {
     }
     
-    function authenticateByEmail($email, $password)
+    function authenticate($argary)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("authenticateByEmail");
-        $fr = "UNKNOWN_ERROR";
+        zLog()->LogInfoStartFUNCTION("authenticateByEmail");
+        $mr = "NA";
         
-        $gdfuad = new gdFindUserAuthenticationData();
-        $emailexists = $gdfuad->findUserAuthenticationData_ByEmail($email);
-        if($emailexists == "RECORD_IS_FOUND")
+        $rua = new RetrieveUserAccount();
+        $rua->byEmail($argary["useraccount_email"]);
+        if($rua->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            if($gdfuad->getIsactive() == "F")    // User account is inactive
+            
+            if($rua->getIsactive() == "F")    // User account is inactive
             {
-                $fr = "ACCOUNT_INACTIVE";
+                $mr = zLog()->LogInfoRETURN("ACCOUNT_INACTIVE");
             }
-            else if($gdfuad->getNumberoflogintries() >= 3)  // Number of Login Tries
+            else if($rua->getNumberoflogintries() >= 3)  // Number of Login Tries
             {
-                $gduua = new gdUpdateUsersafetyAccount();
-                $gduua->updateDeactivateUser($gdfuad->getUAUid());
-                $fr = "TOO_MANY_FAILED_LOGIN_ATTEMPTS";
+                $uua = new UpdateUserAccount();
+                $uua->updateIsactive($rua->getUid(), "F");
+                $mr = zLog()->LogInfoRETURN("TOO_MANY_FAILED_LOGIN_ATTEMPTS");
             }
-            else if($gdfuad->getPassword() != $password)
+            else if($rua->getPassword() != $argary["useraccount_password"])   // Password does not match
             {
-                $gduua = new gdUpdateUsersafetyAccount();
-                $gduua->updateRecordUserAccount_Numberoflogintries($gdfuad->getUAUid(), ($gdfuad->getNumberoflogintries() + 1));
-                $fr = "PASSWORD_DOES_NOT_MATCH";
+                $uua = new UpdateUserAccount();
+                $uua->updateLogintries($rua->getUid(), ($rua->getNumberoflogintries() + 1));
+                $mr = zLog()->LogInfoRETURN("PASSWORD_DOES_NOT_MATCH");
             }
-            else if($gdfuad->getPassword() == $password)
+            else if($rua->getPassword() == $argary["useraccount_password"])
             {
-                $this->getGDConfig()->setAuthoritySessionData($gdfuad->getUAUid()
-                                                            , "T"
-                                                            , $gdfuad->getSdesc()
-                                                            , $gdfuad->getPrority()
-                                                            , $gdfuad->getUsertablekey());
-                $fr = "USER_IS_AUTHENTICATED";
+                zLog()->LogDebug("**************************GOOD LOGIN*****************************");
+                zConfig()->setAuthoritySessionData($rua->getUid()
+                                                , "T"
+                                                , $rua->getUsertablekey());
+                $mr = zLog()->LogInfoRETURN("USER_IS_AUTHENTICATED");
             }
         }
-        else if($emailexists == "RECORD_IS_NOT_FOUND")
+        else if($rua->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $fr = "RECORD_NOT_FOUND_BY_EMAIL";
+            $mr = zLog()->LogInfoRETURN("RECORD_NOT_FOUND_BY_EMAIL");
         }
 
-        $this->gdlog()->LogInfoEndFUNCTION("authenticateByEmail");
-        return $fr;
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("authenticateByEmail");
     }
 
     function isAthenticated()
     {
         if(isset($_SESSION[$this->sessAuthenticated]))
+        {
+            $this->setSysReturnCode("USER_IS_AUTHENTICATED");
             return true;
+        }
         else
+        {
+            $this->setSysReturnCode("USER_IS_NOT_AUTHENTICATED");
             return false;
+        }
     }
 }
 ?>

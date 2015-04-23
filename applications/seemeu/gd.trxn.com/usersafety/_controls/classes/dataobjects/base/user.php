@@ -26,11 +26,9 @@ class UserBase
     
     function getFirstname() { return $this->getResult_RecordField("firstname"); }
     function getLastname() { return $this->getResult_RecordField("lastname"); }
-    function getCfgCountrySdesc() { return $this->getResult_RecordField("crossappl_configurations_sdesc_region"); }
-    function getCfgRegionSdesc() { return $this->getResult_RecordField("crossappl_configurations_sdesc_country"); }
+    function getCfgSdescCountry() { return $this->getResult_RecordField("crossappl_configurations_sdesc_region"); }
+    function getCfgSdescRegion() { return $this->getResult_RecordField("crossappl_configurations_sdesc_country"); }
     function getCity() { return $this->getResult_RecordField("city"); }
     
-    function getMatchUserAccountUid() { return $this->getResult_RecordField("useraccount_uid"); }
-    function getMatchUserProfileUid() { return $this->getResult_RecordField("userprofile_uid"); }
 }
 ?>

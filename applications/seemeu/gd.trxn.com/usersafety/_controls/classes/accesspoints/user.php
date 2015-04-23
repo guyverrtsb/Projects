@@ -1,4 +1,5 @@
 <?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/accesspoints/generateuniquevalue.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/useraccount.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/useraccount.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/userprofile.php"); ?>
@@ -33,62 +34,160 @@ class User
                             $crossappl_configurations_sdesc_region,
                             $crossappl_configurations_sdesc_country)
     {
-        $this->gdlog()->LogInfoStartFUNCTION("createUserInfo");
-        $fr = "NA";
+        zLog()->LogInfoStartFUNCTION("createUserInfo");
+        $mr = "NA";
         
-        $rua = new RetrieveUserAccount();
-        $emailexists = $rua->byEmail($email);
-        $nicknameexists = $rua->byNickname($nickname);
-        $tablekeyexists = $rua->byTablekey($nickname);
+        $emailexists = new RetrieveUserAccount();
+        $emailexists->byEmail($email);
         
-        if($emailexists == "RECORD_IS_NOT_FOUND" && $nicknameexists == "RECORD_IS_NOT_FOUND" && $tablekeyexists == "RECORD_IS_NOT_FOUND")
+        $guv = new GenerateUniqueValue();
+        
+        $nicknameexists = new RetrieveUserAccount();
+        $nicknameexists->byNickname($nickname);
+        
+        $tablekeyexists = $guv->generate("USERSAFETY", "useraccount", "usertablekey", $this->createUserTableKey($nickname));
+        
+        if($emailexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND"
+            && $nicknameexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $cua = new CreateUserAccount();
-            $cua->basic($email, $nickname, $password);
+            $ca = new CreateUserAccount();
+            $ca->basic($email, $nickname, $password);
             
-            $cup = new CreateUserProfile();
-            $cup->basic($firstname, $lastname, $city,
-                        $crossappl_configurations_sdesc_region,
-                        $crossappl_configurations_sdesc_country);
+            $cp = new CreateUserProfile();
+            $cp->basic($firstname,
+                    $lastname,
+                    $city,
+                    $crossappl_configurations_sdesc_region,
+                    $crossappl_configurations_sdesc_country);
 
             $cmuatup = new CreateMatchUserAccounttoUserProfile();
-            $cmuatup->basic($cua->getUid(), $cup->getUid());
+            $cmuatup->basic($ca->getUid(), $cp->getUid());
             
-            $gdctc = new gdCreateTaskControl();
-            $gdctc->createRecordTaskControl("ACTIVATION_USER_ACCOUNT", $gdcua->getUid(), "T");
+            //$gdctc = new gdCreateTaskControl();
+            //$gdctc->createRecordTaskControl("ACTIVATION_USER_ACCOUNT", $gdcua->getUid(), "T");
 
             /* Set Output Data Objects */
-            $this->setOutputData("useraccount_uid", $gdcua->getUid());
-            $this->setOutputData("useraccount_email", $gdcua->getEmail());
-            $this->setOutputData("useraccount_nickname", $gdcua->getNickname());
-            $this->setOutputData("userprofile_firstname", $gdcup->getFirstname());
-            $this->setOutputData("userprofile_lastname", $gdcup->getLastname());
-            $this->setOutputData("taskcontrol_qs", $gdctc->getUid1()."{}".$gdctc->getUid2()."{}".$gdctc->getUid3());
+            $this->setOutputData("useraccount_uid", $ca->getUid());
+            $this->setOutputData("useraccount_email", $ca->getEmail());
+            $this->setOutputData("useraccount_usertablekey", $ca->getUsertablekey());
+            $this->setOutputData("useraccount_nickname", $ca->getNickname());
+            $this->setOutputData("userprofile_firstname", $cp->getFirstname());
+            $this->setOutputData("userprofile_lastname", $cp->getLastname());
+            //$this->setOutputData("taskcontrol_qs", $gdctc->getUid1()."{}".$gdctc->getUid2()."{}".$gdctc->getUid3());
 
-            $this->dumpOutputData();
-            $fr = $this->gdlog()->LogInfoRETURN("USER_DATA_IS_CREATED");
+            //$this->dumpOutputData();
+            $mr = zLog()->LogInfoRETURN("USER_IS_CREATED");
         }
-        else if($emailexists == "RECORD_IS_FOUND")
+        else if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $fr = $this->gdlog()->LogInfoRETURN("EMAIL_IN_USE");
+            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
         }
-        else if($nicknameexists == "RECORD_IS_FOUND")
+        else if($nicknameexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $fr = $this->gdlog()->LogInfoRETURN("NICKNAME_IN_USE");
+            $nickname = $guv->generate("USERSAFETY", "useraccount", "nickname", $this->createsdesc($nickname));
+
+            $this->setOutputData("NICKNAME_SUGGESTION", $nickname);
+            $mr = zLog()->LogInfoRETURN("NICKNAME_IN_USE");
         }
-        else if($tablekeyexists == "RECORD_IS_FOUND")
+        else if($tablekeyexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $fr = $this->gdlog()->LogInfoRETURN("USERTABLEKEY_IN_USE");
+            $mr = zLog()->LogInfoRETURN("USERTABLEKEY_IN_USE");
         }
         
-        $this->gdlog()->LogInfoEndFUNCTION("createUserInfo");
-        return $fr;
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("createUserInfo");
     }
     
-    private $taskcontrolqs = "NO_RECORD";
-    function setTaskControlQS($uid1, $uid2, $uid3)
+    function retrieveUserAccount($email)
     {
-        $taskcontrolqs = "taskkey".$uid1."{}".$uid2."{}".$uid3;
+        zLog()->LogInfoStartFUNCTION("retrieveUserInfo");
+        $mr = "NA";
+        
+        $emailexists = new RetrieveUserAccount();
+        $emailexists->byEmail($email);
+        
+        if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
+        {
+            $this->setOutputData("useraccount_uid", $emailexists->getUid());
+            $this->setOutputData("useraccount_email", $emailexists->getEmail());
+            $this->setOutputData("useraccount_nickname", $emailexists->getNickname());
+            $this->setOutputData("useraccount_usertablekey", $emailexists->getUsertablekey());
+            
+            $mr = zLog()->LogInfoRETURN("USER_ACCOUNT_IS_FOUND");
+        }
+        else if($emailexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
+        {
+            $mr = zLog()->LogInfoRETURN("EMAIL_NOT_FOUND");
+        }
+        
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("retrieveUserInfo");
+    }
+
+   function activateUserProcess($emails)
+    {
+        zLog()->LogInfoStartFUNCTION("activateUserProcess");
+        $mr = "NA";
+        
+        $emailexists = new RetrieveUserAccount();
+        $emailexists->byEmail($email);
+        
+        $guv = new GenerateUniqueValue();
+        
+        $nicknameexists = new RetrieveUserAccount();
+        $nicknameexists->byNickname($nickname);
+        
+        $tablekeyexists = $guv->generate("USERSAFETY", "useraccount", "usertablekey", $this->createUserTableKey($nickname));
+        
+        if($emailexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND"
+            && $nicknameexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
+        {
+            $ca = new CreateUserAccount();
+            $ca->basic($email, $nickname, $password);
+            
+            $cp = new CreateUserProfile();
+            $cp->basic($firstname,
+                    $lastname,
+                    $city,
+                    $crossappl_configurations_sdesc_region,
+                    $crossappl_configurations_sdesc_country);
+
+            $cmuatup = new CreateMatchUserAccounttoUserProfile();
+            $cmuatup->basic($ca->getUid(), $cp->getUid());
+            
+            //$gdctc = new gdCreateTaskControl();
+            //$gdctc->createRecordTaskControl("ACTIVATION_USER_ACCOUNT", $gdcua->getUid(), "T");
+
+            /* Set Output Data Objects */
+            $this->setOutputData("useraccount_uid", $ca->getUid());
+            $this->setOutputData("useraccount_email", $ca->getEmail());
+            $this->setOutputData("useraccount_usertablekey", $ca->getUsertablekey());
+            $this->setOutputData("useraccount_nickname", $ca->getNickname());
+            $this->setOutputData("userprofile_firstname", $cp->getFirstname());
+            $this->setOutputData("userprofile_lastname", $cp->getLastname());
+            //$this->setOutputData("taskcontrol_qs", $gdctc->getUid1()."{}".$gdctc->getUid2()."{}".$gdctc->getUid3());
+
+            //$this->dumpOutputData();
+            $mr = zLog()->LogInfoRETURN("USER_IS_CREATED");
+        }
+        else if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
+        {
+            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
+        }
+        else if($nicknameexists->getSysReturnCode() == "RECORD_IS_FOUND")
+        {
+            $nickname = $guv->generate("USERSAFETY", "useraccount", "nickname", $this->createsdesc($nickname));
+
+            $this->setOutputData("NICKNAME_SUGGESTION", $nickname);
+            $mr = zLog()->LogInfoRETURN("NICKNAME_IN_USE");
+        }
+        else if($tablekeyexists->getSysReturnCode() == "RECORD_IS_FOUND")
+        {
+            $mr = zLog()->LogInfoRETURN("USERTABLEKEY_IN_USE");
+        }
+        
+        $this->setSysReturnCode($mr);
+        zLog()->LogInfoEndFUNCTION("activateUserProcess");
     }
 }
 ?>

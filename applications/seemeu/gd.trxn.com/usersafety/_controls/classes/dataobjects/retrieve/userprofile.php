@@ -16,7 +16,8 @@ class RetrieveUserProfile
     
     function byUid($uid)
     {
-        zcLog()->LogInfoStartFUNCTION("byUid");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        
         $sqlstmnt = "SELECT * FROM userprofile ".
             "WHERE uid=:uid";
         
@@ -25,25 +26,10 @@ class RetrieveUserProfile
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":uid", $uid);
         $appcon->execSelect();
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is found:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("byUid");
-        return $fr;
+        
+        $this->resultRetrieveRecord($appcon);
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

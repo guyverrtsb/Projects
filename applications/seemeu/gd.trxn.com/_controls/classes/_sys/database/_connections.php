@@ -39,16 +39,17 @@ class SysConnections
         
     private function getConnectionVariable($db, $param)
     {
-        if(strtolower($db) == "usersafety")
+        $db = strtolower($db);
+        if($db == "usersafety")
             $db = "usersafety";
-        else if(strtolower($db) == "crossappdata")
+        else if($db == "crossappdata")
             $db = "crossapplication";
-        else if(strtolower($db) == "appdb")
+        else if($db == "appdb")
             $db = "application";
             
         $connectionsXML = $_SESSION[AppSysIntegration::getKeySessSiteConfigRoot()]."ZDBCONNECTIONS.xml";
 
-        zLog()->LogDebug("Connections XML : {".$connectionsXML);
+        zLog()->LogDebug("Connections XML : {".$connectionsXML."}:{".$db."}");
         
         $xml = simplexml_load_file($connectionsXML);
         foreach($xml->children() as $dbconfig)

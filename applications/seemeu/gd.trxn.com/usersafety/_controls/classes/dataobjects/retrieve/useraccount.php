@@ -19,7 +19,8 @@ class RetrieveUserAccount
      */
     function byEmail($email)
     {
-        zcLog()->LogInfoStartFUNCTION("byEmail");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("byEmail");
+        
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE email=:email";
         
@@ -28,25 +29,10 @@ class RetrieveUserAccount
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":email", $email);
         $appcon->execSelect();
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is found:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("byEmail");
-        return $fr;
+        
+        $this->resultRetrieveRecord($appcon);
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("byEmail");
     }
     
     /**
@@ -54,7 +40,8 @@ class RetrieveUserAccount
      */
     function byNickname($nickname)
     {
-        zcLog()->LogInfoStartFUNCTION("byEmail");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("byNickname");
+        
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE nickname=:nickname";
         
@@ -63,60 +50,31 @@ class RetrieveUserAccount
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":nickname", $nickname);
         $appcon->execSelect();
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is found:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("byEmail");
-        return $fr;
+        
+        $this->resultRetrieveRecord($appcon);
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("byNickname");
     }
     
     /**
      * Retrieve Record by Tablekey
      */
-    function byTablekey($tablekeyexists)
+    function byUsertablekey($usertablekey)
     {
-        zcLog()->LogInfoStartFUNCTION("byEmail");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("byTablekey");
+        
         $sqlstmnt = "SELECT * FROM useraccount ".
-            "WHERE tablekeyexists=:tablekeyexists";
+            "WHERE usertablekey=:usertablekey";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":tablekeyexists", $tablekeyexists);
+        $appcon->bindParam(":usertablekey", $this->createUserTableKey($usertablekey));
         $appcon->execSelect();
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is found:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("byEmail");
-        return $fr;
+        
+        $this->resultRetrieveRecord($appcon);
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("byTablekey");
     }
 }
 ?>

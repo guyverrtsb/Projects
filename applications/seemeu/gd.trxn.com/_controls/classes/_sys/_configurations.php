@@ -1,114 +1,72 @@
-<?php zReqOnce("/gd.trxn.com/_controls/classes/_sys/_utilities.php"); ?>
+<?php zReqOnce("/gd.trxn.com/_controls/classes/_sys/_returns.php"); ?>
 <?php
 class SysConfigurations
-    extends SysUtilities
+    extends SysReturns
 {
     function findConfigurationListfromGroupKey($groupkey, $APPDB = "crossapplication")
     {
         zLog()->LogInfoStartFUNCTION("findConfigurationListfromGroupKey");
+        
         $this->cleanResults_ConfigurationRecords();
-        $fr;
+
         $sqlstmnt = "SELECT ".
             "uid, sdesc, ldesc, groupkey, label ".
             "from configurations ".
             "WHERE groupkey=:groupkey";
         
-        $dbcontrol = new SysConnections();
-        $dbcontrol->setApplicationDB($APPDB);
-        $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":groupkey", strtoupper($groupkey));
-        $dbcontrol->execSelect();
-        if($dbcontrol->getTransactionGood())
-        {
-            if($dbcontrol->getRowCount() > 0)
-            {
-                $this->setResults_ConfigurationRecords($dbcontrol->getStatement()->fetchAll(PDO::FETCH_ASSOC));
-                zLog()->LogInfoDB($this->getResults_ConfigurationRecords());
-                $fr = zLog()->LogInfoRETURN("LIST_FOUND");
-            }
-            else
-            {
-                $fr = zLog()->LogInfoRETURN("LIST_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB($APPDB);
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":groupkey", strtoupper($groupkey));
+        $appcon->execSelect();
+        
+        $this->resultRetrieveRecord($appcon);
+
         zLog()->LogInfoEndFUNCTION("findConfigurationListfromGroupKey");
-        return $fr;
     }
     
     function findConfigurationfromSdesc($sdesc, $APPDB = "crossapplication")
     {
         zLog()->LogInfoStartFUNCTION("findConfigurationfromSdesc");
+        
         $this->cleanResult_ConfigurationRecord();
-        $fr;
+
         $sqlstmnt = "SELECT ".
             "uid, sdesc, ldesc, groupkey, label ".
             "from configurations ".
             "WHERE sdesc=:sdesc";
         
-        $dbcontrol = new SysConnections();
-        $dbcontrol->setApplicationDB($APPDB);
-        $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":sdesc", strtoupper($sdesc));
-        $dbcontrol->execSelect();
-        if($dbcontrol->getTransactionGood())
-        {
-            if($dbcontrol->getRowCount() > 0)
-            {
-                $this->setResult_ConfigurationRecord($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zLog()->LogInfoDB($this->getResult_ConfigurationRecord());
-                $fr = zLog()->LogInfoRETURN("RECORD_FOUND");
-            }
-            else
-            {
-                $fr = zLog()->LogInfoRETURN("RECORD_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB($APPDB);
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":sdesc", strtoupper($sdesc));
+        $appcon->execSelect();
+        
+        $this->resultRetrieveRecord($appcon);
+
         zLog()->LogInfoEndFUNCTION("findConfigurationfromSdesc");
-        return $fr;
     }
     
     function findConfigurationfromUid($uid, $APPDB = "crossapplication")
     {
         zLog()->LogInfoStartFUNCTION("findConfigurationfromUid");
+        
         $this->cleanResult_ConfigurationRecord();
-        $fr;
+
         $sqlstmnt = "SELECT ".
             "uid, sdesc, ldesc, groupkey, label ".
             "from configurations ".
             "WHERE uid=:uid";
         
-        $dbcontrol = new SysConnections();
-        $dbcontrol->setApplicationDB($APPDB);
-        $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":uid", $uid);
-        $dbcontrol->execSelect();
-        if($dbcontrol->getTransactionGood())
-        {
-            if($dbcontrol->getRowCount() > 0)
-            {
-                $this->setResult_ConfigurationRecord($dbcontrol->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zLog()->LogInfoDB($this->getResult_ConfigurationRecord());
-                $fr = zLog()->LogInfoRETURN("RECORD_FOUND");
-            }
-            else
-            {
-                $fr = zLog()->LogInfoRETURN("RECORD_NOT_FOUND");
-            }
-        }
-        else
-        {
-            $fr = zLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB($APPDB);
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->execSelect();
+        
+        $this->resultRetrieveRecord($appcon);
+
         zLog()->LogInfoEndFUNCTION("findConfigurationfromUid");
-        return $fr;
     }
     
     function findCfgUidfromSdesc($sdesc)

@@ -14,11 +14,12 @@ class Createopenauth
     {
     }
     
-    function basic($openauthkey,
+    function full($openauthkey,
                 $expiredt,
                 $isvalid)
     {
-        zcLog()->LogInfoStartFUNCTION("basic");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        
         $sqlstmnt = "INSERT INTO openauth SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
             openauthkey=:openauthkey,
@@ -33,25 +34,9 @@ class Createopenauth
         $appcon->bindParam(":isvalid", $isvalid);
         $appcon->execUpdate();
         
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getRowfromLastId($appcon, "openauth", $appcon->getLastInsertID()));
-                zcLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_CREATED", "Record is Created:".json_encode($this->getResult_Record()).":");
-            }
-            else
-            {
-                $fr = zcLog()->LogInfoRETURN("RECORD_IS_NOT_CREATED");
-            }
-        }
-        else
-        {
-            $fr = zcLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zcLog()->LogInfoEndFUNCTION("basic");
-        return $fr;
+        $this->resultCreateRecord($appcon, "openauth");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

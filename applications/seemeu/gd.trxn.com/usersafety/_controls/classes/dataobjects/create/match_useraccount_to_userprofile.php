@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/usermatch.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class CreateMatchUserAccounttoUserProfile
-    extends UserBase
+    extends UserMatchBase
 {
     function __construct()
     {
@@ -17,7 +17,8 @@ class CreateMatchUserAccounttoUserProfile
     function basic($useraccount_uid,
                 $userprofile_uid)
     {
-        zLog()->LogInfoStartFUNCTION("basic");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        
         $sqlstmnt = "INSERT INTO match_useraccount_to_userprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
             useraccount_uid=:useraccount_uid,
@@ -30,26 +31,9 @@ class CreateMatchUserAccounttoUserProfile
         $appcon->bindParam(":userprofile_uid", $userprofile_uid);
         $appcon->execUpdate();
         
-        if($appcon->getTransactionGood())
-        {
-            if($appcon->getRowCount() > 0)
-            {
-                $this->setResult_Record($appcon->getRowfromLastId($appcon, "match_useraccount_to_userprofile", $appcon->getLastInsertID()));
-                zLog()->LogInfoDB($this->getResult_Record());
-                $fr = $this->saveActivityLog("RECORD_IS_CREATED", "Record is Created:".json_encode($this->getResult_Record()).":");
-                zLog()->LogInfo("this->getNummberoflogintries() - {".($this->getNumberoflogintries() + 1)."}");
-            }
-            else
-            {
-                $fr = zLog()->LogInfoRETURN("RECORD_IS_NOT_CREATED");
-            }
-        }
-        else
-        {
-            $fr = zLog()->LogInfoERROR("TRANSACTION_FAIL");
-        }
-        zLog()->LogInfoEndFUNCTION("basic");
-        return $fr;
+        $this->resultCreateRecord($appcon, "match_useraccount_to_userprofile");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

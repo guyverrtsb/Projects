@@ -108,10 +108,27 @@
         {
             $this->methodname = $methodname;
             if(strtoupper($methodname) != "SAVEACTIVITYLOG")
-                $this->Log("-\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/-", KLogger::INFO );
+                $this->Log("---", KLogger::INFO );
             $this->Log("FUNCTION START:".$this->methodname.":", KLogger::INFO );
         }
         public function LogInfoEndFUNCTION($methodname = "EMPTY")
+        {
+            if($methodname == "EMPTY")
+                $this->Log("FUNCTION END:".$this->$methodname.":", KLogger::INFO );
+            else
+                $this->Log("FUNCTION END:".$methodname.":", KLogger::INFO );
+            if(strtoupper($methodname) != "SAVEACTIVITYLOG")
+                $this->Log("---", KLogger::INFO );
+        }
+        
+        public function LogInfoStartDATAOBJECTFUNCTION($methodname = "")
+        {
+            $this->methodname = $methodname;
+            if(strtoupper($methodname) != "SAVEACTIVITYLOG")
+                $this->Log("-\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/-", KLogger::INFO );
+            $this->Log("FUNCTION START:".$this->methodname.":", KLogger::INFO );
+        }
+        public function LogInfoEndDATAOBJECTFUNCTION($methodname = "EMPTY")
         {
             if($methodname == "EMPTY")
                 $this->Log("FUNCTION END:".$this->$methodname.":", KLogger::INFO );

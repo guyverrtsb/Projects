@@ -1,3 +1,4 @@
+<?php zReqOnce("/gd.trxn.com/_controls/classes/_sys/database/_connections.php"); ?>
 <?php zReqOnce("/gd.trxn.com/_controls/classes/_sys/_configurations.php"); ?>
 <?php
 class SysBaseObject

@@ -1,61 +1,22 @@
-<?php zReqOnce("/gd.trxn.com/_controls/classes/_sys/database/_connections.php"); ?>
 <?php zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php"); ?>
 <?php
 class SysUtilities
-{
-    public function saveActivityLog($fr, $notes)
+{    
+    public function saveActivityLog($sdesc, $notes)
     {
         zLog()->LogInfoStartFUNCTION("saveActivityLog");
-        $sqlstmnt = "INSERT INTO activity_log SET ".
+        $sqlstmnt = "INSERT INTO activitylog SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "sdesc=:sdesc, notes=:notes";
 
         $dbcontrol = new SysConnections();
         $dbcontrol->setApplicationDB("crossapplication");
         $dbcontrol->setStatement($sqlstmnt);
-        $dbcontrol->bindParam(":sdesc", $fr);
+        $dbcontrol->bindParam(":sdesc", $sdesc);
         $dbcontrol->bindParam(":notes", $notes);
-        $numrows = $dbcontrol->execUpdate();
-/*
-        for ($idx = 0; $idx < sizeof($dbcontrol->getErrorNumAry()); $idx++)
-        {
-            $en = $dbcontrol->getErrorNumAry();
-            $em = $dbcontrol->getErrorMsgAry();
-            $rc = $dbcontrol->getRowCount();
-            $li = $dbcontrol->getLastInsertID();
-            $dbcontrol->setErrorContainer($en[$idx], $em[$idx], $rc[$idx], $li[$idx]);
-        }
-*/
-        $dbcontrol->rollbackcommit();
-        zLog()->LogInfoRETURN($fr);
+        $dbcontrol->execUpdate();
+
         zLog()->LogInfoEndFUNCTION("saveActivityLog");
-        return $fr;
-    }
-    
-    /*
-     * Use this to Send Email
-     * to : To Field
-     * subject : Subject Field
-     * $message : Message body
-     */
-    function sendmail($to, $from, $subject, $message)
-    {
-        // if "email" is filled out, send email
-        //$email = $email;
-        $subject = $subject;
-        $message = $message;
-        $headers = "";
-            $headers .= "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
-            $headers .= "From:" . $from . "\r\n";
-            $headers .= "BCC:support@guyverdesigns.com\r\n";
-            $headers .= "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
-    
-        mail($to,
-            $subject,
-            $message,
-            $headers);
     }
     
     /*
@@ -81,7 +42,7 @@ class SysUtilities
                 $fieldoutput = $fieldoutput.",";
         }
         zLog()->LogInfo("BASE OBJECT:DBFAS[".count($fns)."]:fieldoutput {".$fieldoutput."}");
-        return $fieldoutput;
+        return $fieldoutput." ";
     }
     
     /*
@@ -112,20 +73,20 @@ class SysUtilities
     
     function createUserTableKey($usertablekey)
     {
-        $import = $usertablekey;
-        $export = preg_replace('/[^a-zA-Z0-9]/', '', $import);
-        $export = str_replace(' ', '_', strtoupper($export));
-        if(strlen($export) >= 100)
-            $export = $export.substring(0, 99);
-        $export = strtoupper($export);
         $export = "X_".$usertablekey."_";
-        return $export;
+        return $this->createSdescToupper($export);
+    }
+    
+    function createSdescToupper($import)
+    {
+        $export = strtoupper($import);
+        return $this->createSdesc($export);
     }
     
     function createSdesc($import)
     {
         $export = preg_replace('/[^a-zA-Z0-9]/', '', $import);
-        $export = str_replace(' ', '_', strtoupper($export));
+        $export = str_replace(' ', '_', $export);
         if(strlen($export) >= 100)
             $export = $export.substring(0, 99);
         return strtoupper($export);
