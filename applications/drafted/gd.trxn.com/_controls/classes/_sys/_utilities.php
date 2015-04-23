@@ -42,7 +42,7 @@ class SysUtilities
                 $fieldoutput = $fieldoutput.",";
         }
         zLog()->LogInfo("BASE OBJECT:DBFAS[".count($fns)."]:fieldoutput {".$fieldoutput."}");
-        return $fieldoutput;
+        return $fieldoutput." ";
     }
     
     /*

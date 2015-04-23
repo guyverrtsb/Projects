@@ -14,7 +14,6 @@ function getPathing($path)
 /** Include method that uses the standardized subdomain **/
 function zIncVar($path, $lvar="")
 {
-    
     return include(getPathing($path));
 }
 
@@ -44,7 +43,7 @@ function zLog()
 
 function zConfig()
 {
-    zReqOnce("/_controls/classes/base/_appsysintegrations.php");
+    zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
     return new AppSysIntegration();
 }
 

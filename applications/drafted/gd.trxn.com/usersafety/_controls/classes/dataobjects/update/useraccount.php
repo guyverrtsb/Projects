@@ -76,7 +76,7 @@ class UpdateUserAccount
     function updateIsactive($uid,
                             $isactive)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateLogintries");
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateIsactive");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -92,7 +92,49 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateLogintries");
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateIsactive");
+    }
+    
+    function updateActivatebyUid($uid)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateActivatebyUid");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "isactive=:isactive ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":isactive", "T");
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateActivatebyUid");
+    }
+    
+    function updateDeactivatebyUid($uid)
+    {
+        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateDeactivatebyUid");
+        
+        $sqlstmnt = "UPDATE useraccount SET ".
+            "changeddt=NOW(), ".
+            "isactive=:isactive ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":isactive", "F");
+        $appcon->execUpdate();
+
+        $this->resultUpdateRecord($appcon, "useraccount");
+        
+        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateDeactivatebyUid");
     }
 }
 ?>

@@ -3,6 +3,8 @@
 	[
     { "display":"PHP Info", "url":"/gd.trxn.com/system/phpinfo.php" },
     { "display":"AJAX Test", "url":"/_controls/ajax/_templates/BASIC.php" },
+    { "display":"BottStrap Login", "url":"/gd.trxn.com/usersafety/login.php" },
+    { "display":"BottStrap Change Password", "url":"/gd.trxn.com/usersafety/changepassword.php" },
     { "display":"POC BattleMap", "url":"/poc/hud.php" },
     { "display":"1) UNIT TEST Create New User Gamer", "url":"/unittest/create_new_user_gamer.php" },
     { "display":"2) UNIT TEST Create New User Merchant", "url":"/unittest/create_new_user_merchant.php" },

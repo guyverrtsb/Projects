@@ -21,6 +21,12 @@ class AppSysIntegration
         return AppSysIntegration::$user_logged_off_correctly;
     }
     
+    static $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
+    static function getRedirectAuthChangePasswordPage()
+    {
+        return AppSysIntegration::$user_change_password;
+    }
+    
     static $email_support_account = "support@guyverdesigns.com";
     static function getEmailSupportAccount()
     {

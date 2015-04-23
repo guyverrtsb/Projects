@@ -31,7 +31,7 @@ class gdAuthenticateUser
                 $uua->updateIsactive($rua->getUid(), "F");
                 $mr = zLog()->LogInfoRETURN("TOO_MANY_FAILED_LOGIN_ATTEMPTS");
             }
-            else if($rua->getPassword() != $password)   // Password does not match
+            else if($rua->getPassword() != $argary["useraccount_password"])   // Password does not match
             {
                 $uua = new UpdateUserAccount();
                 $uua->updateLogintries($rua->getUid(), ($rua->getNumberoflogintries() + 1));
@@ -39,6 +39,7 @@ class gdAuthenticateUser
             }
             else if($rua->getPassword() == $argary["useraccount_password"])
             {
+                zLog()->LogDebug("**************************GOOD LOGIN*****************************");
                 zConfig()->setAuthoritySessionData($rua->getUid()
                                                 , "T"
                                                 , $rua->getUsertablekey());

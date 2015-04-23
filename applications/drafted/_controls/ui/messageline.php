@@ -1,9 +1,16 @@
-        <div id="messageline">
 <?php
-if(gdconfig()->getUIPageResponseCode() != "")
+if(isset($_REQUEST["ACTION_SERVICE_RETURN"]))
 {
-    printf("<p class=\"message\" UIPAGERESSHOW=\"%s\" UIPAGERESCODE=\"%s\" UIPAGERESKEY=\"%s\" UIPAGERESMSG=\"%s\">%s</p>", gdconfig()->getUIPageResponseMsgShow(), gdconfig()->getUIPageResponseCode(), gdconfig()->getUIPageResponseKey(), gdconfig()->getUIPageResponseMsg(), gdconfig()->getUIPageResponseMsg());
+    $return = $_REQUEST["ACTION_SERVICE_RETURN"];
+    if($return->getSysReturnShowMsg() == "TRUE")
+    {
+?>
+<div id="messageline">
+<?php
+    printf("<div class=\"form-return-message\"><p class=\"message\">[%s]:%s</p></div>", $return->getSysReturnCode(), $return->getSysReturnMsg());
+?>
+</div>
+<?php
+    }
 }
 ?>
-<?php gdconfig()->cleanUIPageResponseData() ?>
-        </div>
