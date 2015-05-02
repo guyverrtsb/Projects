@@ -1,5 +1,5 @@
 <script src="/gd.trxn.com/mimes/jquery/1.11.1/jquery-1.11.1.js"></script>
-<script src="/gd.trxn.com/mimes/jquery/1.11.1/jquery-1.11.1.js"></script>
+<script src="/gd.trxn.com/mimes/bootstrap/3.3.4/js/bottstrap.min.js"></script>
 <script src="/gd.trxn.com/mimes/gdtrxn/commons/jquery.backstretch.min.js"></script>
 <script src="/gd.trxn.com/mimes/gdtrxn/commons/jquery.form.js"></script>
 <script src="/gd.trxn.com/mimes/gdtrxn/commons/utilities.js"></script>

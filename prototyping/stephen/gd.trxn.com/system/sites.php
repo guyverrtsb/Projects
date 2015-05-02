@@ -1,13 +1,13 @@
-<?php require "../../_controls/classes/_core.php"; ?>
+<?php require_once("../_controls/classes/_syscore.php"); ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Guyver Designs - Solutions through Research and Imagination</title>
 <meta charset="UTF-8">
-<?php gdinc("/_controls/ui/css/core.php"); ?>
+<?php zInc("/_controls/ui/css/core.php"); ?>
 <style>
 </style>
-<?php gdinc("/_controls/ui/js/core.php"); ?>
+<?php zInc("/_controls/ui/js/core.php"); ?>
 <script>
 $(document).ready(function()
 {
@@ -28,7 +28,7 @@ function gdFuncSaveData()
 </head>
 <body>
 <div id="ContentWrapper">
-    <?php gdinc("/gd.trxn.com/_controls/ui/gdHeader.php"); ?>
+    <?php zInc("/gd.trxn.com/_controls/ui/gdHeader.php"); ?>
     <div id="gdContent"><table>
         <tr>
         <td width="50%"><ul>
@@ -42,7 +42,7 @@ function gdFuncSaveData()
         </ul></form></td>
         </tr>
     </table></div>
-    <?php gdinc("/gd.trxn.com/_controls/ui/gdFooter.php"); ?>
+    <?php zInc("/gd.trxn.com/_controls/ui/gdFooter.php"); ?>
 </div>
 </body>
 </html>

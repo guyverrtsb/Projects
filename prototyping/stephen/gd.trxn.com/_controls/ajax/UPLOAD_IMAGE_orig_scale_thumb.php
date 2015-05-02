@@ -2,7 +2,7 @@
 <?php gdinc("/includes/classes/image.manipulation.php"); ?>
 <?php gdinc("/includes/classes/image.to.database.php"); ?>
 <?php
-ini_set("memory_limit","100M");
+// ini_set("memory_limit","100M");
 $target_h_pxl = "500";
 $target_w_pxl = "400";
 $origimg = new ImageManipulation(); $origimg->setUploadedImage();

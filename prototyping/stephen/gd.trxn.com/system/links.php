@@ -1,10 +1,10 @@
-<?php require_once("../_controls/classes/_core.php"); ?>
+<?php require_once("../../gd.trxn.com/_controls/classes/_syscore.php"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
 <title zgd.bkgimg="/gd.trxn.com/mimes/images/backgrounds/scaled/02841_theroadtonowhere_1440x900.jpg">Site Access</title>
-<?php gdinc("/gd.trxn.com/_controls/ui/css/core.php") ?>
-<?php gdinc("/gd.trxn.com/_controls/ui/js/core.php") ?>
+<?php zInc("/gd.trxn.com/_controls/ui/css/core.php") ?>
+<?php zInc("/gd.trxn.com/_controls/ui/js/core.php") ?>
 <script>
 $(document).ready(function()
 {
@@ -31,7 +31,7 @@ $(document).ready(function()
 </head>
 <body>
 <div id="container">
-<?php gdinc("/gd.trxn.com/_controls/ui/header.php") ?>
+<?php zInc("/gd.trxn.com/_controls/ui/header.php") ?>
     <!-- CONTENT_AREA -->
     <div id="content_area">
         <div id="banner">Banner</div>
@@ -45,13 +45,14 @@ $(document).ready(function()
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE"]; ?></li>
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"]; ?></li>
 <li><?php echo $_SESSION["GUYVERDESIGNS_SITE_ALIAS"]; ?></li>
+<li><?php echo $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]; ?></li>
 </ul>
 </div>
             </div>
         </div>
         <div id="right_column">Right Column</div>
     </div>
-<?php gdinc("/gd.trxn.com/_controls/ui/footer.php") ?>
+<?php zInc("/gd.trxn.com/_controls/ui/footer.php") ?>
 </div>
 </body>
 </html>

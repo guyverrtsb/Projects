@@ -104,19 +104,20 @@ a.miniButtonBlue:hover {
 #logo { float:left; width:45px; height:70px; margin:0px; margin-left:0px; /*background:#fff;*/ border: 0px solid #000000; }
 #top_info { float:right; width:100px; height:40px; margin:5px; background:#666; border: 1px solid #c7c7c7; }
 
-#navbar { height:30px; clear:both; background:#666; border-top: 2px solid #FF0000; }
+#navbar { height:33px; clear:both; background:#666; border-top: 2px solid #FF0000; }
 #navbar ul { margin:0; padding:0; list-style-type:none; }
 #navbar ul li { float:left; padding:5px; }
 #navbar ul li a { float:left; font-size:12px; padding: 0 0 0 10px; display:block; color:#fff; }
 
 #content_area { height:700px; border:0px solid #F7A922; }
 #banner { height:50px; padding:10px; clear:both; }
-#left_column { float:left; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
-#right_column { float:right; width:170px; padding:5px; border:1px solid #fff; color:#fff; }
+#messageline { padding-left:5px; padding-top:5px; padding-bottom:5px; clear:both; background-color:#FF7E00; font-weight:bold; }
+#left_column { float:left; width:170px; height:100%; padding:5px; border:1px solid #fff; color:#fff; margin-right:2px; }
+#right_column { float:right; width:170px; height:100%; padding:5px; border:1px solid #fff; color:#fff; }
 #footer { height:50px; padding:5px; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }
 
-#workarea { float:left; width:720px; height:100%; padding:5px; border:1px solid #F7A922; background: url("/gd.trxn.com/mimes/images/grey.png"); }
 #workarea_col_left { float:left; width:45%; border:0px solid #fff; }
+#workarea { float:left; width:720px; height:100%; padding:5px; border:1px solid #F7A922; background: url("/gd.trxn.com/mimes/images/grey.png"); }
 #workarea_col_right { float:right; width:45%; border:0px solid #fff; }
 
 #workarea_col_left_scrolling { float:left; width:45%; height:600px; border:0px solid #fff; overflow:auto; }
@@ -126,7 +127,14 @@ a.miniButtonBlue:hover {
 .header { font-size:16px; color:orange; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }
 .subheader { font-size:14px; color:orange; clear:both; background: url("/gd.trxn.com/mimes/images/grey.png"); }
 .text { margin:5px; font-size:10px; color:#fff; border-bottom:0px solid #F00000; }
+.formlabel { font-size:12px; }
 .entry { margin:0px; font-size:10px; color:#fff; border-top:0px solid #fff; border-bottom:0px solid #fff; }
 .button { border:0px; margin-top:10px; }
 .menuheader { margin:0px; font-size:14px; color:orange; }
 .menulink { margin:10px; font-size:12px; color:#fff; }
+
+.tile { float:left;  width:180px; height:180px; padding:10px;
+        background: url("/gd.trxn.com/mimes/images/grey.png") repeat scroll 0 0 #0074B2; margin:10px 10px 10px 10px;
+        text-align:center; }
+
+

@@ -15,19 +15,19 @@ if($action != "INVALID")
             if($zfconfigs->findConfigurationListfromGroupKey($group_key) == "LIST_FOUND")
             {
                 $echoret = json_encode(buildReturnArray("RETURN_KEY", "SUCCESS"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"
+                                                ,"RETURN_SHOW_MSG", "FALSE"
                                                 , "LIST", $zfconfigs->getResults_ConfigurationRecords()));
             }
             else
             {
                 $echoret = json_encode(buildReturnArray("RETURN", "CONFIG_NOT_FOUND"
-                                                ,"RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                ,"RETURN_SHOW_MSG", "FALSE"));
             }
         }
         else
         {
             $echoret = json_encode(buildReturnArray("RETURN", "FORM_FIELDS_NOT_VALID"
-                                                , "RETURN_SHOW_PASS_MSG", "FALSE"));
+                                                , "RETURN_SHOW_MSG", "FALSE"));
         }
     }
 }

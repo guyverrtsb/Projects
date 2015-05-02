@@ -1,4 +1,4 @@
-<?php require_once("gd.trxn.com/_controls/classes/_core.php"); ?>
+<?php require_once("../_controls/classes/_syscore.php"); ?>
 <!DOCTYPE HTML><!-- HTML 5 -->
 </html>
 <head>
