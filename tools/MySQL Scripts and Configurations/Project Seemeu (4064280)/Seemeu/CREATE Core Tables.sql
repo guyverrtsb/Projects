@@ -11,7 +11,7 @@ CREATE  TABLE IF NOT EXISTS `configurations` (
   `uid` VARCHAR(36) NOT NULL ,
   `createddt` DATETIME NOT NULL ,
   `changeddt` DATETIME NOT NULL ,
-  `sdesc` VARCHAR(45) NOT NULL ,
+  `sdesc` VARCHAR(100) NOT NULL ,
   `ldesc` VARCHAR(250) NOT NULL ,
   `label` VARCHAR(50) NOT NULL ,
   `groupkey` VARCHAR(250) NOT NULL ,
