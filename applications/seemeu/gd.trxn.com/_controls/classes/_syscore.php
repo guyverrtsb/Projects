@@ -62,6 +62,6 @@ SysIntegration::setZBaseLines();
 SysIntegration::setZLogging(1);
 SysIntegration::setZSiteRegistration();
 //** END ** Sets the Site Integration after the Includes are set
-zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_ajax.php");
+zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_service.php");
 
 ?>
