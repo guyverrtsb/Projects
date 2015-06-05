@@ -4,20 +4,28 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
--- Table `battlestage`
+-- Table `gamestage`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `battlestage` (
+CREATE  TABLE IF NOT EXISTS `gamestage` (
   `lid` INT(11) NOT NULL AUTO_INCREMENT ,
   `uid` VARCHAR(36) NOT NULL ,
   `createddt` DATETIME NOT NULL ,
   `changeddt` DATETIME NOT NULL ,
-  `connectionkey` VARCHAR(50) NOT NULL ,
-  `tablekey` VARCHAR(100) NOT NULL ,
-  `groupaccount_uid` VARCHAR(36) NOT NULL ,
-  PRIMARY KEY (`lid`, `uid`, `groupaccount_uid`, `tablekey`) ,
+  `sdesc` VARCHAR(100) NOT NULL ,
+  `ldesc` VARCHAR(250) NOT NULL ,
+  `name` VARCHAR(250) NOT NULL ,
+  `desc` TEXT NOT NULL ,
+  `configurations_sdesc_gametype` VARCHAR(100) NOT NULL ,
+  `startdt` DATETIME NOT NULL ,
+  `enddt` DATETIME NOT NULL ,
+  `latitude` VARCHAR(15) NOT NULL ,
+  `longitude` VARCHAR(15) NOT NULL ,
+  `configurations_sdesc_range` VARCHAR(100) NOT NULL ,
+  `configurations_sdesc_gamedbinstancenumber` VARCHAR(100) NOT NULL ,
+  PRIMARY KEY (`lid`, `uid`, `sdesc`, `ldesc`) ,
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
-  UNIQUE INDEX `groupaccount_uid_UNIQUE` (`groupaccount_uid` ASC) ,
-  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )
+  UNIQUE INDEX `sdesc_UNIQUE` (`sdesc` ASC) ,
+  UNIQUE INDEX `ldesc_UNIQUE` (`ldesc` ASC) )
 ENGINE = MyISAM
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;

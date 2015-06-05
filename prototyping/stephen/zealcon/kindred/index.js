@@ -1,65 +1,111 @@
 $(document).ready(function()
 {
-    zcBuildMenu();
-    var zcnc = $("#zcnavicarousel");
+    zcBuildNavi("JSON");
+	//zcBuildNavi("PNAVI");
 });
+
+function zcBuildNavi(type)
+{
+	if(type == "JSON")
+	{
+	    $.post("/json/menuitems.php", function(json)
+	    {
+	    	zcBuildMenuJSON(eval("(" + json + ")"));
+	    });
+	}
+	else if(type = "PNAVI")
+	{
+		zcBuildMenuPNAVI();
+	}
+}
+
 
 var mmcAry = new Array();
 var numberOfMenuItems = 0;
 var doDestroyMegaMenu = false;
-function zcBuildMenu()
+function zcBuildMenuPNAVI()
 {
-	var zcpaddingLR = "2";
-    $.post("/json/menuitems.php", function(json)
-    {
-    	var idx = 0;
-        json = eval("(" + json + ")");
-        var carousel = $("<div/>", {
-        		id: "zcnavicarousel"
-			});
+	var json = "{\"LEVEL1\" : [";
+	var jsonLvl1 = "";
+	var lvl1IsFirst = true;
+	
+	var pnaviObj = $("#zcportalnavigation");
+	pnaviObj.children("div").each(function ()
+	{
+		var lvl1Obj = $(this);
+		if(lvl1Obj.attr("portalnavlevel") == 1)
+		{
+			var fobj = lvl1Obj.children().first();
+			if(fobj.prop("tagName") == "A")
+			{
+				if(!lvl1IsFirst)
+					jsonLvl1 += ",";
+				jsonLvl1 += "{\"text\":\"" + fobj.text() + "\", \"href\":\"" + fobj.attr("href") + "\"}";
+			}
+			else if(fobj.prop("tagName") == "DIV")
+			{
+				
+			}
+			lvl1IsFirst = false;
+		}
+	});
 
-        $.each(json.LEVEL1, function(key, val)
-        {
-            var text = json.LEVEL1[key].text;
-            var href = json.LEVEL1[key].href;
-            
-            var lvl1 = $("<div/>", {
-            	id: "zcnavilvl1_block_" + idx,
-            	class: "zcnavilvl1_block"
-            });
-            
-            if(json.LEVEL1[key].LEVEL2 != null)
-            	mmcAry[lvl1.attr("id")] = json.LEVEL1[key].LEVEL2;
-            
-            var anchor = $("<a/>", {
-                href: href,
-                class: "btn btn-default btn-sm zcnavilvl1_link"
-            }).text(text);
-            
-            anchor.mouseover(function()
-    		{
-            	if(($(this).parent().attr("id") in mmcAry))
-        		{
-        			doDestroyMegaMenu = false;
-	            	var jqObj = zcBuildLevel2Content($(this).parent().attr("id"));
-	            	zcShowMegaMenu(jqObj);
-        		}
-            });
-            
-            anchor.mouseout(function()
-    		{
-    			doDestroyMegaMenu = true;
-            	setTimeout(function()
-    			{
-            		zcDestroyMegaMenu();
-        		}, 1000);
-    		});
-            
-            lvl1.append(anchor);
-            
-            carousel.append(lvl1);
-            idx++;
+	json += jsonLvl1 + "]}";
+	alert(json);
+	pnaviObj.remove();
+	zcBuildMenuJSON(eval("(" + json + ")"));
+}
+function zcBuildMenuJSON(json)
+{
+	alert(json);
+    alert(json.LEVEL1);
+	var zcpaddingLR = "2";
+	var idx = 0;
+    var carousel = $("<div/>", {
+    		id: "zcnavicarousel"
+		});
+    $.each(json.LEVEL1, function(key, val)
+    {
+        var text = json.LEVEL1[key].text;
+        var href = json.LEVEL1[key].href;
+        
+        var lvl1 = $("<div/>", {
+        	id: "zcnavilvl1_block_" + idx,
+        	class: "zcnavilvl1_block"
         });
+        
+        if(json.LEVEL1[key].LEVEL2 != null)
+        	mmcAry[lvl1.attr("id")] = json.LEVEL1[key].LEVEL2;
+        
+        var anchor = $("<a/>", {
+            href: href,
+            class: "btn btn-default btn-sm zcnavilvl1_link"
+        }).text(text);
+        
+        anchor.mouseover(function()
+		{
+        	if(($(this).parent().attr("id") in mmcAry))
+    		{
+    			doDestroyMegaMenu = false;
+            	var jqObj = zcBuildLevel2Content($(this).parent().attr("id"));
+            	zcShowMegaMenu(jqObj);
+    		}
+        });
+        
+        anchor.mouseout(function()
+		{
+			doDestroyMegaMenu = true;
+        	setTimeout(function()
+			{
+        		zcDestroyMegaMenu();
+    		}, 1000);
+		});
+        
+        lvl1.append(anchor);
+        
+        carousel.append(lvl1);
+        idx++;
+            
         $("#zcnavicontainer").append(carousel);
         numberOfMenuItems = idx;
     });

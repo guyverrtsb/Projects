@@ -19,7 +19,7 @@ class RetreiveMatchMerchantAccountProfile
      */
     function byMerchantaccountUid($merchantaccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byMerchantaccountUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byMerchantaccountUid");
         
         $sqlstmnt = "SELECT * FROM match_merchantaccount_to_merchantprofile ".
             "WHERE merchantaccount_uid=:merchantaccount_uid";
@@ -32,7 +32,7 @@ class RetreiveMatchMerchantAccountProfile
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byMerchantaccountUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byMerchantaccountUid");
     }
 }
 ?>

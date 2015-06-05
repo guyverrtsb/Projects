@@ -18,7 +18,7 @@ class CreateTaskControl
                 $pathtoclass,
                 $json)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         $mr = "NA"; //Method Return;
         
         $sqlstmnt = "INSERT INTO taskcontrollink SET 
@@ -42,7 +42,7 @@ class CreateTaskControl
         
         $this->resultCreateRecord($appcon, "taskcontrollink");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

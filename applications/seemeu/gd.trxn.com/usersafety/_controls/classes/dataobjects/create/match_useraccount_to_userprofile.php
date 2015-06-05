@@ -17,7 +17,7 @@ class CreateMatchUserAccounttoUserProfile
     function basic($useraccount_uid,
                 $userprofile_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         
         $sqlstmnt = "INSERT INTO match_useraccount_to_userprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,7 +33,7 @@ class CreateMatchUserAccounttoUserProfile
         
         $this->resultCreateRecord($appcon, "match_useraccount_to_userprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

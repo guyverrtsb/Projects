@@ -23,7 +23,7 @@ class GenerateUniqueValue
      */
     function generate($APPDB, $tablename, $fieldname, $fieldvalue, $interval = 0)
     {
-        zLog()->LogInfoStartFUNCTION("generate");
+        zLog()->LogStartFUNCTION("generate");
         $mr = "NA";
 
         if($interval > 0)
@@ -37,7 +37,7 @@ class GenerateUniqueValue
             zLog()->LogDebug("generate:".$fieldname."{".$fieldvalue."}");
             $this->setOutputData("UNIQUE_VALUE", $fieldvalue);
 
-            $mr = zLog()->LogInfoRETURN("UNIQUE_VALUE_FOUND");
+            $mr = zLog()->LogRETURN("UNIQUE_VALUE_FOUND");
         }
         else
         {
@@ -47,7 +47,7 @@ class GenerateUniqueValue
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("generate");
+        zLog()->LogEndFUNCTION("generate");
     }
 }
 ?>

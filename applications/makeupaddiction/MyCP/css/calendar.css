@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+
+.clr{ clear:both;}
+
+
+.cal_top_but{ padding:5px;}
+.cal_top_but a{  float:left; margin-right:5px;}
+.cal_top_but p{ float:left; color:#fff; padding:5px 5px 0 15px; margin:0;}
+.cal_top_but input[type="text"]{ float:left; border:1px solid #333; width:130px; padding:4px; margin-right:20px;}
+
+.calendar_box table th{  font-size:14px;text-shadow: 0 1px 0 #FFFFFF;font: bold 14px Arial;color: #482B17;background:url(../images/title-bar-bg.png) repeat-x; padding:11px 9px; text-align:left; border-left:1px solid #D6D1BD;}
+.calendar_box table th:first-child{ border:none;}
+
+.calendar_box table td{background:url(../images/dayCellCurrentMonth.png) repeat-y #EFEFEF !important ; vertical-align:top}
+.calendar_box table td .events{ min-height:150px; min-width:136px; background:url(../images/dayCellCurrentMonth.png) repeat-y}
+.calendar_box table td .date_bar{ background:#921e28; margin:0 0px 0 1px;}
+
+.calendar_box table td .date_bar span{ float:left; padding:3px 9px;font: bold 14px Arial;color: #fff; text-shadow:0 -1px 0 #482D17}
+.calendar_box table td .date_bar img{ float:right; padding:5px 9px 0 0; cursor:pointer;}
+.calendar_box table td .add_event{ background:#D6D1BD; color:#333;font: normal 11px Arial;padding:2px 9px; margin:0px 1px 1px 1px;}
+
+.calendar_box table td div.today_date, .calendar_box table td.today_date{ background:url(../images/dayCellToday.png) repeat-y !important;}
+
+.calendar_box table td div.off_date .date_bar{ background:#A9222D;}
+.calendar_box table td div.off_date .add_event{ background:#A9222D;}
+
+.calendar_box table td .off_date, .calendar_box table td.off_date{ background:url(../images/dayCellOtherMonth.png) repeat-y !important;}
+
+.add_event_1{ width:500px;}
+.add_event_1 input[type="text"]{ height:10px !important; margin-top:3px !important;}
+.in_box .add_event_1 form select{ width:90px !important;}
+
+.in_box form table tr td span{ margin:0px !important;}
+
+
+.list_view table tr td{ padding:10px; border-bottom:1px solid #ccc; box-shadow:0 1px 0 #fff;}
+.list_view table tr td table tr td{ background:#ccc !important; border-bottom:1px solid #fff !important; box-shadow:none !important; padding:5px !important; text-shadow:0 1px 0 #fff;}
+.list_view h1{ line-height:27px !important;}
+
+
+.tab_content .calendar_box table td .events{ min-width:82px !important; min-height:43px !important}
+.tab_content .calendar_box table td .date_bar img{ padding:0px !important; width:7px !important;}
+.tab_content .button{font-size: 13px;
+    padding: 4px;
+    width: 91px;}
+.tab_content .cal_top_but input[type="text"]{ width:103px; margin-right:0;}
+.tab_content .cal_top_but p{ padding-top:1px;}
+.events h5{ float:left; padding:3px 9px;}
+

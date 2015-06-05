@@ -18,7 +18,7 @@ class CreateUserAccount
                 $nickname,
                 $password)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         
         $sqlstmnt = "INSERT INTO useraccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -44,7 +44,7 @@ class CreateUserAccount
         
         $this->resultCreateRecord($appcon, "useraccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

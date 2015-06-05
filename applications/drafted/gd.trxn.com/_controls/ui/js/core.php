@@ -1,9 +1,0 @@
-<script src="/gd.trxn.com/mimes/jquery/1.11.1/jquery-1.11.1.js"></script>
-<script src="/gd.trxn.com/mimes/jquery/1.11.1/jquery-1.11.1.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/commons/jquery.backstretch.min.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/commons/jquery.form.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/commons/utilities.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/content_blocks/main.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/content_blocks/generic_elements.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/content_blocks/content_block_elements.js"></script>
-<script src="/gd.trxn.com/mimes/gdtrxn/app_logic.js"></script>

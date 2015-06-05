@@ -19,7 +19,7 @@ class RetrieveGamerProfile
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid");
         
         $sqlstmnt = "SELECT * FROM gamerprofile ".
             "WHERE uid=:uid";
@@ -32,7 +32,7 @@ class RetrieveGamerProfile
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

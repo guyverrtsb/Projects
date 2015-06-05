@@ -21,7 +21,7 @@ class UpdateUserProfile
                             $crossappl_configurations_sdesc_region,
                             $crossappl_configurations_sdesc_country)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("updateAllbyUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("updateAllbyUid");
         
         $sqlstmnt = "UPDATE userprofile SET ".
             "changeddt=NOW(), ".
@@ -45,7 +45,7 @@ class UpdateUserProfile
 
         $this->resultUpdateRecord($appcon, "userprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("updateAllbyUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("updateAllbyUid");
     }
 }
 ?>

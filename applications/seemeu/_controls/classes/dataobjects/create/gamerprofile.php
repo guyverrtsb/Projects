@@ -16,14 +16,14 @@ class CreateGamerProfile
     
     function basic()
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         $this->full("");
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
     
     function full($avatarmimeuid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
         
         $sqlstmnt = "INSERT INTO gamerprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -37,7 +37,7 @@ class CreateGamerProfile
         
         $this->resultCreateRecord($appcon, "gamerprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

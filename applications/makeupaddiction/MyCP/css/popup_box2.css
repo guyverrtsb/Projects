@@ -1,0 +1,142 @@
+.clr{ clear: both}
+.Change_Imgbox{ background:#D2D9E1;}
+.picture_in{ background:#fff; padding:12px; border:1px solid #B5B5B5;min-height:100px;}
+.picture_head{ padding:5px;}
+.picture_head h1{ font-size:19px; float:left; text-shadow:0 -1px 0 #648227; color:#fff;}
+.picture_head h2{ font-size:17px; float:left; text-shadow:0 1px 0 #fff; color:#333;}
+.picture_head img{ float:right; cursor:pointer;}
+
+.Change_Imgbox{
+	-moz-border-radius: 5px;/*Firefox*/
+-webkit-border-radius: 5px;/*Safari, Chrome*/
+border-radius: 5px;
+	margin:16px 0 15px 21px;
+	 padding:1px;
+	 width:152px;
+	border:1px solid #fff;
+	-moz-box-shadow: 2px 2px 6px #6d6b6b;/*FF 3.5+*/
+-webkit-box-shadow: 2px 2px 6px #6d6b6b;/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=6, Direction=135, Color=#6d6b6b)";/*IE 8*/
+box-shadow: 2px 2px 6px #6d6b6b;
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=6, Direction=135, Color=#6d6b6b);/*IE 5.5-7*/
+}
+
+
+.Submit_btn{background: #9acc36; /* for non-css3 browsers */
+background: -moz-linear-gradient(top, #9acc36,  #73a411); /* for firefox 3.6+ */ 
+background: -webkit-gradient(linear, left top, left bottom, from(#9acc36), to(#73a411)); /* Safari 4+, Chrome */
+background: -webkit-linear-gradient(left top, left bottom, #9acc36, #73a411); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+background: -o-linear-gradient(top, #9acc36,#73a411); /* Opera 11.10+ */
+background: -ms-filter:"progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#9acc36, EndColorStr=#73a411, GradientType=0)";
+background: linear-gradient(to bottom, #9acc36,#73a411); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9acc36', endColorstr='#73a411', GradientType='0'); /* for IE */
+
+-moz-box-shadow: inset 0px 1px 0px #C6E782 ;/*FF 3.5+*/
+-webkit-box-shadow: inset 0px 1px 0px #C6E782 ;/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+box-shadow: inset 0px 1px 0px #C6E782 ;
+border:1px solid #69970c;
+text-shadow:1px -1px 0 #6C9A0C;
+	
+	
+
+padding:5px 10px;
+-moz-border-radius: 5px;/*Firefox*/
+-webkit-border-radius: 5px;/*Safari, Chrome*/
+border-radius: 5px;
+cursor:pointer;
+color:#fff;
+font-size:14px; 
+min-width:56px;
+text-decoration:none;
+ margin:5px 0;
+}
+.Submit_btn:hover{background: #777777; /* for non-css3 browsers */
+background: -moz-linear-gradient(top, #777777,  #575757); /* for firefox 3.6+ */ 
+background: -webkit-gradient(linear, left top, left bottom, from(#777777), to(#575757)); /* Safari 4+, Chrome */
+background: -webkit-linear-gradient(left top, left bottom, #777777, #575757); /* Chrome 10+, Safari 5.1+, iOS 5+ */
+background: -o-linear-gradient(top, #777777,#575757); /* Opera 11.10+ */
+background: -ms-filter:"progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#777777, EndColorStr=#575757, GradientType=0)";
+background: linear-gradient(to bottom, #777777,#575757); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#777777', endColorstr='#575757', GradientType='0'); /* for IE */
+
+-moz-box-shadow: inset 0px 1px 0px #acabab ;/*FF 3.5+*/
+-webkit-box-shadow: inset 0px 1px 0px #acabab ;/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+box-shadow: inset 0px 1px 0px #acabab ;
+border:1px solid #555;
+text-shadow:1px -1px 0 #333;}
+
+.picture_in input[type="text"]{ border:1px solid #ccc ; padding:10px 5px; width:363px ; }
+.picture_in select{ border:1px solid #ccc; padding:10px 5px;width:376px}
+
+
+.picture_in #moretext_show{font-family: Verdana;
+text-align: left;
+font-weight: 400;
+text-decoration: none;
+text-transform: none;
+font-style: normal;
+font-size: 12px;
+line-height: 1.3em;
+letter-spacing: 0px;
+word-spacing: 2px;
+text-indent: 12px;
+color: #000000;
+background: #fdfdfd;
+unicode-bidi: normal;
+direction: rtl;
+font-variant: normal;
+font-stretch: normal;
+white-space: normal;
+}
+
+
+.pop_inForm input[type="text"]{ border:1px solid #ccc; padding: 10px 5px; width:362px; }
+.pop_inForm select{ border:1px solid #ccc; padding:10px 5px; width:100%;}
+
+
+
+.pop_inForm2 input[type="text"]{ border:1px solid #ccc; padding: 10px 5px; width:362px; }
+.pop_inForm2 select{ border:1px solid #ccc; padding:10px 5px; width:100%;}
+
+
+.pop_inForm3 input[type="text"]{ border:1px solid #ccc; padding: 10px 5px; width:362px; }
+.pop_inForm3 select{ border:1px solid #ccc; padding:10px 5px; width:100%;}
+
+
+.labelText{ padding:0 0 5px 0; text-align:left; font-size:15px;}
+.t_box{padding:0 0 10px 0; text-align:left;}
+.t_but{padding:0 0 10px 0; text-align:left;}
+
+.labelText2{ padding:0 0 5px 0; text-align:left; font-size:15px;}
+.t_box2{padding:0 0 10px 0; text-align:left;}
+.t_but2{padding:0 0 10px 0; text-align:left;}
+
+
+.poRow{ padding: 0 0 10px 0;}
+.po_text{ padding:0 0 5px 0; text-align:left; font-size:15px; float:left;}
+.showTewxt{ float:left; padding:0 0 0 10px;}
+.poImg{ float:left; margin:0 0 0 10px;}
+
+.p_text{ padding:0 0 5px 0; text-align:left; font-size:15px; float:left; width:100px;}
+.p_showTewxt{ float:left; padding:0 0 0 10px; background:#F1F1F1; padding:5px; width:245px; -moz-border-radius:5px; -webkit-border-bottom-left-radius:5px; border-radius:5px; border:#E3E0E0 solid 1px;}
+.p_{ float:left; margin:0 0 0 10px;}
+
+
+.p_in{ background:#fff; padding:12px; border:1px solid #B5B5B5;min-height:150px;}
+.p_head{ padding:5px;}
+.p_head h1{ font-size:19px; float:left; text-shadow:0 -1px 0 #648227; color:#fff;}
+.p_head h2{ font-size:17px; float:left; text-shadow:0 1px 0 #fff; color:#333;}
+.p_head img{ float:right; cursor:pointer;}
+.editForm label{ display:block; float:left; width:143px; padding:16px 0 0;}
+.editForm input[type="text"]{ float:left; margin:5px 0;color: #333333 !important;
+   -moz-border-radius: 4px;/*Firefox*/
+-webkit-border-radius: 4px;/*Safari, Chrome*/
+border-radius: 4px;
+
+-moz-box-shadow: inset 0px 2px 6px #cccccc;/*FF 3.5+*/
+-webkit-box-shadow: inset 0px 2px 6px #cccccc;/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+box-shadow: inset 0px 2px 6px #cccccc;}
+.editForm .subMitBut{margin:10px 0 0 144px}
+.editForm .button{ float:left; margin:0 20px 0 0;
+    
+}

@@ -44,7 +44,7 @@ class Gamer
                             $configurations_sdesc_gamerrole,
                             $avatarmimeuid = "")
     {
-        zLog()->LogInfoStartFUNCTION("createGamerInfo");
+        zLog()->LogStartFUNCTION("createGamerInfo");
         $mr = "NA";
         
         $emailexists = new RetrieveUserAccount();
@@ -55,7 +55,7 @@ class Gamer
         
         $guv = new GenerateUniqueValue();
         $tablekey = $guv->generate("USERSAFETY", "useraccount", "usertablekey", $this->createUserTableKey($nickname));
-        zLog()->LogInfo("TABLEKEY:{".$guv->getOutputData("UNIQUE_VALUE")."}");
+        zLog()->LogDebug("TABLEKEY:{".$guv->getOutputData("UNIQUE_VALUE")."}");
         
         $gamertagexists = new RetrieveGamerAccount();
         $gamertagexists->byGamertag($gamertag);
@@ -95,34 +95,34 @@ class Gamer
             $this->setOutputData("gameraccount_uid", $cga->getUid());
             $this->setOutputData("gameraccount_gamertag", $cga->getGamertag());
 
-            $mr = zLog()->LogInfoRETURN("GAMER_IS_CREATED");
+            $mr = zLog()->LogReturn("GAMER_IS_CREATED");
         }
         else if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
+            $mr = zLog()->LogReturn("EMAIL_IN_USE");
         }
         else if($nicknameexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
             $guv->generate("USERSAFETY", "useraccount", "nickname", $this->createsdesc($nickname));
 
             $this->setOutputData("NICKNAME_SUGGESTION", $guv->getOutputData("UNIQUE_VALUE"));
-            $mr = zLog()->LogInfoRETURN("NICKNAME_IN_USE");
+            $mr = zLog()->LogReturn("NICKNAME_IN_USE");
         }
         else if($gamertagexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
             $guv->generate("APPLICATION", "gameraccount", "gamertag", $this->createsdesc($gamertag));
 
             $this->setOutputData("GAMERTAG_SUGGESTION", $guv->getOutputData("UNIQUE_VALUE"));
-            $mr = zLog()->LogInfoRETURN("GAMERTAG_IN_USE");
+            $mr = zLog()->LogReturn("GAMERTAG_IN_USE");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("createGamerInfo");
+        zLog()->LogEndFUNCTION("createGamerInfo");
     }
     
     function retrieveGamer($by, $val)
     {
-        zLog()->LogInfoStartFUNCTION("retrieveGamer");
+        zLog()->LogStartFUNCTION("retrieveGamer");
         $mr = "NA";
  
         if($by == "useraccount_uid")
@@ -184,7 +184,7 @@ class Gamer
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("retrieveGamer");
+        zLog()->LogEndFUNCTION("retrieveGamer");
     }
 }
 ?>

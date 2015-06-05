@@ -16,7 +16,7 @@ class DeleteMatchMerchantAccounttoObject
     
     function byMerchantaccountUid($merchantaccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byMerchantaccountUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byMerchantaccountUid");
         
         $sqlstmnt = "DELETE FROM match_merchantaccount_to_object
             WHERE merchantaccount_uid=:merchantaccount_uid";
@@ -29,7 +29,7 @@ class DeleteMatchMerchantAccounttoObject
         
         $this->resultDeleteRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byMerchantaccountUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byMerchantaccountUid");
     }
 }
 ?>

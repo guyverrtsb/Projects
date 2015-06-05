@@ -20,7 +20,7 @@ class CreateUserProfile
                 $crossappl_configurations_sdesc_region,
                 $crossappl_configurations_sdesc_country)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         
         $sqlstmnt = "INSERT INTO userprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -42,7 +42,7 @@ class CreateUserProfile
         
         $this->resultCreateRecord($appcon, "userprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

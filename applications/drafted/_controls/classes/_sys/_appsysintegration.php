@@ -3,40 +3,51 @@
 class AppSysIntegration
     extends SysIntegration
 {
-    static $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
-    static function getRedirectAuthFailPage()
+    private $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectAuthFailPage()
     {
-        return AppSysIntegration::$not_authorized_page;
+        return $this->not_authorized_page;
     }
     
-    static $user_logged_in_correctly = "/s_user_home.php";
-    static function getRedirectAuthLoggedinPage()
+    private $user_logged_in_correctly = "/s_user_home.php";
+    function getRedirectAuthLoggedinPage()
     {
-        return AppSysIntegration::$user_logged_in_correctly;
+        return $this->user_logged_in_correctly;
     }
     
-    static $user_logged_off_correctly = "/gd.trxn.com/usersafety/index.php";
-    static function getRedirectAuthLoggedoffPage()
+    private $user_logged_off_correctly = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectAuthLoggedoffPage()
     {
-        return AppSysIntegration::$user_logged_off_correctly;
+        return $this->user_logged_off_correctly;
     }
     
-    static $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
-    static function getRedirectAuthChangePasswordPage()
+    private $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
+    function getRedirectAuthChangePasswordPage()
     {
-        return AppSysIntegration::$user_change_password;
+        return $this->user_change_password;
     }
     
-    static $email_support_account = "support@guyverdesigns.com";
-    static function getEmailSupportAccount()
+    private $email_support_account = "support@guyverdesigns.com";
+    function getEmailSupportAccount()
     {
-        return AppSysIntegration::$email_support_account;
+        return $this->email_support_account;
     }
     
-    static $email_admin_account = "stephen@guyverdesigns.com";
-    static function getEmailAdminAccount()
+    private $email_admin_account = "stephen@guyverdesigns.com";
+    function getEmailAdminAccount()
     {
-        return AppSysIntegration::$email_admin_account;
+        return $this->email_admin_account;
+    }
+    
+    private $default_page_title = "SeeMeU - Education, Access and Collaboration for All";
+    function setDefaultPageTitle($pageTitle)
+    {
+        $this->default_page_title = $pageTitle;
+    }
+    
+    function getDefaultPageTitle()
+    {
+        return $this->default_page_title;
     }
 }
 ?>

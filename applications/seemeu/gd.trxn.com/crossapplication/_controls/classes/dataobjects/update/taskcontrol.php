@@ -16,7 +16,7 @@ class UpdateTaskControl
     
     function deactivateTasklink($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("deactivateTasklink");
+        zLog()->LogStartDATAOBJECTFUNCTION("deactivateTasklink");
         $mr = "NA"; //Method Return;
         
         $sqlstmnt = "UPDATE taskcontrollink SET ".
@@ -33,7 +33,7 @@ class UpdateTaskControl
 
         $this->resultUpdateRecord($appcon, "taskcontrollink");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("deactivateTasklink");
+        zLog()->LogEndDATAOBJECTFUNCTION("deactivateTasklink");
     }
 }
 ?>

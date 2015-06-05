@@ -1,48 +1,17 @@
-function gdSearializeControlKey(val)
+function gdSearializeControlKey(serviceControlKey)
 {
-	return gdSerialize("GD_CONTROL_KEY", val);
+	return gdSerialize(serviceControlKey);
 }
 
 function gdSerialize()
 {
 	var data = "";
-	if(arguments.length == 1)
+	if(arguments.length == 1)	// two Arguments means that only doing SERVICE_CONTROL_KEY
 	{
-		data = $("#FORM_" + arguments[0]).serialize();
+		data = arguments[0].serialize();
 	}
-	else if(arguments.length == 2)
-	{
-		data = arguments[0] + "=" + arguments[1];
-	}
-	else
-	{
-		for (var idx = 0; idx < arguments.length; idx++)
-		{
-			if(idx == 0 && $("#FORM_" + arguments[idx]).is("form"))
-				data = $("#FORM_" + arguments[idx]).serialize();
-			else
-			{
-				data = data + "&" + arguments[idx];
-				idx++;
-				data = data + "=" + arguments[idx];
-			}
-		}
-	}
-	// alert("serial data-" + data + "-");
+	alert("serial data[" + data + "]");
 	return data;
-}
-
-function getGDControlKey(id)
-{
-	var qsary = gdSerialize(id).split("&");
-	for(var idx = 0; idx < qsary.length; idx++)
-	{
-		var n = qsary[idx].split("=")[0];
-		var v = qsary[idx].split("=")[1];
-		if(n == "GD_CONTROL_KEY")
-			return v;
-	}
-	return null;
 }
 
 function gdShowJSONRawtoOutput(data)
@@ -62,7 +31,7 @@ function ltrim(stringToTrim) {
 function rtrim(stringToTrim) {
 	return stringToTrim.replace(/\s+$/,"");
 }
-function isType(obj, type)
+function gdIsType(obj, type)
 {
 	if(typeof(type) == "undefined")
 		type = "undefined";
@@ -72,7 +41,7 @@ function isType(obj, type)
 		return false;
 }
 
-function getDay(idx)
+function gdGetDay(idx)
 {
 	var day = new Array();
 	day[0] = "Sunday";
@@ -84,4 +53,24 @@ function getDay(idx)
 	day[6] = "Saturday";
 	
 	return day[idx];
+}
+
+function gdGetParentForm(obj)
+{
+	obj = $(obj);
+	if(obj.prop("tagName") == "FORM")
+		return obj;
+	else
+		return gdGetParentForm(obj.parent());
+}
+
+function isEven(n)
+{
+	  n = Number(n);
+	  return n === 0 || !!(n && !(n%2));
+}
+
+function isOdd(n)
+{
+  return isEven(Number(n) + 1);
 }

@@ -35,6 +35,11 @@ class SysReturns
         zLog()->LogInfoEndFUNCTION("setSysReturnStructure");
     }
     
+    function setSysReturnObj($object)
+    {
+        $this->transferSysReturnAry($object);
+    }
+    
     function transferSysReturnAry($object)
     {
         return $this->setSysReturnAry($object->getSysReturnAry());

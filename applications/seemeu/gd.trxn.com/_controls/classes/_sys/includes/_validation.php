@@ -17,7 +17,7 @@ function validateFormforBlanks()
     {
         if (!isset($_POST[$name]) || $_POST[$name] == "")
         {
-            zLog()->LogInfo("Bad Field :{".$name."}");
+            zLog()->LogIssue("Bad Field :{".$name."}");
             $fieldfailed = "email";
         }
     }
@@ -36,7 +36,7 @@ function validateFormforBlanks()
  */
 function ajaxValidationLogging($retTF, $ajaxfile, $fieldfailed)
 {
-    zLog()->LogInfo($ajaxfile." :{".$fieldfailed."}");
+    zLog()->LogIssue($ajaxfile." :{".$fieldfailed."}");
     return $retTF; 
 }
 ?>

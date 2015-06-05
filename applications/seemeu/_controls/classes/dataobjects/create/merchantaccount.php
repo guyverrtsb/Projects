@@ -17,7 +17,7 @@ class CreateMerchantAccount
     function full($sdesc,
                 $companyname)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
 
         $sqlstmnt = "INSERT INTO merchantaccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,12 +33,12 @@ class CreateMerchantAccount
         
         $this->resultCreateRecord($appcon, "merchantaccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
     
     function byCompanyname($companyname)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
 
         $sqlstmnt = "INSERT INTO merchantaccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -54,7 +54,7 @@ class CreateMerchantAccount
         
         $this->resultCreateRecord($appcon, "merchantaccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

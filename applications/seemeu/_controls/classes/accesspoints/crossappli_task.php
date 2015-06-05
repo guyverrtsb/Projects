@@ -19,7 +19,7 @@ class AppliTaskControl
 
     function send($args)
     {
-        zLog()->LogInfoStartFUNCTION("execute");
+        zLog()->LogStartFUNCTION("execute");
         $mr = "NA"; //Method Return;
                                 
         if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "ACTIVATE_GAMER_ACCOUNT")
@@ -27,7 +27,7 @@ class AppliTaskControl
             $activation = new Activation();
             $activation->sendActivationofGamerAccount($args);
 
-            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
+            $mr = zLog()->LogReturn("TASK_PERFORMED");
             $this->transferSysReturnAry($activation);
         }
         else if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "RESET_GAMER_PASSWORD")
@@ -35,16 +35,16 @@ class AppliTaskControl
             $activation = new Activation();
             $activation->sendResetofGamerPassword($args);
 
-            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
+            $mr = zLog()->LogReturn("TASK_PERFORMED");
             $this->transferSysReturnAry($activation);
         }
         else
         {
-            $mr = zLog()->LogInfoRETURN("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
+            $mr = zLog()->LogReturn("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("execute");
+        zLog()->LogEndFUNCTION("execute");
     }
     
     /*
@@ -57,7 +57,7 @@ class AppliTaskControl
     function execute($taskkey,
                     $json)
     {
-        zLog()->LogInfoStartFUNCTION("execute");
+        zLog()->LogStartFUNCTION("execute");
         $mr = "NA"; //Method Return;
                
         if($taskkey == "ACTIVATE_GAMER_ACCOUNT")
@@ -76,7 +76,7 @@ class AppliTaskControl
             
             $this->transferSysReturnAry($gamer);
             
-            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
+            $mr = zLog()->LogReturn("TASK_PERFORMED");
         }
         else if($taskkey == "DEACTIVATE_GAMER_ACCOUNT")
         {
@@ -90,20 +90,20 @@ class AppliTaskControl
             $this->setOutputData("userprofile_lastname", $cup->getLastname());
             */
 
-            $mr = zLog()->LogInfoRETURN("TASK_PERFORMED");
+            $mr = zLog()->LogReturn("TASK_PERFORMED");
         }
         else if($taskkey == "RESET_GAMER_PASSWORD")
         {
             SysIntegration::redirectToUIPage("0", "RESET_GAMER_PASSWORD", "Reset Gamer Password", "FALSE", SysIntegration::getRedirectAuthChangePasswordPage());
-            $mr = zLog()->LogInfoRETURN("RESET_GAMER_PASSWORD");
+            $mr = zLog()->LogReturn("RESET_GAMER_PASSWORD");
         }
         else
         {
-            $mr = zLog()->LogInfoRETURN("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
+            $mr = zLog()->LogReturn("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("execute");
+        zLog()->LogEndFUNCTION("execute");
     }
 }
 ?>

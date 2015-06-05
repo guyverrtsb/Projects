@@ -8,14 +8,14 @@ class CreateSiteandAlias
     
     function __construct()
     {
-        $this->site = $_SESSION[SysIntegration::getKeySessSite()];
-        $this->sitealias = $_SESSION[SysIntegration::getKeySessSiteAlias()];
+        $this->site = $_SESSION[zAppSysIntegration()->getKeySessSite()];
+        $this->sitealias = $_SESSION[zAppSysIntegration()->getKeySessSiteAlias()];
         zLog()->LogDebug($this->site."-".$this->sitealias);
     }
 
     function registerSite()
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("registerSite");
+        zLog()->LogStartDATAOBJECTFUNCTION("registerSite");
         
         $sqlstmnt = "INSERT INTO site SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -29,12 +29,12 @@ class CreateSiteandAlias
         
         $this->resultCreateRecord($appcon, "site");
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("registerSite");
+        zLog()->LogEndDATAOBJECTFUNCTION("registerSite");
     }
     
     function registerSiteAlias()
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("registerSiteAlias");
+        zLog()->LogStartDATAOBJECTFUNCTION("registerSiteAlias");
         
         $sqlstmnt = "INSERT INTO sitealias SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -48,12 +48,12 @@ class CreateSiteandAlias
         
          $this->resultCreateRecord($appcon, "sitealias");
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("registerSiteAlias");
+        zLog()->LogEndDATAOBJECTFUNCTION("registerSiteAlias");
     }
     
     function matchSiteandSiteAlias($site_uid, $sitealias_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("matchSiteandSiteAlias");
+        zLog()->LogStartDATAOBJECTFUNCTION("matchSiteandSiteAlias");
         
         $sqlstmnt = "INSERT INTO match_site_to_sitealias SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -69,7 +69,7 @@ class CreateSiteandAlias
 
         $this->resultCreateRecord($appcon, "match_site_to_sitealias");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("matchSiteandSiteAlias");
+        zLog()->LogEndDATAOBJECTFUNCTION("matchSiteandSiteAlias");
     }
 }
 ?>

@@ -4,7 +4,7 @@ class SysUtilities
 {    
     public function saveActivityLog($sdesc, $notes)
     {
-        zLog()->LogInfoStartFUNCTION("saveActivityLog");
+        zLog()->LogStartFUNCTION("saveActivityLog");
         $sqlstmnt = "INSERT INTO activitylog SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "sdesc=:sdesc, notes=:notes";
@@ -16,7 +16,7 @@ class SysUtilities
         $dbcontrol->bindParam(":notes", $notes);
         $dbcontrol->execUpdate();
 
-        zLog()->LogInfoEndFUNCTION("saveActivityLog");
+        zLog()->LogEndFUNCTION("saveActivityLog");
     }
     
     /*
@@ -36,12 +36,12 @@ class SysUtilities
             {
                 $fo = str_replace($usertablekey, "", $fo);
             }
-            zLog()->LogInfo("BASE OBJECT:DBFAS:".$fn."{".$fo."}");
+            zLog()->LogDebug("BASE OBJECT:DBFAS:".$fn."{".$fo."}");
             $fieldoutput = $fieldoutput.$fn." ".$fo;
             if(count($fns) > $cntr)
                 $fieldoutput = $fieldoutput.",";
         }
-        zLog()->LogInfo("BASE OBJECT:DBFAS[".count($fns)."]:fieldoutput {".$fieldoutput."}");
+        zLog()->LogDebug("BASE OBJECT:DBFAS[".count($fns)."]:fieldoutput {".$fieldoutput."}");
         return $fieldoutput." ";
     }
     
@@ -51,7 +51,7 @@ class SysUtilities
     public function dbf($fieldinput)
     {
         $fieldoutput = str_replace(".", "_", $fieldinput);
-        zLog()->LogInfo("BASE OBJECT:DBF:".$fieldinput."{".$fieldoutput."}");
+        zLog()->LogDebug("BASE OBJECT:DBF:".$fieldinput."{".$fieldoutput."}");
         return $fieldoutput;
     }
     

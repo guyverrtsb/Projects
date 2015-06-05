@@ -18,7 +18,7 @@ class CreateMatchGamertoGrouptoRole
                 $groupaccount_uid,
                 $configurations_sdesc_grouprole)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
         
         $sqlstmnt = "INSERT INTO match_gameraccount_to_groupaccount_to_grouprole SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -36,7 +36,7 @@ class CreateMatchGamertoGrouptoRole
         
         $this->resultCreateRecord($appcon, "match_gameraccount_to_groupaccount_to_grouprole");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

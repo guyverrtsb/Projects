@@ -88,12 +88,13 @@ CREATE  TABLE IF NOT EXISTS `universityaccount` (
   `uid` VARCHAR(36) NOT NULL ,
   `createddt` DATETIME NOT NULL ,
   `changeddt` DATETIME NOT NULL ,
-  `sdesc` VARCHAR(45) NOT NULL ,
-  `emailkey` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`lid`, `emailkey`, `sdesc`, `uid`) ,
+  `webaddress` VARCHAR(100) NOT NULL ,
+  `emaildomain` VARCHAR(100) DEFAULT NULL ,
+  `isactive` VARCHAR(1) NOT NULL DEFAULT "F" ,
+  `islive` VARCHAR(1) NOT NULL DEFAULT "F" ,
+  PRIMARY KEY (`lid`, `webaddress`, `uid`) ,
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
-  UNIQUE INDEX `searchkey_UNIQUE` (`sdesc` ASC) ,
-  UNIQUE INDEX `univemailkey_UNIQUE` (`emailkey` ASC) ,
+  UNIQUE INDEX `webaddress_UNIQUE` (`webaddress` ASC) ,
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )
 ENGINE = MyISAM
 AUTO_INCREMENT = 1
@@ -109,11 +110,113 @@ CREATE  TABLE IF NOT EXISTS `universityprofile` (
   `createddt` DATETIME NOT NULL ,
   `changeddt` DATETIME NOT NULL ,
   `city` VARCHAR(45) NOT NULL ,
-  `crossappl_configurations_sdesc_region` VARCHAR(45) NOT NULL ,
-  `crossappl_configurations_sdesc_country` VARCHAR(45) NOT NULL ,
+  `crossappl_configurations_sdesc_region` VARCHAR(100) DEFAULT NULL ,
+  `crossappl_configurations_sdesc_country` VARCHAR(100) DEFAULT NULL ,
+  `region` VARCHAR(45) NOT NULL ,
   `foundeddate` DATE NULL DEFAULT NULL ,
-  `content` TEXT NOT NULL ,
+  `ldesc` VARCHAR(250) NOT NULL ,
   `name` VARCHAR(250) NOT NULL ,
+  `phonenumber` VARCHAR(20) NOT NULL ,
+  `configurations_sdesc_schooltype` VARCHAR(100) DEFAULT NULL ,
+  `schooltype` VARCHAR(11) NOT NULL ,
+  `latitude` VARCHAR(15) NOT NULL ,
+  `longitude` VARCHAR(15) NOT NULL ,
+  `universitysource_uid` VARCHAR(36) NOT NULL ,
+  PRIMARY KEY (`lid`, `uid`, `ldesc`, `universitysource_uid`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ,
+  UNIQUE INDEX `ldesc_UNIQUE` (`ldesc` ASC) ,
+  UNIQUE INDEX `universitysource_uid_UNIQUE` (`universitysource_uid` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `universitysource`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `universitysource` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
+  `uid` VARCHAR(36) NOT NULL ,
+  `createddt` DATETIME NOT NULL ,
+  `changeddt` DATETIME NOT NULL ,
+  `cxurl` VARCHAR(1000) NOT NULL ,
+  `idx` INT(6) NOT NULL ,
+  `profile` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `universityaccountcreated` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_essentials` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_about` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_overallratings` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_studentratings` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_location` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_gettingaround` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_walkability` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_transit` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_weather` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_students` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_similar` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  `snapshot_otherschoolsnear` VARCHAR(1) NOT NULL DEFAULT 'F' ,
+  PRIMARY KEY (`lid`, `uid`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `scholarshipprofile`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `scholarshipprofile` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
+  `uid` VARCHAR(36) NOT NULL ,
+  `createddt` DATETIME NOT NULL ,
+  `changeddt` DATETIME NOT NULL ,
+  `ldesc` VARCHAR(250) NOT NULL ,
+  `name` VARCHAR(250) NOT NULL ,
+  `scholarshipsponsor_uid` VARCHAR(250) NOT NULL ,
+  `applylink` VARCHAR(1000) DEFAULT NULL ,
+  `scholarshipsource_uid` VARCHAR(36) NOT NULL ,
+  PRIMARY KEY (`lid`, `uid`, `ldesc`, `scholarshipsource_uid`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ,
+  UNIQUE INDEX `ldesc_UNIQUE` (`ldesc` ASC) ,
+  UNIQUE INDEX `scholarshipsource_uid_UNIQUE` (`scholarshipsource_uid` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `scholarshipsponsor`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `scholarshipsponsor` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
+  `uid` VARCHAR(36) NOT NULL ,
+  `createddt` DATETIME NOT NULL ,
+  `changeddt` DATETIME NOT NULL ,
+  `ldesc` VARCHAR(250) NOT NULL ,
+  `name` VARCHAR(250) NOT NULL ,
+  PRIMARY KEY (`lid`, `uid`, `ldesc`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
+  UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) ,
+  UNIQUE INDEX `ldesc_UNIQUE` (`ldesc` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `scholarshipsource`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `scholarshipsource` (
+  `lid` INT(11) NOT NULL AUTO_INCREMENT ,
+  `uid` VARCHAR(36) NOT NULL ,
+  `createddt` DATETIME NOT NULL ,
+  `changeddt` DATETIME NOT NULL ,
+  `cxurl` VARCHAR(1000) NOT NULL ,
+  `idx` INT(6) NOT NULL ,
+  `profile` VARCHAR(1) NOT NULL DEFAULT 'F' ,
   PRIMARY KEY (`lid`, `uid`) ,
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
   UNIQUE INDEX `lid_UNIQUE` (`lid` ASC) )

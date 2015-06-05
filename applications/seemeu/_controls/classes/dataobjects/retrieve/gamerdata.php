@@ -19,7 +19,7 @@ class RetrieveGamerData
      */
     function byUseraccountuid($match_useraccount_to_gameraccount_to_gamerprofile_useraccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUseraccountuid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUseraccountuid");
         
         $sqlstmnt = "SELECT ".
             $this->dbfas("match_useraccount_to_gameraccount_to_gamerprofile.useraccount_uid,".
@@ -45,7 +45,7 @@ class RetrieveGamerData
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUseraccountuid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUseraccountuid");
     }
     
     /**
@@ -53,7 +53,7 @@ class RetrieveGamerData
      */
     function byGamertag($gameraccount_gamertag)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byGamertag");
+        zLog()->LogStartDATAOBJECTFUNCTION("byGamertag");
 
         $sqlstmnt = "SELECT ".
             $this->dbfas("gameraccount.uid,".
@@ -78,7 +78,7 @@ class RetrieveGamerData
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byGamertag");
+        zLog()->LogEndDATAOBJECTFUNCTION("byGamertag");
     }
     
     /**
@@ -86,7 +86,7 @@ class RetrieveGamerData
      */
     function byGameraccountuid($gameraccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byGameraccountuid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byGameraccountuid");
         
         $sqlstmnt = "SELECT ".
             $this->dbfas("match_useraccount_to_gameraccount_to_gamerprofile.gameraccount_uid,".
@@ -112,7 +112,7 @@ class RetrieveGamerData
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byGameraccountuid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byGameraccountuid");
     }
 }
 ?>

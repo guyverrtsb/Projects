@@ -5,7 +5,7 @@ class SysConfigurations
 {
     function findConfigurationListfromGroupKey($groupkey, $APPDB = "crossapplication")
     {
-        zLog()->LogInfoStartFUNCTION("findConfigurationListfromGroupKey");
+        zLog()->LogStartFUNCTION("findConfigurationListfromGroupKey");
         
         $this->cleanResults_ConfigurationRecords();
 
@@ -22,12 +22,12 @@ class SysConfigurations
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndFUNCTION("findConfigurationListfromGroupKey");
+        zLog()->LogEndFUNCTION("findConfigurationListfromGroupKey");
     }
     
     function findConfigurationfromSdesc($sdesc, $APPDB = "crossapplication")
     {
-        zLog()->LogInfoStartFUNCTION("findConfigurationfromSdesc");
+        zLog()->LogStartFUNCTION("findConfigurationfromSdesc");
         
         $this->cleanResult_ConfigurationRecord();
 
@@ -44,12 +44,12 @@ class SysConfigurations
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndFUNCTION("findConfigurationfromSdesc");
+        zLog()->LogEndFUNCTION("findConfigurationfromSdesc");
     }
     
     function findConfigurationfromUid($uid, $APPDB = "crossapplication")
     {
-        zLog()->LogInfoStartFUNCTION("findConfigurationfromUid");
+        zLog()->LogStartFUNCTION("findConfigurationfromUid");
         
         $this->cleanResult_ConfigurationRecord();
 
@@ -66,7 +66,7 @@ class SysConfigurations
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndFUNCTION("findConfigurationfromUid");
+        zLog()->LogEndFUNCTION("findConfigurationfromUid");
     }
     
     function findCfgUidfromSdesc($sdesc)

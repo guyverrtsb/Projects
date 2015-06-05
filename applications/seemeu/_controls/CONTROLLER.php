@@ -8,31 +8,28 @@
  * This will give the Developers central place to manage flow
  */
 $return = new AppSysBaseObject();
-if(getAjaxControlKey() != "NO_KEY_SENT")
+$serviceControlKey = getServiceControlKey();
+switch($serviceControlKey)
 {
-    zLog()->LogInfo("SERVICE_CONTROL_KEY{".getServiceControlKey()."}");
-    if(getServiceControlKey() == "CREATE_GAMER_REGISTRATION"
-        || getServiceControlKey() == "LOGIN_GAMER_BY_EMAIL"
-        || getServiceControlKey() == "ACTIVATE_GAMER_ACCOUNT"
-        || getServiceControlKey() == "TASK_CONTROL"
-        || getServiceControlKey() == "LOGGED_IN_GAMER_DATA"
-        || getServiceControlKey() == "RESET_GAMER_PASSWORD")
-    {
-        zReqOnce("/_controls/executors/".getServiceControlKey().".php");
-        $executor = new Executor();
-        $return->setSysReturnAry($executor->execute());
-    }
-    else
-    {
-        $return->setSysReturnCode("AJAX_SERVICE_CONTROL_KEY_NOT_VALID");
+        case "TEST_ACTION":
+        case "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS":
+        case "ACTIVATE_GAMER_ACCOUNT":
+        case "TASK_CONTROL":
+        case "LOGGED_IN_GAMER_DATA":
+            zReqOnce("/_controls/executors/".$serviceControlKey.".php");
+            $executor = new Executor();
+            $return->setSysReturnAry($executor->execute()->getSysReturnAry());
+            break;
+    case "NO_KEY_SENT":
+            $return->setSysReturnCode("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND");
+            $return->setSysReturnShowMsg("FALSE");
+            $return->setSysReturnMsg("Action not provided");
+            zLog()->LogInfo("SERVICE_CONTROL_KEY{".getServiceControlKey()."}");
+            break;
+    default:
+        $return->setSysReturnCode("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND");
         $return->setSysReturnShowMsg("FALSE");
-        $return->setSysReturnMsg("AJAX_SERVICE_CONTROL_KEY Not valid");
-    }
-}
-else
-{
-    $return->setSysReturnCode("AJAX_SERVICE_CONTROL_KEY_NOT_FOUND");
-    $return->setSysReturnShowMsg("FALSE");
-    $return->setSysReturnMsg("AJAX_SERVICE_CONTROL_KEY Not found");
+        $return->setSysReturnMsg("Action not valid");
 }
 zLog()->LogInfo($return->getSysReturnAryJSON());
+$_REQUEST["SERVICE_RETURN"] = $return;

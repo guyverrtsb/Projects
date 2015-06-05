@@ -17,7 +17,7 @@ class CreateMatchGamerAccounttoObject
     function full($gameraccount_uid,
                 $object_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
         
         $sqlstmnt = "INSERT INTO match_gameraccount_to_object SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,7 +33,7 @@ class CreateMatchGamerAccounttoObject
         
         $this->resultCreateRecord($appcon, "match_gameraccount_to_object");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

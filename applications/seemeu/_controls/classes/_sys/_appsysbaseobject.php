@@ -7,6 +7,7 @@ class AppSysBaseObject
     {
         $this->setSysReturnitem("REFERER", $_SERVER["HTTP_REFERER"]);
     }
+    
     function resultCreateRecord($appcon, $tablename)
     {
         $mr = "NA"; //Method Return;
@@ -15,7 +16,7 @@ class AppSysBaseObject
             if($appcon->getRowCount() > 0)
             {
                 $this->setResult_Record($appcon->getRowfromLastLid($appcon, $tablename));
-                zLog()->LogInfoDB($this->getResult_Record());
+                zLog()->LogDBResult($this->getResult_Record());
                 $this->saveActivityLog("RECORD_IS_CREATED", "Record is Created:".json_encode($this->getResult_Record()).":");
                 $this->setSysReturnCode("RECORD_IS_CREATED");
             }
@@ -38,7 +39,7 @@ class AppSysBaseObject
             if($appcon->getRowCount() > 0)
             {
                 $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zLog()->LogInfoDB($this->getResult_Record());
+                zLog()->LogDBResult($this->getResult_Record());
                 $mr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is Retrieved:".json_encode($this->getResult_Record()).":");
                 $this->setSysReturnCode("RECORD_IS_FOUND");
             }
@@ -60,8 +61,8 @@ class AppSysBaseObject
         {
             if($appcon->getRowCount() > 0)
             {
-                $this->setResult_Records($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zLog()->LogInfoDB($this->getResult_Records());
+                $this->setResult_Records($appcon->getStatement()->fetchAll(PDO::FETCH_ASSOC));
+                zLog()->LogDBResult($this->getResult_Records());
                 $mr = $this->saveActivityLog("RECORDS_ARE_FOUND", "Records are Retrieved:".json_encode($this->getResult_Records()).":");
                 $this->setSysReturnCode("RECORDS_ARE_FOUND");
             }

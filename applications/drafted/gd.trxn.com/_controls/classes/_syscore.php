@@ -37,31 +37,38 @@ function zReqOnce($path)
 
 function zLog()
 {
-    zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
-    return new KLogger();
-}
-
-function zConfig()
-{
-    zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
-    return new AppSysIntegration();
+    if(!isset($_SERVER["GD_APPSYSLOGGER"]))
+    {
+        zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
+        $_SERVER["GD_APPSYSLOGGER"] = new KLogger();
+    }
+    return $_SERVER["GD_APPSYSLOGGER"];
 }
 
 function zAuth()
 {
-    zReqOnce("/gd.trxn.com/usersafety/_controls/classes/authorityuser.php");
-    return new gdAuthorizeUser();
+    if(!isset($_SERVER["GD_APPSYSAUTHORIZATION"]))
+    {
+        zReqOnce("/gd.trxn.com/usersafety/_controls/classes/authorityuser.php");
+        $_SERVER["GD_APPSYSAUTHORIZATION"] = new zcAuthorizeUser();
+    }
+    return $_SERVER["GD_APPSYSAUTHORIZATION"];
 }
 
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/_returns.php");
-$zcSysReturn = new SysReturns();
+$zSysReturn = new SysReturns();
 
 //** START ** Sets the Site Integration after the Includes are set 
 zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
-SysIntegration::setZBaseLines();
-SysIntegration::setZLogging(1);
-SysIntegration::setZSiteRegistration();
+function zAppSysIntegration()
+{
+    if(!isset($_SERVER["GD_APPSYSINTEGATION"]))
+        $_SERVER["GD_APPSYSINTEGATION"] = new AppSysIntegration();
+    return $_SERVER["GD_APPSYSINTEGATION"];
+}
+zAppSysIntegration()->setZBaseLines();
+zAppSysIntegration()->setZLogging(1);
+zAppSysIntegration()->setZSiteRegistration();
 //** END ** Sets the Site Integration after the Includes are set
-zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_ajax.php");
-
+zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_service.php");
 ?>

@@ -13,7 +13,7 @@ class gdAuthenticateUser
     
     function authenticate($argary)
     {
-        zLog()->LogInfoStartFUNCTION("authenticateByEmail");
+        zLog()->LogStartFUNCTION("authenticateByEmail");
         $mr = "NA";
         
         $rua = new RetrieveUserAccount();
@@ -23,19 +23,19 @@ class gdAuthenticateUser
             
             if($rua->getIsactive() == "F")    // User account is inactive
             {
-                $mr = zLog()->LogInfoRETURN("ACCOUNT_INACTIVE");
+                $mr = zLog()->LogReturn("ACCOUNT_INACTIVE");
             }
             else if($rua->getNumberoflogintries() >= 3)  // Number of Login Tries
             {
                 $uua = new UpdateUserAccount();
                 $uua->updateIsactive($rua->getUid(), "F");
-                $mr = zLog()->LogInfoRETURN("TOO_MANY_FAILED_LOGIN_ATTEMPTS");
+                $mr = zLog()->LogReturn("TOO_MANY_FAILED_LOGIN_ATTEMPTS");
             }
             else if($rua->getPassword() != $argary["useraccount_password"])   // Password does not match
             {
                 $uua = new UpdateUserAccount();
                 $uua->updateLogintries($rua->getUid(), ($rua->getNumberoflogintries() + 1));
-                $mr = zLog()->LogInfoRETURN("PASSWORD_DOES_NOT_MATCH");
+                $mr = zLog()->LogReturn("PASSWORD_DOES_NOT_MATCH");
             }
             else if($rua->getPassword() == $argary["useraccount_password"])
             {
@@ -43,16 +43,16 @@ class gdAuthenticateUser
                 zConfig()->setAuthoritySessionData($rua->getUid()
                                                 , "T"
                                                 , $rua->getUsertablekey());
-                $mr = zLog()->LogInfoRETURN("USER_IS_AUTHENTICATED");
+                $mr = zLog()->LogReturn("USER_IS_AUTHENTICATED");
             }
         }
         else if($rua->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("RECORD_NOT_FOUND_BY_EMAIL");
+            $mr = zLog()->LogReturn("RECORD_NOT_FOUND_BY_EMAIL");
         }
 
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("authenticateByEmail");
+        zLog()->LogEndFUNCTION("authenticateByEmail");
     }
 
     function isAthenticated()

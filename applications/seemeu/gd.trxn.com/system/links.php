@@ -1,48 +1,38 @@
 <?php require_once("../../gd.trxn.com/_controls/classes/_syscore.php"); ?>
-<?php zInc("/gd.trxn.com/ui/carousel/head.php"); ?>
-<!-- START - Content -->
+<?php zInc("/gd.trxn.com/_controls/ui/carousel/head.php"); ?>
+<!-- START - Content ================================================== -->
+<!-- START - Navigation ================================================== -->
 <div class="navbar-wrapper">
-<div class="container">
-
-<nav class="navbar navbar-inverse navbar-static-top">
-<div class="container">
-<div class="navbar-header">
-<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-<span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
-<a class="navbar-brand" href="#">Project name</a>
+    <div class="container">
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul id="gdtrxncomnav" class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </div>
 </div>
-<div id="navbar" class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<li class="active"><a href="#">Home</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#contact">Contact</a></li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-<ul class="dropdown-menu" role="menu">
-<li><a href="#">Action</a></li>
-<li><a href="#">Another action</a></li>
-<li><a href="#">Something else here</a></li>
-<li class="divider"></li>
-<li class="dropdown-header">Nav header</li>
-<li><a href="#">Separated link</a></li>
-<li><a href="#">One more separated link</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-
-</div>
-</div>
-
-
-<!-- Carousel
-================================================== -->
+<!-- END - Navigation ================================================== -->
+<!-- START - Carousel ================================================== -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 <!-- Indicators -->
 <ol class="carousel-indicators">
@@ -56,7 +46,7 @@
 <div class="container">
 <div class="carousel-caption">
 <h1>Example headline.</h1>
-<p><?php echo preg_replace('/\.php$/', '', __FILE__); ?>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
 <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
 </div>
 </div>
@@ -90,28 +80,26 @@
 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 <span class="sr-only">Next</span>
 </a>
-</div><!-- /.carousel -->
+</div>
+<!-- END - Carousel ================================================== -->
 
-
-<!-- Marketing messaging and featurettes
-================================================== -->
+<!-- Marketing messaging and featurettes ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
+<!-- START - Container ================================================== -->
 <div class="container marketing">
-
-<!-- Three columns of text below the carousel -->
+<!-- START - 3 Column Context ================================================== -->
 <div class="row">
 <div class="col-lg-4">
 <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-<h2>Heading</h2>
-<p></p>
-<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+<h2>Links</h2>
+<p id="gdsyslinksButton"><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
 </div><!-- /.col-lg-4 -->
 <div class="col-lg-4">
 <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-<h2>Heading</h2>
-<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+<h2>GD Sys Site Variable</h2>
+<p></p>
+<p id="gdsyssitevarButton"><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
 </div><!-- /.col-lg-4 -->
 <div class="col-lg-4">
 <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
@@ -120,10 +108,9 @@
 <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
 </div><!-- /.col-lg-4 -->
 </div><!-- /.row -->
+<!-- END - 3 Column Context ================================================== -->
 
-
-<!-- START THE FEATURETTES -->
-
+<!-- START - Featurettes ================================================== -->
 <hr class="featurette-divider">
 
 <div class="row featurette">
@@ -162,16 +149,15 @@
 
 <hr class="featurette-divider">
 
-<!-- /END THE FEATURETTES -->
+<!-- END - Featurettes ================================================== -->
 
-
-<!-- FOOTER -->
+<!-- START - Footer ================================================== -->
 <footer>
 <p class="pull-right"><a href="#">Back to top</a></p>
 <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
 </footer>
-
-</div><!-- /.container -->
-
-<!-- END - Content -->
-<?php zInc("/gd.trxn.com/ui/carousel/foot.php"); ?>
+<!-- END - Footer ================================================== -->
+</div>
+<!-- END - Container ================================================== -->
+<!-- END - Content ================================================== -->
+<?php zInc("/gd.trxn.com/_controls/ui/carousel/foot.php"); ?>

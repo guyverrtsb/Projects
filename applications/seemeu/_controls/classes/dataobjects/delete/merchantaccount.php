@@ -19,7 +19,7 @@ class DeleteMerchantAccount
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid");
         
         $sqlstmnt = "DELETE FROM merchantaccount ".
             "WHERE uid=:uid";
@@ -32,7 +32,7 @@ class DeleteMerchantAccount
 
         $this->resultDeleteRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

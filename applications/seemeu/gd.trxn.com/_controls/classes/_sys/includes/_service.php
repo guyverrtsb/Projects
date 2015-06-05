@@ -14,7 +14,7 @@ function getPageKey()
 
 function getServiceControlKey()
 {
-    $key = "ACTION_SERVICE_CONTROL_KEY";
+    $key = "SERVICE_CONTROL_KEY";
     $controlkey = "NO_KEY_SENT";
     if(isset($_POST[$key]))
     {
@@ -40,7 +40,7 @@ function getServiceControlKey()
             $controlkey = "NO_KEY_SENT";
         }
     }
-    zLog()->LogDebug("getServiceControlKey:$key{$controlkey}");
+    zLog()->LogDebug("getServiceControlKey:[$key]:[$controlkey]");
     return $controlkey;
 }
 ?>

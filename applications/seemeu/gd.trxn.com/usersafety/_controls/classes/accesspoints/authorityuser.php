@@ -47,7 +47,7 @@ class gdAuthorizeUser
     
     function isContentAuthorized($resource_role_sdesc = "GD_USER")
     {
-        $this->gdlog()->LogInfoStartFUNCTION("isContentAuthorized");
+        zLog()->LogInfoStartFUNCTION("isContentAuthorized");
         $fr = "UNKNOWN_ERROR";
 
         $gdfur = new gdFindUsersafetyRole();

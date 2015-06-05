@@ -19,7 +19,7 @@ class RetrieveUserAccount
      */
     function byEmail($email)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byEmail");
+        zLog()->LogStartDATAOBJECTFUNCTION("byEmail");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE email=:email";
@@ -32,7 +32,7 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byEmail");
+        zLog()->LogEndDATAOBJECTFUNCTION("byEmail");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveUserAccount
      */
     function byNickname($nickname)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byNickname");
+        zLog()->LogStartDATAOBJECTFUNCTION("byNickname");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE nickname=:nickname";
@@ -53,7 +53,7 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byNickname");
+        zLog()->LogEndDATAOBJECTFUNCTION("byNickname");
     }
     
     /**
@@ -61,7 +61,7 @@ class RetrieveUserAccount
      */
     function byUsertablekey($usertablekey)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byTablekey");
+        zLog()->LogStartDATAOBJECTFUNCTION("byTablekey");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE usertablekey=:usertablekey";
@@ -74,7 +74,7 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byTablekey");
+        zLog()->LogEndDATAOBJECTFUNCTION("byTablekey");
     }
 }
 ?>

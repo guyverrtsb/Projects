@@ -12,7 +12,7 @@ class SysReturns
      */
     function setSysReturnStructure()
     {
-        zLog()->LogInfoStartFUNCTION("setSysReturnStructure");
+        zLog()->LogStartFUNCTION("setSysReturnStructure");
         $msgshowcaught = false;
         $msgcaught = false;
         for ($idx = 0; $idx < func_num_args(); $idx++)
@@ -32,7 +32,12 @@ class SysReturns
             $this->setSysReturnShowMsg("TRUE");    
         if(!$msgcaught)
             $this->setSysReturnMsg("No message defined.");    
-        zLog()->LogInfoEndFUNCTION("setSysReturnStructure");
+        zLog()->LogEndFUNCTION("setSysReturnStructure");
+    }
+    
+    function setSysReturnObj($object)
+    {
+        $this->transferSysReturnAry($object);
     }
     
     function transferSysReturnAry($object)
@@ -42,12 +47,13 @@ class SysReturns
     
     function setSysReturnAry($array)
     {
-        zLog()->LogInfoStartFUNCTION("setSysReturnAry");
+        zLog()->LogStartFUNCTION("setSysReturnAry");
         foreach ($array as $key => $value)
         {
+            zLog()->LogDebug("setSysReturnAry[".$key."]-[".$value."]");
             $this->setSysReturnitem($key, $value);
         }
-        zLog()->LogInfoEndFUNCTION("setSysReturnAry");
+        zLog()->LogEndFUNCTION("setSysReturnAry");
     }
     
     function getSysReturnAry()
@@ -99,9 +105,7 @@ class SysReturns
     {
         return $this->getSysReturnitem("RETURN_MSG");
     }
-    
 
-    
     /**
      * Name Value item pair  Use this to pass extra
      * data through return structure 

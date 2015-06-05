@@ -5,7 +5,7 @@ class SysConnections
 {
     public function setApplicationDB($APPDB = "APPDB")
     {
-        SysIntegration::dumpSessionData();
+        zAppSysIntegration()->dumpSessionData();
         //Variables for connecting to your database.
         //These variable values come from your hosting account.
         $hostname = $this->getConnectionVariable($APPDB, "hostname");
@@ -16,7 +16,7 @@ class SysConnections
         //Connecting to your database
         try
         {
-            zLog()->LogInfo("DB Connect:mysql:host=" .
+            zLog()->LogDebug("DB Connect:mysql:host=" .
                 $hostname . ":" .
                 ";dbname=". $database . ":" .
                 ";username=". $username . ":" .
@@ -27,11 +27,11 @@ class SysConnections
                 $username,
                 $password));
             $this->getConnection()->beginTransaction();
-            zLog()->LogInfo("Good Connection");
+            zLog()->LogDebug("Good Connection");
         }
         catch (PDOException $ex)
         {
-            zLog()->LogInfo("Connection Error: ".$ex->getMessage());
+            zLog()->LogDebug("Connection Error: ".$ex->getMessage());
             echo "Connection Error: ".$ex->getMessage();
         }
     }
@@ -47,7 +47,7 @@ class SysConnections
         else if($db == "appdb")
             $db = "application";
             
-        $connectionsXML = $_SESSION[AppSysIntegration::getKeySessSiteConfigRoot()]."ZDBCONNECTIONS.xml";
+        $connectionsXML = $_SESSION[zAppSysIntegration()->getKeySessSiteConfigRoot()]."ZDBCONNECTIONS.xml";
 
         zLog()->LogDebug("Connections XML : {".$connectionsXML."}:{".$db."}");
         

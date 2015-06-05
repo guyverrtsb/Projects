@@ -19,7 +19,7 @@ class CreateGroupAccount
                 $configurations_sdesc_groupvisibility,
                 $configurations_sdesc_groupaccept)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
         
         $sqlstmnt = "INSERT INTO groupaccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -39,7 +39,7 @@ class CreateGroupAccount
         
         $this->resultCreateRecord($appcon, "groupaccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

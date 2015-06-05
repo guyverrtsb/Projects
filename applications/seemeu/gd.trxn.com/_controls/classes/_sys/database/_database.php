@@ -13,7 +13,7 @@ class SysDatabase
     public function getConnection() { return $this->connection; }
     public function setStatement($sqlstatement)
     {
-        zLog()->LogInfo("setStatement():".$sqlstatement);
+        zLog()->LogDebug("setStatement():".$sqlstatement);
         $statementLen = strlen($sqlstatement);
         $statementTyp = strtoupper(substr($sqlstatement, 0, 6));
         $crudstate = "CRUD Not Found";
@@ -33,7 +33,7 @@ class SysDatabase
         {
             $crudstate = "DELETE";
         }
-        zLog()->LogInfo("StatementLen{".$statementLen."}:StatementTyp{".$statementTyp."}:CRUD State:{".$crudstate."}");
+        zLog()->LogDebug("StatementLen{".$statementLen."}:StatementTyp{".$statementTyp."}:CRUD State:{".$crudstate."}");
         $this->statement = $this->getConnection()->prepare($sqlstatement);
     }
     public function getStatement() { return $this->statement; }
@@ -52,17 +52,17 @@ class SysDatabase
     // **************************** BINDS
     public function bindParam($name, $value)
     {
-        zLog()->LogInfo("bindParam()--{".$name."}-{".$value."}");
+        zLog()->LogDebug("bindParam()--{".$name."}-{".$value."}");
         $this->getStatement()->bindParam($name, $value);
     }
     public function bindParamDateTime($name, $value)
     {
-        zLog()->LogInfo("bindParamDateTime()--{".$name."}-{".$value."}");
+        zLog()->LogDebug("bindParamDateTime()--{".$name."}-{".$value."}");
         $value = $this->getmySQLDateTimeStamp($value);
         $this->getStatement()->bindParam($name, $value);
     }
     public function bindParamBlob($name, $value) {
-        zLog()->LogInfo("bindParam()--{".$name."}-{BLOB}");
+        zLog()->LogDebug("bindParam()--{".$name."}-{BLOB}");
         $this->getStatement()->bindParam($name, $value);
     }
     // **************************** BINDS
@@ -72,7 +72,7 @@ class SysDatabase
     {
         if($this->getStatement()->execute())
         {
-            zLog()->LogInfo("execUpdate():Good Transaction.");
+            zLog()->LogDebug("execUpdate():Good Transaction.");
             $this->setTransactionSuccessful();
             $this->setSysReturnStructure("DB_ERROR_CODE", $this->getStatement()->errorCode(),
                                         "DB_ERROR_INFO" , $this->getStatement()->errorInfo(),
@@ -81,7 +81,7 @@ class SysDatabase
         }
         else
         {
-            zLog()->LogInfoERROR("execUpdate():Failed Transaction:".$this->getStatement()->errorInfo());
+            zLog()->LogIssue("execUpdate():Failed Transaction:".$this->getStatement()->errorInfo());
             $this->setTransactionFailure();
             $this->setSysReturnStructure("DB_ERROR_CODE", $this->getStatement()->errorCode(),
                                         "DB_ERROR_INFO" , $this->getStatement()->errorInfo(),
@@ -94,7 +94,7 @@ class SysDatabase
     {
         if($this->getStatement()->execute())
         {
-            zLog()->LogInfo("execSelect():Good Transaction.");
+            zLog()->LogDebug("execSelect():Good Transaction.");
             $this->setTransactionSuccessful();
             $this->setSysReturnStructure("DB_ERROR_CODE", $this->getStatement()->errorCode(),
                                         "DB_ERROR_INFO" , $this->getStatement()->errorInfo(),
@@ -103,7 +103,7 @@ class SysDatabase
         }
         else
         {
-            zLog()->LogInfoERROR("execSelect():Failed Transaction:".$this->getStatement()->errorInfo());
+            zLog()->LogIssue("execSelect():Failed Transaction:".$this->getStatement()->errorInfo());
             $this->setTransactionFailure();
             $this->setSysReturnStructure("DB_ERROR_CODE", $this->getStatement()->errorCode(),
                                         "DB_ERROR_INFO" , $this->getStatement()->errorInfo(),
@@ -122,7 +122,7 @@ class SysDatabase
     public function getRowfromLastLid($appcon, $tablename)
     {
         $lid = $this->getConnection()->lastInsertId();
-        zLog()->LogInfo("getLastRowId():{".$lid."}");
+        zLog()->LogDebug("getLastRowId():{".$lid."}");
         $sqlstmnt = "SELECT * FROM ".$tablename." ".
         "WHERE lid=:lid";
         
@@ -131,13 +131,13 @@ class SysDatabase
         $appcon->execSelect();
         if($appcon->getRowCount() > 0)
         {
-            zLog()->LogInfo("getRowfromLastId():Good Transaction:".$tablename);
+            zLog()->LogDebug("getRowfromLastId():Good Transaction:".$tablename);
             $row = $appcon->getStatement()->fetch(PDO::FETCH_ASSOC);
             return $row;
         }
         else
         {
-            zLog()->LogInfoERROR("getLastRowId():Failed Transaction:".$tablename);
+            zLog()->LogIssue("getLastRowId():Failed Transaction:".$tablename);
         }
     }
     
@@ -151,13 +151,13 @@ class SysDatabase
         $appcon->execSelect();
         if($appcon->getRowCount() > 0)
         {
-            zLog()->LogInfo("getRowfromLastUid():Good Transaction:".$tablename.":".$uid);
+            zLog()->LogDebug("getRowfromLastUid():Good Transaction:".$tablename.":".$uid);
             $row = $appcon->getStatement()->fetch(PDO::FETCH_ASSOC);
             return $row;
         }
         else
         {
-            zLog()->LogInfoERROR("getRowfromLastUid():Failed Transaction:".$tablename);
+            zLog()->LogIssue("getRowfromLastUid():Failed Transaction:".$tablename);
         }
     }
     
@@ -170,12 +170,12 @@ class SysDatabase
         $this->rollBackCommitPerformed = true;
         if($this->transactionSuccessful)
         {
-            zLog()->LogInfo("rollbackcommit():Good Commit");
+            zLog()->LogDebug("rollbackcommit():Good Commit");
             $this->getConnection()->commit();
         }
         else
         {
-            zLog()->LogInfoERROR("rollbackcommit():Bad Commit");
+            zLog()->LogIssue("rollbackcommit():Bad Commit");
             $this->getConnection()->rollback();
         }
     }

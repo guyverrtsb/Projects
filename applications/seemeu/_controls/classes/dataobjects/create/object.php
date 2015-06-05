@@ -23,7 +23,7 @@ class CreateObject
                 $configurations_sdesc_objecttype,
                 $configurations_sdesc_paymenttype)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
 
         $sqlstmnt = "INSERT INTO object SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -51,7 +51,7 @@ class CreateObject
         
         $this->resultCreateRecord($appcon, "object");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

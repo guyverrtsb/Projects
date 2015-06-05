@@ -16,7 +16,7 @@ class UpdateGamerAccount
     
     function updateActivatebyUid($uid)
     {
-        zLog()->LogInfoStartFUNCTION("updateActivatebyUid");
+        zLog()->LogStartFUNCTION("updateActivatebyUid");
         
         $sqlstmnt = "UPDATE gameraccount SET ".
             "changeddt=NOW(), ".
@@ -32,12 +32,12 @@ class UpdateGamerAccount
 
         $this->resultUpdateRecord($appcon, "gameraccount");
         
-        zLog()->LogInfoEndFUNCTION("updateActivatebyUid");
+        zLog()->LogEndFUNCTION("updateActivatebyUid");
     }
     
     function updateActivatebyGamertag($gamertag)
     {
-        zLog()->LogInfoStartFUNCTION("updateActivatebyGamertag");
+        zLog()->LogStartFUNCTION("updateActivatebyGamertag");
         
         $sqlstmnt = "UPDATE gameraccount SET ".
             "changeddt=NOW(), ".
@@ -53,12 +53,12 @@ class UpdateGamerAccount
 
         $this->resultUpdateRecord($appcon, "gameraccount");
         
-        zLog()->LogInfoEndFUNCTION("updateActivatebyGamertag");
+        zLog()->LogEndFUNCTION("updateActivatebyGamertag");
     }
     
     function updateDeactivatebyUid($uid)
     {
-        zLog()->LogInfoStartFUNCTION("updateDeactivatebyUid");
+        zLog()->LogStartFUNCTION("updateDeactivatebyUid");
         
         $sqlstmnt = "UPDATE gameraccount SET ".
             "changeddt=NOW(), ".
@@ -74,12 +74,12 @@ class UpdateGamerAccount
 
         $this->resultUpdateRecord($appcon, "gameraccount");
         
-        zLog()->LogInfoEndFUNCTION("updateDeactivatebyUid");
+        zLog()->LogEndFUNCTION("updateDeactivatebyUid");
     }
     
     function updateDeactivatebyGamertag($gamertag)
     {
-        zLog()->LogInfoStartFUNCTION("updateDeactivatebyGamertag");
+        zLog()->LogStartFUNCTION("updateDeactivatebyGamertag");
         
         $sqlstmnt = "UPDATE gameraccount SET ".
             "changeddt=NOW(), ".
@@ -95,7 +95,7 @@ class UpdateGamerAccount
 
         $this->resultUpdateRecord($appcon, "gameraccount");
         
-        zLog()->LogInfoEndFUNCTION("updateDeactivatebyGamertag");
+        zLog()->LogEndFUNCTION("updateDeactivatebyGamertag");
     }
 }
 ?>

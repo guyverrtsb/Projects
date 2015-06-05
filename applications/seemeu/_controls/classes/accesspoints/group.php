@@ -33,7 +33,7 @@ class Group
                             $mantra,
                             $objectives)
     {
-        zLog()->LogInfoStartFUNCTION("createGroupInfo");
+        zLog()->LogStartFUNCTION("createGroupInfo");
         $mr = "NA";
         
         $ra = new RetrieveGroupAccount();
@@ -56,15 +56,15 @@ class Group
             $match = new CreateMatchGroupAccountProfile();
             $match->full($ca->getUid(), $cp->getUid());
 
-            $mr = zLog()->LogInfoRETURN("DATA_IS_CREATED");
+            $mr = zLog()->LogReturn("DATA_IS_CREATED");
         }
         else if($tr == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
+            $mr = zLog()->LogReturn("EMAIL_IN_USE");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("createGroupInfo");
+        zLog()->LogEndFUNCTION("createGroupInfo");
     }
 }
 ?>

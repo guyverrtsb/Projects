@@ -63,7 +63,6 @@ class SysConnections
                 }
             }
         }
-        // gdlog()->LogDebug("DB_CONNECTION_PARAM:".$db.":".$param.":".$output);
         return $output;
     }
 }

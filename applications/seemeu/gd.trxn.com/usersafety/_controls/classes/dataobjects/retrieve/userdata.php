@@ -19,7 +19,7 @@ class RetrieveUserData
      */
     function byUseraccountemail($useraccount_email)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUseraccountemail");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUseraccountemail");
         
         $sqlstmnt = "SELECT ".
             $this->dbfas("useraccount.uid,".
@@ -51,7 +51,7 @@ class RetrieveUserData
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUseraccountemail");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUseraccountemail");
     }
     
     /**
@@ -59,7 +59,7 @@ class RetrieveUserData
      */
     function byUseraccountuid($useraccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUseraccountuid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUseraccountuid");
         
         $sqlstmnt = "SELECT ".
             $this->dbfas("useraccount.uid,".
@@ -91,7 +91,7 @@ class RetrieveUserData
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUseraccountuid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUseraccountuid");
     }
 }
 ?>

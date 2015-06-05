@@ -1,0 +1,430 @@
+/* 
+   ------------------------------------------------------
+					Responsive Styles
+   ------------------------------------------------------
+*/
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	
+	/*------------------------------------------*/
+	/*	 Intro Description 
+	/*------------------------------------------*/
+
+	#intro_description h1 {font-size: 46px; line-height: 46px; margin-top: 50px;}
+	#intro_description h2 {font-size: 30px;} 
+	
+	/*------------------------------------------*/
+	/*	  Features Box
+	/*------------------------------------------*/
+
+	.feature-box { margin-top: 35px; }
+	
+	/*------------------------------------------*/
+	/*	  More Feature Box
+	/*------------------------------------------*/
+
+	.more_feature_box { margin-top: 30px; }
+	
+	/*------------------------------------------*/
+	/*	 Content Slider
+	/*------------------------------------------*/
+
+	.content_slider h2 { font-size: 28px; margin-top: 0; margin-bottom: 10px;}	
+	.content_slider img { margin-top: 30px;}
+		
+	/*------------------------------------------*/
+	/*	  Video
+	/*------------------------------------------*/ 
+	
+	#video .titlebar {margin-bottom: 40px;}
+	#video_content {margin-bottom: 60px;}
+	#video_content h2 {text-align: center;padding: 0 8%;}
+	#video_content p { padding: 0 10%;}
+	.stores {text-align: center;}
+	#video_holder {margin-left: 80px; margin-right: 80px;}
+	.top_contentinner { height:280px;}
+	
+	
+}
+
+
+@media only screen and (max-width: 1023px) {
+	.fixed_section { display:none;}
+	
+}
+
+@media only screen and (max-width: 991px){
+
+	/*------------------------------------------*/
+	/*	 Intro Description 
+	/*------------------------------------------*/
+
+	#intro_description  {margin-bottom: 80px; }
+	#intro_description h1 { font-size: 48px; line-height: 48px; margin-top: 30px; text-align: center; }
+	#intro_description h2 { font-size: 30px; text-align: center; } 
+	#intro_description p { text-align: center; padding: 0 5%; }
+	
+	/*------------------------------------------*/
+	/*	 Intro Store Icons
+	/*------------------------------------------*/
+
+	#intro_stores { margin-top: 30px; text-align: center; }
+	
+	/*------------------------------------------*/
+	/*	  Features
+	/*------------------------------------------*/
+
+	#features .titlebar {margin-bottom: 10px;}
+	#features_left_content, #features_right_content { text-align: center; padding: 0 15%; }
+	.feature-box { margin-top: 30px; }
+	#features_image img { margin-top: 60px; }
+	
+	/*------------------------------------------*/
+	/*	 Call-To-Action 
+	/*------------------------------------------*/  
+
+	#cta_slogan, #cta_button { text-align: center;}
+	#cta_button a { margin-top: 20px; }
+	
+	/*------------------------------------------*/
+	/*	 More Features Description
+	/*------------------------------------------*/
+
+	#more_features_description h2 { text-align: center; margin-top: 0; }
+	#more_features_description p { text-align: center; padding: 0 10%;}
+	#more_features_description .more_feature_box p { text-align: left; padding: 0;}
+	#more_features_description .row {margin-left: 40px; margin-right: 40px;}
+	#more_features img {margin-top: 60px;}
+	
+	/*------------------------------------------*/
+	/*	  Statistic Banner Content
+	/*------------------------------------------*/ 
+
+	.statistic-number {font-size: 55px; line-height: 55px;}
+	.statistic-text {font-size: 16px;}
+	
+	/*------------------------------------------*/
+	/*	 Content Slider
+	/*------------------------------------------*/
+
+	.content_slider { text-align: center; }
+	.content_slider h2 { padding: 0 10%; margin-top: 0; }
+	.content_slider p { padding: 0 10%; }
+	.slide_2 img { margin-top: 30px;}
+	.slide_1 img, .slide_3 img { margin-bottom: 20px;}	
+	
+	/*------------------------------------------*/
+	/*	 Black promo Line
+	/*------------------------------------------*/
+	
+	#black_promo_line h3 { line-height: 32px;}
+	
+	/*------------------------------------------*/
+	/*	  Video
+	/*------------------------------------------*/ 
+	
+	#video .titlebar {margin-bottom: 40px;}
+	#video_content {margin-bottom: 60px;}
+	#video_content h2 {text-align: center; padding: 0 8%;}
+	#video_content p { padding: 0 8%; text-align: center; }
+	.stores {text-align: center;}
+	#video_holder {margin-left: 40px; margin-right: 40px;}
+	
+	/*------------------------------------------*/
+	/*	 Testimonial
+	/*------------------------------------------*/	
+	
+	.testimonials {margin: 60px 0% 50px;}
+	
+	/*------------------------------------------*/
+	/*	  Newsletter Form Input
+	/*------------------------------------------*/
+	
+	#newsletter form input[type="email"] {width: 55%;}
+	#newsletter form input[type="submit"] {width: 25%;}	
+	
+	/*------------------------------------------*/
+	/*	  20 April
+	/*------------------------------------------*/
+	.navbar-nav > li > a { padding:0 7px;}
+	.top_contentinner { height:280px;}
+	.prfl_thumb a:hover::after { top:40%;} 
+}
+
+
+@media only screen and (max-width: 767px){
+	
+	/*------------------------------------------*/
+	/*	 Logo Image    
+	/*------------------------------------------*/
+
+	.navbar-brand {padding: 17px 30px;}  
+	
+	/*------------------------------------------*/
+	/*	 Navigation Menu    
+	/*------------------------------------------*/
+
+	.navbar { background-color: #222; padding: 0px;  }
+	
+	/*------------------------------------------*/
+	/*	 Responsive Menu
+	/*------------------------------------------*/
+	
+	.navbar-nav { margin: 0 -15px; border-top: 1px solid #444; background-color: #222;}	
+	.navbar-nav > li { text-align: center;}
+	.navbar-nav > li > a { line-height: 45px; text-align: center;}
+
+	/*------------------------------------------*/
+	/*	 More Features Description
+	/*------------------------------------------*/
+
+	#more_features_description p { padding: 0 4%;}
+	
+	/*------------------------------------------*/
+	/*	  Statistic Banner Content
+	/*------------------------------------------*/ 
+
+	.statistic-number {font-size: 40px; line-height: 40px;}
+	.statistic-text {font-size: 14px;}
+	
+	/*------------------------------------------*/
+	/*	 Content Slider
+	/*------------------------------------------*/
+
+	.content_slider h2 { padding: 0 4%; margin-top: 0; }
+	.content_slider p { padding: 0 4%; }
+	
+	/*------------------------------------------*/
+	/*	  Video
+	/*------------------------------------------*/ 
+	
+	#video_content h2 { padding: 0 4%;}
+	#video_content p { padding: 0 4%;  }
+	#video_holder {margin-left: 20px; margin-right: 20px;}
+	
+	/*------------------------------------------*/
+	/*	 Testimonial
+	/*------------------------------------------*/
+
+	.testimonials p {font-size: 16px;line-height: 26px;}
+	
+	/*------------------------------------------*/
+	/*	 FAQs
+	/*------------------------------------------*/
+	
+	#faq { padding-left: 30px; padding-right: 30px; }
+	/*------------------------------------------*/
+	/*	 14 April 2015
+	/*------------------------------------------*/
+	.navbar > .container .navbar-brand { margin-left:15px;}
+	/*------------------------------------------*/
+	/*	 20 April 2015
+	/*------------------------------------------*/
+	.outer_container .nav-tabs > li { width:100%; margin:0;}
+	.outer_container .nav-tabs > li a::after, .outer_container .nav-tabs > li.active a::after { border:none;}
+	.outer_container .nav-tabs > li a { padding:0 15px; text-align:center; border-radius:0}
+	.activity_list > span { float:none; margin:0 auto;}
+	.right_info { float:none;}
+	.activity_list { text-align:center;}
+	.right_info { padding:10px 0 20px;}
+	.followed_info { float:none; padding:0;}
+	.right_arrow::after { border-top: 20px solid #ddd; border-left: 25px solid transparent; border-right: 25px solid transparent; content: ""; left: 0; position: absolute; top: 0;
+    z-index: 1;}
+	.right_arrow::before { border-top: 20px solid #fff; border-left: 25px solid transparent; border-right: 25px solid transparent; content: ""; left: 0; position: absolute; top: -4px
+	; z-index: 2;}
+	.date { float:none; clear:both;}
+	.date i { display:none;}
+	.gallery_like a { width:25%;}
+	.top_contentinner { height:180px;}
+	.profile_thumb { width:100%; text-align:center; margin:0 0 15px}
+	.profile_thumb span { margin:0 auto 15px}
+	.profile_inforight{ padding:25px 10px 0; border-right:none; border-top:1px dashed #ddd; text-align:center;}
+	.follow_panel { float:none; margin:0 0 20px;}
+	.infocontent .nav-tabs > li { width:100%;}
+}
+
+
+@media (max-width: 480px) {
+
+	#stlChanger { display: none;}
+	
+	/*------------------------------------------*/
+	/*	 Section Titlebar
+	/*------------------------------------------*/
+
+	.titlebar h2 { font-size: 34px; line-height: 34px; }
+	.titlebar p { padding: 0 2%; }
+	
+	/*------------------------------------------*/
+	/*	 Intro Description 
+	/*------------------------------------------*/
+
+	#intro_description  {margin-bottom: 80px; }
+	#intro_description h1 { font-size: 38px; line-height: 38px; }
+	#intro_description h2 { font-size: 24px; } 
+	#intro_description p { font-size: 16px; line-height: 22px; padding: 0; }
+	#intro_stores a img { margin-bottom: 10px;}
+	
+	/*------------------------------------------*/
+	/*	  Features
+	/*------------------------------------------*/
+
+	#features_left_content, #features_right_content { text-align: center; padding: 0 7%; }
+
+	/*------------------------------------------*/
+	/*	 Call-To-Action Slogan
+	/*------------------------------------------*/  
+
+	#cta_slogan h2 {font-size: 24px; line-height: 32px;}
+	#cta_slogan p {	font-size: 14px;line-height: 22px; padding: 0 12%;}
+	
+	/*------------------------------------------*/
+	/*	 More Features Description
+	/*------------------------------------------*/
+
+	#more_features_description h2 {font-size: 24px; line-height: 32px;}
+	#more_features_description p { padding: 0;}
+	.more_feature_box {width: 100%; float: none; margin: 40px 30px 0;}
+	
+	/*------------------------------------------*/
+	/*	  Statistic Banner
+	/*------------------------------------------*/ 
+
+	#statistic_banner {padding-top: 30px; }
+	.statistic-block {width: 100%; float: none; margin-top: 30px;}
+	.statistic-number {margin-bottom: 10px;}
+	
+	/*------------------------------------------*/
+	/*	 Content Slider
+	/*------------------------------------------*/
+
+	.content_slider h2 {font-size: 24px; line-height: 32px; padding: 0;}
+	.content_slider p { padding: 0; }
+	
+	/*------------------------------------------*/
+	/*	 Promo Banner 
+	/*------------------------------------------*/
+	
+	#promo_banner h2 {font-size: 30px; line-height: 30px;}
+	#promo_banner h3 {font-size: 17px;}
+	
+	/*------------------------------------------*/
+	/*	 Black Promo Line
+	/*------------------------------------------*/
+	
+	#black_promo_line h3 {font-size: 20px; line-height: 30px;}
+	
+	/*------------------------------------------*/
+	/*	  Video
+	/*------------------------------------------*/ 
+	
+	#video_content h2 {font-size: 24px; line-height: 32px; padding: 0;}
+	#video_content p { padding: 0;  }
+	#video_holder {margin-left: 10px; margin-right: 10px;}
+	.stores a img { margin-bottom: 10px;}
+		
+	/*------------------------------------------*/
+	/*	 FAQs
+	/*------------------------------------------*/
+	
+	#faq { padding-left: 5px; padding-right: 5px; }
+	
+	/*------------------------------------------*/
+	/*	  Newsletter
+	/*------------------------------------------*/
+	
+	#newsletter h1 {font-size: 28px; }
+	#newsletter p {font-size: 16px; padding: 0 5%;}
+	
+	/*------------------------------------------*/
+	/*	  Newsletter Form Input
+	/*------------------------------------------*/
+	
+	#newsletter form input[type="email"] {width: 60%; font-size: 16px;}
+	#newsletter form input[type="submit"] {width: 30%; font-size: 16px; margin-left: 5px;}	
+	.message {font-size: 14px;}
+	/*------------------------------------------*/
+	/*	  14 April 2015
+	/*------------------------------------------*/
+	.feed_thumb { margin:0 auto 15px;float:none; display:inherit;}
+	.feed_details h3 { clear:both;}
+	/*------------------------------------------*/
+	/*	  16 April 2015
+	/*------------------------------------------*/
+	.gallery_like a { width:50%;}
+	/*------------------------------------------*/
+	/*	  21 April 2015
+	/*------------------------------------------*/
+	.button_follow a { padding-right:15px;}
+	.button_follow a span { margin-right:10px;}
+}
+
+
+@media (max-width: 320px) {
+
+	/*------------------------------------------*/
+	/*	 Section Titlebar
+	/*------------------------------------------*/
+
+	.titlebar h2 { font-size: 30px; line-height: 34px; }
+	.titlebar p { font-size: 14px; line-height: 20px; padding: 0 5%; }
+	
+	/*------------------------------------------*/
+	/*	 Intro Basic Settings
+	/*------------------------------------------*/
+
+	#intro {padding-top: 100px;}
+	
+	/*------------------------------------------*/
+	/*	 Intro Description 
+	/*------------------------------------------*/
+
+	#intro_description  {margin-bottom: 40px; }
+	#intro_description h1 { font-size: 25px; line-height: 25px; }
+	#intro_description h2 { font-size: 16px; } 
+	#intro_description p { font-size: 13px; line-height: 18px; padding: 0; }
+	
+	/*------------------------------------------*/
+	/*	  Features
+	/*------------------------------------------*/
+
+	#features_left_content, #features_right_content { text-align: center; padding: 0 2%; }
+	
+	/*------------------------------------------*/
+	/*	 More Features Description
+	/*------------------------------------------*/
+
+	#more_features_description p { padding: 0;}
+	#more_features_description .row {margin-left: 5px; margin-right: 5px;}
+	.more_feature_box {margin: 40px 0 0;}
+	
+	/*------------------------------------------*/
+	/*	 Promo Banner 
+	/*------------------------------------------*/
+	
+	#promo_banner { padding-top: 30px; }
+	
+	/*------------------------------------------*/
+	/*	  Newsletter Form Input
+	/*------------------------------------------*/
+	
+	#newsletter form input[type="email"] {width: 55%; font-size: 14px;}
+	#newsletter form input[type="submit"] {width: 40%; font-size: 14px; margin-left: 2px;}	
+	.message {font-size: 16px;}
+	/*------------------------------------------*/
+	/*	  14 April 2015
+	/*------------------------------------------*/
+	.feed_thumb { margin:0 auto 15px;float:none; display:inherit;}
+	.feed_details h3 { clear:both;}
+	.owl-pagination, .vote_comments { width:100%; text-align:center;}
+	/*------------------------------------------*/
+	/*	  21 April 2015
+	/*------------------------------------------*/
+	.right_profile { clear:both; padding:15px 0 0;}	
+	.button_follow a { padding-right: 10px;} 
+	.button_follow a span { margin-right: 5px; width:30px;}
+	.top_contentinner { height:110px;}
+}
+
+

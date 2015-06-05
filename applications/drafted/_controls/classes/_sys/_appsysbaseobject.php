@@ -3,6 +3,10 @@
 class AppSysBaseObject
     extends SysBaseObject
 {
+    function __constructor()
+    {
+        $this->setSysReturnitem("REFERER", $_SERVER["HTTP_REFERER"]);
+    }
     function resultCreateRecord($appcon, $tablename)
     {
         $mr = "NA"; //Method Return;

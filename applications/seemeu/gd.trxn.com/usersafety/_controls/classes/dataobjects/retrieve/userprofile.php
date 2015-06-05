@@ -16,7 +16,7 @@ class RetrieveUserProfile
     
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid");
         
         $sqlstmnt = "SELECT * FROM userprofile ".
             "WHERE uid=:uid";
@@ -29,7 +29,7 @@ class RetrieveUserProfile
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

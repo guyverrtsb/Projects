@@ -7,7 +7,7 @@ if($action != "INVALID")
 {
     if($action == "GET_CONFIGURATION")
     {
-        gdlog()->LogInfoTaskLabel("Get Configuration");
+        gdlog()->LogTaskLabel("Get Configuration");
         if(validateConfiguration())
         {
             $group_key = filter_var($_POST["group_key"], FILTER_SANITIZE_STRING);

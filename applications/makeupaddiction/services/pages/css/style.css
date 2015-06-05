@@ -1,0 +1,172 @@
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.428571429;
+  color: #333; }
+  
+.p_container{ margin:15px 20px;}
+.p_container h1{ font-size:23px; text-transform:none;}
+.p_container h2{ font-size:22px; text-transform:none;}
+.p_container h3{ font-size:21px; text-transform:none;}
+
+.p_container ul{ margin:0px; padding:0 0 0 20px;}
+.p_container ul li{ list-style:none; margin:10px 0px 10px 10px; list-style:disc; text-align:justify;}
+
+.top_header{ text-align:center; background:#fff; padding:0px 0px; border-bottom:#ccc solid 1px;}
+
+.bottom_footer{ text-align:center; background:#222222; padding:10px 0px; background:#F5F5F5; border-top:2px solid #e4e4e4;}
+
+.p_container p{ text-align:justify;}
+
+.mdl_tag{ margin:20px 0px;}
+.mdl_row{ margin:0px; width:100%}
+.mdl_img{ float:left; width:50%;}
+.adlIcon{ display:inline-block; width:100%; padding:0px !important;}
+.adlIcon li{ float:left; list-style:none !important; margin:0px 5px !important;}
+
+.mdl_tgs{ float:left; width:50%;}
+
+.mdl_tgs h5{ font-size:20px; margin:0px; padding:0px;}
+
+.clr{ clear:both;}
+
+.three_box{display:inline-block; width:100%; padding-left:0px !important; }
+.three_box li{ float:left; width:32.5%;text-align:center !important;  list-style:none !important; margin:0px !important; }
+.three_box li h3{ }
+.three_box li p{ text-align:center !important;}
+
+
+
+
+.left-half{} 
+.halfRw{ margin-bottom:20px; width:100%;}
+.halfRw p{ font-family:Arial, Helvetica, sans-serif; margin-bottom:5px;}
+.halfRw p sup{ color:#F00; font-size:20px; vertical-align:bottom;}
+.halfRw .contact_inputs{ width:100%; padding:10px; border:#ccc solid 1px; height:auto;
+
+-webkit-box-sizing: border-box !important; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box !important;    /* Firefox, other Gecko */
+  box-sizing: border-box !important;         /* Opera/IE 8+ */}
+
+.halfRw .left{ float:left; width:49%;}
+.halfRw .right{ float:right; width:49%;}
+
+.halfRw .contact_msg { width:100%; padding:10px; border:#ccc solid 1px; height:auto; height:200px; resize:none;  
+-webkit-box-sizing: border-box !important; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box !important;    /* Firefox, other Gecko */
+  box-sizing: border-box !important;         /* Opera/IE 8+ */}
+
+.halfRw .contact_submit{ display:inline-block; background:#037ADA; padding:10px 50px; color:#fff; font-size:20px; text-transform:uppercase; border:none;
+
+-moz-border-radius: 5px;/*Firefox*/
+-webkit-border-radius: 5px;/*Safari, Chrome*/
+border-radius: 5px;
+}
+.halfRw .contact_submit:hover{ background:#289FFF;}
+
+.right-half{ margin-top:30px;}
+
+
+
+
+.rightRw{ margin-bottom:20px;}
+.rightRw h3{ font-size:25px; margin:0px 0 10px 0; color:#037ADA  }
+
+.rightRw .contact_btn{ display:inline-block; background:#037ADA; padding:10px 20px; color:#fff; font-size:20px; text-transform:uppercase; border:none;
+
+-moz-border-radius: 5px;/*Firefox*/
+-webkit-border-radius: 5px;/*Safari, Chrome*/
+border-radius: 5px;
+}
+.rightRw .contact_btn:hover{ background:#289FFF;}
+.rightRw p{ font-family:Arial, Helvetica, sans-serif;}
+
+.rightRw .contact_litbtn{ display:inline-block; background:#eee; padding:10px 30px; color:#666; font-size:20px; text-transform:uppercase; border:#E1E1E1 solid 1px;
+
+-moz-border-radius: 5px;/*Firefox*/
+-webkit-border-radius: 5px;/*Safari, Chrome*/
+border-radius: 5px;
+
+background: -moz-linear-gradient(90deg, #eeeeee 0%, #ffffff 100%);/* FF3.6+ */
+background: -webkit-gradient(linear, 90deg, color-stop(0%, #eeeeee), color-stop(100%, #ffffff));/* Chrome,Safari4+ */
+background: -webkit-linear-gradient(90deg, #eeeeee 0%, #ffffff 100%);/* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(90deg, #eeeeee 0%, #ffffff 100%);/* Opera 11.10+ */
+background: -ms-linear-gradient(90deg, #eeeeee 0%, #ffffff 100%);/* IE10+ */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff', GradientType='0'); /* for IE */
+background: linear-gradient(0deg, #eeeeee 0%, #ffffff 100%);/* W3C */
+}
+.rightRw .contact_litbtn:hover{ background:#eee;}
+
+ul.social_icon { margin:20px 0px; display:inline-block; padding-left:0px;}
+ul.social_icon li{ float:left; margin:0 5px; list-style:none;}
+ul.social_icon li a{ display:inline-block; width:40px; height:40px; background:#eee; text-align:center; color:#fff; font-size:22px; padding-top:0px;
+
+-moz-border-radius: 100px;/*Firefox*/
+-webkit-border-radius: 100px;/*Safari, Chrome*/
+border-radius: 100px;
+}
+
+ul.social_icon li a i{ line-height:39px;}
+
+ul.social_icon li a.f{ background:#3b5999}
+ul.social_icon li a.f:hover{ background:#4d72c1}
+
+ul.social_icon li a.t{ background:#00befb}
+ul.social_icon li a.t:hover{ background:#50d4ff}
+
+ul.social_icon li a.g{ background:#d13d2f}
+ul.social_icon li a.g:hover{ background:#ee4838}
+
+ul.social_icon li a.l{ background:#006dc0}
+ul.social_icon li a.l:hover{ background:#008af3}
+
+ul.social_icon li a.y{ background:#df342d;}
+ul.social_icon li a.y:hover{ background:#ff473f;}
+
+.sidebar-content ul { position:relative;}
+.sidebar-content ul:after { content:''; background:#f7f7f7; width:256px; height:1500px; position:absolute; left:-1px; top:200px; border-left:1px solid #c3cfd9; border-right:1px solid #c3cfd9; }
+
+body.sidebar-page { background-image: none !important;}
+.fbphotobox-container-right{ overflow:hidden;}
+
+ul.lnk{}
+ul.lnk li{}
+ul.lnk li a{ color:#000; text-decoration:none;}
+
+
+.p_container ul.nbr{ margin:0px; padding:0 0 0 20px;}
+.p_container ul.nbr li{ list-style:none; margin:10px 0px 10px 10px; list-style-type: value; text-align:justify;}
+
+
+
+
+
+/*-======== Mobile Media Query  ========*/
+@media (min-width:300px) and (max-width:767px) {
+ .adlIcon li { margin: 0 !important;}
+ .p_container h3 { font-size: 18px;}
+ .three_box li { width: 100%;}
+}
+
+/*-======== Tab Media Query  ========*/
+@media (min-width:768px) and (max-width:1024px) {
+ 
+}
+
+/*-======== Mobile Portrait  ========*/
+@media screen and (min-width:300px) and (max-width: 767px) and (orientation:portrait) { 
+
+}
+
+/*-======== Mobile Landscape  ========*/
+@media screen and (min-width:300px) and (max-width: 767px) and (orientation:landscape) { 
+
+
+}
+
+/*-======== Tab & small Screen Portrait  ========*/
+@media screen and (min-width:767px) and (max-width:1024px) and (orientation:portrait) { 
+
+}
+
+/*-======== Tab & small Screen Landscape  ========*/
+@media screen and (min-width:767px) and (max-width:1024px) and (orientation:landscape) { 
+
+}

@@ -34,7 +34,7 @@ class User
                             $crossappl_configurations_sdesc_region,
                             $crossappl_configurations_sdesc_country)
     {
-        zLog()->LogInfoStartFUNCTION("createUserInfo");
+        zLog()->LogStartFUNCTION("createUserInfo");
         $mr = "NA";
         
         $emailexists = new RetrieveUserAccount();
@@ -76,31 +76,31 @@ class User
             //$this->setOutputData("taskcontrol_qs", $gdctc->getUid1()."{}".$gdctc->getUid2()."{}".$gdctc->getUid3());
 
             //$this->dumpOutputData();
-            $mr = zLog()->LogInfoRETURN("USER_IS_CREATED");
+            $mr = zLog()->LogReturn("USER_IS_CREATED");
         }
         else if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
+            $mr = zLog()->LogReturn("EMAIL_IN_USE");
         }
         else if($nicknameexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
             $nickname = $guv->generate("USERSAFETY", "useraccount", "nickname", $this->createsdesc($nickname));
 
             $this->setOutputData("NICKNAME_SUGGESTION", $nickname);
-            $mr = zLog()->LogInfoRETURN("NICKNAME_IN_USE");
+            $mr = zLog()->LogReturn("NICKNAME_IN_USE");
         }
         else if($tablekeyexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("USERTABLEKEY_IN_USE");
+            $mr = zLog()->LogReturn("USERTABLEKEY_IN_USE");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("createUserInfo");
+        zLog()->LogEndFUNCTION("createUserInfo");
     }
     
     function retrieveUserAccount($email)
     {
-        zLog()->LogInfoStartFUNCTION("retrieveUserInfo");
+        zLog()->LogStartFUNCTION("retrieveUserInfo");
         $mr = "NA";
         
         $emailexists = new RetrieveUserAccount();
@@ -113,20 +113,20 @@ class User
             $this->setOutputData("useraccount_nickname", $emailexists->getNickname());
             $this->setOutputData("useraccount_usertablekey", $emailexists->getUsertablekey());
             
-            $mr = zLog()->LogInfoRETURN("USER_ACCOUNT_IS_FOUND");
+            $mr = zLog()->LogReturn("USER_ACCOUNT_IS_FOUND");
         }
         else if($emailexists->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_NOT_FOUND");
+            $mr = zLog()->LogReturn("EMAIL_NOT_FOUND");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("retrieveUserInfo");
+        zLog()->LogEndFUNCTION("retrieveUserInfo");
     }
 
    function activateUserProcess($emails)
     {
-        zLog()->LogInfoStartFUNCTION("activateUserProcess");
+        zLog()->LogStartFUNCTION("activateUserProcess");
         $mr = "NA";
         
         $emailexists = new RetrieveUserAccount();
@@ -168,26 +168,26 @@ class User
             //$this->setOutputData("taskcontrol_qs", $gdctc->getUid1()."{}".$gdctc->getUid2()."{}".$gdctc->getUid3());
 
             //$this->dumpOutputData();
-            $mr = zLog()->LogInfoRETURN("USER_IS_CREATED");
+            $mr = zLog()->LogReturn("USER_IS_CREATED");
         }
         else if($emailexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_IN_USE");
+            $mr = zLog()->LogReturn("EMAIL_IN_USE");
         }
         else if($nicknameexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
             $nickname = $guv->generate("USERSAFETY", "useraccount", "nickname", $this->createsdesc($nickname));
 
             $this->setOutputData("NICKNAME_SUGGESTION", $nickname);
-            $mr = zLog()->LogInfoRETURN("NICKNAME_IN_USE");
+            $mr = zLog()->LogReturn("NICKNAME_IN_USE");
         }
         else if($tablekeyexists->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("USERTABLEKEY_IN_USE");
+            $mr = zLog()->LogReturn("USERTABLEKEY_IN_USE");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("activateUserProcess");
+        zLog()->LogEndFUNCTION("activateUserProcess");
     }
 }
 ?>

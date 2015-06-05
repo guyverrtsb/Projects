@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ margin:0px; padding:0px; font-size:14px; font-family:Arial, Helvetica, sans-serif;}
+.clr{ clear:both;}
+img{ border:0px;}
+.fl{ float:left;}
+.fr{ float:right;}
+
+.container_640x960{ width:640px; height:960px; margin:0 auto;}
+.container_640x960 .picture{ width:640px; height:960px;}
+.container_640x960 .picture img{ width:100%; height:100%;}
+
+.container_640x1136{ width:640px;height:1136px; margin:0 auto;}
+.container_640x1136 .picture{ width:640px; height:1136px;}
+.container_640x1136 .picture img{ width:100%; height:100%;}
+
+/*---- Edited-----*/
+@media only screen and (max-width: 479px) {
+.container_640x960{ width:320px; height:480px; margin:0 auto;}
+.container_640x960 .picture{ width:320px; height:480px;}
+
+.container_640x1136{ width:320px;height:568px; margin:0 auto;}
+.container_640x1136 .picture{ width:320px; height:568px;}
+
+}
+
+
+
+

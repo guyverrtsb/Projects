@@ -79,82 +79,104 @@
 				fclose( $this->file_handle );
 		}
         
+        /** ************************************************ **/
+        /** START CUSTOM LOG FUNCTIONS
+        /** ************************************************ **/
+        public function LogPageDeclaration()
+        {
+            $includedFiles = get_included_files();
+            $this->Log("PAGE_NAME-[".$includedFiles[0]."]", KLogger::INFO );
+        }
+        public function LogAllPageDeclaration()
+        {
+            $includedFiles = get_included_files();
+            foreach($includedFiles as $filename)
+            $this->Log("PAGE_NAME-[".$filename."]", KLogger::INFO );
+        }
+        
+        public function LogDBResult($result)
+        {
+            $this->Log("DB_RESULT-[".json_encode($result)."]", KLogger::INFO );
+        }
+        
+        public function LogReturn($line)
+        {
+            $this->Log("RETURN-[".$line."]", KLogger::INFO );
+            return $line;
+        }
+        
+        public function LogTaskLabel($line)
+        {
+            $this->Log(":-----------------------[".$line."]", KLogger::INFO );
+            return $line;
+        }
+        
+        public function LogIssue($line)
+        {
+            $this->Log("############################################################################################################", KLogger::INFO );
+            $this->Log("ISSUE-[".$line."]", KLogger::INFO );
+            $this->Log("############################################################################################################", KLogger::INFO );
+            return $line;
+        }
+
+        public function LogSTARTshaggy()
+        {
+            $this->Log("(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)", KLogger::INFO );
+        }
+        
+        public function LogMSGshaggy($line)
+        {
+            $this->Log($line, KLogger::INFO );
+        }
+        
+        public function LogENDshaggy()
+        {
+            $this->Log("(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)", KLogger::INFO );
+        }
+
+        public function LogFUNCTION($functioname, $line)
+        {
+            $this->Log($functioname."-[".$line."]", KLogger::INFO );
+        }  
+        
         private $methodname = "";
-        public function LogInfoDB($result)
-        {
-            $this->Log("DB:{".json_encode($result)."}", KLogger::INFO );
-        }
-        public function LogInfoRETURN($line)
-        {
-            $this->Log("RETURN:{".$line."}", KLogger::INFO );
-            return $line;
-        }
-        
-        public function LogInfoTaskLabel($line)
-        {
-            $this->Log(":----------------------{".$line."}", KLogger::INFO );
-            return $line;
-        }
-        
-        public function LogInfoERROR($line)
-        {
-            $this->Log("############################################################################################################", KLogger::INFO );
-            $this->Log("ERROR:{".$line."}", KLogger::INFO );
-            $this->Log("############################################################################################################", KLogger::INFO );
-            return $line;
-        }
-        
-        public function LogInfoStartFUNCTION($methodname = "")
+        public function LogStartFUNCTION($methodname = "")
         {
             $this->methodname = $methodname;
             if(strtoupper($methodname) != "SAVEACTIVITYLOG")
                 $this->Log("---", KLogger::INFO );
-            $this->Log("FUNCTION START:".$this->methodname.":", KLogger::INFO );
+            $this->Log("FUNCTION_START-[".$this->methodname."]", KLogger::INFO );
         }
-        public function LogInfoEndFUNCTION($methodname = "EMPTY")
+        
+        public function LogEndFUNCTION($methodname = "EMPTY")
         {
             if($methodname == "EMPTY")
-                $this->Log("FUNCTION END:".$this->$methodname.":", KLogger::INFO );
+                $this->Log("FUNCTION_END-[".$this->$methodname."]", KLogger::INFO );
             else
-                $this->Log("FUNCTION END:".$methodname.":", KLogger::INFO );
+                $this->Log("FUNCTION_END-[".$methodname."]", KLogger::INFO );
             if(strtoupper($methodname) != "SAVEACTIVITYLOG")
                 $this->Log("---", KLogger::INFO );
         }
         
-        public function LogInfoStartDATAOBJECTFUNCTION($methodname = "")
+        public function LogStartDATAOBJECTFUNCTION($methodname = "")
         {
             $this->methodname = $methodname;
             if(strtoupper($methodname) != "SAVEACTIVITYLOG")
                 $this->Log("-\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/--\/-", KLogger::INFO );
             $this->Log("FUNCTION START:".$this->methodname.":", KLogger::INFO );
         }
-        public function LogInfoEndDATAOBJECTFUNCTION($methodname = "EMPTY")
+        public function LogEndDATAOBJECTFUNCTION($methodname = "EMPTY")
         {
             if($methodname == "EMPTY")
-                $this->Log("FUNCTION END:".$this->$methodname.":", KLogger::INFO );
+                $this->Log("FUNCTION END-[".$this->$methodname."]", KLogger::INFO );
             else
-                $this->Log("FUNCTION END:".$methodname.":", KLogger::INFO );
+                $this->Log("FUNCTION END-[".$methodname."]", KLogger::INFO );
             if(strtoupper($methodname) != "SAVEACTIVITYLOG")
                 $this->Log("-/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\--/\-", KLogger::INFO );
-        }
-
-        public function LogInfoSTARTshaggy()
-        {
-            $this->Log("(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)", KLogger::INFO );
-        }
-        public function LogInfoMSGshaggy($line)
-        {
-            $this->Log($line, KLogger::INFO );
-        }
-        public function LogInfoENDshaggy()
-        {
-            $this->Log("(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)-(SHAGGY)", KLogger::INFO );
-        }
-
-        public function LogInfoFUNCTION($functioname, $line)
-        {
-            $this->Log($functioname.":{".$line."}", KLogger::INFO );
-        }
+        }      
+        /** ************************************************ **/
+        /** END CUSTOM LOG FUNCTIONS
+        /** ************************************************ **/
 		public function LogInfo($line)
 		{
 			$this->Log( $line , KLogger::INFO );

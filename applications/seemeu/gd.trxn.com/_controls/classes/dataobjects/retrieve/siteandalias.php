@@ -15,7 +15,7 @@ class RetrieveSiteandAlias
     
     function isSiteandAliasValid()
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("isSiteandAliasValid");
+        zLog()->LogStartDATAOBJECTFUNCTION("isSiteandAliasValid");
         
         $sqlstmnt = "SELECT ".$this->dbfas("site.uid, site.sdesc, sitealias.uid, sitealias.sdesc")." ".
             "FROM sitealias ".
@@ -33,12 +33,12 @@ class RetrieveSiteandAlias
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("isSiteandAliasValid");
+        zLog()->LogEndDATAOBJECTFUNCTION("isSiteandAliasValid");
     }
     
     function doesSiteExist()
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("doesSiteExist");
+        zLog()->LogStartDATAOBJECTFUNCTION("doesSiteExist");
         $sqlstmnt = "SELECT uid, sdesc FROM site ".
             "WHERE sdesc=:package";
 
@@ -50,7 +50,7 @@ class RetrieveSiteandAlias
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("doesSiteExist");
+        zLog()->LogEndDATAOBJECTFUNCTION("doesSiteExist");
     }
 }
 ?>

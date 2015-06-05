@@ -16,11 +16,11 @@ class Activation
     
     function sendActivationofGamerAccount($args)
     {
-        zLog()->LogInfoStartFUNCTION("sendActivationofGamerAccount");
+        zLog()->LogStartFUNCTION("sendActivationofGamerAccount");
         
         // $this->sendmail($to, $from, $subject, $message);TASKKEY
 
-        zLog()->LogInfo("Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
+        zLog()->LogDebug("Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
         
         $url = "http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
             "/_controls/CONTROL.php?AJAX_SERVICE_CONTROL_KEY=TASK_CONTROL&TASKKEY=".
@@ -44,9 +44,9 @@ class Activation
         $o .= "</body>";
         $o .= "</html>";
         
-        zLog()->LogInfo($o);
+        zLog()->LogDebug($o);
         
-        $envkey = SysIntegration::isLandscapeLocal();
+        $envkey = zAppSysIntegration()->isLandscapeLocal();
         
         if(!$envkey)
         {
@@ -65,16 +65,16 @@ class Activation
                                 
         zLog()->LogDebug("TASK Url {".$this->getSysReturnitem("TRXN_URL")."}");  
         
-        zLog()->LogInfoEndFUNCTION("sendActivationofGamerAccount");
+        zLog()->LogEndFUNCTION("sendActivationofGamerAccount");
     }
     
     function sendResetofGamerPassword($args)
     {
-        zLog()->LogInfoStartFUNCTION("sendResetofGamerPassword");
+        zLog()->LogStartFUNCTION("sendResetofGamerPassword");
         
         // $this->sendmail($to, $from, $subject, $message);TASKKEY
 
-        zLog()->LogInfo("Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
+        zLog()->LogDebug("Build Activation Email:".$_SESSION['GUYVERDESIGNS_SITE_ALIAS']);
         
         $url = "http://".$_SESSION['GUYVERDESIGNS_SITE_ALIAS'].
             "/_controls/CONTROL.php?AJAX_SERVICE_CONTROL_KEY=TASK_CONTROL&TASKKEY=".
@@ -98,9 +98,9 @@ class Activation
         $o .= "</body>";
         $o .= "</html>";
         
-        zLog()->LogInfo($o);
+        zLog()->LogDebug($o);
         
-        $envkey = SysIntegration::isLandscapeLocal();
+        $envkey = zAppSysIntegration()->isLandscapeLocal();
         
         if(!$envkey)
         {
@@ -119,7 +119,7 @@ class Activation
                                 
         zLog()->LogDebug("TASK Url {".$this->getSysReturnitem("TRXN_URL")."}");  
         
-        zLog()->LogInfoEndFUNCTION("sendResetofGamerPassword");
+        zLog()->LogEndFUNCTION("sendResetofGamerPassword");
     }
 }
 ?>

@@ -19,7 +19,7 @@ class RetrieveGroupAccount
      */
     function bySdesc($sdesc)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogStartDATAOBJECTFUNCTION("bySdesc");
         
         $sqlstmnt = "SELECT * FROM groupaccount ".
             "WHERE sdesc=:sdesc";
@@ -32,7 +32,7 @@ class RetrieveGroupAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogEndDATAOBJECTFUNCTION("bySdesc");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveGroupAccount
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid");
         
         $sqlstmnt = "SELECT * FROM groupaccount ".
             "WHERE uid=:uid";
@@ -53,7 +53,7 @@ class RetrieveGroupAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

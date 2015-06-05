@@ -19,7 +19,7 @@ class RetrieveMerchantProfile
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid");
         
         $sqlstmnt = "SELECT * FROM merchantprofile ".
             "WHERE uid=:uid";
@@ -32,7 +32,7 @@ class RetrieveMerchantProfile
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid");
     }
 }
 ?>

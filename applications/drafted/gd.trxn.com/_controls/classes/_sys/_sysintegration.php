@@ -1,7 +1,7 @@
 <?php
 class SysIntegration
 {
-    static function setZBaseLines()
+    function setZBaseLines()
     {
         if (!isset($_SESSION["GD_SITE_DEFINED"]))
         {
@@ -23,26 +23,26 @@ class SysIntegration
             /** Site Information **/
             $f = explode("/", $_SERVER["DOCUMENT_ROOT"]);
             if($_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] == "LCL")
-                $_SESSION[SysIntegration::getKeySessSite()] = $f[sizeof($f) - 1];
+                $_SESSION[$this->getKeySessSite()] = $f[sizeof($f) - 1];
             else
-                $_SESSION[SysIntegration::getKeySessSite()] = $f[sizeof($f) - 4].".".$f[sizeof($f) - 2].".".$f[sizeof($f) - 1];
-            $_SESSION[SysIntegration::getKeySessSiteAlias()] = $_SERVER["HTTP_HOST"];
+                $_SESSION[$this->getKeySessSite()] = $f[sizeof($f) - 4].".".$f[sizeof($f) - 2].".".$f[sizeof($f) - 1];
+            $_SESSION[$this->getKeySessSiteAlias()] = $_SERVER["HTTP_HOST"];
             
             $_SESSION["GD_SITE_DEFINED"] = "TRUE";
             
             $f = explode("/", $_SERVER["DOCUMENT_ROOT"]);
-            $_SESSION[SysIntegration::getKeySessSiteConfigRoot()] = substr($_SERVER["DOCUMENT_ROOT"], 0, -strlen($f[sizeof($f) - 1]));
+            $_SESSION[$this->getKeySessSiteConfigRoot()] = substr($_SERVER["DOCUMENT_ROOT"], 0, -strlen($f[sizeof($f) - 1]));
         }
     }
 
-    static function getPathing($path)
+    function getPathing($path)
     {
         if(substr($path, 0, 1) == "/")
-            $path = SysIntegration::getSubDomainDocumentRoot().$path;
+            $path = $this->getSubDomainDocumentRoot().$path;
         return $path;
     }
     
-    static function setZLogging($loglevel = 6)
+    function setZLogging($loglevel = 6)
     {
         /** Set sub domain document root for standardized _controls **/
         if (!isset($_SESSION["GD_LOG_LOCATION"]))
@@ -69,16 +69,16 @@ class SysIntegration
             //$f = explode("/", $_SERVER["DOCUMENT_ROOT"]);
             //$logpath = substr($_SERVER["DOCUMENT_ROOT"], 0, -strlen($f[sizeof($f) - 1]));
             
-            $_SESSION["GD_LOG_LOCATION"] = $_SESSION[AppSysIntegration::getKeySessSiteConfigRoot()]."ZLOG.txt";
+            $_SESSION["GD_LOG_LOCATION"] = $_SESSION[$this->getKeySessSiteConfigRoot()]."ZLOG.txt";
         }
     }
 
-    static function setZSiteRegistration()
+    function setZSiteRegistration()
     {
-        if (!isset($_SESSION[SysIntegration::getKeySessSiteUid()])
-            || !isset($_SESSION[SysIntegration::getKeySessSiteAliasUid()])
-            || !isset($_SESSION[SysIntegration::getKeySessSite()])
-            || !isset($_SESSION[SysIntegration::getKeySessSiteAlias()]))
+        if (!isset($_SESSION[$this->getKeySessSiteUid()])
+            || !isset($_SESSION[$this->getKeySessSiteAliasUid()])
+            || !isset($_SESSION[$this->getKeySessSite()])
+            || !isset($_SESSION[$this->getKeySessSiteAlias()]))
         {
             zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/retrieve/siteandalias.php");
             zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/create/siteandalias.php");
@@ -129,15 +129,15 @@ class SysIntegration
         }
         else
         {
-            zLog()->LogInfo("{".SysIntegration::getKeySessSiteUid()."}-{".$_SESSION[SysIntegration::getKeySessSiteUid()]."}");
-            zLog()->LogInfo("{".SysIntegration::getKeySessSite()."}-{".$_SESSION[SysIntegration::getKeySessSite()]."}");
-            zLog()->LogInfo("{".SysIntegration::getKeySessSiteAliasUid()."}-{".$_SESSION[SysIntegration::getKeySessSiteAliasUid()]."}");
-            zLog()->LogInfo("{".SysIntegration::getKeySessSiteAlias()."}-{".$_SESSION[SysIntegration::getKeySessSiteAlias()]."}");
+            zLog()->LogInfo("{".$this->getKeySessSiteUid()."}-{".$_SESSION[$this->getKeySessSiteUid()]."}");
+            zLog()->LogInfo("{".$this->getKeySessSite()."}-{".$_SESSION[$this->getKeySessSite()]."}");
+            zLog()->LogInfo("{".$this->getKeySessSiteAliasUid()."}-{".$_SESSION[$this->getKeySessSiteAliasUid()]."}");
+            zLog()->LogInfo("{".$this->getKeySessSiteAlias()."}-{".$_SESSION[$this->getKeySessSiteAlias()]."}");
             zLog()->LogInfo("_config.php:Session Object Found");
         }
     }
     
-    static function isLandscapeLocal()
+    function isLandscapeLocal()
     {
         if($_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] == "LCL")
             return true;
@@ -165,139 +165,139 @@ class SysIntegration
     }
     
     /** Start - SITE DATA **/
-    static function setSiteControlData($siteuid, $site, $sitealiasuid, $sitealias)
+    function setSiteControlData($siteuid, $site, $sitealiasuid, $sitealias)
     {
         $zlog = new KLogger();
         $zlog->LogInfoStartFUNCTION("setSiteControlData");
-        SysIntegration::setSiteData($siteuid, $site);
-        SysIntegration::setSiteAliasData($sitealiasuid, $sitealias);
+        $this->setSiteData($siteuid, $site);
+        $this->setSiteAliasData($sitealiasuid, $sitealias);
         $syslog->LogInfoEndFUNCTION("setSiteControlData");
     }
     
-    static function setSiteData($siteuid, $site)
+    function setSiteData($siteuid, $site)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setSiteData");
-        $_SESSION[SysIntegration::getKeySessSiteUid()] = $siteuid;
-        $_SESSION[SysIntegration::getKeySessSite()] = $site;
+        $_SESSION[$this->getKeySessSiteUid()] = $siteuid;
+        $_SESSION[$this->getKeySessSite()] = $site;
         $syslog->LogInfoEndFUNCTION("setSiteData");
     }
     
-    static function setSiteAliasData($sitealiasuid, $sitealias)
+    function setSiteAliasData($sitealiasuid, $sitealias)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setSiteAliasData");
-        $_SESSION[SysIntegration::getKeySessSiteAliasUid()] = $sitealiasuid;
-        $_SESSION[SysIntegration::getKeySessSiteAlias()] = $sitealias;
+        $_SESSION[$this->getKeySessSiteAliasUid()] = $sitealiasuid;
+        $_SESSION[$this->getKeySessSiteAlias()] = $sitealias;
         $syslog->LogInfoEndFUNCTION("setSiteAliasData");
     }
 
-    static function getSiteUid(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessSiteUid()); }
-    static function getSite(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessSite()); }
-    static function getSiteAliasUid(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessSiteAliasUid()); }
-    static function getSiteAlias(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessSiteAlias()); }
+    function getSiteUid(){ return $this->nullCheckSession($this->getKeySessSiteUid()); }
+    function getSite(){ return $this->nullCheckSession($this->getKeySessSite()); }
+    function getSiteAliasUid(){ return $this->nullCheckSession($this->getKeySessSiteAliasUid()); }
+    function getSiteAlias(){ return $this->nullCheckSession($this->getKeySessSiteAlias()); }
     /** End - SITE DATA **/
 
     
     /** Start - USER AUTHORITY DATA **/
-    static function setAuthoritySessionData($usersafety_account_uid,
+    function setAuthoritySessionData($usersafety_account_uid,
                                             $isauthenticated,
                                             $usersafety_account_usertablekey)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setAuthoritySessionData");
-        $_SESSION[SysIntegration::getKeySessAuthUserUid()] = $usersafety_account_uid;
-        $_SESSION[SysIntegration::getKeySessAuthUserIsAuthenticated()] = $isauthenticated;
-        $_SESSION[SysIntegration::getKeySessAuthUsertablekey()] = $usersafety_account_usertablekey;
+        $_SESSION[$this->getKeySessAuthUserUid()] = $usersafety_account_uid;
+        $_SESSION[$this->getKeySessAuthUserIsAuthenticated()] = $isauthenticated;
+        $_SESSION[$this->getKeySessAuthUsertablekey()] = $usersafety_account_usertablekey;
         $syslog->LogInfoEndFUNCTION("setAuthoritySessionData");
     }
     
-    static function setAuthoritySessionPageRedirectPageOverride($page_redirect_override)
+    function setAuthoritySessionPageRedirectPageOverride($page_redirect_override)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setAuthoritySessionPageRedirectPageOverride");
-        $_SESSION[SysIntegration::getKeySessAuthUserPageRedirectOverride()] = $page_redirect_override;
-        $syslog->LogInfo("Page Redirect Override:{" . SysIntegration::getAuthUserPageRedirectOverride() . "}");
+        $_SESSION[$this->getKeySessAuthUserPageRedirectOverride()] = $page_redirect_override;
+        $syslog->LogInfo("Page Redirect Override:{" . $this->getAuthUserPageRedirectOverride() . "}");
         $syslog->LogInfoEndFUNCTION("setAuthoritySessionPageRedirectPageOverride");
     }
     
-    static function getAuthUserUid(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUserUid()); }
-    static function getAuthUserIsAuthenticated(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUserIsAuthenticated()); }
-    static function getAuthUserSiteRole(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUserSiteRole()); }
-    static function getAuthUserSiteRolePriority(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUserSiteRolePriority()); }
-    static function getAuthUsertablekey(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUsertablekey()); }
-    static function getAuthUserPageRedirectOverride(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessAuthUserPageRedirectOverride()); }
+    function getAuthUserUid(){ return $this->nullCheckSession($this->getKeySessAuthUserUid()); }
+    function getAuthUserIsAuthenticated(){ return $this->nullCheckSession($this->getKeySessAuthUserIsAuthenticated()); }
+    function getAuthUserSiteRole(){ return $this->nullCheckSession($this->getKeySessAuthUserSiteRole()); }
+    function getAuthUserSiteRolePriority(){ return $this->nullCheckSession($this->getKeySessAuthUserSiteRolePriority()); }
+    function getAuthUsertablekey(){ return $this->nullCheckSession($this->getKeySessAuthUsertablekey()); }
+    function getAuthUserPageRedirectOverride(){ return $this->nullCheckSession($this->getKeySessAuthUserPageRedirectOverride()); }
         
-    static function cleanAuthoritySessionData()
+    function cleanAuthoritySessionData()
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("cleanAuthoritySessionObjects");
-        unset($_SESSION[SysIntegration::getKeySessAuthUserUid()]);
-        unset($_SESSION[SysIntegration::getKeySessAuthUserIsAuthenticated()]);
-        unset($_SESSION[SysIntegration::getKeySessAuthUserSiteRole()]);
-        unset($_SESSION[SysIntegration::getKeySessAuthUserSiteRolePriority()]);
-        unset($_SESSION[SysIntegration::getKeySessAuthUsertablekey()]);
+        unset($_SESSION[$this->getKeySessAuthUserUid()]);
+        unset($_SESSION[$this->getKeySessAuthUserIsAuthenticated()]);
+        unset($_SESSION[$this->getKeySessAuthUserSiteRole()]);
+        unset($_SESSION[$this->getKeySessAuthUserSiteRolePriority()]);
+        unset($_SESSION[$this->getKeySessAuthUsertablekey()]);
         $syslog->LogInfoEndFUNCTION("cleanAuthoritySessionObjects");
     }
     
-    static function cleanAuthoritySessionPageRedirectPageOverride()
+    function cleanAuthoritySessionPageRedirectPageOverride()
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
-        unset($_SESSION[SysIntegration::getAuthUserPageRedirectOverride()]);
+        unset($_SESSION[$this->getAuthUserPageRedirectOverride()]);
         $syslog->LogInfoEndFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
     }
     /** End - USER AUTHORITY DATA **/
     
     
     /** Start - UI RESPONSE DATA **/
-    static function setUIPageResponseData($code, $key, $msg, $showmsg = "TRUE")
+    function setUIPageResponseData($code, $key, $msg, $showmsg = "TRUE")
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setUIPageResponseData");
-        $syslog->LogInfo("{".SysIntegration::getKeySessUIPageRespCode()."}-{".$code."}");
-        $syslog->LogInfo("{".SysIntegration::getKeySessUIPageRespKey()."}-{".$key."}");
-        $syslog->LogInfo("{".SysIntegration::getKeySessUIPageRespMsg()."}-{".$msg."}");
-        $syslog->LogInfo("{".SysIntegration::getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
-        $_SESSION[SysIntegration::getKeySessUIPageRespCode()] = $code;
-        $_SESSION[SysIntegration::getKeySessUIPageRespKey()] = $key;
-        $_SESSION[SysIntegration::getKeySessUIPageRespMsg()] = $msg;
-        $_SESSION[SysIntegration::getKeySessUIPageRespMsgShow()] = strtoupper($showmsg);
+        $syslog->LogInfo("{".$this->getKeySessUIPageRespCode()."}-{".$code."}");
+        $syslog->LogInfo("{".$this->getKeySessUIPageRespKey()."}-{".$key."}");
+        $syslog->LogInfo("{".$this->getKeySessUIPageRespMsg()."}-{".$msg."}");
+        $syslog->LogInfo("{".$this->getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
+        $_SESSION[$this->getKeySessUIPageRespCode()] = $code;
+        $_SESSION[$this->getKeySessUIPageRespKey()] = $key;
+        $_SESSION[$this->getKeySessUIPageRespMsg()] = $msg;
+        $_SESSION[$this->getKeySessUIPageRespMsgShow()] = strtoupper($showmsg);
         $syslog->LogInfoEndFUNCTION("setUIPageResponseData");
     }
     
-    static function getUIPageResponseCode(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessUIPageRespCode()); }
-    static function getUIPageResponseKey(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessUIPageRespKey()); }
-    static function getUIPageResponseMsg(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessUIPageRespMsg()); }
-    static function getUIPageResponseMsgShow(){ return SysIntegration::nullCheckSession(SysIntegration::getKeySessUIPageRespMsgShow()); }
+    function getUIPageResponseCode(){ return $this->nullCheckSession($this->getKeySessUIPageRespCode()); }
+    function getUIPageResponseKey(){ return $this->nullCheckSession($this->getKeySessUIPageRespKey()); }
+    function getUIPageResponseMsg(){ return $this->nullCheckSession($this->getKeySessUIPageRespMsg()); }
+    function getUIPageResponseMsgShow(){ return $this->nullCheckSession($this->getKeySessUIPageRespMsgShow()); }
     
-    static function cleanUIPageResponseData()
+    function cleanUIPageResponseData()
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("cleanUIPageResponseData");
-        unset($_SESSION[SysIntegration::getKeySessUIPageRespCode()]);
-        unset($_SESSION[SysIntegration::getKeySessUIPageRespKey()]);
-        unset($_SESSION[SysIntegration::getKeySessUIPageRespMsg()]);
-        unset($_SESSION[SysIntegration::getKeySessUIPageRespMsgShow()]);
+        unset($_SESSION[$this->getKeySessUIPageRespCode()]);
+        unset($_SESSION[$this->getKeySessUIPageRespKey()]);
+        unset($_SESSION[$this->getKeySessUIPageRespMsg()]);
+        unset($_SESSION[$this->getKeySessUIPageRespMsgShow()]);
         $syslog->LogInfoEndFUNCTION("cleanUIPageResponseData");
     }
     /** End - UI RESPONSE DATA **/
     
     
     /** Start - APPLICATION_DATA **/
-    static function setAppData($name, $value)
+    function setAppData($name, $value)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("setAppData");
-        $_SESSION[SysIntegration::getKeySessAppDataPrefix().$name] = $value;
-        SysIntegration::dumpSessionData();
+        $_SESSION[$this->getKeySessAppDataPrefix().$name] = $value;
+        $this->dumpSessionData();
         $syslog->LogInfoEndFUNCTION("setAppData");
     }
     
-    static function getAppData($name)
+    function getAppData($name)
     {
         $value = "";
-        $prefix = SysIntegration::getKeySessAppDataPrefix();
+        $prefix = $this->getKeySessAppDataPrefix();
         foreach ($_SESSION as $sessname => $sessvalue)
         {
             if(strlen($sessname) > strlen($prefix))
@@ -311,41 +311,41 @@ class SysIntegration
         return $value;
     }
 
-    static function cleanAppDataName($name)
+    function cleanAppDataName($name)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("cleanAppData");
-        $prefix = SysIntegration::getKeySessAppDataPrefix();
+        $prefix = $this->getKeySessAppDataPrefix();
         foreach ($_SESSION as $sessname => $sessvalue)
         {
             if(strlen($sessname) > strlen($prefix))
             {
                 if(substr($sessname, strlen($prefix), strlen($sessname)) == $name)
                 {
-                    unset($_SESSION[SysIntegration::getKeySessAppDataPrefix().$name]);
+                    unset($_SESSION[$this->getKeySessAppDataPrefix().$name]);
                 }
             }
         }
         $syslog->LogInfoEndFUNCTION("cleanAppData");
     }
 
-    static function cleanAppData($name)
+    function cleanAppData($name)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("cleanAppData");
-        $prefix = SysIntegration::getKeySessAppDataPrefix();
+        $prefix = $this->getKeySessAppDataPrefix();
         foreach ($_SESSION as $sessname => $sessvalue)
         {
             if(strlen($sessname) > strlen($prefix))
             {
-                unset($_SESSION[SysIntegration::getKeySessAppDataPrefix().$name]);
+                unset($_SESSION[$this->getKeySessAppDataPrefix().$name]);
             }
         }
         $syslog->LogInfoEndFUNCTION("cleanAppData");
     }
     /** End - APPLICATION_DATA **/
     
-    static function nullCheckSession($name)
+    function nullCheckSession($name)
     {
         $value = "";
         if(isset($_SESSION[$name]))
@@ -353,27 +353,27 @@ class SysIntegration
         return $value;
     }
     
-    static function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}
-    static function getKeySessUIPageRespKey(){return "UI_PAGE_RESPONSE_KEY";}
-    static function getKeySessUIPageRespMsg(){return "UI_PAGE_RESPONSE_MSG";}
-    static function getKeySessUIPageRespMsgShow(){return "UI_PAGE_RESPONSE_MSG_SHOW";}
+    function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}
+    function getKeySessUIPageRespKey(){return "UI_PAGE_RESPONSE_KEY";}
+    function getKeySessUIPageRespMsg(){return "UI_PAGE_RESPONSE_MSG";}
+    function getKeySessUIPageRespMsgShow(){return "UI_PAGE_RESPONSE_MSG_SHOW";}
     
-    static function getKeySessAuthUserUid(){return "GD_CORP_AUTH_USER_UID";}
-    static function getKeySessAuthUserIsAuthenticated(){return "GD_CORP_AUTH_ISUSERAUTHENTICATED_TF";}
-    static function getKeySessAuthUserSiteRole(){return "GD_CORP_AUTH_SITE_ROLE";}
-    static function getKeySessAuthUserSiteRolePriority(){return "GD_CORP_AUTH_SITE_ROLE_PRIORITY";}
-    static function getKeySessAuthUsertablekey(){return "GD_CORP_AUTH_USER_TABLE_KEY";}
-    static function getKeySessAuthUserPageRedirectOverride(){return "GD_CORP_AUTH_USER_PAGE_REDIRECT_OVERRIDE";}
+    function getKeySessAuthUserUid(){return "GD_CORP_AUTH_USER_UID";}
+    function getKeySessAuthUserIsAuthenticated(){return "GD_CORP_AUTH_ISUSERAUTHENTICATED_TF";}
+    function getKeySessAuthUserSiteRole(){return "GD_CORP_AUTH_SITE_ROLE";}
+    function getKeySessAuthUserSiteRolePriority(){return "GD_CORP_AUTH_SITE_ROLE_PRIORITY";}
+    function getKeySessAuthUsertablekey(){return "GD_CORP_AUTH_USER_TABLE_KEY";}
+    function getKeySessAuthUserPageRedirectOverride(){return "GD_CORP_AUTH_USER_PAGE_REDIRECT_OVERRIDE";}
     
-    static function getKeySessSiteUid(){return "GUYVERDESIGNS_SITE_UID";}
-    static function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
-    static function getKeySessSiteAliasUid(){return "GUYVERDESIGNS_SITE_ALIAS_UID";}
-    static function getKeySessSiteAlias(){return "GUYVERDESIGNS_SITE_ALIAS";}
-    static function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
+    function getKeySessSiteUid(){return "GUYVERDESIGNS_SITE_UID";}
+    function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
+    function getKeySessSiteAliasUid(){return "GUYVERDESIGNS_SITE_ALIAS_UID";}
+    function getKeySessSiteAlias(){return "GUYVERDESIGNS_SITE_ALIAS";}
+    function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
     
-    static function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
+    function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
 
-    static function dumpSessionData()
+    function dumpSessionData()
     {
         $syslog = new KLogger();
         foreach ($_SESSION as $sessname => $sessvalue)
@@ -382,12 +382,12 @@ class SysIntegration
         }
     }
     
-    static function redirectToUIPage($code, $key, $msg, $showmsg = "TRUE", $location)
+    function redirectToUIPage($code, $key, $msg, $showmsg = "TRUE", $location)
     {
         $syslog = new KLogger();
         $syslog->LogInfoStartFUNCTION("redirectToUIPage");
-        SysIntegration::cleanUIPageResponseData();
-        SysIntegration::setUIPageResponseData($code, $key, $msg, strtoupper($showmsg));
+        $this->cleanUIPageResponseData();
+        $this->setUIPageResponseData($code, $key, $msg, strtoupper($showmsg));
         $syslog->LogInfo("{location}-{".$location."}");
         $syslog->LogInfoEndFUNCTION("redirectToUIPage");
         header("Location: ".$location);
@@ -410,40 +410,51 @@ class SysIntegration
     }
     
     /** Start - CONFIG VALUES **/
-    static $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
-    static function getRedirectAuthFailPage()
+    private $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectAuthFailPage()
     {
-        return SysIntegration::$not_authorized_page;
+        return $this->not_authorized_page;
     }
     
-    static $user_logged_in_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
-    static function getRedirectAuthLoggedinPage()
+    private $user_logged_in_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
+    function getRedirectAuthLoggedinPage()
     {
-        return SysIntegration::$user_logged_in_correctly;
+        return $this->user_logged_in_correctly;
     }
     
-    static $user_logged_off_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
-    static function getRedirectAuthLoggedoffPage()
+    private $user_logged_off_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
+    function getRedirectAuthLoggedoffPage()
     {
-        return SysIntegration::$user_logged_off_correctly;
+        return $this->user_logged_off_correctly;
     }
     
-    static $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
-    static function getRedirectAuthChangePasswordPage()
+    private $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
+    function getRedirectAuthChangePasswordPage()
     {
-        return AppSysIntegration::$user_change_password;
+        return $this->user_change_password;
     }
     
-    static $email_support_account = "support@guyverdesigns.com";
-    static function getEmailSupportAccount()
+    private $email_support_account = "support@guyverdesigns.com";
+    function getEmailSupportAccount()
     {
-        return SysIntegration::$email_support_account;
+        return $this->email_support_account;
     }
     
-    static $email_admin_account = "stephen@guyverdesigns.com";
-    static function getEmailAdminAccount()
+    private $email_admin_account = "stephen@guyverdesigns.com";
+    function getEmailAdminAccount()
     {
-        return SysIntegration::$email_admin_account;
+        return $this->email_admin_account;
+    }
+    
+    private $default_page_title = "SeeMeU - Education, Access and Collaboration for All";
+    function setDefaultPageTitle($pageTitle)
+    {
+        $this->default_page_title = $pageTitle;
+    }
+    
+    function getDefaultPageTitle()
+    {
+        return $this->default_page_title;
     }
 }
 ?>

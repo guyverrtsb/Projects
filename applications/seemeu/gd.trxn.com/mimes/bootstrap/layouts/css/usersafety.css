@@ -1,0 +1,45 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-return-message,
+.usersafety-form {
+  max-width: 435px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.gdtrxn-message,
+.usersafety-form .usersafety-form-heading,
+.usersafety-form .checkbox {
+  margin-bottom: 10px;
+}
+.usersafety-form .checkbox {
+  font-weight: normal;
+}
+.usersafety-form .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.usersafety-form .form-control:focus {
+  z-index: 2;
+}
+/*
+ * Form Elements
+ */
+.usersafety-form input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.usersafety-form input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

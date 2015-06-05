@@ -1,0 +1,8 @@
+<?php		
+											$var	=	"&page@lpo-report-print.php&name@lpo-report.pdf";
+											$var	= 	base64_encode( $var );
+											$var 	=	urlencode($var);
+											?>
+											 <a href="<?php echo base_path?>print/mainexport.php?type=pdf&var=<?php echo $var;?>">
+												 <i class="fa fa-download"></i> PDF File</a>
+											 <a href="<?php echo base_path?>print/mainexport.php?type=excel&var=<?php echo $var;?>">

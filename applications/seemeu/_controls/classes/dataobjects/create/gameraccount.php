@@ -17,7 +17,7 @@ class CreateGamerAccount
     function full($gamertag,
                 $configurations_sdesc_gamerrole)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
         
         $sqlstmnt = "INSERT INTO gameraccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -35,7 +35,7 @@ class CreateGamerAccount
         
         $this->resultCreateRecord($appcon, "gameraccount");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

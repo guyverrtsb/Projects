@@ -27,7 +27,7 @@ class CreateMerchantProfile
                 $prefix,
                 $number)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStartDATAOBJECTFUNCTION("full");
 
         $sqlstmnt = "INSERT INTO merchantprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -63,7 +63,7 @@ class CreateMerchantProfile
         
         $this->resultCreateRecord($appcon, "merchantprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEndDATAOBJECTFUNCTION("full");
     }
 }
 ?>

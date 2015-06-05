@@ -21,7 +21,7 @@ class RetrieveTaskControl
                     $uid2,
                     $uid3)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid123");
+        zLog()->LogStartDATAOBJECTFUNCTION("byUid123");
         $mr = "NA"; //Method Return;
         
         $sqlstmnt = "SELECT * FROM taskcontrollink ".
@@ -37,7 +37,7 @@ class RetrieveTaskControl
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid123");
+        zLog()->LogEndDATAOBJECTFUNCTION("byUid123");
     }
 }
 ?>

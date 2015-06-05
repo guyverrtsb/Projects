@@ -1,4 +1,5 @@
 <?php
+session_start();
 /** Set sub domain document root for standardized _controls **/
 if (!isset($_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]))
     $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"] = $_SERVER["CONTEXT_DOCUMENT_ROOT"];
@@ -35,33 +36,47 @@ function zReqOnce($path)
     return require_once(getPathing($path));
 }
 
-function zLog()
-{
-    zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
-    return new KLogger();
-}
-
-function zConfig()
-{
-    zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
-    return new AppSysIntegration();
-}
-
+/*
+zReqOnce("/gd.trxn.com/usersafety/_controls/classes/authorityuser.php");
 function zAuth()
 {
-    zReqOnce("/gd.trxn.com/usersafety/_controls/classes/authorityuser.php");
-    return new gdAuthorizeUser();
+    if(!isset($_SESSION["GD_APPSYSAUTHORIZATION"]))
+    {
+        $_SESSION["GD_APPSYSAUTHORIZATION"] = new zcAuthorizeUser();
+    }
+    return $_SESSION["GD_APPSYSAUTHORIZATION"];
+}
+ */
+ 
+zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
+function zLog()
+{
+    if(!isset($_SERVER["GD_APPSYSLOGGER"]))
+    {
+        $klogger = new KLogger();
+        $_SERVER["GD_APPSYSLOGGER"] = $klogger;
+    }
+    return $_SERVER["GD_APPSYSLOGGER"];
 }
 
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/_returns.php");
-$zcSysReturn = new SysReturns();
+$zSysReturn = new SysReturns();
 
 //** START ** Sets the Site Integration after the Includes are set 
 zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
-SysIntegration::setZBaseLines();
-SysIntegration::setZLogging(1);
-SysIntegration::setZSiteRegistration();
+function zAppSysIntegration()
+{
+    if(!isset($_SERVER["GD_APPSYSINTEGATION"]))
+    {
+        $appSysIntegration = new AppSysIntegration();
+        $appSysIntegration->setZBaseLines();
+        $appSysIntegration->setZLogging(1);
+        zLog()->LogPageDeclaration();
+        $appSysIntegration->setZSiteRegistration();
+        $_SERVER["GD_APPSYSINTEGATION"] = $appSysIntegration;
+    }
+    return $_SERVER["GD_APPSYSINTEGATION"];
+}
 //** END ** Sets the Site Integration after the Includes are set
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_service.php");
-
 ?>

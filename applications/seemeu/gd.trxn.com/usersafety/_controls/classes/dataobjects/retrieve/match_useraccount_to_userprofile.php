@@ -16,7 +16,7 @@ class RetrieveMatchUserAccounttoUserProfile
     
     function basic($useraccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStartDATAOBJECTFUNCTION("basic");
         
         $sqlstmnt = "SELECT * FROM match_useraccount_to_userprofile ".
             "WHERE useraccount_uid=:useraccount_uid";
@@ -29,7 +29,7 @@ class RetrieveMatchUserAccounttoUserProfile
         
         $this->resultCreateRecord($appcon, "match_useraccount_to_userprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEndDATAOBJECTFUNCTION("basic");
     }
 }
 ?>

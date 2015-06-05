@@ -6,9 +6,9 @@ if($action != "INVALID")
 {
     if($action == "MAINT_USERACOUNT" && validateUsersafetyUseraccount())
     {
-        gdlog()->LogInfoTaskLabel("Redirect to User Acount Maintenance");
-        gdconfig()->setAppData("USERSAFETY_USERACCOUNT_UID", filter_var($_GET["usersafety_useraccount_uid"], FILTER_SANITIZE_STRING));
-        gdconfig()->redirectToUIPage("000", "GOTO_USERACCOUNT", "Go to User Account", "FALSE", "/gd.trxn.com/usersafety/s_user_account.php");
+        zLog()->LogTaskLabel("Redirect to User Acount Maintenance");
+        zAppSysIntegration()->setAppData("USERSAFETY_USERACCOUNT_UID", filter_var($_GET["usersafety_useraccount_uid"], FILTER_SANITIZE_STRING));
+        zAppSysIntegration()->redirectToUIPage("000", "GOTO_USERACCOUNT", "Go to User Account", "FALSE", "/gd.trxn.com/usersafety/s_user_account.php");
     }
     else
     {

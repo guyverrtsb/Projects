@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Lookagram</title>
+<link href="css/style.css" rel="stylesheet">
+    
+    
+</head>
+
+<body>
+<div class="top_header"><img src="images/logo.png"></div>
+<div class="p_container">
+<h1>Services</h1>
+<h2>facebook login - </h2>
+<ul>
+<li><strong>send -</strong> first name , last name , image, Facebook id, email id,dob, gender</li>
+<li><strong>res-</strong> response same as login.</li>
+</ul>
+
+
+<h2>feed post - </h2>
+
+<ul>
+<li><strong>send -</strong> userid, title, type(audio/video), data, image,</li>
+<li><strong>response  -</strong> status, mesg ,feed id, type, data url</li>
+</ul>
+
+<h2>home feed - </h2>
+
+<ul>
+<li><strong>send  -</strong> userid, page no.</li>
+<li><strong>res -</strong> status, msg, total page, total records,</li>
+<li><strong>array -</strong> image, type, data, image, total votes, total likes, time ago, username, usrimage, userid,is vote </li>
+<li><strong>array -</strong> latest three comment </li>
+</ul>
+
+<h2>single feed- </h2>
+<p>
+
+
+</p>
+<ul>
+<li><strong>send-</strong> userid, feed id, </li>
+<li><strong>res -</strong> status, mesg, </li>
+<li><strong>array -</strong> single feed object</li>
+</ul>
+
+<h2>vote - </h2>
+
+<ul>
+<li><strong>send -</strong> userid, post id , status</li>
+<li><strong>res -</strong> dislike status, total vote, status mesg</li>
+</ul>
+
+<h2>comment add- </h2>
+
+<ul>
+<li><strong>send -</strong> feedid, userid, comment</li>
+<li><strong>res-</strong> status, mesg</li>
+<li><strong>array -</strong> all comments </li>
+<li>comment, username, userid, user image </li>
+</ul>
+
+<h2>get comment </h2>
+<ul>
+<li><strong>send -</strong> comment , user id</li>
+<li><strong>res-</strong> status, mesg</li>
+<li><strong>array -</strong> all comments </li>
+<li>comment, username, userid, user image </li>
+</ul>
+
+<h2>delete a post - </h2>
+
+<ul>
+<li><strong>send -</strong> feedid, userid</li>
+<li><strong>res -</strong> check owner , then delete post,status, msg</li>
+</ul>
+
+<h2>report a post</h2>
+<ul>
+<li><strong>send  -</strong>  feed id, userid</li>
+<li><strong>res -</strong> status, msg</li>
+</ul>
+
+</div>
+
+<div class="bottom_footer">Lookagram © 2015</div>
+</body>
+</html>
