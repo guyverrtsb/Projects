@@ -42,7 +42,7 @@ class Merchant
                                 $number,
                                 $configurations_sdesc_merchantrole)
     {
-        zLog()->LogInfoStartFUNCTION("createMerchantInfo");
+        zLog()->LogStart_AccessPointFunction("createMerchantInfo");
         $mr = "NA";
 
         $ra = new RetrieveMerchantAccount();
@@ -79,15 +79,15 @@ class Merchant
             $this->setOutputData("merchantaccount_sdesc", $ca->getSdesc());
             $this->setOutputData("merchantaccount_companyname", $ca->getCompanyname());
             
-            $mr = zLog()->LogInfoRETURN("MERCHANT_IS_CREATED");
+            $mr = zLog()->LogReturn("MERCHANT_IS_CREATED");
         }
         else if($ra->getSysReturnCode()  == "RECORD_IS_FOUND")
         {
-            $mr = zLog()->LogInfoRETURN("MERCHANT_IN_USE");
+            $mr = zLog()->LogReturn("MERCHANT_IN_USE");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("createMerchantInfo");
+        zLog()->LogEnd_AccessPointFunction("createMerchantInfo");
     }
     
     /*
@@ -99,20 +99,20 @@ class Merchant
      */
     function deleteMerchantInfo($jsonargs)
     {
-        zLog()->LogInfoStartFUNCTION("deleteMerchantInfo");
+        zLog()->LogStart_AccessPointFunction("deleteMerchantInfo");
         
-        zLog()->LogInfo("JSON:{".$jsonargs."}");
+        zLog()->LogDebug("JSON:{".$jsonargs."}");
         $args = json_decode($jsonargs, TRUE);
         
         $ra = new RetrieveMerchantAccount();
         if(isset($args['sdesc']))
         {
-            zLog()->LogInfo("sdesc:{".$args['sdesc']."}");
+            zLog()->LogDebug("sdesc:{".$args['sdesc']."}");
             $ra->bySdescCompanyame($args['sdesc']);
         }
         if(isset($args['uid']))
         {
-            zLog()->LogInfo("uid:{".$args['uid']."}");
+            zLog()->LogDebug("uid:{".$args['uid']."}");
             $ra->byUid($args['uid']);
         }
         
@@ -131,7 +131,7 @@ class Merchant
         $dm->byUid($match->getUid());
 
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("deleteMerchantInfo");
+        zLog()->LogEnd_AccessPointFunction("deleteMerchantInfo");
     }
 
 

@@ -15,23 +15,26 @@ class CreateGroupAccount
     }
     
     function full($sdesc,
+                $ldesc,
                 $configurations_sdesc_grouptype,
                 $configurations_sdesc_groupvisibility,
                 $configurations_sdesc_groupaccept)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO groupaccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
             sdesc=:sdesc,
+            ldesc=:ldesc,
             configurations_sdesc_grouptype=:configurations_sdesc_grouptype,
             configurations_sdesc_groupvisibility=:configurations_sdesc_groupvisibility,
             configurations_sdesc_groupaccept=:configurations_sdesc_groupaccept";
-
+        
         $appcon = new SysConnections();
         $appcon->setApplicationDB("APPLICATION");
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":sdesc", $this->createSdesc($sdesc));
+        $appcon->bindParam(":ldesc", $this->createSdesc($ldesc));
         $appcon->bindParam(":configurations_sdesc_grouptype", $configurations_sdesc_grouptype);
         $appcon->bindParam(":configurations_sdesc_groupvisibility", $configurations_sdesc_groupvisibility);
         $appcon->bindParam(":configurations_sdesc_groupaccept", $configurations_sdesc_groupaccept);
@@ -39,7 +42,7 @@ class CreateGroupAccount
         
         $this->resultCreateRecord($appcon, "groupaccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

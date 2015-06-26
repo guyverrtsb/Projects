@@ -17,43 +17,43 @@ class RetrieveAppConfiguration
     /**
      * Retrieve Record by Email
      */
-    function byGroupkey($groupkey)
+    function byGroupkey($groupkey, $dbappli = "APPLICATION")
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("byGroupkey");
+        zLog()->LogStart_DataObjectFunction("byGroupkey");
         
         $sqlstmnt = "SELECT * FROM configurations ".
             "WHERE groupkey=:groupkey";
         
         $appcon = new SysConnections();
-        $appcon->setApplicationDB("APPLICATION");
+        $appcon->setApplicationDB($dbappli);
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":groupkey", $groupkey);
         $appcon->execSelect();
 
         $this->resultRetrieveRecords($appcon);
 
-        zLog()->LogEndDATAOBJECTFUNCTION("byGroupkey");
+        zLog()->LogEnd_DataObjectFunction("byGroupkey");
     }
     
     /**
      * Retrieve Record by Nickname
      */
-    function bySdesc($sdesc)
+    function bySdesc($sdesc, $dbappli = "APPLICATION")
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogStart_DataObjectFunction("bySdesc");
         
         $sqlstmnt = "SELECT * FROM gameraccount ".
             "WHERE sdesc=:sdesc";
         
         $appcon = new SysConnections();
-        $appcon->setApplicationDB("APPLICATION");
+        $appcon->setApplicationDB($dbappli);
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":sdesc", $sdesc);
         $appcon->execSelect();
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogEnd_DataObjectFunction("bySdesc");
     }
 }
 ?>

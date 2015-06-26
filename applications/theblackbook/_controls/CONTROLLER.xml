@@ -1,0 +1,24 @@
+<controller>
+	<globals>
+		<USER_NOT_AUTHORIZED_URL type="SYS" method="user_not_authorized_url"/>
+		<USER_LOGGED_ON_SUCCESSFULY_URL type="SYS" method="user_logged_on_successfully_url"/>
+		<USER_LOGGED_OFF_SUCCESSFULY_URL type="SYS" method="user_logged_off_successfully_url"/>
+		<USER_CHANGE_PASWORD_URL type="SYS" method="user_change_password_url"/>
+		<USER_LOGIN_URL type="SYS" method="user_login_url"/>
+		<FORM_FIELDS_NOT_VALID type="SYS" method="referer"/>
+	</globals>
+	<executors>
+		<USERSAFETY-LOGIN_BY_EMAIL_PROSPECT>
+			<USER_LOGIN type="PAGE" path="/register_login_prospect.php"/>
+		</USERSAFETY-LOGIN_BY_EMAIL_PROSPECT>
+		<USERSAFETY-REGISTER_BY_EMAIL_PROSPECT>
+			<USER_IS_CREATED type="PAGE" path="/register_login_prospect.php"/>
+			<EMAIL_IN_USE type="SYS" method="referer"/>
+			<NICKNAME_IN_USE type="SYS" method="referer"/>
+			<USERTABLEKEY_IN_USE type="SYS" method="referer"/>
+		</USERSAFETY-REGISTER_BY_EMAIL_PROSPECT>
+		<TEST>
+			<USER_LOGIN type="PAGE" path="/login_prospect.php"/>
+		</TEST>
+	</executors>
+</controller>

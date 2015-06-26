@@ -111,7 +111,7 @@ function clearOutputResults()
 <a class="miniButtonBlue" name="navtop" onclick="$('#GDUploadForm').submit();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
         </tr>
         </table></li>
-    <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div ></div></li>
+    <li><div id="GDUploadProgressBox"><div id="GDUploadProgressBar"></div><div id="GDUploadProgressBarStatusTxt">0%</div></div></li>
     <li id="TransactionOutput">&nbsp;</li>
     <li id="CEResultsTOP">&nbsp;</li>
     <li id="CEResultsBOTTOM"><a href="javascript:gdLoadContentBlocksforExistingWallMessages();">Load new Messages</a>&nbsp;</li>

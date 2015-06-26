@@ -15,31 +15,23 @@ class CreateGroupProfile
     }
     
     function full($validtodate,
-                $description,
-                $mantra,
-                $objectives)
+                $ldesc)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO groupprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
-            validtodate=:validtodate,
-            description=:description,
-            mantra=:mantra,
-            objectives=:objectives";
+            ldesc=:ldesc";
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB("APPLICATION");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":validtodate", $validtodate);
-        $appcon->bindParam(":description", $description);
-        $appcon->bindParam(":mantra", $mantra);
-        $appcon->bindParam(":objectives", $objectives);
+        $appcon->bindParam(":ldesc", $ldesc);
         $appcon->execUpdate();
         
         $this->resultCreateRecord($appcon, "groupprofile");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

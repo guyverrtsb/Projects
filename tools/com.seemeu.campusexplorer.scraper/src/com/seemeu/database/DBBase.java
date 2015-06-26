@@ -24,6 +24,7 @@ public class DBBase
 		try {
 			if(this.preparedStatement == null)
 				this.preparedStatement = this.getConnection().prepareStatement(sql);
+			this.out("SQL[" + sql + "]");
 		} catch (SQLException e) {
 			this.outErr(e.getMessage());
 		}
@@ -68,10 +69,10 @@ public class DBBase
 	{
 	    try {           
 	    	this.rowsImpactedbyCUD = this.getPreparedStatement().executeUpdate();
-			this.out("create  [" + key + ":GOOD TRANSACTION]");
+			this.out("GOOD TRANSACTION:create  [" + key + "]");
 			this.isTrxnGood = true;
 	    } catch (SQLException e) {
-	    	this.outErr("create  [" + key + ":" + e.getMessage() + "]");
+	    	this.outErr("create " + ":" + e.getMessage() + ":[" + key + "]");
 			this.isTrxnGood = false;
 	    } finally {
 	    	this.close();
@@ -83,10 +84,10 @@ public class DBBase
 	    try {
 	    	this.resultSet = this.getPreparedStatement().executeQuery();
 	    	this.setResult(resultSet);
-	    	this.out("retrieve[" + key + ":GOOD TRANSACTION]");
+	    	this.out("GOOD TRANSACTION:retrieve[" + key + "]");
 			this.isTrxnGood = true;
 	    } catch (SQLException e) {
-	    	this.outErr("retrieve[" + key + ":" + e.getMessage() + "]");
+	    	this.outErr("retrieve" + ":" + e.getMessage() + ":[" + key + "]");
 			this.isTrxnGood = false;
 	    } finally {
 	    	this.close();
@@ -97,10 +98,10 @@ public class DBBase
 	{
 	    try {           
 	    	this.rowsImpactedbyCUD = this.getPreparedStatement().executeUpdate();
-	    	this.out("update  [" + key + ":GOOD TRANSACTION]");
+	    	this.out("GOOD TRANSACTION:update  [" + key + "]");
 			this.isTrxnGood = true;
 	    } catch (SQLException e) {
-	    	this.outErr("update  [" + key + ":" + e.getMessage() + "]");
+	    	this.outErr("update   " + ":" + e.getMessage() + ":[" + key + "]");
 			this.isTrxnGood = false;
 	    } finally {
 	    	this.close();
@@ -111,10 +112,10 @@ public class DBBase
 	{
 	    try {           
 	    	this.rowsImpactedbyCUD = this.getPreparedStatement().executeUpdate();
-	    	this.out("delete  [" + key + ":GOOD TRANSACTION]");
+	    	this.out("GOOD TRANSACTION:delete  [" + key + "]");
 			this.isTrxnGood = true;
 	    } catch (SQLException e) {
-	    	this.outErr("delete  [" + key + ":" + e.getMessage() + "]");
+	    	this.outErr("delete   " + ":" + e.getMessage() + ":[" + key + "]");
 			this.isTrxnGood = false;
 	    } finally {
 	    	this.close();

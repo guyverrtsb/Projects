@@ -18,7 +18,7 @@ class CreateBattleMap
                 $tablekey,
                 $groupaccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO battlestage SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -36,7 +36,7 @@ class CreateBattleMap
         
         $this->resultCreateRecord($appcon, "battlestage");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

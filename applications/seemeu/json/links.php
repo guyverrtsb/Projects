@@ -3,15 +3,19 @@
 	"URLINKS" :
 	[
 	{ "display":"Home", "url":"/index.php" },
-    { "display":"Usersafety Index", "url":"/gd.trxn.com/usersafety/index.php" },
-    { "display":"Usersafety Home", "url":"/s_user_home.php" },
-    { "display":"Site Template", "url":"/index.php" },
-    { "display":"Large File Share", "url":"/utilities/largefileshare/upload.php" },
+    { "display":"Secure User Index", "url":"/s_user/s_index.php" },
+    { "display":"-----------", "url":"#" },
     { "display":"PHP Info", "url":"/gd.trxn.com/system/phpinfo.php" },
     { "display":"-----------", "url":"#" },
-    { "display":"JQ Upload Basic", "url":"/gd.trxn.com/upload/basic.php" },
-    { "display":"JQ Upload Basic Plus", "url":"/gd.trxn.com/jq_upload/basic-plus.html" },
-    { "display":"JQ Upload UI", "url":"/gd.trxn.com/jq_upload/jquery-ui.html" }
+    { "display":"User Home", "url":"/s_user/home.php" },
+    { "display":"Group Wall", "url":"/s_group/wall.php" },
+    { "display":"-----------", "url":"#" },
+    { "display":"Activate Prospect", "url":"/unittest/activate_prospect.php" },
+    { "display":"Upload Single", "url":"/gd.trxn.com/crossapplication/upload/single.php" },
+    { "display":"Upload Multiple", "url":"/gd.trxn.com/crossapplication/upload/multiple.php" },
+    { "display":"Upload Basic Plus", "url":"/gd.trxn.com/crossapplication/upload/basic_plus.php" },
+    { "display":"-----------", "url":"#" },
+    { "display":"Off Canvas", "url":"/gd.trxn.com/templates/offcanvas.php" }
     ]
     ,
     "SYS_SITE_VARIABLES" :

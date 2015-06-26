@@ -16,19 +16,20 @@ class CreateUserAccount
     
     function basic($email,
                 $nickname,
-                $password)
+                $password,
+                $usertablekey)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStart_DataObjectFunction("basic");
         
-        $sqlstmnt = "INSERT INTO useraccount SET 
-            uid=UUID(), createddt=NOW(), changeddt=NOW(),
-            email=:email,
-            password=:password,
-            nickname=:nickname,
-            usertablekey=:usertablekey,
-            isactive=:isactive,
-            changepassword=:changepassword,
-            numberoflogintries=:numberoflogintries";
+        $sqlstmnt = "INSERT INTO useraccount SET ".
+            "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
+            "email=:email, ".
+            "password=:password, ".
+            "nickname=:nickname, ".
+            "usertablekey=:usertablekey, ".
+            "isactive=:isactive, ".
+            "changepassword=:changepassword, ".
+            "numberoflogintries=:numberoflogintries";
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -36,7 +37,7 @@ class CreateUserAccount
         $appcon->bindParam(":email", $email);
         $appcon->bindParam(":nickname", $nickname);
         $appcon->bindParam(":password", $password);
-        $appcon->bindParam(":usertablekey", $nickname);
+        $appcon->bindParam(":usertablekey", $usertablekey);
         $appcon->bindParam(":isactive", "F");
         $appcon->bindParam(":changepassword", "F");
         $appcon->bindParam(":numberoflogintries", 0);
@@ -44,7 +45,7 @@ class CreateUserAccount
         
         $this->resultCreateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEnd_DataObjectFunction("basic");
     }
 }
 ?>

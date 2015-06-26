@@ -17,7 +17,7 @@ class CreateMatchMerchantAccountProfile
     function full($merchantaccount_uid,
                 $merchantprofile_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO match_merchantaccount_to_merchantprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,7 +33,7 @@ class CreateMatchMerchantAccountProfile
         
         $this->resultCreateRecord($appcon, "match_merchantaccount_to_merchantprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

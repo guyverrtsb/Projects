@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/dataobjects/base/draftedmatch.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/base/groupmatch.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class CreateMatchGroupAccountProfile
-    extends DraftedMatchBase
+    extends GroupMatchBase
 {
     function __construct()
     {
@@ -17,7 +17,7 @@ class CreateMatchGroupAccountProfile
     function full($groupaccount_uid,
                 $groupprofile_uid)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO match_groupaccount_to_groupprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,7 +33,7 @@ class CreateMatchGroupAccountProfile
         
         $this->resultCreateRecord($appcon, "match_groupaccount_to_groupprofile");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

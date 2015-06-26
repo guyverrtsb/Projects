@@ -34,10 +34,10 @@ class Object
      */
     function assignObjecttoMerchant($jsonargs)
     {
-        zLog()->LogInfoStartFUNCTION("loadObjects");
+        zLog()->LogStart_AccessPointFunction("loadObjects");
         $mr = "NA";
 
-        zLog()->LogInfo("JSON:{".$jsonargs."}");
+        zLog()->LogDebug("JSON:{".$jsonargs."}");
 
         $objectTypes = json_decode($jsonargs, TRUE);
         foreach ($objectTypes as $type => $objects)
@@ -66,24 +66,24 @@ class Object
                         $match = new CreateMatchMerchantAccounttoObject();
                         $match->full($rma->getUid(), $co->getUid());
                         
-                        $mr = zLog()->LogInfoRETURN("COMPLETED_SUCCESSFULLY");
+                        $mr = zLog()->LogReturn("COMPLETED_SUCCESSFULLY");
                     }
                     else
                     {
-                        $mr = zLog()->LogInfoRETURN("MERCHANT_NOT_FOUND");                     
+                        $mr = zLog()->LogReturn("MERCHANT_NOT_FOUND");                     
                     }
                 }
             }
         }
 
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("loadObjects");
+        zLog()->LogEnd_AccessPointFunction("loadObjects");
     }
     
     function assignObjectToGamer($gameraccount_email,
                                 $object_sdesc)
     {
-        zLog()->LogInfoStartFUNCTION("assignObjectToGamer");
+        zLog()->LogStart_AccessPointFunction("assignObjectToGamer");
         $mr = "NA";
         
         // Get User Account from EMail
@@ -111,25 +111,25 @@ class Object
                     $cmgao = new CreateMatchGamerAccounttoObject();
                     $cmgao->full($rmusgap->getGameraccountUid(), $object->getUid());
                     
-                    $mr = zLog()->LogInfoRETURN("GAMER_ASSIGNED_TO_OBJECT");
+                    $mr = zLog()->LogReturn("GAMER_ASSIGNED_TO_OBJECT");
                 }
                 else
                 {
-                    $mr = zLog()->LogInfoRETURN("GAMER_IS_ALREADY_ASSIGNED_TO_OBJECT");
+                    $mr = zLog()->LogReturn("GAMER_IS_ALREADY_ASSIGNED_TO_OBJECT");
                 }
             }
             else
             {
-                $mr = zLog()->LogInfoRETURN("OBJECT_NOT_FOUND");
+                $mr = zLog()->LogReturn("OBJECT_NOT_FOUND");
             }
         }
         else
         {
-            $mr = zLog()->LogInfoRETURN("EMAIL_NOT_FOUND");
+            $mr = zLog()->LogReturn("EMAIL_NOT_FOUND");
         }
         
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("assignObjectToGamer");
+        zLog()->LogEnd_AccessPointFunction("assignObjectToGamer");
     }
     
     /*
@@ -141,12 +141,12 @@ class Object
      */
     function deleteObjects($jsonobjects)
     {
-        zLog()->LogInfoStartFUNCTION("deleteObjects");
+        zLog()->LogStart_AccessPointFunction("deleteObjects");
         $mr = "NA";
         
         $co = null;
         $match = null;
-        zLog()->LogInfo("JSON:{".$jsonobjects."}");
+        zLog()->LogDebug("JSON:{".$jsonobjects."}");
 
         $objectTypes = json_decode($jsonobjects, TRUE);
         foreach ($objectTypes as $type => $objects)
@@ -162,12 +162,12 @@ class Object
         }
 
         if($co->getSysReturnCode()  == "RECORD_IS_CREATED")
-            $mr = zLog()->LogInfoRETURN("COMPLETED_SUCCESSFULLY");
+            $mr = zLog()->LogReturn("COMPLETED_SUCCESSFULLY");
         else
-            $mr = zLog()->LogInfoRETURN("FAILURE");
+            $mr = zLog()->LogReturn("FAILURE");
 
         $this->setSysReturnCode($mr);
-        zLog()->LogInfoEndFUNCTION("deleteObjects");
+        zLog()->LogEnd_AccessPointFunction("deleteObjects");
     }
 }
 ?>

@@ -23,28 +23,26 @@ class TaskControl
                             $pathtoclass,
                             $args)
     {
-        zLog()->LogStartFUNCTION("createTaskcontrollink");
+        zLog()->LogStart_AccessPointFunction("createTaskControl");
                 
         $ct = new CreateTaskControl();
         $ct->basic($appl_configurations_sdesc_taskkey,
                 $pathtoclass,
                 json_encode($args));
 
-        $this->setOutputData("uid1", $ct->getUid1());
-        $this->setOutputData("uid2", $ct->getUid2());
-        $this->setOutputData("uid3", $ct->getUid3());
-        $this->setOutputData("appl_configurations_sdesc_taskkey", $ct->getApplConfigSdescTaskkey());
-                                        
-        $mr = zLog()->LogReturn("DATA_IS_CREATED");
+        $this->setSysReturnitem("uid1", $ct->getUid1());
+        $this->setSysReturnitem("uid2", $ct->getUid2());
+        $this->setSysReturnitem("uid3", $ct->getUid3());
+        $this->setSysReturnitem("appl_configurations_sdesc_taskkey", $ct->getApplConfigSdescTaskkey());
+
+        $this->setSysReturnData("DATA_IS_CREATED", "DATA is Created", "FALSE");
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("createTaskcontrollink");
+        zLog()->LogEnd_AccessPointFunction("createTaskControl");
     }
     
     function sendTaskControl($args)
     {
-        zLog()->LogStartFUNCTION("sendTaskcontrollink");
-        $mr = "NA"; //Method Return;
+        zLog()->LogStart_AccessPointFunction("sendTaskControl");
 
         $ra = new RetrieveTaskControl();
         $ra->byUid123($args["taskcontrollink_uid1"],
@@ -60,20 +58,19 @@ class TaskControl
             $appliTaskControl = new AppliTaskControl();
             $appliTaskControl->send($args);
             
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
+            $this->setSysReturnData("TASK_PERFORMED", "Task is Performed");
             $this->transferSysReturnAry($appliTaskControl);
         }
         else if($ra->getIsactive() == "F")
         {
-            $mr = zLog()->LogReturn("TASKCONTROLLINK_IS_NOT_ACTIVE");
+            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link is not active.");
         }
         else if($ra->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $mr = zLog()->LogReturn("RECORD_IS_NOT_FOUND");
+            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Found");
         }
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("sendTaskcontrollink");
+        zLog()->LogEnd_AccessPointFunction("sendTaskControl");
     }
     
     /*
@@ -81,8 +78,7 @@ class TaskControl
      */
     function executeTaskControl($taskkey)
     {
-        zLog()->LogStartFUNCTION("runTaskcontrollink");
-        $mr = "NA"; //Method Return;
+        zLog()->LogStart_AccessPointFunction("executeTaskControl");
         
         $tkary = explode("{}", $taskkey);
         
@@ -91,8 +87,7 @@ class TaskControl
                     $tkary[1],
                     $tkary[2]);
                             
-        if($ra->getSysReturnCode() == "RECORD_IS_FOUND"
-            && $ra->getIsactive() == "T")
+        if($ra->getSysReturnCode() == "RECORD_IS_FOUND" && $ra->getIsactive() == "T")
         {
             $pathtoclass = $ra->getPathtoclass();
             
@@ -110,19 +105,18 @@ class TaskControl
             
             $this->setSysReturnAry($ary);
             
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
+            $this->setSysReturnData("TASK_PERFORMED", "Task is Performed");
         }
         else if($ra->getIsactive() == "F")
         {
-            $mr = zLog()->LogReturn("TASKCONTROLLINK_IS_NOT_ACTIVE");
+            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link is not active.");
         }
         else if($ra->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $mr = zLog()->LogReturn("RECORD_IS_NOT_FOUND");
+            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Found");
         }
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("runTaskcontrollink");
+        zLog()->LogEnd_AccessPointFunction("executeTaskControl");
     }
 }
 ?>

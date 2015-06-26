@@ -19,7 +19,7 @@ class RetrieveMerchantAccount
      */
     function bySdesc($sdesc)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("bySdescCompanyame");
+        zLog()->LogStart_DataObjectFunction("bySdescCompanyame");
         
         $sqlstmnt = "SELECT * FROM merchantaccount ".
             "WHERE sdesc=:sdesc";
@@ -32,7 +32,7 @@ class RetrieveMerchantAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("bySdescCompanyame");
+        zLog()->LogEnd_DataObjectFunction("bySdescCompanyame");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveMerchantAccount
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStart_DataObjectFunction("byUid");
         
         $sqlstmnt = "SELECT * FROM merchantaccount ".
             "WHERE uid=:uid";
@@ -53,7 +53,7 @@ class RetrieveMerchantAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEnd_DataObjectFunction("byUid");
     }
 }
 ?>

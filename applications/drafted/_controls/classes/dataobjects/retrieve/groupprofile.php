@@ -19,7 +19,7 @@ class RetrieveGroupProfile
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStart_DataObjectFunction("byUid");
         
         $sqlstmnt = "SELECT * FROM groupprofile ".
             "WHERE uid=:uid";
@@ -32,7 +32,7 @@ class RetrieveGroupProfile
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEnd_DataObjectFunction("byUid");
     }
 }
 ?>

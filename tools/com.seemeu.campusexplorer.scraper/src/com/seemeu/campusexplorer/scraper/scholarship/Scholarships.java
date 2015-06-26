@@ -19,21 +19,10 @@ public class Scholarships
 	public void doExecute()
 	{
 		SectionIntrfc scholarship = new Scholarship();
-		this.setDataPassNV("cxurl", this.getUrlPath());
+		this.setDataPassNV("url", this.getUrlPath());
 		this.setDataPassNV("idx", this.getDataPass().get("ZZZZCOUNTER"));
 		scholarship.setDataPass(this.getDataPass());
-		
-		scholarship.execute("GET_UID_FOR_CXURL");
-		int numrows = scholarship.getResult().getNumRows();
-		if(numrows == 0)
-		{
-			scholarship.execute("NEW_SCHOLARSHIP_SOURCE");
-			this.setProcessState("SUCCESS");
-		}
-		else
-		{
-			this.out("EXISTS " + this.getUrlPath());
-			this.setProcessState("ALREADY_ADDED");
-		}
+		scholarship.execute("CREATE_SCHOLARSHIPSOURCE");
+		scholarship.execute("CREATE_SCHOLARSHIPSOURCEDATA");
 	}
 }

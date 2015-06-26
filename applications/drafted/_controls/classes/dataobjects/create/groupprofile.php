@@ -19,7 +19,7 @@ class CreateGroupProfile
                 $mantra,
                 $objectives)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO groupprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -39,7 +39,7 @@ class CreateGroupProfile
         
         $this->resultCreateRecord($appcon, "groupprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

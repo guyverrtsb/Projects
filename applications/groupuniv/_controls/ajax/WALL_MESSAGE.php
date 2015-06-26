@@ -20,7 +20,7 @@ if($action != "INVALID")
                 $gdud = new gdUploadData();
                 $gdud->uploadFile(array(
                     'image_versions' => array(
-                        '' => array('auto_orient' => true),
+                        'original' => array('auto_orient' => true),
                         'medium' => array('max_width' => 500,'max_height' => 500),
                         'thumbnail' => array('max_width' => 100, 'max_height' => 100)
                     ),

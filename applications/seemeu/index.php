@@ -1,47 +1,15 @@
-<?php require_once("/gd.trxn.com/_controls/classes/_syscore.php"); ?>
-<?php zInc("/gd.trxn.com/_controls/ui/carousel/head.php"); ?>
+<?php require_once("gd.trxn.com/_controls/classes/_syscore.php"); ?>
+<?php zInc("/_controls/ui/templates/carousel/head.php"); ?>
 <!-- START - Content ================================================== -->
-<!-- START - Navigation ================================================== -->
-<div class="navbar-wrapper">
-    <div class="container">
-    <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Project name</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul id="gdtrxncomnav" class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="/gd.trxn.com/usersafety/login.php">Login</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    </div>
-</div>
-<!-- END - Navigation ================================================== -->
 <!-- START - Carousel ================================================== -->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div id="carousel" class="carousel slide" data-ride="carousel">
 <!-- Indicators -->
 <ol class="carousel-indicators">
 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 <li data-target="#myCarousel" data-slide-to="1"></li>
 <li data-target="#myCarousel" data-slide-to="2"></li>
 </ol>
-<div class="carousel-inner" role="listbox">
+<div id="carousel" class="carousel-inner" role="listbox">
 <div class="item active">
 <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
 <div class="container">
@@ -89,8 +57,15 @@
 
 <!-- START - Container ================================================== -->
 <div id="" class="container marketing">
-    <div id="usertypes" class="row"><div class="col-lg-12"></div></div>
-    <div id="featurettes" class="row"><div class="col-lg-12"></div></div>
+    <hr/>
+    <h1>User Supported</h1>
+    <div id="usertypes" class="row"></div>
+    <hr/>
+    <h1>Tools Provided</h1>
+    <div id="featurettes" class="row"></div>
+    <hr/>
+    <h1>Education Support</h1>
+    <div id="entitytypes" class="row"></div>
 
 <!-- START - Footer ================================================== -->
     <footer>
@@ -101,4 +76,4 @@
 </div>
 <!-- END - Container ================================================== -->
 <!-- END - Content ================================================== -->
-<?php zInc("/gd.trxn.com/_controls/ui/carousel/foot.php"); ?>
+<?php zInc("/_controls/ui/templates/carousel/foot.php"); ?>

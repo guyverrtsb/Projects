@@ -26,65 +26,53 @@ public class Profile
 	
 	private void doHeader()
 	{
-		// Check to make sure URL is valid and has been registered
-		SectionIntrfc college = new College();
-		this.setDataPassNV("cxurl", this.getUrlPath());
-		college.setDataPass(this.getDataPass());
-		college.execute("GET_UID_FOR_CXURL");
-		int numrows = college.getResult().getNumRows();
-		if(numrows == 1)
+		String universitysource_uid = this.getDataPassString("universitysource_uid");
+		
+		// Check if University Profile has been created already.
+		// Only one Profile to Source allowed
+		SectionIntrfc collegeProfile = new CollegeProfile();
+		this.setDataPassNV("universitysource_uid", universitysource_uid);
+		collegeProfile.setDataPass(this.getDataPass());
+		collegeProfile.execute("GET_UNIVERSITYPROFILE_FROM_UNIVERSITYSOURCE_UID");
+		int numrows = collegeProfile.getResult().getNumRows();
+		if(numrows == 0)
 		{
-			// Get UID from the results Table
-			college.getResult().setRow(0);
-			String universitysource_uid = college.getResult().getString("UID");
+			// Create Data for new Record
+			collegeProfile = new CollegeProfile();
 			
-			// Check if University Profile has been created already.
-			// Only one Profile to Source allowed
-			SectionIntrfc collegeProfile = new CollegeProfile();
-			this.setDataPassNV("universitysource_uid", universitysource_uid);
+			this.setSchooltype();
+			this.setLatLng();
+			this.setName();
+			this.setCity();
+			this.setRegion();
+			this.setPhoneNumber();
+			this.setLdesc();
+			
 			collegeProfile.setDataPass(this.getDataPass());
-			collegeProfile.execute("GET_UID_FOR_UNIVERSITYSOURCE_UID");
-			numrows = collegeProfile.getResult().getNumRows();
-			if(numrows == 0)
+			collegeProfile.execute("CREATE_UNIVERSITYPROFILE");
+			
+			if(collegeProfile.getIsTrxnGood())
 			{
-				// Create Data for new Record
-				collegeProfile = new CollegeProfile();
-				
-				this.setSchooltype();
-				this.setLatLng();
-				this.setName();
-				this.setCity();
-				this.setRegion();
-				this.setPhoneNumber();
-				this.setLdesc();
-				
-				collegeProfile.setDataPass(this.getDataPass());
-				collegeProfile.execute("CREATE_INIT_UNIV_PROFILE");
-				
-				if(collegeProfile.getIsTrxnGood())
-				{
-					college = new College();
-					this.setDataPassNV("universitysource_uid", universitysource_uid);
-					college.setDataPass(this.getDataPass());
-					college.execute("UPDATE_PROFILE_VALID");
-					this.setProcessState("SUCCESS");
-				}
-				else
-				{
-					this.outErr(": Issue Tracked : " + this.getClass().getName());
-					this.setProcessState("ISSUE");
-				}
+				SectionIntrfc college = new College();
+				this.setDataPassNV("url", this.getUrlPath());
+				college = new College();
+				this.setDataPassNV("universitysource_uid", universitysource_uid);
+				this.setDataPassNV("fieldname", "profilecreated");
+				this.setDataPassNV("fieldvalue", "T");
+				college.setDataPass(this.getDataPass());
+				college.execute("UPDATE_UNIVERSITYSOURCE_STATUS");
+				this.setProcessState("SUCCESS");
 			}
 			else
 			{
-				this.out("**************" + " : Record Already Added : " + this.getClass().getName());
-				this.setProcessState("ALREADY_ADDED");
+				this.out("**********************\n[ISSUE_IS_TRACKED]\n" + this.getClass().getName() + "\n**********************");
+				this.setProcessState("ISSUE");
 			}
 		}
 		else
 		{
-			this.out("**************" + " : Scholarship Source not Found : " + this.getClass().getName());
-			this.setProcessState("FAILURE");
+			this.out("**********************\nPROFILE_ALREADY_CREATED\n" + this.getClass().getName() + "\n**********************");
+			this.setProcessState("ALREADY_ADDED");
 		}
 	}
 	

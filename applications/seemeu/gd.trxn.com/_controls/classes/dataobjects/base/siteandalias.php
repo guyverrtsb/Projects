@@ -15,7 +15,7 @@ class SiteandAliasBase
     }
     
     function getUid() { return $this->getResult_RecordField("uid"); }
-    function getSite() { return $this->getResult_RecordField("sdesc"); }
+    function getSite() { return strtolower($this->getResult_RecordField("sdesc")); }
 
 }
 ?>

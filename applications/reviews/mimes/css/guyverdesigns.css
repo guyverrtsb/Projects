@@ -1,6 +1,0 @@
-#workarea_col_left { float:left; width:45%; border:0px solid #fff; }
-#workarea_col_right { float:right; width:45%; border:0px solid #fff; }
-
-.tile { float:left;  width:180px; height:180px; padding:10px;
-        background: url("/gd.trxn.com/mimes/images/grey.png") repeat scroll 0 0 #0074B2; margin:10px 10px 10px 10px;
-        text-align:center; }

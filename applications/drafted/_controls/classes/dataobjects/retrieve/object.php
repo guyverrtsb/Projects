@@ -19,7 +19,7 @@ class RetrieveObject
      */
     function bySdesc($sdesc)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogStart_DataObjectFunction("bySdesc");
         
         $sqlstmnt = "SELECT * FROM object ".
             "WHERE sdesc=:sdesc";
@@ -32,7 +32,7 @@ class RetrieveObject
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogEnd_DataObjectFunction("bySdesc");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveObject
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStart_DataObjectFunction("byUid");
         
         $sqlstmnt = "SELECT * FROM object ".
             "WHERE uid=:uid";
@@ -53,7 +53,7 @@ class RetrieveObject
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEnd_DataObjectFunction("byUid");
     }
 }
 ?>

@@ -4,7 +4,11 @@ class SysUtilities
 {    
     public function saveActivityLog($sdesc, $notes)
     {
-        zLog()->LogStartFUNCTION("saveActivityLog");
+        zLog()->LogStart_FUNCTION("saveActivityLog");
+        
+        zLog()->LogDebug("SDESC:[".$sdesc."]");
+        zLog()->LogDebug("NOTES:[".$notes."]");
+        
         $sqlstmnt = "INSERT INTO activitylog SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "sdesc=:sdesc, notes=:notes";
@@ -16,7 +20,7 @@ class SysUtilities
         $dbcontrol->bindParam(":notes", $notes);
         $dbcontrol->execUpdate();
 
-        zLog()->LogEndFUNCTION("saveActivityLog");
+        zLog()->LogEnd_FUNCTION("saveActivityLog");
     }
     
     /*
@@ -65,9 +69,15 @@ class SysUtilities
         return "DATE_FORMAT(".$date.", \"%W\")";
     }
     
-    function getmySQLDateTimeStamp($date)
+    function getMySqlDateTimeStamp($date)
     {
         $odate = date("Y-m-d h:i:s", strtotime($date));
+        return $odate;
+    }
+    
+    function getMySqlDate($date)
+    {
+        $odate = date("Y-m-d", strtotime($date));
         return $odate;
     }
     

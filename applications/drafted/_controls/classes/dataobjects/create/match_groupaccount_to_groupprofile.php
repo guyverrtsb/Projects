@@ -17,7 +17,7 @@ class CreateMatchGroupAccountProfile
     function full($groupaccount_uid,
                 $groupprofile_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO match_groupaccount_to_groupprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -33,7 +33,7 @@ class CreateMatchGroupAccountProfile
         
         $this->resultCreateRecord($appcon, "match_groupaccount_to_groupprofile");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

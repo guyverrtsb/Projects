@@ -18,19 +18,10 @@ public class Colleges
 	public void doExecute()
 	{
 		SectionIntrfc college = new College();
-		this.setDataPassNV("cxurl", this.getUrlPath());
+		this.setDataPassNV("url", this.getUrlPath());
 		this.setDataPassNV("idx", this.getDataPass().get("ZZZZCOUNTER"));
 		college.setDataPass(this.getDataPass());
-		
-		college.execute("GET_UID_FOR_CXURL");
-		int numrows = college.getResult().getNumRows();
-		if(numrows == 0)
-		{
-			college.execute("NEW_UNIV_SOURCE");
-		}
-		else
-		{
-			this.out("**************" + " : Record Exists : " + this.getClass().getName());
-		}
+		college.execute("CREATE_UNIVERSITYSOURCE");
+		college.execute("CREATE_UNIVERSITYSOURCEDATA");
 	}
 }

@@ -4,13 +4,17 @@ body {
   background-color: #eee;
 }
 
+#gdtrxncom_msgline {
+  max-width: 435px;
+  padding-top: 15px;
+  margin: 0 auto;
+}
 .form-return-message,
 .usersafety-form {
   max-width: 435px;
   padding: 15px;
   margin: 0 auto;
 }
-.gdtrxn-message,
 .usersafety-form .usersafety-form-heading,
 .usersafety-form .checkbox {
   margin-bottom: 10px;
@@ -38,7 +42,19 @@ body {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.usersafety-form input[type="password"] {
+.usersafety-form input[id="inputLoginPassword"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.usersafety-form input[id="inputRegisterPassword"] {
+  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.usersafety-form input[id="inputRegisterPasswordConfirm"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

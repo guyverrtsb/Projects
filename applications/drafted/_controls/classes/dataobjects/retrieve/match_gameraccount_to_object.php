@@ -20,7 +20,7 @@ class RetrieveMatchGamerAccounttoObject
     function byGamerAccountUidandObjectUid($gameraccount_uid,
                                         $object_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byGamerAccountUidandObjectUid");
+        zLog()->LogStart_DataObjectFunction("byGamerAccountUidandObjectUid");
         
         $sqlstmnt = "SELECT * FROM match_gameraccount_to_object".
             " WHERE gameraccount_uid=:gameraccount_uid".
@@ -35,7 +35,7 @@ class RetrieveMatchGamerAccounttoObject
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byGamerAccountUidandObjectUid");
+        zLog()->LogEnd_DataObjectFunction("byGamerAccountUidandObjectUid");
     }
 }
 ?>

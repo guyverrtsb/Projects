@@ -6,12 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class LoggingBase
 {
 	public void createLogFile()
 	{
-		File folder = new File("C:\\tmp\\logs\\seemeu\\");
+		File folder = new File(JDBCMySQLConnection.PROJECT_PATH + "/seemeu/");
 		if(!folder.exists())
 			folder.mkdirs();
 		Calendar calendar = Calendar.getInstance();
@@ -31,15 +32,32 @@ public class LoggingBase
 	
 	public void out(String msg)
 	{
-		System.out.println(msg);
+		if(msg.indexOf("ERR_ERR_ERR") != -1 || msg.indexOf("**********") != -1)
+		{
+			System.out.println(msg);
+		}
+		else if(msg.indexOf("SCREENDATA") == -1)
+		{
+			System.out.println(msg);
+		}
+		/*
+		else if(msg.indexOf("||||||||||||||||") != -1)
+			System.out.print("\r" + msg);
+		else if(msg.indexOf("[INCREMENT]") != -1)
+		{
+			String number = msg.substring(1, msg.indexOf("]"));
+			System.out.print("\r" + number);
+		}
+		*/
 		this.appendToLogFile(msg);
 	}
 	
+
 	private void appendToLogFile(String msg)
 	{
 		Calendar calendar = Calendar.getInstance();
 		
-		File folder = new File("C:\\tmp\\logs\\seemeu\\");
+		File folder = new File(JDBCMySQLConnection.PROJECT_PATH + "/seemeu/");
 		File[] fl = folder.listFiles();
 		File f = fl[fl.length - 1];
 		try	(
@@ -55,4 +73,6 @@ public class LoggingBase
 		// File writing/opening failed at some stage.
 		}
 	}
+	
+	
 }

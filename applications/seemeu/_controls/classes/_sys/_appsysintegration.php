@@ -3,30 +3,47 @@
 class AppSysIntegration
     extends SysIntegration
 {
-    private $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
-    function getRedirectAuthFailPage()
+    private $user_not_authorized_url = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectUserNotAuthorizedUrl()
     {
-        return $this->not_authorized_page;
+        return $this->user_not_authorized_url;
     }
     
-    private $user_logged_in_correctly = "/s_user_home.php";
-    function getRedirectAuthLoggedinPage()
+    private $user_logged_on_successfully_url = "/s_user_home.php";
+    function getRedirectUserLoggedOnSuccessfullyUrl()
     {
-        return $this->user_logged_in_correctly;
+        return $this->user_logged_on_successfully_url;
     }
     
-    private $user_logged_off_correctly = "/gd.trxn.com/usersafety/index.php";
-    function getRedirectAuthLoggedoffPage()
+    private $user_logged_off_successfully_url = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectUserLoggedOffSuccessfullyUrl()
     {
-        return $this->user_logged_off_correctly;
+        return $this->user_logged_off_successfully_url;
     }
     
-    private $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
-    function getRedirectAuthChangePasswordPage()
+    private $user_change_password_url = "/gd.trxn.com/usersafety/changepassword.php";
+    function getRedirectUserChangePasswordUrl()
     {
-        return $this->user_change_password;
+        return $this->user_change_password_url;
     }
     
+    private $user_login_url = "/gd.trxn.com/usersafety/login.php";
+    function getRedirectUserLoginUrl()
+    {
+        return $this->user_login_url;
+    }
+    
+    private $general_error_url = "/gd.trxn.com/system/error.php";
+    function getRedirectGeneralErrorUrl()
+    {
+        return $this->general_error_url;
+    }
+    
+    function getRedirectRefererUrl()
+    {
+        return $_SERVER['HTTP_REFERER'];
+    }
+
     private $email_support_account = "support@guyverdesigns.com";
     function getEmailSupportAccount()
     {
@@ -39,15 +56,25 @@ class AppSysIntegration
         return $this->email_admin_account;
     }
     
-    private $default_page_title = "SeeMeU - Education, Access and Collaboration for All";
+    private $default_page_title = "SeeMeU :: Access to Education with Collaboration for All";
     function setDefaultPageTitle($pageTitle)
-    {
-        $this->default_page_title = $pageTitle;
+    {   
+        $_SESSION["OVERRIDE_PAGE_TITLE"] = "SeeMeU :: ".$pageTitle;
     }
     
     function getDefaultPageTitle()
     {
-        return $this->default_page_title;
+        $pagetitle = "";
+        if(isset($_SESSION["OVERRIDE_PAGE_TITLE"]))
+        {
+            $pagetitle = $_SESSION["OVERRIDE_PAGE_TITLE"];
+            unset($_SESSION["OVERRIDE_PAGE_TITLE"]);
+        }
+        else
+        {
+            $pagetitle = $this->default_page_title;
+        }
+        return $pagetitle;
     }
 }
 ?>

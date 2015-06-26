@@ -4,67 +4,70 @@
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/match_useraccount_to_userprofile.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/update/useraccount.php"); ?>
 <?php
-class gdAuthenticateUser
+class zAuthenticateUser
     extends AppSysBaseObject
 {
     function __construct()
     {
     }
     
-    function authenticate($argary)
+    function authenticate($args)
     {
-        zLog()->LogStartFUNCTION("authenticateByEmail");
-        $mr = "NA";
-        
+        zLog()->LogStart_AccessPointFunction("authenticate");
+
         $rua = new RetrieveUserAccount();
-        $rua->byEmail($argary["useraccount_email"]);
+        if($args["LOGIN_TYPE"] == 'EMAIL')
+            $rua->byEmail($args["useraccount_email"]);
+        else if($args["LOGIN_TYPE"] == 'NICKNAME')
+            $rua->byNickname($args["useraccount_nickname"]);
+        
         if($rua->getSysReturnCode() == "RECORD_IS_FOUND")
         {
-            
             if($rua->getIsactive() == "F")    // User account is inactive
             {
-                $mr = zLog()->LogReturn("ACCOUNT_INACTIVE");
+                $this->setSysReturnData("ACCOUNT_INACTIVE", "account inactive");
             }
             else if($rua->getNumberoflogintries() >= 3)  // Number of Login Tries
             {
                 $uua = new UpdateUserAccount();
                 $uua->updateIsactive($rua->getUid(), "F");
-                $mr = zLog()->LogReturn("TOO_MANY_FAILED_LOGIN_ATTEMPTS");
+                $this->setSysReturnData("TOO_MANY_FAILED_LOGIN_ATTEMPTS", "Too many failed attempts");
             }
             else if($rua->getPassword() != $argary["useraccount_password"])   // Password does not match
             {
                 $uua = new UpdateUserAccount();
                 $uua->updateLogintries($rua->getUid(), ($rua->getNumberoflogintries() + 1));
-                $mr = zLog()->LogReturn("PASSWORD_DOES_NOT_MATCH");
+                $this->setSysReturnData("PASSWORD_DOES_NOT_MATCH", "Passwords do not match");
             }
             else if($rua->getPassword() == $argary["useraccount_password"])
             {
-                zLog()->LogDebug("**************************GOOD LOGIN*****************************");
                 zConfig()->setAuthoritySessionData($rua->getUid()
                                                 , "T"
                                                 , $rua->getUsertablekey());
-                $mr = zLog()->LogReturn("USER_IS_AUTHENTICATED");
+                $this->setSysReturnData("USER_IS_AUTHENTICATED", "User is Authenticated");
             }
         }
         else if($rua->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $mr = zLog()->LogReturn("RECORD_NOT_FOUND_BY_EMAIL");
+            if($args["LOGIN_TYPE"] == 'EMAIL')
+                $this->setSysReturnData("RECORD_NOT_FOUND_BY_EMAIL", "Record not found by email");
+            else if($args["LOGIN_TYPE"] == 'NICKNAME')
+                $this->setSysReturnData("RECORD_NOT_FOUND_BY_NICKNAME", "Record not found by nickname");
         }
 
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("authenticateByEmail");
+        zLog()->LogEnd_AccessPointFunction("authenticate");
     }
 
     function isAthenticated()
     {
         if(isset($_SESSION[$this->sessAuthenticated]))
         {
-            $this->setSysReturnCode("USER_IS_AUTHENTICATED");
+            $this->setSysReturnData("USER_IS_AUTHENTICATED", "User is authenticated");
             return true;
         }
         else
         {
-            $this->setSysReturnCode("USER_IS_NOT_AUTHENTICATED");
+            $this->setSysReturnData("USER_IS_NOT_AUTHENTICATED", "User is not authenticated");
             return false;
         }
     }

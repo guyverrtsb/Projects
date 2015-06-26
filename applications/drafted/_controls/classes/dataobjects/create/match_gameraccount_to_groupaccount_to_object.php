@@ -18,7 +18,7 @@ class CreateMatchGamertoGrouptoObject
                 $groupaccount_uid,
                 $object_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO match_gameraccount_to_groupaccount_to_object SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -36,7 +36,7 @@ class CreateMatchGamertoGrouptoObject
         
         $this->resultCreateRecord($appcon, "match_gameraccount_to_groupaccount_to_object");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

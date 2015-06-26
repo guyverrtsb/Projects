@@ -1,8 +1,8 @@
-<?php gdreqonce("/_controls/classes/base/appbase.php"); ?>
+<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_role.php"); ?>
 <?php
 class gdAuthorizeUser
-    extends zAppBaseObject
+    extends AppSysBaseObject
 {
     function isGuest()
     {
@@ -47,7 +47,7 @@ class gdAuthorizeUser
     
     function isContentAuthorized($resource_role_sdesc = "GD_USER")
     {
-        zLog()->LogInfoStartFUNCTION("isContentAuthorized");
+        zLog()->LogInfoStart_AccessPointFunction("isContentAuthorized");
         $fr = "UNKNOWN_ERROR";
 
         $gdfur = new gdFindUsersafetyRole();
@@ -65,7 +65,7 @@ class gdAuthorizeUser
             $fr = $this->gdlog()->LogInfoRETURN("USER_NOT_AUTHORIZED");
         }
         
-        $this->gdlog()->LogInfoEndFUNCTION("isContentAuthorized");
+        $this->gdlog()->LogInfoEnd_AccessPointFunction("isContentAuthorized");
         if($fr == "USER_AUTHORIZED")
             return true;
         else
@@ -74,7 +74,7 @@ class gdAuthorizeUser
     
     function isAuthorized($resource_role_sdesc = "GD_USER")
     {
-        $this->gdlog()->LogInfoStartFUNCTION("isAuthorized");
+        $this->gdlog()->LogInfoStart_AccessPointFunction("isAuthorized");
         $fr = "UNKNOWN_ERROR";
 
         $gdfur = new gdFindUsersafetyRole();
@@ -88,7 +88,7 @@ class gdAuthorizeUser
             $fr = $this->gdlog()->LogInfoRETURN("USER_NOT_AUTHORIZED");
         }
         
-        $this->gdlog()->LogInfoEndFUNCTION("isAuthorized");
+        $this->gdlog()->LogInfoEnd_AccessPointFunction("isAuthorized");
         if($fr == "USER_AUTHORIZED")
             return true;
         else

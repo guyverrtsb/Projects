@@ -19,7 +19,7 @@ class RetrieveUserAccount
      */
     function byEmail($email)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("byEmail");
+        zLog()->LogStart_DataObjectFunction("byEmail");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE email=:email";
@@ -32,7 +32,7 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogEndDATAOBJECTFUNCTION("byEmail");
+        zLog()->LogEnd_DataObjectFunction("byEmail");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveUserAccount
      */
     function byNickname($nickname)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("byNickname");
+        zLog()->LogStart_DataObjectFunction("byNickname");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE nickname=:nickname";
@@ -53,7 +53,7 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogEndDATAOBJECTFUNCTION("byNickname");
+        zLog()->LogEnd_DataObjectFunction("byNickname");
     }
     
     /**
@@ -61,7 +61,7 @@ class RetrieveUserAccount
      */
     function byUsertablekey($usertablekey)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("byTablekey");
+        zLog()->LogStart_DataObjectFunction("byUsertablekey");
         
         $sqlstmnt = "SELECT * FROM useraccount ".
             "WHERE usertablekey=:usertablekey";
@@ -74,7 +74,28 @@ class RetrieveUserAccount
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogEndDATAOBJECTFUNCTION("byTablekey");
+        zLog()->LogEnd_DataObjectFunction("byUsertablekey");
+    }
+    
+    /**
+     * Retrieve Record by Uid
+     */
+    function byUid($uid)
+    {
+        zLog()->LogStart_DataObjectFunction("byUid");
+        
+        $sqlstmnt = "SELECT * FROM useraccount ".
+            "WHERE uid=:uid";
+        
+        $appcon = new SysConnections();
+        $appcon->setApplicationDB("USERSAFETY");
+        $appcon->setStatement($sqlstmnt);
+        $appcon->bindParam(":uid", $uid);
+        $appcon->execSelect();
+        
+        $this->resultRetrieveRecord($appcon);
+        
+        zLog()->LogEnd_DataObjectFunction("byUid");
     }
 }
 ?>

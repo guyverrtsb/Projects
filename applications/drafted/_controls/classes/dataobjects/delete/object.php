@@ -16,7 +16,7 @@ class DeleteObject
     
     function bySdesc($sdesc)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogStart_DataObjectFunction("bySdesc");
         
         $sqlstmnt = "DELETE FROM object ".
             "WHERE sdesc=:sdesc";
@@ -29,7 +29,7 @@ class DeleteObject
 
         $this->resultDeleteRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("bySdesc");
+        zLog()->LogEnd_DataObjectFunction("bySdesc");
     }
 }
 ?>

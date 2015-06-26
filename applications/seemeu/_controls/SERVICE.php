@@ -11,25 +11,38 @@ $return = new AppSysBaseObject();
 $serviceControlKey = getServiceControlKey();
 switch($serviceControlKey)
 {
-        case "TEST_ACTION":
-        case "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS":
-        case "ACTIVATE_GAMER_ACCOUNT":
-        case "TASK_CONTROL":
-        case "LOGGED_IN_GAMER_DATA":
-            zReqOnce("/_controls/executors/".$serviceControlKey.".php");
-            $executor = new Executor();
-            $return->setSysReturnAry($executor->execute()->getSysReturnAry());
-            break;
+    case "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS":
+        zReqOnce("/_controls/classes/executors/".$serviceControlKey.".php");
+        $executor = new Executor();
+        $executor->execute();
+        $return->transferSysReturnAry($executor);
+        break;
+    case "TEST_ACTION":
+        zReqOnce("/gd.trxn.com/_controls/classes/executors/".$serviceControlKey.".php");
+        $executor = new Executor();
+        $executor->execute();
+        $return->transferSysReturnAry($executor);
+        break;
+    case "TASK_CONTROL":
+    case "MIME_UPLOAD":
+        zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/executors/".$serviceControlKey.".php");
+        $executor = new Executor();
+        $executor->execute();
+        $return->transferSysReturnAry($executor);
+        break;
+    case "USERSAFETY-LOGIN":
+    case "USERSAFETY-REGISTRATION":
+        zReqOnce("/gd.trxn.com/usersafety/_controls/classes/executors/".$serviceControlKey.".php");
+        $executor = new Executor();
+        $executor->execute();
+        $return->transferSysReturnAry($executor);
+        break;
     case "NO_KEY_SENT":
-            $return->setSysReturnCode("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND");
-            $return->setSysReturnShowMsg("FALSE");
-            $return->setSysReturnMsg("Action not provided");
-            zLog()->LogInfo("SERVICE_CONTROL_KEY{".getServiceControlKey()."}");
-            break;
+        $return->setSysReturnData("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND", "Action not provided");
+        zLog()->LogInfo("SERVICE_CONTROL_KEY{".getServiceControlKey()."}");
+        break;
     default:
-        $return->setSysReturnCode("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND");
-        $return->setSysReturnShowMsg("FALSE");
-        $return->setSysReturnMsg("Action not valid");
+        $return->setSysReturnData("ACTION_SERVICE_CONTROL_KEY_NOT_FOUND", "Action not Valid");
 }
-zLog()->LogInfo($return->getSysReturnAryJSON());
+zLog()->LogDebug($return->getSysReturnAryJSON());
 echo $return->getSysReturnAryJSON();

@@ -5,7 +5,7 @@ class SysConfigurations
 {
     function findConfigurationListfromGroupKey($groupkey, $APPDB = "crossapplication")
     {
-        zLog()->LogStartFUNCTION("findConfigurationListfromGroupKey");
+        zLog()->LogStart_Function("findConfigurationListfromGroupKey");
         
         $this->cleanResults_ConfigurationRecords();
 
@@ -19,15 +19,31 @@ class SysConfigurations
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":groupkey", strtoupper($groupkey));
         $appcon->execSelect();
-        
-        $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndFUNCTION("findConfigurationListfromGroupKey");
+        if($appcon->getTransactionGood())
+        {
+            if($appcon->getRowCount() > 0)
+            {
+                $this->Results_ConfigurationRecords = $appcon->getStatement()->fetch(PDO::FETCH_ASSOC);
+                $this->saveActivityLog("RECORD_IS_FOUND", "Record is Retrieved:".json_encode($this->Results_ConfigurationRecords).":");
+                $this->setSysReturnData("RECORD_IS_FOUND", "Record is Retrieved");
+            }
+            else
+            {
+                $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Retrieved");
+            }
+        }
+        else
+        {
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
+        }
+
+        zLog()->LogEnd_Function("findConfigurationListfromGroupKey");
     }
     
     function findConfigurationfromSdesc($sdesc, $APPDB = "crossapplication")
     {
-        zLog()->LogStartFUNCTION("findConfigurationfromSdesc");
+        zLog()->LogStart_Function("findConfigurationfromSdesc");
         
         $this->cleanResult_ConfigurationRecord();
 
@@ -41,15 +57,31 @@ class SysConfigurations
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":sdesc", strtoupper($sdesc));
         $appcon->execSelect();
-        
-        $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndFUNCTION("findConfigurationfromSdesc");
+        if($appcon->getTransactionGood())
+        {
+            if($appcon->getRowCount() > 0)
+            {
+                $this->Result_ConfigurationRecord = $appcon->getStatement()->fetch(PDO::FETCH_ASSOC);
+                $this->saveActivityLog("RECORD_IS_FOUND", "Record is Retrieved:".json_encode($this->Result_ConfigurationRecord).":");
+                $this->setSysReturnData("RECORD_IS_FOUND", "Record is Retrieved");
+            }
+            else
+            {
+                $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Retrieved");
+            }
+        }
+        else
+        {
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
+        }
+
+        zLog()->LogEnd_Function("findConfigurationfromSdesc");
     }
     
     function findConfigurationfromUid($uid, $APPDB = "crossapplication")
     {
-        zLog()->LogStartFUNCTION("findConfigurationfromUid");
+        zLog()->LogStart_Function("findConfigurationfromUid");
         
         $this->cleanResult_ConfigurationRecord();
 
@@ -66,7 +98,7 @@ class SysConfigurations
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndFUNCTION("findConfigurationfromUid");
+        zLog()->LogEnd_Function("findConfigurationfromUid");
     }
     
     function findCfgUidfromSdesc($sdesc)

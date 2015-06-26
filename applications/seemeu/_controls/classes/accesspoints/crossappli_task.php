@@ -1,8 +1,7 @@
 <?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/_controls/classes/accesspoints/emailsend.php"); ?>
+<?php zReqOnce("/_controls/classes/accesspoints/activation.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/update/useraccount.php"); ?>
-<?php zReqOnce("/_controls/classes/dataobjects/update/gameraccount.php"); ?>
-<?php zReqOnce("/_controls/classes/accesspoints/gamer.php"); ?>
-<?php zReqOnce("/_controls/classes/send/activation.php"); ?>
 <?php
 /*
 * File: user.php
@@ -19,32 +18,30 @@ class AppliTaskControl
 
     function send($args)
     {
-        zLog()->LogStartFUNCTION("execute");
-        $mr = "NA"; //Method Return;
+        zLog()->LogStart_AccessPointFunction("send");
                                 
-        if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "ACTIVATE_GAMER_ACCOUNT")
+        if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "SEEMEU_ACTIVATE_USERACCOUNT_PROSPECT")
         {
-            $activation = new Activation();
-            $activation->sendActivationofGamerAccount($args);
+            $emailsend = new EmailSend();
+            $emailsend->sendUseraccountActivation($args);
 
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
-            $this->transferSysReturnAry($activation);
+            $this->setSysReturnData("TASK_PERFORMED", "Task is Performed", "FALSE");
+            $this->transferSysReturnAry($emailsend);
         }
-        else if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "RESET_GAMER_PASSWORD")
+        else if($args["taskcontrollink_appl_configurations_sdesc_taskkey"] == "SEEMEU_RESET_USERACCOUNT_PASSWORD")
         {
-            $activation = new Activation();
-            $activation->sendResetofGamerPassword($args);
+            $emailsend = new EmailSend();
+            $emailsend->sendUseraccountPasswordReset($args);
 
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
-            $this->transferSysReturnAry($activation);
+            $this->setSysReturnData("TASK_PERFORMED", "Task is Performed", "FALSE");
+            $this->transferSysReturnAry($emailsend);
         }
         else
         {
-            $mr = zLog()->LogReturn("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
+            $this->setSysReturnData("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC", "Task key is not Associated to Logic", "FALSE");
         }
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("execute");
+        zLog()->LogEnd_AccessPointFunction("send");
     }
     
     /*
@@ -57,53 +54,29 @@ class AppliTaskControl
     function execute($taskkey,
                     $json)
     {
-        zLog()->LogStartFUNCTION("execute");
-        $mr = "NA"; //Method Return;
+        zLog()->LogStart_AccessPointFunction("execute");
                
-        if($taskkey == "ACTIVATE_GAMER_ACCOUNT")
+        if($taskkey == "SEEMEU_ACTIVATE_USERACCOUNT_PROSPECT")
         {
             zLog()->LogDebug("JSON{".$json."}");
             $obj = json_decode($json, true);
             
-            $uga = new UpdateGamerAccount();
-            $uga->updateActivatebyUid($obj['gameraccount_uid']);
-            
             $uua = new UpdateUserAccount();
             $uua->updateActivatebyUid($obj['useraccount_uid']);
             
-            $gamer = new Gamer();
-            $gamer->retrieveGamer("useraccount_uid", $obj['gameraccount_uid']);
+            $activation = new Activation();
+            $activation->prospect($obj);
             
-            $this->transferSysReturnAry($gamer);
+            $this->transferSysReturnAry($uua);
             
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
-        }
-        else if($taskkey == "DEACTIVATE_GAMER_ACCOUNT")
-        {
-            $ua = new UpdateGamerAccount();
-            $ua->updateDeactivatebyUid($recorduid);
-
-            /* Set Output Data Objects 
-            $this->setOutputData("useraccount_email", $cua->getEmail());
-            $this->setOutputData("useraccount_nickname", $cua->getNickname());
-            $this->setOutputData("userprofile_firstname", $cup->getFirstname());
-            $this->setOutputData("userprofile_lastname", $cup->getLastname());
-            */
-
-            $mr = zLog()->LogReturn("TASK_PERFORMED");
-        }
-        else if($taskkey == "RESET_GAMER_PASSWORD")
-        {
-            SysIntegration::redirectToUIPage("0", "RESET_GAMER_PASSWORD", "Reset Gamer Password", "FALSE", SysIntegration::getRedirectAuthChangePasswordPage());
-            $mr = zLog()->LogReturn("RESET_GAMER_PASSWORD");
+            $this->setSysReturnData("TASK_PERFORMED", "Task is Performed", "FALSE");
         }
         else
         {
-            $mr = zLog()->LogReturn("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC");
+            $this->setSysReturnData("TASK_KEY_NOT_ASSOCIATED_TO_LOGIC", "Task key is not Associated to Logic", "FALSE");
         }
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("execute");
+        zLog()->LogEnd_AccessPointFunction("execute");
     }
 }
 ?>

@@ -10,10 +10,10 @@ class CountUnique
     private $uniqueCounter = 0;
     public function countUniqueFieldValue($APPDB, $tablename, $fieldname, $fieldvalue)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("countUniqueFieldValue");
-        $sqlstmnt = "SELECT COUNT(lid) AS numofrecords
-             FROM ".$tablename."
-             WHERE ".$fieldname."=:".$fieldname;
+        zLog()->LogStart_DataObjectFunction("countUniqueFieldValue");
+        $sqlstmnt = "SELECT COUNT(lid) AS numofrecords ".
+             "FROM ".$tablename." ".
+             "WHERE ".$fieldname."=:".$fieldname;
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB($APPDB);
@@ -23,7 +23,7 @@ class CountUnique
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogEndDATAOBJECTFUNCTION("countUniqueFieldValue");
+        zLog()->LogEnd_DataObjectFunction("countUniqueFieldValue");
     }
 }
 ?>

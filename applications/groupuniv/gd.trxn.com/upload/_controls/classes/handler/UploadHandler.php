@@ -1013,7 +1013,7 @@ class UploadHandler
         $failed_versions = array();
         foreach($this->options['image_versions'] as $version => $options) {
             if ($this->create_scaled_image($file->name, $version, $options)) {
-                if (!empty($version)) {
+                if (strtoupper($version) != "ORIGINAL") {
                     $file->{$version.'Url'} = $this->get_download_url(
                         $file->name,
                         $version

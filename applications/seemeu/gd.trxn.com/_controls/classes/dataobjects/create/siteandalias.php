@@ -8,14 +8,14 @@ class CreateSiteandAlias
     
     function __construct()
     {
-        $this->site = $_SESSION[zAppSysIntegration()->getKeySessSite()];
-        $this->sitealias = $_SESSION[zAppSysIntegration()->getKeySessSiteAlias()];
-        zLog()->LogDebug($this->site."-".$this->sitealias);
+        $this->site = $_SESSION[AppSysIntegration::getKeySessSite()];
+        $this->sitealias = $_SESSION[AppSysIntegration::getKeySessSiteAlias()];
+        zLog()->LogDebug("CreateSiteandAlias[".$this->site."-".$this->sitealias."]");
     }
 
     function registerSite()
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("registerSite");
+        zLog()->LogStart_DataObjectFunction("registerSite");
         
         $sqlstmnt = "INSERT INTO site SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -24,17 +24,17 @@ class CreateSiteandAlias
         $appcon = new SysConnections();
         $appcon->setApplicationDB("crossapplication");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":package", $this->site);
+        $appcon->bindParam(":package", strtolower($this->site));
         $appcon->execUpdate();
         
         $this->resultCreateRecord($appcon, "site");
 
-        zLog()->LogEndDATAOBJECTFUNCTION("registerSite");
+        zLog()->LogEnd_DataObjectFunction("registerSite");
     }
     
     function registerSiteAlias()
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("registerSiteAlias");
+        zLog()->LogStart_DataObjectFunction("registerSiteAlias");
         
         $sqlstmnt = "INSERT INTO sitealias SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -43,17 +43,17 @@ class CreateSiteandAlias
         $appcon = new SysConnections();
         $appcon->setApplicationDB("crossapplication");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":fullyqualifieddomain", $this->sitealias);
+        $appcon->bindParam(":fullyqualifieddomain", strtolower($this->sitealias));
         $appcon->execUpdate();
         
          $this->resultCreateRecord($appcon, "sitealias");
 
-        zLog()->LogEndDATAOBJECTFUNCTION("registerSiteAlias");
+        zLog()->LogEnd_DataObjectFunction("registerSiteAlias");
     }
     
     function matchSiteandSiteAlias($site_uid, $sitealias_uid)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("matchSiteandSiteAlias");
+        zLog()->LogStart_DataObjectFunction("matchSiteandSiteAlias");
         
         $sqlstmnt = "INSERT INTO match_site_to_sitealias SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
@@ -69,7 +69,7 @@ class CreateSiteandAlias
 
         $this->resultCreateRecord($appcon, "match_site_to_sitealias");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("matchSiteandSiteAlias");
+        zLog()->LogEnd_DataObjectFunction("matchSiteandSiteAlias");
     }
 }
 ?>

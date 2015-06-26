@@ -12,13 +12,14 @@ public class ScholarshipProfile
 		if(key.equalsIgnoreCase("CREATE_INIT_SCHOLARSHIP_PROFILE"))
 		{
 			this.setPreparedStatement("INSERT INTO scholarshipprofile " +
-			"(`uid`,`createddt`,`changeddt`,`ldesc`,`name`,`scholarshipsponsor_uid`,`scholarshipsource_uid`) " +
+			"(`lid`,`uid`,`createddt`,`changeddt`,`ldesc`,`name`,`scholarshipsponsor_uid`,`scholarshipsource_uid`) " +
 			"VALUES " +
-			"( UUID(), NOW(), NOW(), ?, ?, ?, ? )");
-			this.bind(1, this.getDataPassString("ldesc"));
-			this.bind(2, this.getDataPassString("name"));
-			this.bind(3, this.getDataPassString("scholarshipsponsor_uid"));
-			this.bind(4, this.getDataPassString("scholarshipsource_uid"));
+			"(?, UUID(), NOW(), NOW(), ?, ?, ?, ? )");
+			this.bind(1, (int)this.getDataPass().get("ZZZZCOUNTER"));
+			this.bind(2, this.getDataPassString("ldesc"));
+			this.bind(3, this.getDataPassString("name"));
+			this.bind(4, this.getDataPassString("scholarshipsponsor_uid"));
+			this.bind(5, this.getDataPassString("scholarshipsource_uid"));
 			this.create(key);
 		}
 		else if(key.equalsIgnoreCase("GET_UID_FOR_SCHOLARSHIPSOURCE_UID"))

@@ -17,14 +17,9 @@ class GroupBase
     function getUid() { return $this->getResult_RecordField("uid"); }
     
     function getSdesc() { return $this->getResult_RecordField("sdesc"); }
+    function getLdesc() { return $this->getResult_RecordField("ldesc"); }
     function getCfgSdescGrouptype() { return $this->getResult_RecordField("configurations_sdesc_grouptype"); }
     function getCfgSdescGroupvisibility() { return $this->getResult_RecordField("configurations_sdesc_groupvisibility"); }
     function getCfgSdescGroupaccept() { return $this->getResult_RecordField("configurations_sdesc_groupaccept"); }
-    
-    function getValidatodate() { return $this->getResult_RecordField("validtodate"); }   
-    function getDescription() { return $this->getResult_RecordField("description"); }   
-    function getMantra() { return $this->getResult_RecordField("mantra"); }   
-    function getObjectives() { return $this->getResult_RecordField("objectives"); }   
-
 }
 ?>

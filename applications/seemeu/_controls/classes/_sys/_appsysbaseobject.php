@@ -5,103 +5,95 @@ class AppSysBaseObject
 {
     function __constructor()
     {
-        $this->setSysReturnitem("REFERER", $_SERVER["HTTP_REFERER"]);
+        // $this->setSysReturnitem("REFERER", $_SERVER["HTTP_REFERER"]);
     }
     
     function resultCreateRecord($appcon, $tablename)
     {
-        $mr = "NA"; //Method Return;
         if($appcon->getTransactionGood())
         {
             if($appcon->getRowCount() > 0)
             {
                 $this->setResult_Record($appcon->getRowfromLastLid($appcon, $tablename));
-                zLog()->LogDBResult($this->getResult_Record());
                 $this->saveActivityLog("RECORD_IS_CREATED", "Record is Created:".json_encode($this->getResult_Record()).":");
-                $this->setSysReturnCode("RECORD_IS_CREATED");
+                $this->setSysReturnData("RECORD_IS_CREATED", "Record is Created");
             }
             else
             {
-                $this->setSysReturnCode("RECORD_IS_NOT_CREATED");
+                $this->setSysReturnData("RECORD_IS_NOT_CREATED", "Record is not Created");
             }
         }
         else
         {
-            $this->setSysReturnCode("TRANSACTION_FAIL");
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
         }
     }
     
     function resultRetrieveRecord($appcon)
     {
-        $mr = "NA"; //Method Return;
         if($appcon->getTransactionGood())
         {
             if($appcon->getRowCount() > 0)
             {
                 $this->setResult_Record($appcon->getStatement()->fetch(PDO::FETCH_ASSOC));
-                zLog()->LogDBResult($this->getResult_Record());
-                $mr = $this->saveActivityLog("RECORD_IS_FOUND", "Record is Retrieved:".json_encode($this->getResult_Record()).":");
-                $this->setSysReturnCode("RECORD_IS_FOUND");
+                $this->saveActivityLog("RECORD_IS_FOUND", "Record is Retrieved:".json_encode($this->getResult_Record()).":");
+                $this->setSysReturnData("RECORD_IS_FOUND", "Record is Retrieved");
             }
             else
             {
-                $this->setSysReturnCode("RECORD_IS_NOT_FOUND");
+                $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Retrieved");
             }
         }
         else
         {
-            $this->setSysReturnCode("TRANSACTION_FAIL");
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
         }
     }
     
     function resultRetrieveRecords($appcon)
     {
-        $mr = "NA"; //Method Return;
         if($appcon->getTransactionGood())
         {
             if($appcon->getRowCount() > 0)
             {
                 $this->setResult_Records($appcon->getStatement()->fetchAll(PDO::FETCH_ASSOC));
-                zLog()->LogDBResult($this->getResult_Records());
-                $mr = $this->saveActivityLog("RECORDS_ARE_FOUND", "Records are Retrieved:".json_encode($this->getResult_Records()).":");
-                $this->setSysReturnCode("RECORDS_ARE_FOUND");
+                $this->saveActivityLog("RECORDS_ARE_FOUND", "Records are Retrieved:".json_encode($this->getResult_Records()).":");
+                $this->setSysReturnData("RECORDS_ARE_FOUND", "Records are Retrieved");
             }
             else
             {
-                $this->setSysReturnCode("RECORDS_ARE_NOT_FOUND");
+                $this->setSysReturnData("RECORDS_ARE_NOT_FOUND", "Records are not Retrieved");
             }
         }
         else
         {
-            $this->setSysReturnCode("TRANSACTION_FAIL");
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
         }
     }
     
     function resultUpdateRecord($appcon)
     {
-        $mr = "NA"; //Method Return;
         if($appcon->getTransactionGood())
         {
             $this->saveActivityLog("RECORD_IS_UDPATED", "Record is Updated");
-            $this->setSysReturnCode("RECORD_IS_UDPATED");
+            $this->setSysReturnData("RECORD_IS_UDPATED", "Record is Updated");
         }
         else
         {
-            $this->setSysReturnCode("TRANSACTION_FAIL");
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
         }
     }
     
     function resultDeleteRecord($appcon)
     {
-        $mr = "NA"; //Method Return;
         if($appcon->getTransactionGood())
         {
             $this->saveActivityLog("RECORD_IS_DELETED", "Record is Deleted");
-            $this->setSysReturnCode("RECORD_IS_DELETED");
+            $this->setSysReturnData("RECORD_IS_DELETED", "Record is Deleted");
         }
         else
         {
-            $this->setSysReturnCode("TRANSACTION_FAIL");
+            $this->setSysReturnData("TRANSACTION_FAIL", "Transaction has failed");
         }
     }
 }

@@ -1,12 +1,3 @@
-#GDUploadWrapper {
-     width: 70%;
-     margin-right: auto;
-     margin-left: auto;
-     margin-top: 50px;
-     background: #EEEEEE;
-     padding: 20px;
-     border: 1px solid #E6E6E6;
-}
 #GDUploadProgressBox {
      border: 1px solid #0099CC;
      padding: 1px;

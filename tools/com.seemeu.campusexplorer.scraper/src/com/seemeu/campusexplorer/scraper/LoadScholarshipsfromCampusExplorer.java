@@ -1,36 +1,32 @@
 package com.seemeu.campusexplorer.scraper;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
+import com.seemeu.campusexplorer.scraper.db.Scholarship;
+import com.seemeu.campusexplorer.scraper.intrfc.SectionIntrfc;
 import com.seemeu.campusexplorer.scraper.scholarship.Profile;
 import com.seemeu.campusexplorer.scraper.scholarship.Scholarships;
-import com.seemeu.database.LoggingBase;
+import com.seemeu.campusexplorer.scraper.university.Colleges;
+import com.seemeu.campusexplorer.scraper.university.ScreenData;
+import com.seemeu.database.RunBase;
 
 public class LoadScholarshipsfromCampusExplorer
-	extends LoggingBase
+	extends RunBase
 {
-	private HashMap record = new HashMap();
-	public static void main(String[] args)
+
+	public void run(int startIdx, int endIdx)
 	{
-		LoadScholarshipsfromCampusExplorer init = new LoadScholarshipsfromCampusExplorer();
-		init.createLogFile();
-		init.run("http://www.campusexplorer.com/scholarships/");
-	}
-	
-	public void run(String urlPath)
-	{
-		this.record.put("ZZZZHOSTNAME", "http://www.campusexplorer.com");
-		this.record.put("ZZZZPATHEXTRA", "");
+		this.set("ZZZZHOSTNAME", "http://www.campusexplorer.com");
+		this.set("ZZZZPATHEXTRA", "");
 		try
 		{
 			int counter = 1;
-			Document docStates = Jsoup.connect(urlPath).get();
+			Document docStates = Jsoup.connect("http://www.campusexplorer.com/scholarships/").get();
 			Elements anchorStates = docStates.getElementsByTag("a");
 			for(int idxStates = 40; idxStates <= 90; idxStates++)
 			{
@@ -54,19 +50,19 @@ public class LoadScholarshipsfromCampusExplorer
 						
 						if(!href.equals("/scholarships/13E528F6/john-and-ruth-childe-scholarship/"))
 						{
-							this.record.put("ZZZZCOUNTER", counter);
-							this.record.put("ZZZZPATH", href);
-							this.load(this.record);
+							this.out("[" + startIdx + "]:[" + counter + "]:[" + endIdx + "]");
+							if(counter >= startIdx && counter <= endIdx)
+							{
+								this.set("ZZZZCOUNTER", counter);
+								this.set("ZZZZPATH", href);
+								this.load();
+							}
 							
-							if(counter == 100000)
+							if(counter == endIdx)
 							{
 								idxTr = 10000000;
 								idxPages = 10000000;
 								idxStates = 10000000;
-							}
-							else if(counter == 3172)
-							{
-								String dothis = "Check Href";
 							}
 							
 							counter++;
@@ -106,16 +102,64 @@ public class LoadScholarshipsfromCampusExplorer
 		return 0;
 	}
 
-	public void load(HashMap record)
+	public void load()
 	{
-		this.out("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-		Scholarships scholarships = new Scholarships(record);
-		scholarships.execute();
-		if(scholarships.getProcessState().equalsIgnoreCase("SUCCESS"))
+		this.out("[" + this.getInt("ZZZZCOUNTER") + "]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+		this.set("URL", (String)this.getStr("ZZZZHOSTNAME") + (String)this.getStr("ZZZZPATH") + (String)this.getStr("ZZZZPATHEXTRA"));
+		SectionIntrfc scholarshipStatusCheck = new Scholarship();
+		scholarshipStatusCheck.setDataPass(this.getRecord());
+		scholarshipStatusCheck.execute("GET_SCHOLARSHIPSOURCE_FROM_URL");
+		if(scholarshipStatusCheck.getResult().getNumRows() == 0)
 		{
-			Profile profile = new Profile(record);
-			profile.execute();
+			this.out("[" + this.getInt("ZZZZCOUNTER") + "][START_CREATE_NEW_SOURCE]");
+			Scholarships scholarships = new Scholarships(this.getRecord());
+			scholarships.execute();
+			this.out("[" + this.getInt("ZZZZCOUNTER") + "][END_CREATE_NEW_SOURCE]");
 		}
-		this.out("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+		
+		scholarshipStatusCheck.execute("GET_SCHOLARSHIPSOURCE_FROM_URL");
+		if(scholarshipStatusCheck.getResult().getNumRows() == 1)
+		{
+			scholarshipStatusCheck.getResult().setRow(0);
+			this.set("scholarshipsource_uid", scholarshipStatusCheck.getResult().getString("uid"));	
+			this.set("idx", scholarshipStatusCheck.getResult().getInt("idx"));			
+			this.set("profile", scholarshipStatusCheck.getResult().getString("profile"));	
+			this.set("screendata", scholarshipStatusCheck.getResult().getString("screendata"));	
+			
+			if(scholarshipStatusCheck.getResult().getString("screendata").equalsIgnoreCase("F"))
+			{
+				this.out("[" + this.getInt("ZZZZCOUNTER") + "][START_ADD_SOURCE_DATA]");
+				this.set("JOB_KEY", "scholarship");
+				ScreenData screenData = new ScreenData(this.getRecord());
+				screenData.execute();
+				this.out("[" + this.getInt("ZZZZCOUNTER") + "][END_ADD_SOURCE_DATA]");
+			}
+			else
+			{
+				this.out("**********************\nSCREEN_DATA_ALREADY_ADDED\n**********************");
+			}
+			/*
+			if(scholarshipStatusCheck.getResult().getString("profile").equalsIgnoreCase("F"))
+			{
+				this.out("[" + this.getInt("ZZZZCOUNTER") + "][START_PROFILE]");
+				Profile profile = new Profile(this.getRecord());
+				profile.execute();
+				this.out("[" + this.getInt("ZZZZCOUNTER") + "][END_PROFILE]");
+			}
+			else
+			{
+				this.out("**********************\nPROFILE_DATA_ALREADY_ADDED\n**********************");
+			}
+			*/
+		}
+		else if(scholarshipStatusCheck.getResult().getNumRows() == 0)
+		{
+			this.out("**********************\nERR_ERR_ERR[SOURCE_NOT_CREATED]\n**********************");
+		}
+		else if(scholarshipStatusCheck.getResult().getNumRows() > 1)
+		{
+			this.out("**********************\nERR_ERR_ERR[SOURCE_DUPLICATE_FOUND]\n**********************");
+		}
+		this.out("[" + this.getInt("ZZZZCOUNTER") + "]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 	}
 }

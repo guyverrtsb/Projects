@@ -8,14 +8,14 @@ class RetrieveSiteandAlias
     
     function __construct()
     {
-        $this->site = $_SESSION[SysIntegration::getKeySessSite()];
-        $this->sitealias = $_SESSION[SysIntegration::getKeySessSiteAlias()];
-        zLog()->LogDebug($this->site."-".$this->sitealias);
+        $this->site = $_SESSION[AppSysIntegration::getKeySessSite()];
+        $this->sitealias = $_SESSION[AppSysIntegration::getKeySessSiteAlias()];
+        zLog()->LogDebug("RetrieveSiteandAlias[".$this->site."-".$this->sitealias."]");
     }
     
     function isSiteandAliasValid()
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("isSiteandAliasValid");
+        zLog()->LogStart_DataObjectFunction("isSiteandAliasValid");
         
         $sqlstmnt = "SELECT ".$this->dbfas("site.uid, site.sdesc, sitealias.uid, sitealias.sdesc")." ".
             "FROM sitealias ".
@@ -28,29 +28,29 @@ class RetrieveSiteandAlias
         $appcon = new SysConnections();
         $appcon->setApplicationDB("crossapplication");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":alias", $this->sitealias);
+        $appcon->bindParam(":alias", strtolower($this->sitealias));
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndDATAOBJECTFUNCTION("isSiteandAliasValid");
+        zLog()->LogEnd_DataObjectFunction("isSiteandAliasValid");
     }
     
     function doesSiteExist()
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("doesSiteExist");
+        zLog()->LogStart_DataObjectFunction("doesSiteExist");
         $sqlstmnt = "SELECT uid, sdesc FROM site ".
             "WHERE sdesc=:package";
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB("crossapplication");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":package", $this->site);
+        $appcon->bindParam(":package", strtolower($this->site));
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogEndDATAOBJECTFUNCTION("doesSiteExist");
+        zLog()->LogEnd_DataObjectFunction("doesSiteExist");
     }
 }
 ?>

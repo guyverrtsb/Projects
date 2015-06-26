@@ -5,7 +5,6 @@ class SysBaseObject
     extends SysConfigurations
 {
     /* Record Container */
-    private $Result_Records = "NO_RECORDS";
     function setResult_Records($rows)
     {
         $this->setSysReturnitem(strtoupper(get_class($this)), $rows);
@@ -13,12 +12,12 @@ class SysBaseObject
     
     function getResult_Records()
     {
+        $records = $this->getSysReturnitem(strtoupper(get_class($this)));
         if($this->getSysReturnitem(strtoupper(get_class($this))) == "NO_VALUE_SET")
             return null;
-        return $this->Result_Records;
+        return $records;
     }
     
-    private $Result_Record = "NO_RECORD";
     function setResult_Record($row)
     {
         $this->setSysReturnitem(strtoupper(get_class($this)), $row);
@@ -26,9 +25,10 @@ class SysBaseObject
     
     function getResult_Record()
     {
-        if(getSysReturnitem(strtoupper(get_class($this))) == "NO_VALUE_SET")
+        $record = $this->getSysReturnitem(strtoupper(get_class($this)));
+        if($record == "NO_VALUE_SET")
             return null;
-        return $this->Result_Record;
+        return $record;
     }
     
     function getResult_RecordField($name)

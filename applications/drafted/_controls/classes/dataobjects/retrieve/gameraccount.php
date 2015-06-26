@@ -19,7 +19,7 @@ class RetrieveGamerAccount
      */
     function byGamertag($gamertag)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byGamertag");
+        zLog()->LogStart_DataObjectFunction("byGamertag");
         
         $sqlstmnt = "SELECT * FROM gameraccount ".
             "WHERE gamertag=:gamertag";
@@ -32,7 +32,7 @@ class RetrieveGamerAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byGamertag");
+        zLog()->LogEnd_DataObjectFunction("byGamertag");
     }
     
     /**
@@ -40,7 +40,7 @@ class RetrieveGamerAccount
      */
     function byUid($uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUid");
+        zLog()->LogStart_DataObjectFunction("byUid");
         
         $sqlstmnt = "SELECT * FROM gameraccount ".
             "WHERE uid=:uid";
@@ -53,7 +53,7 @@ class RetrieveGamerAccount
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUid");
+        zLog()->LogEnd_DataObjectFunction("byUid");
     }
 }
 ?>

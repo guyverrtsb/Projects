@@ -18,7 +18,7 @@ class CreateMatchUsertoMerchanttoRole
                 $merchantaccount_uid,
                 $configurations_sdesc_merchantrole)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("full");
+        zLog()->LogStart_DataObjectFunction("full");
         
         $sqlstmnt = "INSERT INTO match_useraccount_to_merchantaccount_to_merchantrole SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -36,7 +36,7 @@ class CreateMatchUsertoMerchanttoRole
         
         $this->resultCreateRecord($appcon, "match_useraccount_to_merchantaccount_to_merchantrole");
         
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("full");
+        zLog()->LogEnd_DataObjectFunction("full");
     }
 }
 ?>

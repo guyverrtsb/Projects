@@ -18,7 +18,7 @@ class Createopenauth
                 $expiredt,
                 $isvalid)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStart_DataObjectFunction("basic");
         
         $sqlstmnt = "INSERT INTO openauth SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -36,7 +36,7 @@ class Createopenauth
         
         $this->resultCreateRecord($appcon, "openauth");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEnd_DataObjectFunction("basic");
     }
 }
 ?>

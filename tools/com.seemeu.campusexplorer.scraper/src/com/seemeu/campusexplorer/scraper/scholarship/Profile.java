@@ -30,61 +30,42 @@ public class Profile
 	
 	private void doProfile()
 	{
-		// Get the UID for the Scholarship Source
-		SectionIntrfc scholarship = new Scholarship();
-		this.setDataPassNV("cxurl", this.getUrlPath());
-		scholarship.setDataPass(this.getDataPass());
-		scholarship.execute("GET_UID_FOR_CXURL");
-		int numrows = scholarship.getResult().getNumRows();
-		if(numrows == 1)
-		{
-			scholarship.getResult().setRow(0);
-			String scholarshipsource_uid = scholarship.getResult().getString("UID");
-			this.setDataPassNV("scholarshipsource_uid", scholarshipsource_uid);
 
-			// Check to make sure that the Scholarship has not been added already
-			SectionIntrfc scholarshipProfile = new ScholarshipProfile();
+		// Check to make sure that the Scholarship has not been added already
+		SectionIntrfc scholarshipProfile = new ScholarshipProfile();
+		scholarshipProfile.setDataPass(this.getDataPass());
+		scholarshipProfile.execute("GET_UID_FOR_SCHOLARSHIPSOURCE_UID");
+		int numrows = scholarshipProfile.getResult().getNumRows();
+		if(numrows == 0)
+		{
+			// Create Data for new Record
+			scholarshipProfile = new ScholarshipProfile();
+			
+			this.setSponsorUid();
+			this.setName();
+			this.setLdesc();
+
 			scholarshipProfile.setDataPass(this.getDataPass());
-			scholarshipProfile.execute("GET_UID_FOR_SCHOLARSHIPSOURCE_UID");
-			numrows = scholarshipProfile.getResult().getNumRows();
-			if(numrows == 0)
+			scholarshipProfile.execute("CREATE_INIT_SCHOLARSHIP_PROFILE");
+			
+			if(scholarshipProfile.getIsTrxnGood())
 			{
-				// Create Data for new Record
-				scholarshipProfile = new ScholarshipProfile();
-				
-				this.setSponsorUid();
-				this.setName();
-				this.setLdesc();
-				this.setDataPassNV("scholarshipsource_uid", scholarshipsource_uid);
-	
-				scholarshipProfile.setDataPass(this.getDataPass());
-				scholarshipProfile.execute("CREATE_INIT_SCHOLARSHIP_PROFILE");
-				
-				if(scholarshipProfile.getIsTrxnGood())
-				{
-					// Record that Scholarship Profile has been initialized
-					scholarship = new Scholarship();
-					this.setDataPassNV("scholarshipsource_uid", scholarshipsource_uid);
-					scholarship.setDataPass(this.getDataPass());
-					scholarship.execute("UPDATE_PROFILE_VALID");
-					this.setProcessState("SUCCESS");
-				}
-				else
-				{
-					this.outErr(": Issue Tracked : " + this.getClass().getName());
-					this.setProcessState("ISSUE");
-				}
+				// Record that Scholarship Profile has been initialized
+				Scholarship scholarship = new Scholarship();
+				scholarship.setDataPass(this.getDataPass());
+				scholarship.execute("UPDATE_PROFILE_VALID");
+				this.setProcessState("SUCCESS");
 			}
 			else
 			{
-				this.out("**************" + " : Record Already Added : " + this.getClass().getName());
-				this.setProcessState("ALREADY_ADDED");
+				this.outErr(": Issue Tracked : " + this.getClass().getName());
+				this.setProcessState("ISSUE");
 			}
 		}
 		else
 		{
-			this.out("**************" + " : Scholarship Source not Found : " + this.getClass().getName());
-			this.setProcessState("FAILURE");
+			this.out("**************" + " : Record Already Added : " + this.getClass().getName());
+			this.setProcessState("ALREADY_ADDED");
 		}
 	}
 	

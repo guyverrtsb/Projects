@@ -4,7 +4,7 @@ session_start();
 if (!isset($_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]))
     $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"] = $_SERVER["CONTEXT_DOCUMENT_ROOT"];
 $_SERVER["DOCUMENT_ROOT"] = $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"];
-
+$_SESSION["SHAGGY_TEST"] = "carzy value";
 function getPathing($path)
 {
     if(substr($path, 0, 1) == "/")
@@ -17,7 +17,6 @@ function zIncVar($path, $lvar="")
 {
     return include(getPathing($path));
 }
-
 /** Include method that uses the standardized subdomain **/
 function zInc($path)
 {
@@ -47,18 +46,11 @@ function zAuth()
     return $_SESSION["GD_APPSYSAUTHORIZATION"];
 }
  */
- 
 zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
 function zLog()
 {
-    if(!isset($_SERVER["GD_APPSYSLOGGER"]))
-    {
-        $klogger = new KLogger();
-        $_SERVER["GD_APPSYSLOGGER"] = $klogger;
-    }
-    return $_SERVER["GD_APPSYSLOGGER"];
+    return new KLogger();
 }
-
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/_returns.php");
 $zSysReturn = new SysReturns();
 
@@ -66,17 +58,22 @@ $zSysReturn = new SysReturns();
 zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
 function zAppSysIntegration()
 {
-    if(!isset($_SERVER["GD_APPSYSINTEGATION"]))
+    $appSysIntegration = new AppSysIntegration();
+    
+    if(!isset($_SESSION["GD_APP_SYS_INTEGRATION"]))
     {
-        $appSysIntegration = new AppSysIntegration();
+        $_SESSION["GD_APP_SYS_INTEGRATION"] = "PERFORMED";
         $appSysIntegration->setZBaseLines();
         $appSysIntegration->setZLogging(1);
-        zLog()->LogPageDeclaration();
+        zLog()->LogAllPageDeclaration();
         $appSysIntegration->setZSiteRegistration();
-        $_SERVER["GD_APPSYSINTEGATION"] = $appSysIntegration;
+        zLog()->LogDebug("zAppSysIntegration()::Ceated");
     }
-    return $_SERVER["GD_APPSYSINTEGATION"];
+
+    
+    return $appSysIntegration;
 }
+
 //** END ** Sets the Site Integration after the Includes are set
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/includes/_service.php");
 ?>

@@ -123,8 +123,7 @@ class SysDatabase
     {
         $lid = $this->getConnection()->lastInsertId();
         zLog()->LogDebug("getLastRowId():{".$lid."}");
-        $sqlstmnt = "SELECT * FROM ".$tablename." ".
-        "WHERE lid=:lid";
+        $sqlstmnt = "SELECT * FROM ".$tablename." WHERE lid=:lid";
         
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":lid", $lid);
@@ -143,8 +142,7 @@ class SysDatabase
     
     public function getRowfromLastUid($appcon, $tablename, $uid)
     {
-        $sqlstmnt = "SELECT * FROM ".$tablename." ".
-        "WHERE uid=:uid";
+        $sqlstmnt = "SELECT * FROM ".$tablename." WHERE uid=:uid";
         
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":uid", $uid);
@@ -178,29 +176,6 @@ class SysDatabase
             zLog()->LogIssue("rollbackcommit():Bad Commit");
             $this->getConnection()->rollback();
         }
-    }
-    
-    public function getSelectResultJSON()
-    {
-        $o = "";
-        $numargs = func_num_args();
-        $rc = 0;
-        while($row = $this->getStatement()->fetch(PDO::FETCH_ASSOC))
-        {
-            if($rc > 0)
-                $o .= ",";
-            $o .= "{";
-            for($ci = 0; $ci < $numargs; $ci++)
-            {
-                if($ci > 0)
-                    $o .= ",";
-                $arg = func_get_arg($ci);
-                $o .= "\"".$arg."\":\"".$row[$arg]."\"";
-            }
-            $o .= "}";
-            $rc++;
-        }
-        return $o;
     }
 }
 ?>

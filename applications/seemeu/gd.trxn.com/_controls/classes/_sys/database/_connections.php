@@ -47,11 +47,11 @@ class SysConnections
         else if($db == "appdb")
             $db = "application";
             
-        $connectionsXML = $_SESSION[zAppSysIntegration()->getKeySessSiteConfigRoot()]."ZDBCONNECTIONS.xml";
+        $xml = $_SESSION[zAppSysIntegration()->getKeySessSiteConfigRoot()]."ZDBCONNECTIONS.xml";
 
-        zLog()->LogDebug("Connections XML : {".$connectionsXML."}:{".$db."}");
+        zLog()->LogDebug("XML : {".$xml."}:{".$db."}");
         
-        $xml = simplexml_load_file($connectionsXML);
+        $xml = simplexml_load_file($xml);
         foreach($xml->children() as $dbconfig)
         {
             if($dbconfig->getName() == $db)

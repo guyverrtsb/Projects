@@ -9,11 +9,11 @@ class SysIntegration
             if (!isset($_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"]))
             {
                 $docroot = $_SERVER["DOCUMENT_ROOT"];
-                if (strpos($docroot, "prototyping") !== false)
+                if (strpos($docroot, "/environments/development") !== false)
                     $_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] = "PRT";
-                else if (strpos($docroot, "staging") !== false)
-                    $_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] = "STG";
-                else if (strpos($docroot, "zzzproduction") !== false)
+                else if (strpos($docroot, "/environments/quality") !== false)
+                    $_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] = "QLT";
+                else if (strpos($docroot, "/environments/production") !== false)
                     $_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] = "PRD";
                 else
                     $_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] ="LCL";
@@ -22,7 +22,7 @@ class SysIntegration
             /** Site Information **/
             $f = explode("/", $_SERVER["DOCUMENT_ROOT"]);
             if($_SESSION["GUYVERDESIGNS_SERVER_ENVIRONMENT"] == "LCL")
-                $_SESSION[$this->getKeySessSite()] = $f[sizeof($f) - 1];
+                $_SESSION[$this->getKeySessSite()] = $f[sizeof($f) - 2];
             else
                 $_SESSION[$this->getKeySessSite()] = $f[sizeof($f) - 4].".".$f[sizeof($f) - 2].".".$f[sizeof($f) - 1];
             $_SESSION[$this->getKeySessSiteAlias()] = $_SERVER["HTTP_HOST"];
@@ -74,65 +74,64 @@ class SysIntegration
 
     function setZSiteRegistration()
     {
+        zLog()->LogStart_Function("setZSiteRegistration");
+        zLog()->LogDebug("DOCUMENT_ROOT[".$_SERVER["DOCUMENT_ROOT"]."]");
         if (!isset($_SESSION[$this->getKeySessSiteUid()])
             || !isset($_SESSION[$this->getKeySessSiteAliasUid()])
             || !isset($_SESSION[$this->getKeySessSite()])
             || !isset($_SESSION[$this->getKeySessSiteAlias()]))
         {
+            zLog()->LogDebug("Site has not been setup in Session");
             zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/retrieve/siteandalias.php");
             zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/create/siteandalias.php");
 
-            //require_once("integration/roles.php");
-            zLog()->LogDebug("++Session Objects Not Found++");
             $rsa = new RetrieveSiteandAlias();
-            $csa = new CreateSiteandAlias();
             
             $rsa->isSiteandAliasValid();
             if($rsa->getSysReturnCode() == "RECORD_IS_FOUND")  // Checking to see if Site and Alias exist and are matched
             {
-                zLog()->LogDebug("++Site and Site Alias found in Database++");
+                zLog()->LogDebug("Site has been registered in the database.  Set to Session");
+                
                 $_SESSION["GUYVERDESIGNS_SITE_UID"] = $rsa->getResult_RecordField($rsa->dbf("site.uid"));
                 $_SESSION["GUYVERDESIGNS_SITE"] = $rsa->getResult_RecordField($rsa->dbf("site.sdesc"));
-                $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"] = $rsa->getResult_RecordField($rsa->dbf("site.uid"));
-                $_SESSION["GUYVERDESIGNS_SITE_ALIAS"] = $rsa->getResult_RecordField($rsa->dbf("site.sdesc"));
+                $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"] = $rsa->getResult_RecordField($rsa->dbf("sitealias.uid"));
+                $_SESSION["GUYVERDESIGNS_SITE_ALIAS"] = $rsa->getResult_RecordField($rsa->dbf("sitealias.sdesc"));
             }
             else if($rsa->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
             {
-                zLog()->LogDebug("++Site and Site Alias not found in Database++");
+                zLog()->LogDebug("Site has not been registered in the database.  Register into Database");
                 
+                $csa = new CreateSiteandAlias();
                 $tr = $rsa->doesSiteExist();
                 if($rsa->getSysReturnCode() == "RECORD_IS_FOUND")
                 {
-                    zLog()->LogDebug("++Site found in Database++");
                     $_SESSION["GUYVERDESIGNS_SITE_UID"] = $rsa->getResult_RecordField("uid");
                     $_SESSION["GUYVERDESIGNS_SITE"] = $rsa->getResult_RecordField("sdesc");
                 }
                 else if($rsa->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
                 {
-                    zLog()->LogDebug("++Site not found in Database++");
                     $csa->registerSite();
-                    zLog()->LogDebug("++Site created in Database++");
                     $_SESSION["GUYVERDESIGNS_SITE_UID"] = $csa->getResult_RecordField("uid");
                     $_SESSION["GUYVERDESIGNS_SITE"] = $csa->getResult_RecordField("sdesc");
                 }
                 
                 $csa->registerSiteAlias();
-                zLog()->LogDebug("++Site Alias created in Database++");
                 $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"] = $csa->getResult_RecordField("uid");
                 $_SESSION["GUYVERDESIGNS_SITE_ALIAS"] = $csa->getResult_RecordField("sdesc");
                 
                 $csa->matchSiteandSiteAlias($_SESSION["GUYVERDESIGNS_SITE_UID"],
                                             $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"]);
-                zLog()->LogDebug("++Match Site to Alias created in Database++");
             }
         }
-        else
-        {
-            zLog()->LogDebug("{".$this->getKeySessSiteUid()."}-{".$_SESSION[$this->getKeySessSiteUid()]."}");
-            zLog()->LogDebug("{".$this->getKeySessSite()."}-{".$_SESSION[$this->getKeySessSite()]."}");
-            zLog()->LogDebug("{".$this->getKeySessSiteAliasUid()."}-{".$_SESSION[$this->getKeySessSiteAliasUid()]."}");
-            zLog()->LogDebug("{".$this->getKeySessSiteAlias()."}-{".$_SESSION[$this->getKeySessSiteAlias()]."}");
-        }
+        zLog()->LogDebug("Site has been setup in Session");
+        
+        zLog()->LogDebug("[".$this->getKeySessSiteUid()."]:[".$_SESSION[$this->getKeySessSiteUid()]."]");
+        zLog()->LogDebug("[".$this->getKeySessSite()."]:[".$_SESSION[$this->getKeySessSite()]."]");
+        zLog()->LogDebug("[".$this->getKeySessSiteAliasUid()."]:[".$_SESSION[$this->getKeySessSiteAliasUid()]."]");
+        zLog()->LogDebug("[".$this->getKeySessSiteAlias()."]:[".$_SESSION[$this->getKeySessSiteAlias()]."]");
+        zLog()->LogDebug("[SHAGGY_TEST]:[".$_SESSION["SHAGGY_TEST"]."]");
+        
+        zLog()->LogEnd_Function("setZSiteRegistration");
     }
     
     function isLandscapeLocal()
@@ -165,29 +164,26 @@ class SysIntegration
     /** Start - SITE DATA **/
     function setSiteControlData($siteuid, $site, $sitealiasuid, $sitealias)
     {
-        $zlog = new KLogger();
-        $zlog->LogStartFUNCTION("setSiteControlData");
+        zLog()->LogStart_Function("setSiteControlData");
         $this->setSiteData($siteuid, $site);
         $this->setSiteAliasData($sitealiasuid, $sitealias);
-        $syslog->LogEndFUNCTION("setSiteControlData");
+        zLog()->LogEnd_Function("setSiteControlData");
     }
     
     function setSiteData($siteuid, $site)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setSiteData");
+        zLog()->LogStart_Function("setSiteData");
         $_SESSION[$this->getKeySessSiteUid()] = $siteuid;
         $_SESSION[$this->getKeySessSite()] = $site;
-        $syslog->LogEndFUNCTION("setSiteData");
+        zLog()->LogEnd_Function("setSiteData");
     }
     
     function setSiteAliasData($sitealiasuid, $sitealias)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setSiteAliasData");
+        zLog()->LogStart_Function("setSiteAliasData");
         $_SESSION[$this->getKeySessSiteAliasUid()] = $sitealiasuid;
         $_SESSION[$this->getKeySessSiteAlias()] = $sitealias;
-        $syslog->LogEndFUNCTION("setSiteAliasData");
+        zLog()->LogEnd_Function("setSiteAliasData");
     }
 
     function getSiteUid(){ return $this->nullCheckSession($this->getKeySessSiteUid()); }
@@ -202,21 +198,19 @@ class SysIntegration
                                             $isauthenticated,
                                             $usersafety_account_usertablekey)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setAuthoritySessionData");
+        zLog()->LogStart_Function("setAuthoritySessionData");
         $_SESSION[$this->getKeySessAuthUserUid()] = $usersafety_account_uid;
         $_SESSION[$this->getKeySessAuthUserIsAuthenticated()] = $isauthenticated;
         $_SESSION[$this->getKeySessAuthUsertablekey()] = $usersafety_account_usertablekey;
-        $syslog->LogEndFUNCTION("setAuthoritySessionData");
+        zLog()->LogEnd_Function("setAuthoritySessionData");
     }
     
     function setAuthoritySessionPageRedirectPageOverride($page_redirect_override)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setAuthoritySessionPageRedirectPageOverride");
+        zLog()->LogStart_Function("setAuthoritySessionPageRedirectPageOverride");
         $_SESSION[$this->getKeySessAuthUserPageRedirectOverride()] = $page_redirect_override;
-        $syslog->LogDebug("Page Redirect Override:{" . $this->getAuthUserPageRedirectOverride() . "}");
-        $syslog->LogEndFUNCTION("setAuthoritySessionPageRedirectPageOverride");
+        $logger->LogDebug("Page Redirect Override:{" . $this->getAuthUserPageRedirectOverride() . "}");
+        zLog()->LogEnd_Function("setAuthoritySessionPageRedirectPageOverride");
     }
     
     function getAuthUserUid(){ return $this->nullCheckSession($this->getKeySessAuthUserUid()); }
@@ -228,56 +222,48 @@ class SysIntegration
         
     function cleanAuthoritySessionData()
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("cleanAuthoritySessionObjects");
+        zLog()->LogStart_Function("cleanAuthoritySessionObjects");
         unset($_SESSION[$this->getKeySessAuthUserUid()]);
         unset($_SESSION[$this->getKeySessAuthUserIsAuthenticated()]);
         unset($_SESSION[$this->getKeySessAuthUserSiteRole()]);
         unset($_SESSION[$this->getKeySessAuthUserSiteRolePriority()]);
         unset($_SESSION[$this->getKeySessAuthUsertablekey()]);
-        $syslog->LogEndFUNCTION("cleanAuthoritySessionObjects");
+        zLog()->LogEnd_Function("cleanAuthoritySessionObjects");
     }
     
     function cleanAuthoritySessionPageRedirectPageOverride()
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
+        zLog()->LogStart_Function("cleanAuthoritySessionPageRedirectPageOverride");
         unset($_SESSION[$this->getAuthUserPageRedirectOverride()]);
-        $syslog->LogEndFUNCTION("cleanAuthoritySessionPageRedirectPageOverride");
+        zLog()->LogEnd_Function("cleanAuthoritySessionPageRedirectPageOverride");
     }
     /** End - USER AUTHORITY DATA **/
     
     
     /** Start - UI RESPONSE DATA **/
-    function setUIPageResponseData($code, $key, $msg, $showmsg = "TRUE")
+    function setUIPageResponseData($code, $msg, $showmsg = "TRUE")
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setUIPageResponseData");
-        $syslog->LogDebug("{".$this->getKeySessUIPageRespCode()."}-{".$code."}");
-        $syslog->LogDebug("{".$this->getKeySessUIPageRespKey()."}-{".$key."}");
-        $syslog->LogDebug("{".$this->getKeySessUIPageRespMsg()."}-{".$msg."}");
-        $syslog->LogDebug("{".$this->getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
+        zLog()->LogStart_Function("setUIPageResponseData");
+        zLog()->LogDebug("{".$this->getKeySessUIPageRespCode()."}-{".$code."}");
+        zLog()->LogDebug("{".$this->getKeySessUIPageRespMsg()."}-{".$msg."}");
+        zLog()->LogDebug("{".$this->getKeySessUIPageRespMsgShow()."}-{".strtoupper($showmsg)."}");
         $_SESSION[$this->getKeySessUIPageRespCode()] = $code;
-        $_SESSION[$this->getKeySessUIPageRespKey()] = $key;
         $_SESSION[$this->getKeySessUIPageRespMsg()] = $msg;
         $_SESSION[$this->getKeySessUIPageRespMsgShow()] = strtoupper($showmsg);
-        $syslog->LogEndFUNCTION("setUIPageResponseData");
+        zLog()->LogEnd_Function("setUIPageResponseData");
     }
     
     function getUIPageResponseCode(){ return $this->nullCheckSession($this->getKeySessUIPageRespCode()); }
-    function getUIPageResponseKey(){ return $this->nullCheckSession($this->getKeySessUIPageRespKey()); }
     function getUIPageResponseMsg(){ return $this->nullCheckSession($this->getKeySessUIPageRespMsg()); }
     function getUIPageResponseMsgShow(){ return $this->nullCheckSession($this->getKeySessUIPageRespMsgShow()); }
     
     function cleanUIPageResponseData()
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("cleanUIPageResponseData");
+        zLog()->LogStart_Function("cleanUIPageResponseData");
         unset($_SESSION[$this->getKeySessUIPageRespCode()]);
-        unset($_SESSION[$this->getKeySessUIPageRespKey()]);
         unset($_SESSION[$this->getKeySessUIPageRespMsg()]);
         unset($_SESSION[$this->getKeySessUIPageRespMsgShow()]);
-        $syslog->LogEndFUNCTION("cleanUIPageResponseData");
+        zLog()->LogEnd_Function("cleanUIPageResponseData");
     }
     /** End - UI RESPONSE DATA **/
     
@@ -285,11 +271,10 @@ class SysIntegration
     /** Start - APPLICATION_DATA **/
     function setAppData($name, $value)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("setAppData");
+        zLog()->LogStart_Function("setAppData");
         $_SESSION[$this->getKeySessAppDataPrefix().$name] = $value;
         $this->dumpSessionData();
-        $syslog->LogEndFUNCTION("setAppData");
+        zLog()->LogEnd_Function("setAppData");
     }
     
     function getAppData($name)
@@ -311,8 +296,7 @@ class SysIntegration
 
     function cleanAppDataName($name)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("cleanAppData");
+        zLog()->LogStart_Function("cleanAppData");
         $prefix = $this->getKeySessAppDataPrefix();
         foreach ($_SESSION as $sessname => $sessvalue)
         {
@@ -324,13 +308,12 @@ class SysIntegration
                 }
             }
         }
-        $syslog->LogEndFUNCTION("cleanAppData");
+        zLog()->LogEnd_Function("cleanAppData");
     }
 
     function cleanAppData($name)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("cleanAppData");
+        zLog()->LogStart_Function("cleanAppData");
         $prefix = $this->getKeySessAppDataPrefix();
         foreach ($_SESSION as $sessname => $sessvalue)
         {
@@ -339,7 +322,7 @@ class SysIntegration
                 unset($_SESSION[$this->getKeySessAppDataPrefix().$name]);
             }
         }
-        $syslog->LogEndFUNCTION("cleanAppData");
+        zLog()->LogEnd_Function("cleanAppData");
     }
     /** End - APPLICATION_DATA **/
     
@@ -351,42 +334,43 @@ class SysIntegration
         return $value;
     }
     
-    function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}
-    function getKeySessUIPageRespKey(){return "UI_PAGE_RESPONSE_KEY";}
-    function getKeySessUIPageRespMsg(){return "UI_PAGE_RESPONSE_MSG";}
-    function getKeySessUIPageRespMsgShow(){return "UI_PAGE_RESPONSE_MSG_SHOW";}
+    static function getKeySessUIPageRespCode(){return "UI_PAGE_RESPONSE_CODE";}
+    static function getKeySessUIPageRespMsg(){return "UI_PAGE_RESPONSE_MSG";}
+    static function getKeySessUIPageRespMsgShow(){return "UI_PAGE_RESPONSE_MSG_SHOW";}
     
-    function getKeySessAuthUserUid(){return "GD_CORP_AUTH_USER_UID";}
-    function getKeySessAuthUserIsAuthenticated(){return "GD_CORP_AUTH_ISUSERAUTHENTICATED_TF";}
-    function getKeySessAuthUserSiteRole(){return "GD_CORP_AUTH_SITE_ROLE";}
-    function getKeySessAuthUserSiteRolePriority(){return "GD_CORP_AUTH_SITE_ROLE_PRIORITY";}
-    function getKeySessAuthUsertablekey(){return "GD_CORP_AUTH_USER_TABLE_KEY";}
-    function getKeySessAuthUserPageRedirectOverride(){return "GD_CORP_AUTH_USER_PAGE_REDIRECT_OVERRIDE";}
+    static function getKeySessAuthUserUid(){return "GD_CORP_AUTH_USER_UID";}
+    static function getKeySessAuthUserIsAuthenticated(){return "GD_CORP_AUTH_ISUSERAUTHENTICATED_TF";}
+    static function getKeySessAuthUserSiteRole(){return "GD_CORP_AUTH_SITE_ROLE";}
+    static function getKeySessAuthUserSiteRolePriority(){return "GD_CORP_AUTH_SITE_ROLE_PRIORITY";}
+    static function getKeySessAuthUsertablekey(){return "GD_CORP_AUTH_USER_TABLE_KEY";}
+    static function getKeySessAuthUserPageRedirectOverride(){return "GD_CORP_AUTH_USER_PAGE_REDIRECT_OVERRIDE";}
     
-    function getKeySessSiteUid(){return "GUYVERDESIGNS_SITE_UID";}
-    function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
-    function getKeySessSiteAliasUid(){return "GUYVERDESIGNS_SITE_ALIAS_UID";}
-    function getKeySessSiteAlias(){return "GUYVERDESIGNS_SITE_ALIAS";}
-    function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
+    static function getKeySessSiteUid(){return "GUYVERDESIGNS_SITE_UID";}
+    static function getKeySessSite(){return "GUYVERDESIGNS_SITE";}
+    static function getKeySessSiteAliasUid(){return "GUYVERDESIGNS_SITE_ALIAS_UID";}
+    static function getKeySessSiteAlias(){return "GUYVERDESIGNS_SITE_ALIAS";}
+    static function getKeySessSiteConfigRoot(){return "GUYVERDESIGNS_SITE_CONFIGURATION_ROOT";}
     
-    function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
-
+    static function getKeySessAppDataPrefix(){return "GUYVERDESIGNS_APP_DATA";}
+    
     function dumpSessionData()
     {
         foreach ($_SESSION as $sessname => $sessvalue)
         {
-            zLog()->LogDebug("SESSION:NAME-[".$sessname."]");
+            if(gettype($sessvalue) == "string")
+            {
+                zLog()->LogDebug("SESSION:NAME-[".$sessname."]:[".$sessvalue."]");
+            }
         }
     }
     
-    function redirectToUIPage($code, $key, $msg, $showmsg = "TRUE", $location)
+    function redirectToUIPage($code, $msg, $showmsg, $location)
     {
-        $syslog = new KLogger();
-        $syslog->LogStartFUNCTION("redirectToUIPage");
+        zLog()->LogStart_Function("redirectToUIPage");
         $this->cleanUIPageResponseData();
-        $this->setUIPageResponseData($code, $key, $msg, strtoupper($showmsg));
-        $syslog->LogDebug("{location}-{".$location."}");
-        $syslog->LogEndFUNCTION("redirectToUIPage");
+        $this->setUIPageResponseData($code, $msg, strtoupper($showmsg));
+        zLog()->LogDebug("{location}-{".$location."}");
+        zLog()->LogEnd_Function("redirectToUIPage");
         header("Location: ".$location);
     }
     
@@ -407,28 +391,40 @@ class SysIntegration
     }
     
     /** Start - CONFIG VALUES **/
-    private $not_authorized_page = "/gd.trxn.com/usersafety/index.php";
-    function getRedirectAuthFailPage()
+    private $user_not_authorized_url = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectUserNotAuthorizedUrl()
     {
-        return $this->not_authorized_page;
+        return $this->user_not_authorized_url;
     }
     
-    private $user_logged_in_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
-    function getRedirectAuthLoggedinPage()
+    private $user_logged_on_successfully_url = "/s_user_home.php";
+    function getRedirectUserLoggedOnSuccessfullyUrl()
     {
-        return $this->user_logged_in_correctly;
+        return $this->user_logged_on_successfully_url;
     }
     
-    private $user_logged_off_correctly = "/gd.trxn.com/usersafety/s_user_home.php";
-    function getRedirectAuthLoggedoffPage()
+    private $user_logged_off_successfully_url = "/gd.trxn.com/usersafety/index.php";
+    function getRedirectUserLoggedOffSuccessfullyUrl()
     {
-        return $this->user_logged_off_correctly;
+        return $this->user_logged_off_successfully_url;
     }
     
-    private $user_change_password = "/gd.trxn.com/usersafety/changepassword.php";
-    function getRedirectAuthChangePasswordPage()
+    private $user_change_password_url = "/gd.trxn.com/usersafety/changepassword.php";
+    function getRedirectUserChangePasswordUrl()
     {
-        return $this->user_change_password;
+        return $this->user_change_password_url;
+    }
+    
+    private $user_login_url = "/gd.trxn.com/usersafety/login.php";
+    function getRedirectUserLoginUrl()
+    {
+        return $this->user_login_url;
+    }
+    
+    private $general_error_url = "/gd.trxn.com/system/error.php";
+    function getRedirectGeneralErrorUrl()
+    {
+        return $this->general_error_url;
     }
     
     private $email_support_account = "support@guyverdesigns.com";

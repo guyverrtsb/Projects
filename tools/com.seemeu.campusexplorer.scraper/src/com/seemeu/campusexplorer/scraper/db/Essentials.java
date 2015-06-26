@@ -21,23 +21,24 @@ public class Essentials
 			this.setPreparedStatement("INSERT INTO universityaccount " +
 			"(`uid`,`createddt`,`changeddt`,`webaddress`) " +
 			"VALUES " +
-			"( UUID(), NOW(), NOW(), ? )");
+			"( UUID(), NOW(), NOW(), ?, ? )");
 			this.bind(1, this.getDataPassString("webaddress").toString().toLowerCase());
 			this.create(key);
 		}
-		else if(key.equalsIgnoreCase("CREATE_MATCH_ACCOUNT_PROFILE_FROM_CXURL"))
+		else if(key.equalsIgnoreCase("CREATE_MATCH_ACCOUNT_PROFILE_FROM_URL"))
 		{
 			this.setPreparedStatement("INSERT INTO match_universityaccount_to_universityprofile " +
-			"(`uid`,`createddt`,`changeddt`,`universityaccount_uid`,`universityprofile_uid`) " +
+			"(`lid`,`uid`,`createddt`,`changeddt`,`universityaccount_uid`,`universityprofile_uid`) " +
 			"VALUES " +
-			"( UUID(), NOW(), NOW(), ?, ( " + 
+			"(?, UUID(), NOW(), NOW(), ?, ( " + 
 			"SELECT universityprofile.uid AS universityprofile_uid FROM universitysource " +
 			"JOIN universityprofile " +
 			"ON universitysource.uid = universityprofile.universitysource_uid " +
-			"WHERE universitysource.cxurl = ? " +
+			"WHERE universitysource.url = ? " +
 			") )");
-			this.bind(1, this.getDataPassString("universityaccount_uid").toString());
-			this.bind(2, this.getDataPassString("cxurl").toString());
+			this.bind(1, (int)this.getDataPass().get("ZZZZCOUNTER"));
+			this.bind(2, this.getDataPassString("universityaccount_uid").toString());
+			this.bind(3, this.getDataPassString("url").toString());
 			this.create(key);
 		}
 		else

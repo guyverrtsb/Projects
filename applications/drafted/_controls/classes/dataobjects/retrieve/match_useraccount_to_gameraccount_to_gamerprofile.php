@@ -19,7 +19,7 @@ class RetrieveMatchUserAccounttoGamerAccountProfile
      */
     function byUseraccountUid($useraccount_uid)
     {
-        zLog()->LogInfoStartDATAOBJECTFUNCTION("byUseraccountUid");
+        zLog()->LogStart_DataObjectFunction("byUseraccountUid");
         
         $sqlstmnt = "SELECT * FROM match_useraccount_to_gameraccount_to_gamerprofile ".
             "WHERE useraccount_uid=:useraccount_uid";
@@ -32,7 +32,7 @@ class RetrieveMatchUserAccounttoGamerAccountProfile
 
         $this->resultRetrieveRecord($appcon);
 
-        zLog()->LogInfoEndDATAOBJECTFUNCTION("byUseraccountUid");
+        zLog()->LogEnd_DataObjectFunction("byUseraccountUid");
     }
 }
 ?>

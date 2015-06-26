@@ -22,7 +22,7 @@ class UpdateUserAccount
                 $changepassword,
                 $numberoflogintries)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("basic");
+        zLog()->LogStart_DataObjectFunction("basic");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -48,13 +48,13 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("basic");
+        zLog()->LogEnd_DataObjectFunction("basic");
     }
     
     function updateLogintries($uid,
                             $numberoflogintries)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("updateLogintries");
+        zLog()->LogStart_DataObjectFunction("updateLogintries");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -70,13 +70,13 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("updateLogintries");
+        zLog()->LogEnd_DataObjectFunction("updateLogintries");
     }
     
     function updateIsactive($uid,
                             $isactive)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("updateIsactive");
+        zLog()->LogStart_DataObjectFunction("updateIsactive");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -92,12 +92,12 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("updateIsactive");
+        zLog()->LogEnd_DataObjectFunction("updateIsactive");
     }
     
     function updateActivatebyUid($uid)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("updateActivatebyUid");
+        zLog()->LogStart_DataObjectFunction("updateActivatebyUid");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -113,12 +113,12 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("updateActivatebyUid");
+        zLog()->LogEnd_DataObjectFunction("updateActivatebyUid");
     }
     
     function updateDeactivatebyUid($uid)
     {
-        zLog()->LogStartDATAOBJECTFUNCTION("updateDeactivatebyUid");
+        zLog()->LogStart_DataObjectFunction("updateDeactivatebyUid");
         
         $sqlstmnt = "UPDATE useraccount SET ".
             "changeddt=NOW(), ".
@@ -134,7 +134,7 @@ class UpdateUserAccount
 
         $this->resultUpdateRecord($appcon, "useraccount");
         
-        zLog()->LogEndDATAOBJECTFUNCTION("updateDeactivatebyUid");
+        zLog()->LogEnd_DataObjectFunction("updateDeactivatebyUid");
     }
 }
 ?>

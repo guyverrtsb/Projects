@@ -23,8 +23,7 @@ class GenerateUniqueValue
      */
     function generate($APPDB, $tablename, $fieldname, $fieldvalue, $interval = 0)
     {
-        zLog()->LogStartFUNCTION("generate");
-        $mr = "NA";
+        zLog()->LogStart_AccessPointFunction("generate");
 
         if($interval > 0)
             $fieldvalue = $fieldvalue."_".$interval;
@@ -34,20 +33,19 @@ class GenerateUniqueValue
         
         if($cu->getNumofRecords() == 0)
         {
-            zLog()->LogDebug("generate:".$fieldname."{".$fieldvalue."}");
-            $this->setOutputData("UNIQUE_VALUE", $fieldvalue);
-
-            $mr = zLog()->LogRETURN("UNIQUE_VALUE_FOUND");
+            zLog()->LogDebug("Value is Unique:$fieldname:[$fieldvalue]");
+            $this->setSysReturnitem("UNIQUE_VALUE", $fieldvalue);
+            $this->setSysReturnData("UNIQUE_VALUE_FOUND", "Unique Value Found");
         }
         else
         {
             $interval = $interval + 1;
-            zLog()->LogDebug("generate:".$fieldname."{".$fieldvalue."}");
-            $this->generate($APPDB, $tablename, $fieldname, $fieldvalue, $interval);
+            zLog()->LogDebug("Value not Unique:$fieldname:[$fieldvalue]");
+            $fieldvalue = $this->generate($APPDB, $tablename, $fieldname, $fieldvalue, $interval);
         }
         
-        $this->setSysReturnCode($mr);
-        zLog()->LogEndFUNCTION("generate");
+        zLog()->LogEnd_AccessPointFunction("generate");
+        return $fieldvalue;
     }
 }
 ?>
