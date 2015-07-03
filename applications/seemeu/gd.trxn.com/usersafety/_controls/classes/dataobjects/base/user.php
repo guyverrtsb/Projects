@@ -14,21 +14,31 @@ class UserBase
     {
     }
     
-    function getUid() { return $this->getResult_RecordField("uid"); }
+    function getMatchUserLid() { return $this->getResult_RecordField($this->dbf("match_user.lid")); }
+    function getMatchUserUid() { return $this->getResult_RecordField($this->dbf("match_user.uid")); }
+    function getMatchUserCreateddt() { return $this->getResult_RecordField($this->dbf("match_user.createddt")); }
+    function getMatchUserChangeddt() { return $this->getResult_RecordField($this->dbf("match_user.changeddt")); }
     
-    function getEmail() { return $this->getResult_RecordField("email"); }
-    function getPassword() { return $this->getResult_RecordField("password"); }
-    function getNickname() { return $this->getResult_RecordField("nickname"); }
-    function getUsertablekey() { return $this->getResult_RecordField("usertablekey"); }
-    function getIsactive() { return $this->getResult_RecordField("isactive"); }
-    function getChangepassword() { return $this->getResult_RecordField("changepassword"); }
-    function getNumberoflogintries() { return $this->getResult_RecordField("numberoflogintries"); }
+    function getUseraccountLid() { return $this->getResult_RecordField($this->dbf("useraccount.lid")); }
+    function getUseraccountUid() { return $this->getResult_RecordField($this->dbf("useraccount.uid")); }
+    function getUseraccountCreateddt() { return $this->getResult_RecordField($this->dbf("useraccount.createddt")); }
+    function getUseraccountChangeddt() { return $this->getResult_RecordField($this->dbf("useraccount.changeddt")); }
+    function getUseraccountEmail() { return $this->getResult_RecordField($this->dbf("useraccount.email")); }
+    function getUseraccountPassword() { return $this->getResult_RecordField($this->dbf("useraccount.password")); }
+    function getUseraccountNickname() { return $this->getResult_RecordField($this->dbf("useraccount.nickname")); }
+    function getUseraccountUsertablekey() { return $this->getResult_RecordField($this->dbf("useraccount.usertablekey")); }
+    function getUseraccountIsactive() { return $this->getResult_RecordField($this->dbf("useraccount.isactive")); }
+    function getUseraccountChangepassword() { return $this->getResult_RecordField($this->dbf("useraccount.changepassword")); }
+    function getUseraccountNumberoflogintries() { return $this->getResult_RecordField($this->dbf("useraccount.numberoflogintries")); }
     
-    function getFirstname() { return $this->getResult_RecordField("firstname"); }
-    function getLastname() { return $this->getResult_RecordField("lastname"); }
-    function getCfgSdescCountry() { return $this->getResult_RecordField("crossappl_configurations_sdesc_region"); }
-    function getCfgSdescRegion() { return $this->getResult_RecordField("crossappl_configurations_sdesc_country"); }
-    function getCity() { return $this->getResult_RecordField("city"); }
-    
+    function GetUserprofileLid() { return $this->getResult_RecordField($this->dbf("userprofile.lid")); }
+    function GetUserprofileUid() { return $this->getResult_RecordField($this->dbf("userprofile.uid")); }
+    function GetUserprofileCreateddt() { return $this->getResult_RecordField($this->dbf("userprofile.createddt")); }
+    function GetUserprofileChangeddt() { return $this->getResult_RecordField($this->dbf("userprofile.changeddt")); }
+    function GetUserprofileFirstname() { return $this->getResult_RecordField($this->dbf("userprofile.firstname")); }
+    function GetUserprofileLastname() { return $this->getResult_RecordField($this->dbf("userprofile.lastname")); }
+    function GetUserprofileCity() { return $this->getResult_RecordField($this->dbf("userprofile.city")); }
+    function GetUserprofileCrossapplCfgSdescRegion() { return $this->getResult_RecordField($this->dbf("userprofile.crossappl_configurations_sdesc_region")); }
+    function GetUserprofileCrossapplCfgSdescCountry() { return $this->getResult_RecordField($this->dbf("userprofile.crossappl_configurations_sdesc_country")); }
 }
 ?>

@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/userprofile.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,23 +8,33 @@
  * 1. 
 */
 class RetrieveUserProfile
-    extends UserBase
+    extends UserprofileBase
 {
     function __construct()
     {
     }
     
-    function byUid($uid)
+    function byUid($userprofile_uid)
     {
         zLog()->LogStart_DataObjectFunction("byUid");
         
-        $sqlstmnt = "SELECT * FROM userprofile ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "SELECT 
+                lid,
+                uid,
+                createddt,
+                changeddt,
+                firstname,
+                lastname,
+                city,
+                crossappl_configurations_sdesc_region,
+                crossappl_configurations_sdesc_country
+            FROM userprofile 
+            WHERE uid=:userprofile_uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":userprofile_uid", $userprofile_uid);
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);

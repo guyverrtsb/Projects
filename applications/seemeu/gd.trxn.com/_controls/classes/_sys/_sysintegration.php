@@ -119,7 +119,7 @@ class SysIntegration
                 $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"] = $csa->getResult_RecordField("uid");
                 $_SESSION["GUYVERDESIGNS_SITE_ALIAS"] = $csa->getResult_RecordField("sdesc");
                 
-                $csa->matchSiteandSiteAlias($_SESSION["GUYVERDESIGNS_SITE_UID"],
+                $csa->matchSite($_SESSION["GUYVERDESIGNS_SITE_UID"],
                                             $_SESSION["GUYVERDESIGNS_SITE_ALIAS_UID"]);
             }
         }

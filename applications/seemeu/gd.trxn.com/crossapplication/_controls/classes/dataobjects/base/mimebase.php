@@ -1,7 +1,7 @@
-<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/base/table.php"); ?>
 <?php
 class zMimeBaseObject
-    extends AppSysBaseObject
+    extends TableBase
 {
     var $meta_uid;
     var $appl_uid;

@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/base/table.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,14 +7,12 @@
 * Date: 2013/01/06
  * 1. 
 */
-class UniversityBase
-    extends AppSysBaseObject
+class EntityUniversityaccountBase
+    extends TableBase
 {
     function __construct()
     {
     }
-    
-    function getUid() { return $this->getResult_RecordField("uid"); }
     
     function getWebaddress() { return $this->getResult_RecordField("webaddress"); }
     function getEmaildomain() { return $this->getResult_RecordField("emaildomain"); }

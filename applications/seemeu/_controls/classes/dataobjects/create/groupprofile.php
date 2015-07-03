@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/dataobjects/base/group.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/base/groupprofile.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,17 +7,16 @@
 * Date: 2013/01/06
  * 1. 
 */
-class CreateGroupProfile
-    extends GroupBase
+class CreateGroupprofile
+    extends GroupprofileBase
 {
     function __construct()
     {
     }
     
-    function full($validtodate,
-                $ldesc)
+    function basic($ldesc)
     {
-        zLog()->LogStart_DataObjectFunction("full");
+        zLog()->LogStart_DataObjectFunction("basic");
         
         $sqlstmnt = "INSERT INTO groupprofile SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -31,7 +30,7 @@ class CreateGroupProfile
         
         $this->resultCreateRecord($appcon, "groupprofile");
         
-        zLog()->LogEnd_DataObjectFunction("full");
+        zLog()->LogEnd_DataObjectFunction("basic");
     }
 }
 ?>

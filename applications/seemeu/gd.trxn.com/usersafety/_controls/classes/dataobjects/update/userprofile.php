@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/userprofile.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class UpdateUserProfile
-    extends UserBase
+    extends UserprofileBase
 {
     function __construct()
     {
@@ -23,14 +23,14 @@ class UpdateUserProfile
     {
         zLog()->LogStart_DataObjectFunction("updateAllbyUid");
         
-        $sqlstmnt = "UPDATE userprofile SET ".
-            "changeddt=NOW(), ".
-            "firstname=:firstname, ".
-            "lastname=:lastname, ".
-            "city=:city ".
-            "crossappl_configurations_sdesc_region=:crossappl_configurations_sdesc_region, ".
-            "crossappl_configurations_sdesc_country=:crossappl_configurations_sdesc_country ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE userprofile SET 
+            changeddt=NOW(), 
+            firstname=:firstname, 
+            lastname=:lastname, 
+            city=:city 
+            crossappl_configurations_sdesc_region=:crossappl_configurations_sdesc_region, 
+            crossappl_configurations_sdesc_country=:crossappl_configurations_sdesc_country 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");

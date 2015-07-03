@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/useraccount.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,8 +7,8 @@
 * Date: 2013/01/06
  * 1. 
 */
-class CreateUserAccount
-    extends UserBase
+class CreateUseraccount
+    extends UseraccountBase
 {
     function __construct()
     {
@@ -21,15 +21,15 @@ class CreateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("basic");
         
-        $sqlstmnt = "INSERT INTO useraccount SET ".
-            "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
-            "email=:email, ".
-            "password=:password, ".
-            "nickname=:nickname, ".
-            "usertablekey=:usertablekey, ".
-            "isactive=:isactive, ".
-            "changepassword=:changepassword, ".
-            "numberoflogintries=:numberoflogintries";
+        $sqlstmnt = "INSERT INTO useraccount SET 
+            uid=UUID(), createddt=NOW(), changeddt=NOW(), 
+            email=:email, 
+            password=:password, 
+            nickname=:nickname, 
+            usertablekey=:usertablekey, 
+            isactive=:isactive, 
+            changepassword=:changepassword, 
+            numberoflogintries=:numberoflogintries";
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");

@@ -3,7 +3,7 @@
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/retrieve/useraccount.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/useraccount.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/userprofile.php"); ?>
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/match_useraccount_to_userprofile.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/create/match_user.php"); ?>
 <?php zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/accesspoints/taskcontrol.php"); ?>
 <?php
 /*
@@ -60,8 +60,8 @@ class User
                     $args["userprofile_crossappl_configurations_sdesc_region"],
                     $args["userprofile_crossappl_configurations_sdesc_country"]);
 
-            $cmuatup = new CreateMatchUserAccounttoUserProfile();
-            $cmuatup->basic($ca->getUid(), $cp->getUid());
+            $cmu = new CreateMatchUser();
+            $cmu->basic($ca->getUid(), $cp->getUid());
 
             /* Set Output Data Objects */
             $this->setSysReturnitem("useraccount_uid", $ca->getUid());
@@ -136,7 +136,7 @@ class User
         
         zLog()->LogEnd_AccessPointFunction("retrieveUserInfo");
     }
-
+/*
    function activateUserProcess($emails)
     {
         zLog()->LogStart_AccessPointFunction("activateUserProcess");
@@ -163,11 +163,11 @@ class User
                     $crossappl_configurations_sdesc_region,
                     $crossappl_configurations_sdesc_country);
 
-            $cmuatup = new CreateMatchUserAccounttoUserProfile();
-            $cmuatup->basic($ca->getUid(), $cp->getUid());
+            $cmu = new CreateMatchUser();
+            $cmu->basic($ca->getUid(), $cp->getUid());
             
 
-            /* Set Output Data Objects */
+            // Set Output Data Objects
             $this->setSysReturnitem("useraccount_uid", $ca->getUid());
             $this->setSysReturnitem("useraccount_email", $ca->getEmail());
             $this->setSysReturnitem("useraccount_usertablekey", $ca->getUsertablekey());
@@ -195,5 +195,6 @@ class User
         
         zLog()->LogEnd_AccessPointFunction("activateUserProcess");
     }
+*/
 }
 ?>

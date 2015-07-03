@@ -51,11 +51,11 @@ class CreateSiteandAlias
         zLog()->LogEnd_DataObjectFunction("registerSiteAlias");
     }
     
-    function matchSiteandSiteAlias($site_uid, $sitealias_uid)
+    function matchSite($site_uid, $sitealias_uid)
     {
         zLog()->LogStart_DataObjectFunction("matchSiteandSiteAlias");
         
-        $sqlstmnt = "INSERT INTO match_site_to_sitealias SET ".
+        $sqlstmnt = "INSERT INTO match_site SET ".
             "uid=UUID(), createddt=NOW(), changeddt=NOW(), ".
             "site_uid=:site_uid, ".
             "sitealias_uid=:sitealias_uid";
@@ -67,7 +67,7 @@ class CreateSiteandAlias
         $appcon->bindParam(":sitealias_uid", $sitealias_uid);
         $appcon->execUpdate();
 
-        $this->resultCreateRecord($appcon, "match_site_to_sitealias");
+        $this->resultCreateRecord($appcon, "match_site");
         
         zLog()->LogEnd_DataObjectFunction("matchSiteandSiteAlias");
     }

@@ -2,8 +2,8 @@
 <?php zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/accesspoints/generateuniquevalue.php"); ?>
 <?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/accesspoints/user.php"); ?>
 <?php zReqOnce("/gd.trxn.com/crossapplication/_controls/classes/accesspoints/taskcontrol.php"); ?>
-<?php zReqOnce("/_controls/classes/dataobjects/retrieve/universityaccount.php"); ?>
-<?php zReqOnce("/_controls/classes/dataobjects/create/match_usersafety_useraccount_to_universityaccount_to_usertype.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/retrieve/entity_university.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/create/match_entity_to_usersafety_user.php"); ?>
 <?php
 class Executor
     extends AppSysBaseObject
@@ -20,7 +20,7 @@ class Executor
             $guvutk = new GenerateUniqueValue();
             $nickname = $guvutk->generate("USERSAFETY", "useraccount", "nickname",  "PROSPECT");
             zLog()->LogDebug("nickname:[".$nickname."]");
-            // Generate Unique Tablekey
+            // Generate Unique Table key
             $usertablekey = $guvutk->generate("USERSAFETY", "useraccount", "usertablekey",  $this->createUserTableKey("USER"));
             zLog()->LogDebug("usertablekey:[".$usertablekey."]");
 
@@ -49,18 +49,19 @@ class Executor
                 $univemaildomain = "groupuniv.com";
         
                 // Retrieve the University information based on email domain
-                $rua = new RetrieveUniversityAccount();
+                $rua = new RetrieveEntityUniversity();
                 $rua->byEmaildomain($univemaildomain);
         
-                // Create match of Usersafety User Account to University Account to UserType
-                $cmuuuau = new CreateMatchUsersafetyUseraccounttoUniversityaccounttoUsertype();
-                $cmuuuau->full($user->getSysReturnitem("useraccount_uid")
-                            , $rua->getUid()
-                            , "USER_TYPE-PROSPECT");
+                // Create match of User safety User Account to University Account to UserType
+                $cmeuu = new CreateMatchEntitytoUsersafetyUser();
+                $cmeuu->basic($rua->getMatchEntitytoUniversityMatchEntityUid()
+                            , $user->getSysReturnitem("useraccount_uid")
+                            , "USER_TYPE-PROSPECT"
+                            , "ENTITY_ROLE-USER");
                 
-                if($cmuuuau->getSysReturnCode() == "RECORD_IS_CREATED" && zAppSysIntegration()->isLandscapeLocal())
+                if($cmeuu->getSysReturnCode() == "RECORD_IS_CREATED" && zAppSysIntegration()->isLandscapeLocal())
                     $this->setSysReturnData("USER_IS_CREATED", "User is Created-".$user->getSysReturnitem("LCL_MSG_OVERRIDE"), "TRUE");
-                else if($cmuuuau->getSysReturnCode() == "RECORD_IS_CREATED")
+                else if($cmeuu->getSysReturnCode() == "RECORD_IS_CREATED")
                     $this->setSysReturnData("USER_IS_CREATED", "User is Created", "TRUE");
                 else
                     $this->setSysReturnData("USER_IS_NOT_CREATED", "User Creation Failed", "TRUE");

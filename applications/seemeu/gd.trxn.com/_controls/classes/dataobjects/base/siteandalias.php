@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/base/table.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,13 +8,12 @@
  * 1. 
 */
 class SiteandAliasBase
-    extends AppSysBaseObject
+    extends TableBase
 {
     function __construct()
     {
     }
     
-    function getUid() { return $this->getResult_RecordField("uid"); }
     function getSite() { return strtolower($this->getResult_RecordField("sdesc")); }
 
 }

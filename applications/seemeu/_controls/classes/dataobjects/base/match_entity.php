@@ -7,14 +7,14 @@
 * Date: 2013/01/06
  * 1. 
 */
-class UniqueBase
+class MatchEntityBase
     extends TableBase
 {
     function __construct()
     {
     }
     
-    function getNumofRecords() { return $this->getResult_RecordField("numofrecords"); }
-
+    function getEntityaccountUid() { return $this->getResult_RecordField("entityaccount_uid"); }
+    function getEntityprofileUid() { return $this->getResult_RecordField("entityprofile_uid"); }
 }
 ?>

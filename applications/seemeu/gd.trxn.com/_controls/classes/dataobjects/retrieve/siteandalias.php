@@ -19,10 +19,10 @@ class RetrieveSiteandAlias
         
         $sqlstmnt = "SELECT ".$this->dbfas("site.uid, site.sdesc, sitealias.uid, sitealias.sdesc")." ".
             "FROM sitealias ".
-            "JOIN match_site_to_sitealias ".
-            "ON match_site_to_sitealias.sitealias_uid = sitealias.uid ".
+            "JOIN match_site ".
+            "ON match_site.sitealias_uid = sitealias.uid ".
             "JOIN site ".
-            "ON match_site_to_sitealias.site_uid = site.uid ".
+            "ON match_site.site_uid = site.uid ".
             "WHERE sitealias.sdesc=:alias";
 
         $appcon = new SysConnections();

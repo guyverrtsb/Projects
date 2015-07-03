@@ -11,9 +11,9 @@ class CountUnique
     public function countUniqueFieldValue($APPDB, $tablename, $fieldname, $fieldvalue)
     {
         zLog()->LogStart_DataObjectFunction("countUniqueFieldValue");
-        $sqlstmnt = "SELECT COUNT(lid) AS numofrecords ".
-             "FROM ".$tablename." ".
-             "WHERE ".$fieldname."=:".$fieldname;
+        $sqlstmnt = "SELECT COUNT(lid) AS numofrecords 
+            FROM ".$tablename." 
+            WHERE ".$fieldname."=:".$fieldname;
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB($APPDB);

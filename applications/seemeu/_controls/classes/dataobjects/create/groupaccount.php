@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/dataobjects/base/group.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/base/groupaccount.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,20 +7,20 @@
 * Date: 2013/01/06
  * 1. 
 */
-class CreateGroupAccount
-    extends GroupBase
+class CreateGroupaccount
+    extends GroupaccountBase
 {
     function __construct()
     {
     }
     
-    function full($sdesc,
+    function basic($sdesc,
                 $ldesc,
                 $configurations_sdesc_grouptype,
                 $configurations_sdesc_groupvisibility,
                 $configurations_sdesc_groupaccept)
     {
-        zLog()->LogStart_DataObjectFunction("full");
+        zLog()->LogStart_DataObjectFunction("basic");
         
         $sqlstmnt = "INSERT INTO groupaccount SET 
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
@@ -42,7 +42,7 @@ class CreateGroupAccount
         
         $this->resultCreateRecord($appcon, "groupaccount");
         
-        zLog()->LogEnd_DataObjectFunction("full");
+        zLog()->LogEnd_DataObjectFunction("basic");
     }
 }
 ?>

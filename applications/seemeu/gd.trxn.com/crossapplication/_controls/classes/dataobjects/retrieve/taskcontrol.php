@@ -22,10 +22,10 @@ class RetrieveTaskControl
                     $uid3)
     {
         zLog()->LogStart_DataObjectFunction("byUid123");
-        $mr = "NA"; //Method Return;
         
-        $sqlstmnt = "SELECT * FROM taskcontrollink ".
-            "WHERE uid1=:uid1 AND uid2=:uid2 AND uid3=:uid3";
+        $sqlstmnt = "SELECT * 
+            FROM taskcontrollink 
+            WHERE uid1=:uid1 AND uid2=:uid2 AND uid3=:uid3";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("CROSSAPPLICATION");

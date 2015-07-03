@@ -19,10 +19,10 @@ class UpdateTaskControl
         zLog()->LogStart_DataObjectFunction("deactivateTasklink");
         $mr = "NA"; //Method Return;
         
-        $sqlstmnt = "UPDATE taskcontrollink SET ".
-            "changeddt=NOW(), ".
-            "isactive=:isactive ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE taskcontrollink SET 
+                changeddt=NOW(), 
+                isactive=:isactive 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("CROSSAPPLICATION");

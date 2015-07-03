@@ -45,10 +45,6 @@ zAppSysIntegration()->setDefaultPageTitle("Alumni - Login / Registraion")
         <input type="password" id="inputRegisterPasswordConfirm" name="passwordconfirm" class="form-control" placeholder="Confirm Password" required>
         <!-- Usertype hidden Box -->
         <input type="hidden" id="inputServiceControlKey" name="SERVICE_CONTROL_KEY" class="form-control" value="USERSAFETY-REGISTER_BY_EMAIL_ALUMNI" required>
-        <!-- Check Box -->
-        <div class="checkbox">
-            <label><input type="checkbox" value="remember-me"> Remember me</label>
-        </div>
         <!-- Login Button -->
         <button class="btn btn-lg btn-primary btn-block" type="button" onclick="UserSafety_Login(this);">Register</button>
         Already have an account! <a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a>

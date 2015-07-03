@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/openauth.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,16 +7,17 @@
 * Date: 2013/01/06
  * 1. 
 */
-class Createopenauth
-    extends UserBase
+class CreateOpenauth
+    extends OpenauthBase
 {
     function __construct()
     {
     }
     
-    function full($openauthkey,
+    function basic($openauthkey,
                 $expiredt,
-                $isvalid)
+                $isvalid,
+                $configurations_sdesc_openauthprovider)
     {
         zLog()->LogStart_DataObjectFunction("basic");
         
@@ -24,7 +25,8 @@ class Createopenauth
             uid=UUID(), createddt=NOW(), changeddt=NOW(),
             openauthkey=:openauthkey,
             expiredt=:expiredt,
-            isvalid=:isvalid";
+            isvalid=:isvalid,
+            configurations_sdesc_openauthprovider=:configurations_sdesc_openauthprovider";
 
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -32,6 +34,7 @@ class Createopenauth
         $appcon->bindParam(":openauthkey", $openauthkey);
         $appcon->bindParam(":expiredt", $expiredt);
         $appcon->bindParam(":isvalid", $isvalid);
+        $appcon->bindParam(":configurations_sdesc_openauthprovider", $configurations_sdesc_openauthprovider);
         $appcon->execUpdate();
         
         $this->resultCreateRecord($appcon, "openauth");

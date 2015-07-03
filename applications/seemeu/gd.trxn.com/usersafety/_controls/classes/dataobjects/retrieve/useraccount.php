@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/useraccount.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class RetrieveUserAccount
-    extends UserBase
+    extends UseraccountBase
 {
     function __construct()
     {
@@ -17,17 +17,29 @@ class RetrieveUserAccount
     /**
      * Retrieve Record by Email
      */
-    function byEmail($email)
+    function byEmail($useraccount_email)
     {
         zLog()->LogStart_DataObjectFunction("byEmail");
         
-        $sqlstmnt = "SELECT * FROM useraccount ".
-            "WHERE email=:email";
+        $sqlstmnt = "SELECT 
+                lid,
+                uid,
+                createddt,
+                changeddt,
+                email,
+                password,
+                nickname,
+                usertablekey,
+                isactive,
+                changepassword,
+                numberoflogintries
+            FROM useraccount 
+            WHERE email=:useraccount_email";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":email", $email);
+        $appcon->bindParam(":useraccount_email", $useraccount_email);
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);
@@ -38,17 +50,29 @@ class RetrieveUserAccount
     /**
      * Retrieve Record by Nickname
      */
-    function byNickname($nickname)
+    function byNickname($useraccount_nickname)
     {
         zLog()->LogStart_DataObjectFunction("byNickname");
         
-        $sqlstmnt = "SELECT * FROM useraccount ".
-            "WHERE nickname=:nickname";
+        $sqlstmnt = "SELECT 
+                lid,
+                uid,
+                createddt,
+                changeddt,
+                email,
+                password,
+                nickname,
+                usertablekey,
+                isactive,
+                changepassword,
+                numberoflogintries
+            FROM useraccount 
+            WHERE nickname=:useraccount_nickname";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":nickname", $nickname);
+        $appcon->bindParam(":useraccount_nickname", $useraccount_nickname);
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);
@@ -59,17 +83,29 @@ class RetrieveUserAccount
     /**
      * Retrieve Record by Tablekey
      */
-    function byUsertablekey($usertablekey)
+    function byUsertablekey($useraccount_usertablekey)
     {
         zLog()->LogStart_DataObjectFunction("byUsertablekey");
         
-        $sqlstmnt = "SELECT * FROM useraccount ".
-            "WHERE usertablekey=:usertablekey";
+        $sqlstmnt = "SELECT 
+                lid,
+                uid,
+                createddt,
+                changeddt,
+                email,
+                password,
+                nickname,
+                usertablekey,
+                isactive,
+                changepassword,
+                numberoflogintries
+            FROM useraccount 
+            WHERE usertablekey=:useraccount_usertablekey";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":usertablekey", $this->createUserTableKey($usertablekey));
+        $appcon->bindParam(":useraccount_usertablekey", $this->createUserTableKey($useraccount_usertablekey));
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);
@@ -80,17 +116,29 @@ class RetrieveUserAccount
     /**
      * Retrieve Record by Uid
      */
-    function byUid($uid)
+    function byUid($useraccount_uid)
     {
         zLog()->LogStart_DataObjectFunction("byUid");
         
-        $sqlstmnt = "SELECT * FROM useraccount ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "SELECT 
+                lid,
+                uid,
+                createddt,
+                changeddt,
+                email,
+                password,
+                nickname,
+                usertablekey,
+                isactive,
+                changepassword,
+                numberoflogintries
+            FROM useraccount 
+            WHERE uid=:useraccount_uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
         $appcon->setStatement($sqlstmnt);
-        $appcon->bindParam(":uid", $uid);
+        $appcon->bindParam(":useraccount_uid", $useraccount_uid);
         $appcon->execSelect();
         
         $this->resultRetrieveRecord($appcon);

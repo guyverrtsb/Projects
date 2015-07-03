@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/useraccount.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,7 +8,7 @@
  * 1. 
 */
 class UpdateUserAccount
-    extends UserBase
+    extends UseraccountBase
 {
     function __construct()
     {
@@ -24,15 +24,15 @@ class UpdateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("basic");
         
-        $sqlstmnt = "UPDATE useraccount SET ".
-            "changeddt=NOW(), ".
-            "email=:email, ".
-            "password=:password, ".
-            "nickname=:nickname, ".
-            "isactive=:isactive, ".
-            "changepassword=:changepassword, ".
-            "numberoflogintries=:numberoflogintries ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE useraccount SET 
+            changeddt=NOW(), 
+            email=:email, 
+            password=:password, 
+            nickname=:nickname, 
+            isactive=:isactive, 
+            changepassword=:changepassword, 
+            numberoflogintries=:numberoflogintries 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -56,10 +56,10 @@ class UpdateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("updateLogintries");
         
-        $sqlstmnt = "UPDATE useraccount SET ".
-            "changeddt=NOW(), ".
-            "numberoflogintries=:numberoflogintries ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE useraccount SET 
+            changeddt=NOW(), 
+            numberoflogintries=:numberoflogintries 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -78,10 +78,10 @@ class UpdateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("updateIsactive");
         
-        $sqlstmnt = "UPDATE useraccount SET ".
-            "changeddt=NOW(), ".
-            "isactive=:isactive ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE useraccount SET 
+            changeddt=NOW(), 
+            isactive=:isactive 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -99,10 +99,10 @@ class UpdateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("updateActivatebyUid");
         
-        $sqlstmnt = "UPDATE useraccount SET ".
-            "changeddt=NOW(), ".
-            "isactive=:isactive ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE useraccount SET 
+            changeddt=NOW(), 
+            isactive=:isactive 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");
@@ -120,10 +120,10 @@ class UpdateUserAccount
     {
         zLog()->LogStart_DataObjectFunction("updateDeactivatebyUid");
         
-        $sqlstmnt = "UPDATE useraccount SET ".
-            "changeddt=NOW(), ".
-            "isactive=:isactive ".
-            "WHERE uid=:uid";
+        $sqlstmnt = "UPDATE useraccount SET 
+            changeddt=NOW(), 
+            isactive=:isactive 
+            WHERE uid=:uid";
         
         $appcon = new SysConnections();
         $appcon->setApplicationDB("USERSAFETY");

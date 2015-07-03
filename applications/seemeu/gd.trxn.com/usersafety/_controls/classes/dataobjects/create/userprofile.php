@@ -1,4 +1,4 @@
-<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/user.php"); ?>
+<?php zReqOnce("/gd.trxn.com/usersafety/_controls/classes/dataobjects/base/userprofile.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -7,8 +7,8 @@
 * Date: 2013/01/06
  * 1. 
 */
-class CreateUserProfile
-    extends UserBase
+class CreateUserprofile
+    extends UserprofileBase
 {
     function __construct()
     {

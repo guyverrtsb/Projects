@@ -1,4 +1,4 @@
-<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
+<?php zReqOnce("/gd.trxn.com/_controls/classes/dataobjects/base/table.php"); ?>
 <?php
 /*
 * File: image.to.database.php
@@ -8,13 +8,11 @@
  * 1. 
 */
 class TaskControlBase
-    extends AppSysBaseObject
+    extends TableBase
 {
     function __construct()
     {
     }
-    
-    function getUid() { return $this->getResult_RecordField("uid"); }
     
     function getApplConfigSdescTaskkey() { return $this->getResult_RecordField("appl_configurations_sdesc_taskkey"); }
     function getUid1() { return $this->getResult_RecordField("uid1"); }
