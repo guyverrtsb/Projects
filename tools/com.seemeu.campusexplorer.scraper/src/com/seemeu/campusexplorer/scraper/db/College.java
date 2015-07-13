@@ -9,7 +9,35 @@ public class College
 {
 	public void execute(String key)
 	{
-		if(key.equalsIgnoreCase("CREATE_DEFAULT_UNIVERSITY"))
+		if(key.equalsIgnoreCase("CREATE_DEFAULT_UNIVERSITY_SOURCE"))
+		{
+			this.setPreparedStatement("INSERT INTO `entity_universitysource` " +
+					"(`lid`, `uid`,`createddt`,`changeddt`,`url`,`idx`," +
+					"`profilecreated`,`accountcreated`,`snapshot_essentials`,`snapshot_about`," +
+					"`snapshot_overallratings`,`snapshot_studentratings`,`snapshot_location`,`snapshot_gettingaround`," +
+					"`snapshot_walkability`,`snapshot_transit`,`snapshot_weather`,`snapshot_students`," +
+					"`snapshot_similar`,`snapshot_otherschoolsnear`) " +
+					"VALUES " +
+					"(?, UUID(),NOW(),NOW(),?,?," +
+					"'T','T','F','F'," +
+					"'F','F','F','F'," +
+					"'F','F','F','F'," +
+					"'F','F'" +
+					")");
+			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
+			this.bind(2, this.getDataPassString("url"));
+			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
+			this.create("CREATE_DEFAULT_UNIV_SOURCE [" + this.getDataPassString("url") + "]");
+			
+			this.setPreparedStatement("INSERT INTO `entity_universitysourcedata` " +
+					"(`lid`, `uid`,`createddt`,`changeddt`,`idx`,`entity_universitysource_uid`) " +
+					"VALUES (?, UUID(),NOW(),NOW(),?,(select uid from `entity_universitysource` where lid = ?))");
+			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
+			this.bind(2, this.getDataPassInt("ZZZZCOUNTER"));
+			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
+			this.create("CREATE_DEFAULT_UNIV_SOURCEDATA [" + this.getDataPassString("url") + "]");
+		}
+		else if(key.equalsIgnoreCase("CREATE_DEFAULT_UNIVERSITY"))
 		{
 			// ENTITY
 			this.setPreparedStatement("INSERT INTO `entityaccount` (`lid`,`uid`,`createddt`,`changeddt`" +
@@ -39,32 +67,6 @@ public class College
 			this.create("CREATE_DEFAULT_UNIV_MATCH_ENTITYACCOUNT_TO_ENTITYPROFILE");			
 			
 			// UNIVERSITY
-			this.setPreparedStatement("INSERT INTO `entity_universitysource` " +
-					"(`lid`, `uid`,`createddt`,`changeddt`,`url`,`idx`," +
-					"`profilecreated`,`accountcreated`,`snapshot_essentials`,`snapshot_about`," +
-					"`snapshot_overallratings`,`snapshot_studentratings`,`snapshot_location`,`snapshot_gettingaround`," +
-					"`snapshot_walkability`,`snapshot_transit`,`snapshot_weather`,`snapshot_students`," +
-					"`snapshot_similar`,`snapshot_otherschoolsnear`) " +
-					"VALUES " +
-					"(?, UUID(),NOW(),NOW(),?,?," +
-					"'T','T','F','F'," +
-					"'F','F','F','F'," +
-					"'F','F','F','F'," +
-					"'F','F'" +
-					")");
-			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
-			this.bind(2, this.getDataPassString("url"));
-			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
-			this.create("CREATE_DEFAULT_UNIV_SOURCE [" + this.getDataPassString("url") + "]");
-			
-			this.setPreparedStatement("INSERT INTO `entity_universitysourcedata` " +
-					"(`lid`, `uid`,`createddt`,`changeddt`,`idx`,`entity_universitysource_uid`) " +
-					"VALUES (?, UUID(),NOW(),NOW(),?,(select uid from `entity_universitysource` where lid = ?))");
-			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
-			this.bind(2, this.getDataPassInt("ZZZZCOUNTER"));
-			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
-			this.create("CREATE_DEFAULT_UNIV_SOURCE [" + this.getDataPassString("url") + "]");
-			
 			this.setPreparedStatement("INSERT INTO `entity_universityaccount` (`lid`,`uid`,`createddt`,`changeddt`" +
 					",`emaildomain`,`isactive`,`islive`) " +
 					"VALUES (?,UUID(),NOW(),NOW()" +
@@ -102,17 +104,13 @@ public class College
 			this.bind(14, this.getDataPassString("webaddress"));
 			this.create("CREATE_DEFAULT_UNIV_PROFILE [" + this.getDataPassString("webaddress") + "]");
 			
-			this.setPreparedStatement("INSERT INTO `match_entity_university` " +
+			this.setPreparedStatement("INSERT INTO `match_entity_to_university` " +
 					"(`lid`,`uid`,`createddt`,`changeddt`" +
-					",`entity_universityaccount_uid`,`entity_universityprofile_uid`,`match_entity_uid`,`match_usersafety_user_uid`" +
-					",`configurations_sdesc_usertype`,`configurations_sdesc_entityrole`) " +
+					",`entity_universityaccount_uid`,`entity_universityprofile_uid`,`match_entity_uid`) " +
 					"VALUES (?,UUID(),NOW(),NOW()" +
 					",(select uid from `entity_universityaccount` where lid = ?)" +
 					",(select uid from `entity_universityprofile` where entity_universitysource_uid = (select uid from `entity_universitysource` where lid = ?))" +
 					",(select uid from `match_entity` where lid = ?)" +
-					",'SEEMEU_MASTER_USER'" +
-					",'USER_TYPE-SEEMEU'" +
-					",'ENTITY_ROLE-OWNER'" +
 					")");
 			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
 			this.bind(2, this.getDataPassInt("ZZZZCOUNTER"));
@@ -120,40 +118,36 @@ public class College
 			this.bind(4, this.getDataPassInt("ZZZZCOUNTER"));
 			this.create("CREATE_DEFAULT_UNIV_MATCH");
 			
-			// GROUP
-			this.setPreparedStatement("INSERT INTO `groupaccount` (`lid`,`uid`,`createddt`,`changeddt`" +
-					",`configurations_sdesc_grouptype`,`configurations_sdesc_groupvisibility`,`configurations_sdesc_groupaccept`" +
-					",`sdesc`,`ldesc`) " +
+			this.setPreparedStatement("INSERT INTO `match_entity_to_usersafety_user` " +
+					"(`lid`,`uid`,`createddt`,`changeddt`" +
+					",`match_entity_uid`,`match_usersafety_user_uid`,`configurations_sdesc_usertype`,`configurations_sdesc_entityrole`) " +
 					"VALUES (?,UUID(),NOW(),NOW()" +
-					",'GROUP_TYPE-ENTITY','GROUP_ACCEPT-OWNER_ACCEPT','GROUP_VISIBILITY-PUBLIC'" +
-					",'GROUPUNIVCOM_PUBLIC','Group University Channel for the Public'" +
+					",(select uid from `match_entity` where lid = ?)" +
+					",'SEEMEU_MASTER_USER'" +
+					",'USER_TYPE-SEEMEU'" +
+					",'ENTITY_ROLE-OWNER'" +
 					")");
 			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
-			this.create("CREATE_DEFAULT_UNIV_GROUPACCOUNT");
+			this.bind(2, this.getDataPassInt("ZZZZCOUNTER"));
+			this.create("CREATE_DEFAULT_USER_TO_UNIV_MATCH");
 			
+			// GROUP PUBLIC
 			this.setPreparedStatement("INSERT INTO `groupaccount` (`lid`,`uid`,`createddt`,`changeddt`" +
 					",`configurations_sdesc_grouptype`,`configurations_sdesc_groupvisibility`,`configurations_sdesc_groupaccept`" +
 					",`sdesc`,`ldesc`) " +
 					"VALUES (?,UUID(),NOW(),NOW()" +
-					",'GROUP_TYPE-ENTITY','GROUP_ACCEPT-AUTO_ACCEPT','GROUP_VISIBILITY-ENTITY_PRIVATE'" +
-					",'GROUPUNIVCOM_ENTITYPRIVATE','Group University Channel for University Members'" +
+					",'GROUP_TYPE-ENTITY','GROUP_ACCEPT-AUTO_ACCEPT','GROUP_VISIBILITY-PUBLIC'" +
+					",'GROUPUNIVCOM_ENTITY_PUBLIC','University Entity for the Public'" +
 					")");
-			this.bind(1, (this.getDataPassInt("ZZZZCOUNTER") + 1));
+			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
 			this.create("CREATE_DEFAULT_UNIV_GROUPACCOUNT");
 
 			this.setPreparedStatement("INSERT INTO `groupprofile` (`lid`,`uid`,`createddt`,`changeddt`" +
 					",`ldesc`) " +
 					"VALUES (?,UUID(),NOW(),NOW()" +
-					",'Group University representing the Corporate solution from SeeMeU'" +
+					",'University Entity representing the Corporate solution from SeeMeU'" +
 					")");
 			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
-			this.create("CREATE_DEFAULT_UNIV_GROUPPROFILE");
-
-			this.setPreparedStatement("INSERT INTO `groupprofile` (`lid`,`uid`,`createddt`,`changeddt`" +
-					",`ldesc`) " +
-					"VALUES (?,UUID(),NOW(),NOW()" +
-					",'Group University representing the Corporate solution from SeeMeU for University Members')");
-			this.bind(1, (this.getDataPassInt("ZZZZCOUNTER") + 1));
 			this.create("CREATE_DEFAULT_UNIV_GROUPPROFILE");
 			
 			this.setPreparedStatement("INSERT INTO `match_group` (`lid`,`uid`,`createddt`,`changeddt`" +
@@ -170,6 +164,24 @@ public class College
 			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
 			this.bind(4, this.getDataPassInt("ZZZZCOUNTER"));
 			this.create("CREATE_DEFAULT_UNIV_MATCH_GROUPACCOUNT_TO_GROUPPROFILE");
+			
+			// GROUP ENTITY PUBLIC
+			this.setPreparedStatement("INSERT INTO `groupaccount` (`lid`,`uid`,`createddt`,`changeddt`" +
+					",`configurations_sdesc_grouptype`,`configurations_sdesc_groupvisibility`,`configurations_sdesc_groupaccept`" +
+					",`sdesc`,`ldesc`) " +
+					"VALUES (?,UUID(),NOW(),NOW()" +
+					",'GROUP_TYPE-ENTITY','GROUP_ACCEPT-OWNER_ACCEPT','GROUP_VISIBILITY-ENTITY_PUBLIC'" +
+					",'GROUPUNIVCOM_ENTITY_ENTITYPRIVATE','University Entity for University Members'" +
+					")");
+			this.bind(1, (this.getDataPassInt("ZZZZCOUNTER") + 1));
+			this.create("CREATE_DEFAULT_UNIV_GROUPACCOUNT");
+
+			this.setPreparedStatement("INSERT INTO `groupprofile` (`lid`,`uid`,`createddt`,`changeddt`" +
+					",`ldesc`) " +
+					"VALUES (?,UUID(),NOW(),NOW()" +
+					",'University representing the Corporate solution from SeeMeU for University Members')");
+			this.bind(1, (this.getDataPassInt("ZZZZCOUNTER") + 1));
+			this.create("CREATE_DEFAULT_UNIV_GROUPPROFILE");
 			
 			this.setPreparedStatement("INSERT INTO `match_group` (`lid`,`uid`,`createddt`,`changeddt`" +
 					",`groupaccount_uid`,`groupprofile_uid`" +
@@ -186,6 +198,7 @@ public class College
 			this.bind(4, this.getDataPassInt("ZZZZCOUNTER"));
 			this.create("CREATE_DEFAULT_UNIV_MATCH_GROUPACCOUNT_TO_GROUPPROFILE");
 			
+			// Create Search Entities
 			this.setPreparedStatement("INSERT INTO `search_entities` (`lid`,`uid`,`createddt`,`changeddt`" +
 					",`match_entity_uid`,`record_uid`" +
 					",`configurations_sdesc_entitytype`,`text`) " +
@@ -225,6 +238,13 @@ public class College
 					"FROM entity_universitysource");
 			this.retrieve(key);
 		}
+		else if(key.equalsIgnoreCase("GET_ENTITYACCOUNT_FROM_LID"))
+		{
+			this.setPreparedStatement("SELECT lid, uid, entityaccount_uid, entityprofile_uid " +
+					"FROM match_entity WHERE lid = ?");
+			this.bind(1, this.getDataPassInt("ZZZZCOUNTER"));
+			this.retrieve(key + " [lid=" + this.getDataPassInt("ZZZZCOUNTER") + "]");
+		}
 		else if(key.equalsIgnoreCase("GET_UNIVERSITYSOURCE_FROM_URL"))
 		{
 			this.setPreparedStatement("SELECT lid, uid, url, idx, profilecreated, accountcreated, snapshot_essentials, snapshot_about, " +
@@ -255,8 +275,8 @@ public class College
 			"(?, UUID(), NOW(), NOW(), ?, ?)");
 			this.bind(1, (int)this.getDataPass().get("ZZZZCOUNTER"));
 			this.bind(2, this.getDataPassString("url"));
-			this.bind(3, this.getDataPassInt("idx"));
-			this.create(key + " [url=" + this.getDataPassString("url") + "]");
+			this.bind(3, this.getDataPassInt("ZZZZCOUNTER"));
+			this.create(key + " [idx=" + Integer.toString(this.getDataPassInt("ZZZZCOUNTER")) + "] [url=" + this.getDataPassString("url") + "]");
 		}
 		else if(key.equalsIgnoreCase("CREATE_UNIVERSITYSOURCEDATA"))
 		{
@@ -277,17 +297,17 @@ public class College
 					"WHERE `uid` = ?");
 			this.bind(1, this.getDataPassString("fieldvalue"));
 			this.bind(2, this.getDataPassString("entity_universitysource_uid"));
-			this.create(key + " [uid=" + this.getDataPassString("universitysource_uid") + "]");
+			this.create(key + " [uid=" + this.getDataPassString("entity_universitysource_uid") + "]");
 		}
 		else if(key.equalsIgnoreCase("UPDATE_UNIVERSITYSOURCEDATA_JSON"))
 		{
 			this.setPreparedStatement("UPDATE entity_universitysourcedata SET " +
 					"`changeddt` = NOW(), " +
 					"`" + this.getDataPassString("fieldname") + "_json` = ? " +
-					"WHERE `uid` = ?");
+					"WHERE `entity_universitysource_uid` = ?");
 			this.bind(1, this.getDataPassString("json"));
 			this.bind(2, this.getDataPassString("entity_universitysource_uid"));
-			this.create(key + " [uid=" + this.getDataPassString("entity_universitysource_uid") + "][json=" + this.getDataPassString("json").substring(0, 1000) + "]");
+			this.create(key + " [entity_universitysource_uid=" + this.getDataPassString("entity_universitysource_uid") + "][json=" + this.getDataPassString("json").substring(0, 1000) + "]");
 		}
 		else
 		{

@@ -19,7 +19,7 @@ public class JDBCMySQLConnection {
     private static JDBCMySQLConnection instance = new JDBCMySQLConnection();
 
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
-    public static final String PROJECT_PATH = "/usr/SeeMeU";
+    public static final String PROJECT_PATH = "SeeMeU";
 
     //private constructor
     private JDBCMySQLConnection() {
@@ -50,7 +50,7 @@ public class JDBCMySQLConnection {
     	String value = "";
     	try
     	{
-			File fXmlFile = new File(JDBCMySQLConnection.PROJECT_PATH + "/ZDBCONNECTIONS.xml");
+			File fXmlFile = new File("ZDBCONNECTIONS.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);

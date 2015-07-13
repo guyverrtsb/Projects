@@ -10,7 +10,6 @@ import org.jsoup.select.Elements;
 
 import com.seemeu.campusexplorer.scraper.base.UniversityPageBase;
 import com.seemeu.campusexplorer.scraper.db.College;
-import com.seemeu.campusexplorer.scraper.db.CollegeProfile;
 import com.seemeu.campusexplorer.scraper.intrfc.SectionIntrfc;
 
 public class StoreSource
@@ -37,6 +36,7 @@ public class StoreSource
 		{
 			this.out("[" + this.getDataPassString("ZZZZCOUNTER") + "][BROKEN : " + this.getUrlPath() + "]");
 		}
+		
 		for(int idx = 0; idx < tabs.size(); idx++)
 		{
 			String href = tabs.get(idx).attr("href");

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.seemeu.campusexplorer.scraper.base.UniversityPageBase;
 import com.seemeu.campusexplorer.scraper.db.College;
-import com.seemeu.campusexplorer.scraper.db.Essentials;
 import com.seemeu.campusexplorer.scraper.intrfc.SectionIntrfc;
 
 public class GroupUniv
@@ -48,11 +47,27 @@ public class GroupUniv
 		{
 			SectionIntrfc college = new College();
 			college.setDataPass(this.getDataPass());
+			college.execute("CREATE_DEFAULT_UNIVERSITY_SOURCE");
 			college.execute("CREATE_DEFAULT_UNIVERSITY");
 		}
-		else if(collegeStatusCheck.getResult().getNumRows() == 0)
+		else
 		{
-			this.out("**********************\nERR_ERR_ERR[SOURCE_NOT_CREATED\n**********************");
+			this.out("**********************\nGROUP UNIV SOURCE ALREADY ADDED\n**********************");
+		}
+		
+		collegeStatusCheck = new College();
+		collegeStatusCheck.setDataPass(this.getDataPass());
+		collegeStatusCheck.execute("GET_ENTITYACCOUNT_FROM_LID");
+		
+		if(collegeStatusCheck.getResult().getNumRows() == 0)
+		{
+			SectionIntrfc college = new College();
+			college.setDataPass(this.getDataPass());
+			college.execute("CREATE_DEFAULT_UNIVERSITY");
+		}
+		else if(collegeStatusCheck.getResult().getNumRows() == 1)
+		{
+			this.out("**********************\nGROUP UNIV ENTITY ALREADY ADDED\n**********************");
 		}
 		else if(collegeStatusCheck.getResult().getNumRows() > 1)
 		{

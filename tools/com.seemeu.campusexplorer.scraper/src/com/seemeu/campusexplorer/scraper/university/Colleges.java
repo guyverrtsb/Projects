@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.seemeu.campusexplorer.scraper.base.UniversityPageBase;
 import com.seemeu.campusexplorer.scraper.db.College;
-import com.seemeu.campusexplorer.scraper.db.Essentials;
 import com.seemeu.campusexplorer.scraper.intrfc.SectionIntrfc;
 
 public class Colleges

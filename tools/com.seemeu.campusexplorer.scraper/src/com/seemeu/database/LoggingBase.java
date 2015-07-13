@@ -12,7 +12,7 @@ public class LoggingBase
 {
 	public void createLogFile()
 	{
-		File folder = new File(JDBCMySQLConnection.PROJECT_PATH + "/seemeu/");
+		File folder = new File("seemeu/");
 		if(!folder.exists())
 			folder.mkdirs();
 		Calendar calendar = Calendar.getInstance();
@@ -57,7 +57,7 @@ public class LoggingBase
 	{
 		Calendar calendar = Calendar.getInstance();
 		
-		File folder = new File(JDBCMySQLConnection.PROJECT_PATH + "/seemeu/");
+		File folder = new File("seemeu/");
 		File[] fl = folder.listFiles();
 		File f = fl[fl.length - 1];
 		try	(

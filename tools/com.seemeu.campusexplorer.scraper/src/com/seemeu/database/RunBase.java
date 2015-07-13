@@ -1,6 +1,10 @@
 package com.seemeu.database;
 
+import java.io.IOException;
 import java.util.HashMap;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
 
 public class RunBase
 	extends LoggingBase
@@ -35,5 +39,30 @@ public class RunBase
 	public HashMap getRecord()
 	{
 		return this.record;
+	}
+	
+	int loadDocIdx = 0;
+	public Document loadDoc(String url)
+	{
+		Document doc = null;
+		try
+		{
+			doc = Jsoup.connect(url).timeout(1000 * 60 * 2).get();
+		}
+		catch (IOException e)
+		{
+			this.loadDocIdx++;
+			if(this.loadDocIdx < 10)
+			{
+				this.out("[LOAD_FAILURE][" + e.getMessage() + "][" + url + "]");
+				this.loadDoc(url);
+			}
+			else
+			{
+				this.out("[MAX_RELOAD_TRY][" + url + "]");
+			}	
+		}
+		this.loadDocIdx = 0;
+		return doc;
 	}
 }
