@@ -33,6 +33,11 @@ VALUES ( UUID(), NOW(), NOW(),
 'Container for Scholarships',
 'Scholarship',
 'ENTITY_TYPE'
+),( UUID(), NOW(), NOW(),
+'ENTITY_TYPE-MERCHANT',
+'Container for Merchant',
+'Merchant',
+'ENTITY_TYPE'
 );
 -- **********************************************************************************************************************************************
 -- Entity Acceptance Configuration
@@ -288,7 +293,12 @@ VALUES ( UUID(), NOW(), NOW(),
 ),( UUID(), NOW(), NOW(),
 'USER_TYPE-SEEMEU',
 'If you work as a teacher or some other Faculty role at a University register here to give you access to helping current students and guiding the path of prospective students',
-'Faculty',
+'SeeMeU',
+'USER_TYPE'
+),( UUID(), NOW(), NOW(),
+'USER_TYPE-MERCHANT',
+'To take advantage of all of SeeMeUs Merchant services and getting connected with the customer USe this User Type',
+'Merchant',
 'USER_TYPE'
 );
 -- **********************************************************************************************************************************************
@@ -310,8 +320,8 @@ VALUES ( UUID(), NOW(), NOW(),
 'Online',
 'SCHOOL_TYPE'
 ),( UUID(), NOW(), NOW(),
-'USER_TYPE-SEEMEU',
+'SCHOOL_TYPE-SEEMEU',
 'Corporate Usiversity of See Me U',
-'See Me U',
+'SeeMeU',
 'SCHOOL_TYPE'
 );
