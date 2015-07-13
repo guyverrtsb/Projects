@@ -1,5 +1,8 @@
 <?php
-session_start();
+if(session_id() == '')
+{
+    session_start();
+}
 /** Set sub domain document root for standardized _controls **/
 if (!isset($_SERVER["SUBDOMAIN_DOCUMENT_ROOT"]))
     $_SERVER["SUBDOMAIN_DOCUMENT_ROOT"] = $_SERVER["CONTEXT_DOCUMENT_ROOT"];
@@ -49,7 +52,7 @@ function zAuth()
 zReqOnce("/gd.trxn.com/_controls/classes/KLogger.php");
 function zLog()
 {
-    return new KLogger();
+    return new KLogger(1);
 }
 zReqOnce("/gd.trxn.com/_controls/classes/_sys/_returns.php");
 $zSysReturn = new SysReturns();
@@ -59,18 +62,15 @@ zReqOnce("/_controls/classes/_sys/_appsysintegration.php");
 function zAppSysIntegration()
 {
     $appSysIntegration = new AppSysIntegration();
-    
+    $appSysIntegration->setZBaseLines();
     if(!isset($_SESSION["GD_APP_SYS_INTEGRATION"]))
     {
         $_SESSION["GD_APP_SYS_INTEGRATION"] = "PERFORMED";
-        $appSysIntegration->setZBaseLines();
-        $appSysIntegration->setZLogging(1);
         zLog()->LogAllPageDeclaration();
         $appSysIntegration->setZSiteRegistration();
         zLog()->LogDebug("zAppSysIntegration()::Ceated");
     }
 
-    
     return $appSysIntegration;
 }
 

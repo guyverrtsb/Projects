@@ -8,14 +8,14 @@ $(function ()
 	    url: url,
 	    dataType: 'json',
 	    autoUpload: false,
-	    acceptFileTypes: /(\.|\/)(gif|jpe?g|png|wmv)$/i,
+	    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 	    // maxFileSize: 999000,
 	    // Enable image resizing, except for Android and Opera,
 	    // which actually support image resizing, but fail to
 	    // send Blob objects via XHR requests:
 	    disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
-	    previewMaxWidth: 500,
-	    previewMaxHeight: 500,
+	    previewMaxWidth: 470,
+	    previewMaxHeight: 470,
 	    // previewCrop: true
 	})
 	.on('fileuploadprocessalways', function (e, data)
@@ -67,14 +67,11 @@ $(function ()
 		    $this
 			.prop('disabled', true)
 			.text('Uploading...');
-		    alert("submit()");
-		    /*
 		    data.submit().always(function ()
 			{
 		        $this
 		    	.prop('disabled', true)
 		    	.text('File Uploaded');
 		    });
-		    */
 	});
 });

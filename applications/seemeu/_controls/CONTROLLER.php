@@ -1,6 +1,6 @@
-<?php require_once("../gd.trxn.com/_controls/classes/_syscore.php"); ?>
-<?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
-<?php
+<?php require_once("../gd.trxn.com/_controls/classes/_syscore.php");
+zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); 
+
 /**
  * CONTROLLER Is designed to be called by a web site or an application needing
  * to know what the next steps are.  There is an XML that will store all of

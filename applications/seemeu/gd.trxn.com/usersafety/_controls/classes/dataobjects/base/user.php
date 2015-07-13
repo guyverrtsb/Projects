@@ -18,6 +18,8 @@ class UserBase
     function getMatchUserUid() { return $this->getResult_RecordField($this->dbf("match_user.uid")); }
     function getMatchUserCreateddt() { return $this->getResult_RecordField($this->dbf("match_user.createddt")); }
     function getMatchUserChangeddt() { return $this->getResult_RecordField($this->dbf("match_user.changeddt")); }
+    function getMatchUserUseraccountUid() { return $this->getResult_RecordField($this->dbf("match_user.useraccount_uid")); }
+    function getMatchUserUserprofileUid() { return $this->getResult_RecordField($this->dbf("match_user.userprofile_uid")); }
     
     function getUseraccountLid() { return $this->getResult_RecordField($this->dbf("useraccount.lid")); }
     function getUseraccountUid() { return $this->getResult_RecordField($this->dbf("useraccount.uid")); }

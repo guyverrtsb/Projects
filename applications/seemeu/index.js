@@ -1,38 +1,38 @@
 $(document).ready(function()
 {
     $.post("/_controls/SERVICE.php",
-    		{
-    			SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
-    			groupkey : "USER_TYPE"
-    		},
-    		function(data)
-    	    {
-    	    	data = eval("(" + data + ")");
-    	    	gdBuildHeadline(data.RETRIEVEAPPCONFIGURATION, "usertypes");
-    	    });
+	{
+		SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
+		groupkey : "USER_TYPE"
+	},
+	function(data)
+    {
+    	data = eval("(" + data + ")");
+    	gdBuildHeadline(data.RETRIEVEAPPCONFIGURATION, "usertypes");
+    });
     $.post("/_controls/SERVICE.php",
-    		{
-    			SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
-    			groupkey : "ENTITY_TYPE"
-    		},
-    		function(data)
-    	    {
-    	    	data = eval("(" + data + ")");
-    	    	gdBuildHeadline(data.RETRIEVEAPPCONFIGURATION, "entitytypes");
-    	    });
+	{
+		SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
+		groupkey : "ENTITY_TYPE"
+	},
+	function(data)
+    {
+    	data = eval("(" + data + ")");
+    	gdBuildHeadline(data.RETRIEVEAPPCONFIGURATION, "entitytypes");
+    });
     $.post("/_controls/SERVICE.php",
-		{
-			SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
-			groupkey : "GROUP_TYPE"
-		},
-		function(data)
-	    {
-	    	data = eval("(" + data + ")");
-	    	gdBuildFeaturette(data.RETRIEVEAPPCONFIGURATION);
-	    });
+	{
+		SERVICE_CONTROL_KEY : "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS",
+		groupkey : "GROUP_TYPE"
+	},
+	function(data)
+    {
+    	data = eval("(" + data + ")");
+    	gdBuildFeaturette(data.RETRIEVEAPPCONFIGURATION);
+    });
 });
 
-function gdCarousel(data)
+function gdBuildCarousel(data)
 {
 	/*
 <div class="item">
@@ -85,7 +85,7 @@ function zAnchorLabels(anchorObj, key)
  * numPerRow = (1, 2 ,3 ,4, 6, 12)
  * jsonObj = JSON Object
  */
-function gdBuildHeadline(data, id, numPerRow)
+function gdBuildHeadline(data, elementId, numPerRow)
 {
 	/*
 <div class="row">
@@ -134,7 +134,7 @@ function gdBuildHeadline(data, id, numPerRow)
     	
     	if(counter == numPerRow)
 		{
-    		$("#" + id).append(div_row);
+    		$("#" + elementId).append(div_row);
     		counter = 1;
     		div_row = null;
 		}
@@ -145,9 +145,7 @@ function gdBuildHeadline(data, id, numPerRow)
     });
     
     if(div_row != null)
-		$("#" + id).append(div_row);
-
-    
+		$("#" + elementId).append(div_row);
 }
 
 function gdBuildFeaturette(data)
@@ -190,7 +188,7 @@ function gdBuildFeaturette(data)
     	
     	col2.append(img);
     	
-    	row.append(col1)
+    	row.append(col1);
     	row.append(col2);
     	
     	if(counter > 1)

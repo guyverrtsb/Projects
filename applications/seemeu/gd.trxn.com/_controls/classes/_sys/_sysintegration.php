@@ -194,14 +194,14 @@ class SysIntegration
 
     
     /** Start - USER AUTHORITY DATA **/
-    function setAuthoritySessionData($usersafety_account_uid,
-                                            $isauthenticated,
-                                            $usersafety_account_usertablekey)
+    function setAuthoritySessionData($usersafety_user_uid,
+                                    $isauthenticated,
+                                    $usersafety_user_usertablekey)
     {
         zLog()->LogStart_Function("setAuthoritySessionData");
-        $_SESSION[$this->getKeySessAuthUserUid()] = $usersafety_account_uid;
+        $_SESSION[$this->getKeySessAuthUserUid()] = $usersafety_user_uid;
         $_SESSION[$this->getKeySessAuthUserIsAuthenticated()] = $isauthenticated;
-        $_SESSION[$this->getKeySessAuthUsertablekey()] = $usersafety_account_usertablekey;
+        $_SESSION[$this->getKeySessAuthUsertablekey()] = $usersafety_user_usertablekey;
         zLog()->LogEnd_Function("setAuthoritySessionData");
     }
     

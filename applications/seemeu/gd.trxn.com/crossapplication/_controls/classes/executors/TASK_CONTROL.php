@@ -16,12 +16,21 @@ class Executor
             if($tcl->getSysReturnCode() == "TASK_PERFORMED")
             {
                 $this->transferSysReturnAry($tcl);
-                $this->setSysReturnData("TASK_PERFORMED", "Task is Performed");
+            
+                if ($this->getSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_CODE") != null)
+                {
+                    $this->setSysReturnData($this->getSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_CODE")
+                        , $this->getSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_MSG")
+                        , $this->getSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_SHOW_MSG"));
+                }
+                else
+                {
+                    $this->setSysReturnData("TASK_PERFORMED", "Task is Performed");
+                }
             }
             else
             {
                 $this->transferSysReturnAry($tcl);
-                $this->setSysReturnData("TASK_NOT_PERFORMED", "Task is not Performed");
             }
         }
         else

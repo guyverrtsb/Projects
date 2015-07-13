@@ -39,23 +39,19 @@ body {
  */
 .usersafety-form input[type="email"] {
   margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 .usersafety-form input[id="inputLoginPassword"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 .usersafety-form input[id="inputRegisterPassword"] {
   margin-bottom: 0px;
+  /*
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  */
 }
 .usersafety-form input[id="inputRegisterPasswordConfirm"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }

@@ -2,6 +2,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="/gd.trxn.com/mimes/jquery/1.11.3/jquery-1.11.3.min.js"></script>
 <script src="/gd.trxn.com/mimes/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- BootStrap Validator -->
+<script src="/gd.trxn.com/mimes/bootstrap-validator/0.8.1/js/validator.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="/gd.trxn.com/mimes/bootstrap/layouts/js/holder.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

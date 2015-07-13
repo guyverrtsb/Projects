@@ -4,6 +4,7 @@
 <script src="/gd.trxn.com/mimes/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <!-- BootStrap Validator -->
 <script src="/gd.trxn.com/mimes/bootstrap-validator/0.8.1/js/validator.min.js"></script>
+<script src="/gd.trxn.com/mimes/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="/gd.trxn.com/mimes/bootstrap/layouts/js/holder.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -31,6 +32,7 @@
 <script src="/gd.trxn.com/mimes/jquery-file-upload/9.10.1/js/jquery.fileupload-validate.js"></script>
 <!-- END _ UPLOAD -->
 <script src="/gd.trxn.com/mimes/gdtrxn/js/commons/utilities.js"></script>
+<script src="/mimes/layouts/standard/js/scripts.js"></script>
 <?php
 $includedFiles = get_included_files();
 $jsFile = preg_replace('/\.php$/', '.js', $includedFiles[0]);

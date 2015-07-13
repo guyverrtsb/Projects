@@ -1,7 +1,7 @@
 <?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
 <?php gdreqonce("/gd.trxn.com/usersafety/_controls/classes/find/usersafety_role.php"); ?>
 <?php
-class gdAuthorizeUser
+class AuthorizeUser
     extends AppSysBaseObject
 {
     function isGuest()

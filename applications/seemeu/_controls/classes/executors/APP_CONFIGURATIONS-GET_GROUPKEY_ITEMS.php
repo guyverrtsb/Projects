@@ -22,7 +22,6 @@ class Executor
             $this->setSysReturnData("FORM_FIELDS_NOT_VALID", "Please fill in all fields.");
         }
         zLog()->LogEnd_ExecutorFunction("APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS");
-        return $this;
     }
 
     function validate()

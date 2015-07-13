@@ -12,9 +12,9 @@
 			<ACCOUNT_INACTIVE type="SYS" method="referer"/>
 			<TOO_MANY_FAILED_LOGIN_ATTEMPTS type="SYS" method="referer"/>
 			<PASSWORD_DOES_NOT_MATCH type="SYS" method="referer"/>
-			<RECORD_NOT_FOUND_BY_NICKNAME type="SYS" method="referer"/>
 			<RECORD_NOT_FOUND_BY_EMAIL type="SYS" method="referer"/>
-			<USER_IS_AUTHENTICATED type="SYS" method="referer"/>
+			<RECORD_NOT_FOUND_BY_NICKNAME type="SYS" method="referer"/>
+			<USER_IS_AUTHENTICATED type="PAGE" path="/s_user/home.php"/>
 		</USERSAFETY-LOGIN_BY_EMAIL_PROSPECT>
 		<USERSAFETY-REGISTER_BY_EMAIL_PROSPECT>
 			<USER_IS_CREATED type="PAGE" path="/register_login_prospect.php"/>
@@ -24,6 +24,9 @@
 		</USERSAFETY-REGISTER_BY_EMAIL_PROSPECT>
 		<TASK_CONTROL>
 			<TASK_PERFORMED type="PAGE" path="/gd.trxn.com/crossapplication/taskcontrol.php"/>
+			<TASKCONTROLLINK_IS_NOT_ACTIVE type="PAGE" path="/gd.trxn.com/crossapplication/taskcontrol.php"/>
+			<RECORD_IS_NOT_FOUND type="PAGE" path="/gd.trxn.com/crossapplication/taskcontrol.php"/>
+			<PROSPECT_REGISTERED type="PAGE" path="/gd.trxn.com/crossapplication/taskcontrol.php"/>
 		</TASK_CONTROL>
 		<TEST>
 			<USER_LOGIN type="PAGE" path="/login_prospect.php"/>

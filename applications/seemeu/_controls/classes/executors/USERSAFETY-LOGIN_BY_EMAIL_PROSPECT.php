@@ -12,38 +12,42 @@ class Executor
             $args["useraccount_email"] = trim($_POST["email"]);
             $args["useraccount_password"] = trim($_POST["password"]);
             
-            $auth = new zAuthenticateUser();
-            $auth->authenticate($args);
+            $authenticate = new AuthenticateUser();
+            $authenticate->authenticate($args);
 
-            if($auth->getSysReturnCode() == "ACCOUNT_INACTIVE")
+            if($authenticate->getSysReturnCode() == "ACCOUNT_INACTIVE")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("ACCOUNT_INACTIVE", "For your security we have deactivated your account.  Please reactivate.", "TRUE");  
             }
-            else if($auth->getSysReturnCode() == "TOO_MANY_FAILED_LOGIN_ATTEMPTS")
+            else if($authenticate->getSysReturnCode() == "TOO_MANY_FAILED_LOGIN_ATTEMPTS")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("TOO_MANY_FAILED_LOGIN_ATTEMPTS", "You have tried to login too many times.  Please reset your account to activate.", "TRUE");  
             }
-            else if($auth->getSysReturnCode() == "PASSWORD_DOES_NOT_MATCH")
+            else if($authenticate->getSysReturnCode() == "PASSWORD_DOES_NOT_MATCH")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("PASSWORD_DOES_NOT_MATCH", "Using the information provided your account is not found.", "TRUE");  
             }
-            else if($auth->getSysReturnCode() == "RECORD_NOT_FOUND_BY_EMAIL")
+            else if($authenticate->getSysReturnCode() == "RECORD_NOT_FOUND_BY_EMAIL")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("RECORD_NOT_FOUND_BY_EMAIL", "Using the information provided your account is not found.", "TRUE");  
             }
-            else if($auth->getSysReturnCode() == "RECORD_NOT_FOUND_BY_NICKNAME")
+            else if($authenticate->getSysReturnCode() == "RECORD_NOT_FOUND_BY_NICKNAME")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("RECORD_NOT_FOUND_BY_NICKNAME", "Using the information provided your account is not found.", "TRUE");  
             }
-            else if($auth->getSysReturnCode() == "USER_IS_AUTHENTICATED")
+            else if($authenticate->getSysReturnCode() == "USER_IS_AUTHENTICATED")
             {
-                $this->transferSysReturnAry($auth);
+                $this->transferSysReturnAry($authenticate);
                 $this->setSysReturnData("USER_IS_AUTHENTICATED", "User is authenticated", "TRUE");
+                
+                // capture extra data for prospect
+                
+                
             }
         }
         else

@@ -5,6 +5,8 @@
 <?php zReqOnce("/_controls/classes/dataobjects/create/groupaccount.php"); ?>
 <?php zReqOnce("/_controls/classes/dataobjects/create/groupprofile.php"); ?>
 <?php zReqOnce("/_controls/classes/dataobjects/create/match_group.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/retrieve/group.php"); ?>
+<?php zReqOnce("/_controls/classes/dataobjects/create/personalization.php"); ?>
 <?php
 class Activation
     extends AppSysBaseObject
@@ -22,7 +24,7 @@ class Activation
         $gts = array("GROUP_TYPE-VETTING_UNIVERSITY",   "GROUP_TYPE-SOCIAL",        "GROUP_TYPE-FAMILY");
         $vis = array("GROUP_VISIBILITY-PRIVATE",        "GROUP_VISIBILITY-PRIVATE", "GROUP_VISIBILITY-PRIVATE");
         $ona = array("GROUP_ACCEPT-OWNER_ACCEPT",       "GROUP_ACCEPT-AUTO_ACCEPT", "GROUP_ACCEPT-INVITED_BY_OWNER_AUTO_ACCEPT");
-        $grl = array("GROUP_ROLE-OWNER",                "GROUP_ROLE-OWNER",         "GROUP_ROLE-OWNER");
+        $dsc = array("University View",                 "My Social",                "Famliy and those close");
         
         /*
          * 1. Retrieve User Data from UID
@@ -52,7 +54,7 @@ class Activation
             // Create Group Account
             $cga = new CreateGroupaccount();
             $cga->basic($ga_sdesc,
-                "PROSPECT_".$gts[$idx]."_".$vis[$idx]."_".$ona[$idx],
+                $dsc[$idx],
                 $gts[$idx],
                 $vis[$idx],
                 $ona[$idx]);
@@ -71,9 +73,28 @@ class Activation
                     $cgp->getUid(),
                     $entityuniversity->getMatchEntitytoUniversityMatchEntityUid(),
                     $userdata->getMatchUserUid(),
-                    $grl[$idx]);
+                    "GROUP_ROLE-OWNER");
             }
         }
+
+        $group = new RetrieveGroup();
+        $group->getGroupsbyEntityUid_Grouptype($entityuniversity->getMatchEntitytoUniversityMatchEntityUid()
+                                            , "GROUP_TYPE-ENTITY");
+        foreach ($group->getResult_Records() as $row)
+        {
+            $group->setResult_Record($row);
+            // Create Match Group Account to Group Profile
+            $cmgap = new CreateMatchGroup();
+            $cmgap->basic($group->getMatchGroupGroupaccountUid(),
+                        $group->getMatchGroupGroupprofileUid(),
+                        $entityuniversity->getMatchEntitytoUniversityMatchEntityUid(),
+                        $userdata->getMatchUserUid(),
+                        "GROUP_ROLE-USER");
+        }
+
+        $cp = new CreatePersonalization();
+        $cp->basic($entityuniversity->getMatchEntitytoUniversityMatchEntityUid()
+            , $userdata->getMatchUserUid());
 
         zLog()->LogEnd_AccessPointFunction("prospect");
     }

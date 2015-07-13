@@ -1,6 +1,5 @@
 <?php require_once("../gd.trxn.com/_controls/classes/_syscore.php"); ?>
 <?php zReqOnce("/_controls/classes/_sys/_appsysbaseobject.php"); ?>
-<?php zReqOnce("/_controls/classes/dataobjects/retrieve/appconfiguration.php"); ?>
 <?php
 /**
  * SERVICE page is designed to be called by MVCs and Design Pattern
@@ -12,6 +11,9 @@ $serviceControlKey = getServiceControlKey();
 switch($serviceControlKey)
 {
     case "APP_CONFIGURATIONS-GET_GROUPKEY_ITEMS":
+    case "SEEMEU-GET_GROUPS_BY_ROLE":
+    case "SEEMEU-GET_LIST_OF_UNIVERSITY_SOURCE":
+    case "SEEMEU-GET_LIST_OF_SCHOLARSHIP_SOURCE":
         zReqOnce("/_controls/classes/executors/".$serviceControlKey.".php");
         $executor = new Executor();
         $executor->execute();

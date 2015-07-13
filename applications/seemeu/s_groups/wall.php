@@ -5,11 +5,11 @@ zAppSysIntegration()->setDefaultPageTitle("Wall");
 <style>
 #uploadbox { 
     margin-top:30px;
-    width:600px;
+    width:500px;
     }
 #upload_preview {
     background: #ccc;
-    height:500px; width:500px;
+    height:470px; width:470px;
     /*line-height: 50px;
     text-align: center;
     font-weight: bold;
@@ -17,7 +17,7 @@ zAppSysIntegration()->setDefaultPageTitle("Wall");
     margin:auto;
     }
 #upload_progress {
-    width:500px;
+    width:470px;
     margin:auto;
     }
 </style>

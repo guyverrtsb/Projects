@@ -34,7 +34,7 @@ class CreateGroupaccount
         $appcon->setApplicationDB("APPLICATION");
         $appcon->setStatement($sqlstmnt);
         $appcon->bindParam(":sdesc", $this->createSdesc($sdesc));
-        $appcon->bindParam(":ldesc", $this->createSdesc($ldesc));
+        $appcon->bindParam(":ldesc", $ldesc);
         $appcon->bindParam(":configurations_sdesc_grouptype", $configurations_sdesc_grouptype);
         $appcon->bindParam(":configurations_sdesc_groupvisibility", $configurations_sdesc_groupvisibility);
         $appcon->bindParam(":configurations_sdesc_groupaccept", $configurations_sdesc_groupaccept);

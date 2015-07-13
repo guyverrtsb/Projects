@@ -39,10 +39,23 @@
 		
 		private $file_handle;
 		
-		public function __construct()
+		public function __construct($loglevel)
 		{
-		    $filepath = $_SESSION['GD_LOG_LOCATION'];
-		    $priority = $_SESSION['GD_LOG_PRIORITY'];
+            $filepath = "../../ZLOG.txt";
+		    if(isset($_SESSION[AppSysIntegration::getKeySessSiteConfigRoot()]))
+            {
+                $filepath = $_SESSION[AppSysIntegration::getKeySessSiteConfigRoot()]."ZLOG.txt";
+            }
+            
+            $DEBUG     = 1;    // Most Verbose
+            $INFO      = 2;    // ...
+            $WARN      = 3;    // ...
+            $ERROR     = 4;    // ...
+            $FATAL     = 5;    // Least Verbose
+            $OFF       = 6;    // Nothing at all.
+
+		    $priority = $loglevel;
+            
 			if ( $priority == KLogger::OFF ) return;
 			
 			$this->log_file = $filepath;

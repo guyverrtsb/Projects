@@ -63,11 +63,11 @@ class TaskControl
         }
         else if($ra->getIsactive() == "F")
         {
-            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link is not active.");
+            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link not Found or Inactive");
         }
         else if($ra->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Found");
+            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Task Control Link not Found or Inactive");
         }
         
         zLog()->LogEnd_AccessPointFunction("sendTaskControl");
@@ -96,8 +96,8 @@ class TaskControl
             $appliTaskControl->execute($ra->getApplConfigSdescTaskkey(),
                                     $ra->getjson());
             
-            $this->transferSysReturnAry($appliTaskControl);
-
+            $this->transferSysReturnAry($appliTaskControl);            
+            
             $ut = new UpdateTaskControl();
             $ut->deactivateTasklink($ra->getUid());
             
@@ -109,11 +109,11 @@ class TaskControl
         }
         else if($ra->getIsactive() == "F")
         {
-            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link is not active.");
+            $this->setSysReturnData("TASKCONTROLLINK_IS_NOT_ACTIVE", "Task Control Link not Found or Inactive");
         }
         else if($ra->getSysReturnCode() == "RECORD_IS_NOT_FOUND")
         {
-            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Record is not Found");
+            $this->setSysReturnData("RECORD_IS_NOT_FOUND", "Task Control Link not Found or Inactive");
         }
         
         zLog()->LogEnd_AccessPointFunction("executeTaskControl");

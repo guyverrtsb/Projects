@@ -16,7 +16,7 @@ class RetrieveEntityUniversity
     
     function byMatchEntitytoUniversityUid($uid)
     {
-        zLog()->LogStart_DataObjectFunction("byUid");
+        zLog()->LogStart_DataObjectFunction("byMatchEntitytoUniversityUid");
         
         $sqlstmnt = "select ".
             $this->dbfas("match_entity_to_university.lid,
@@ -66,7 +66,7 @@ class RetrieveEntityUniversity
         
         $this->resultRetrieveRecord($appcon);
         
-        zLog()->LogEnd_DataObjectFunction("byUid");
+        zLog()->LogEnd_DataObjectFunction("byMatchEntitytoUniversityUid");
     }
     
     function byEntityUid($uid)

@@ -68,6 +68,9 @@ class AppliTaskControl
             $activation->prospect($obj);
             
             $this->transferSysReturnAry($uua);
+            $this->setSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_CODE", "PROSPECT_REGISTERED");
+            $this->setSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_MSG", "Prospect has been sucessfully Activated.");
+            $this->setSysReturnitem("CROSS_APP_TASK_OVERRIDE-RETURN_SHOW_MSG", "TRUE");
             
             $this->setSysReturnData("TASK_PERFORMED", "Task is Performed", "FALSE");
         }

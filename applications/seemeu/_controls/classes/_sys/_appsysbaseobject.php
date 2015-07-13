@@ -75,8 +75,8 @@ class AppSysBaseObject
     {
         if($appcon->getTransactionGood())
         {
-            $this->saveActivityLog("RECORD_IS_UDPATED", "Record is Updated");
-            $this->setSysReturnData("RECORD_IS_UDPATED", "Record is Updated");
+            $this->saveActivityLog("RECORD_IS_UPDATED", "Record is Updated");
+            $this->setSysReturnData("RECORD_IS_UPDATED", "Record is Updated");
         }
         else
         {

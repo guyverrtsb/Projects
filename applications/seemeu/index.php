@@ -2,7 +2,7 @@
 <?php zInc("/_controls/ui/templates/carousel/head.php"); ?>
 <!-- START - Content ================================================== -->
 <!-- START - Carousel ================================================== -->
-<div id="carousel" class="carousel slide" data-ride="carousel">
+<div id="carousel" class="carousel slide" data-ride="carousel" style="margin-bottom:60px;">
 <!-- Indicators -->
 <ol class="carousel-indicators">
 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
